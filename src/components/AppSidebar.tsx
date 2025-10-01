@@ -1,3 +1,5 @@
+import { HouseIcon, LucideIcon } from 'lucide-react';
+
 import {
   Sidebar,
   SidebarContent,
@@ -9,7 +11,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { HouseIcon, LucideIcon } from 'lucide-react';
 
 interface SidebarItem {
   title: string;

@@ -1,6 +1,7 @@
-import React from 'react';
-import Image from 'next/image';
 import { ExternalLinkIcon } from 'lucide-react';
+import Image from 'next/image';
+import React from 'react';
+
 import { Button } from '@/components/ui';
 
 const About: React.FC = () => {
