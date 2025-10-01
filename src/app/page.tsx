@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ExternalLinkIcon } from 'lucide-react';
+import { Button } from '@/components/ui';
 
 const About: React.FC = () => {
   return (
@@ -21,26 +22,37 @@ const About: React.FC = () => {
         <div className="m-2 text-gray-300">
           <p>
             <span>This is a demo web application client for </span>
-            <a
-              href="https://en.wikiversity.org/wiki/Database_Examples/Northwind"
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-400 inline-flex items-center gap-1"
+            <Button
+              variant="link"
+              asChild
+              className="text-blue-400 inline-flex items-center gap-1 text-[length:inherit] h-auto p-0 has-[>svg]:px-0"
             >
-              Northwind database <ExternalLinkIcon size={16} />
-            </a>
+              <a
+                href="https://en.wikiversity.org/wiki/Database_Examples/Northwind"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-400 inline-flex items-center gap-1"
+              >
+                Northwind database <ExternalLinkIcon size={16} />
+              </a>
+            </Button>
             .
           </p>
           <p>
             See{' '}
-            <a
-              href="https://kmvx.pages.dev/projects/northwind-traders"
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-400 inline-flex items-center gap-1"
+            <Button
+              variant="link"
+              asChild
+              className="text-blue-400 inline-flex items-center gap-1 text-[length:inherit] h-auto p-0 has-[>svg]:px-0"
             >
-              project description <ExternalLinkIcon size={16} />
-            </a>
+              <a
+                href="https://kmvx.pages.dev/projects/northwind-traders"
+                target="_blank"
+                rel="noreferrer"
+              >
+                project description <ExternalLinkIcon size={16} />
+              </a>
+            </Button>
             .
           </p>
         </div>
