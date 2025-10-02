@@ -1,9 +1,11 @@
-'use client';
+import { Metadata } from 'next';
 
-import { useQueryEmployees } from '@/net';
+import { Employees } from '@/components/entities';
+
+export const metadata: Metadata = {
+  title: 'Employees \u2014 Northwind Traders',
+};
 
 export default function EmployeesPage() {
-  const { data } = useQueryEmployees();
-
-  return <div>Employees {JSON.stringify(data)}</div>;
+  return <Employees />;
 }
