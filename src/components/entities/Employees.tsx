@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useQueryEmployees } from '@/net';
-import { Flag } from '@/ui';
+import { Flag, PanelStretched } from '@/ui';
 import { getEmployeeNameByData } from '@/utils';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
@@ -15,7 +15,8 @@ export default function Employees() {
 
   if (!data) return;
   return (
-    <div>
+    <PanelStretched>
+      <h2 className="m-2 text-center text-4xl">Employees</h2>
       <div className="m-2">{data.length} employees</div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] auto-rows-fr gap-4 max-[400px]:grid-cols-1 max-[400px]:auto-rows-auto">
         {data.map((item, index) => (
@@ -63,6 +64,6 @@ export default function Employees() {
           </Link>
         ))}
       </div>
-    </div>
+    </PanelStretched>
   );
 }
