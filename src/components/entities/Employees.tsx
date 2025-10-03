@@ -18,7 +18,7 @@ export default function Employees() {
     <div>
       <div className="m-2">{data.length} employees</div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] auto-rows-fr gap-4 max-[400px]:grid-cols-1 max-[400px]:auto-rows-auto">
-        {data.map((item) => (
+        {data.map((item, index) => (
           <Link
             href={`/employees/${item.employeeId}`}
             key={item.employeeId}
@@ -38,6 +38,7 @@ export default function Employees() {
                   className="w-[70px] h-[70px] object-cover rounded-md"
                   width="70"
                   height="70"
+                  priority={index === 0}
                 />
                 <div className="flex flex-col flex-1 justify-between">
                   <span
