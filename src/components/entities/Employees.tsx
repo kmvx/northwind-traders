@@ -6,7 +6,13 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { useQueryEmployees } from '@/net';
-import { ErrorMessage, Flag, PanelStretched, ResponsiveGrid } from '@/ui';
+import {
+  ErrorMessage,
+  FilterCountry,
+  Flag,
+  PanelStretched,
+  ResponsiveGrid,
+} from '@/ui';
 import { getEmployeeNameByData, isStringIncludes } from '@/utils';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
@@ -16,6 +22,7 @@ import { Skeleton } from '../ui/skeleton';
 export default function Employees() {
   // Filters
   const [stringFilter, setStringFilter] = useState('');
+  const [filterCountry, setFilterCountry] = useState('');
 
   // Network data
   const { data, isLoading, error, refetch } = useQueryEmployees();
@@ -29,6 +36,12 @@ export default function Employees() {
           return true;
         return isStringIncludes(item[name], stringFilter);
       }),
+    );
+  }
+  const countries = [...new Set(data?.map((item) => item.country))].sort();
+  if (filterCountry) {
+    filteredData = filteredData?.filter(
+      (item) => item.country === filterCountry,
     );
   }
 
@@ -103,6 +116,11 @@ export default function Employees() {
             title="String filter"
           />
         </div>
+        <FilterCountry
+          filterCountry={filterCountry}
+          setFilterCountry={setFilterCountry}
+          countries={countries}
+        />
       </div>
       {getContent()}
     </PanelStretched>

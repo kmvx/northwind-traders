@@ -49,3 +49,7 @@ export function getFlagEmojiByCountryName(country: string): string | undefined {
   }
   return emoji;
 }
+
+export function getCountries(): string[] {
+  return Object.keys(countryFlagEmojiByCountryName);
+}
