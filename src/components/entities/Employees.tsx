@@ -5,16 +5,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useQueryEmployees } from '@/net';
-import { ErrorMessage, Flag, PanelStretched } from '@/ui';
+import { ErrorMessage, Flag, PanelStretched, WaitSpinner } from '@/ui';
 import { getEmployeeNameByData } from '@/utils';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 export default function Employees() {
-  const { data, error, refetch } = useQueryEmployees();
+  const { data, isLoading, error, refetch } = useQueryEmployees();
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
+    if (isLoading) return <WaitSpinner />;
     if (!data) return null;
 
     return (
