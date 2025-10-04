@@ -5,17 +5,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useQueryEmployees } from '@/net';
-import { ErrorMessage, Flag, PanelStretched, WaitSpinner } from '@/ui';
+import { ErrorMessage, Flag, PanelStretched } from '@/ui';
 import { getEmployeeNameByData } from '@/utils';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Skeleton } from '../ui/skeleton';
 
 export default function Employees() {
   const { data, isLoading, error, refetch } = useQueryEmployees();
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
-    if (isLoading) return <WaitSpinner />;
+    if (isLoading) return <LocalSceleton />;
     if (!data) return null;
 
     return (
@@ -76,5 +77,33 @@ export default function Employees() {
       <h2 className="m-2 text-center text-4xl">Employees</h2>
       {getContent()}
     </PanelStretched>
+  );
+}
+
+function LocalSceleton() {
+  return (
+    <>
+      <Skeleton className="m-2 h-6 w-32" />
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] auto-rows-fr gap-4 max-[400px]:grid-cols-1 max-[400px]:auto-rows-auto">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <Card className="h-full" key={index}>
+            <CardHeader>
+              <Skeleton className="h-6 w-3/4" />
+            </CardHeader>
+            <CardContent className="flex gap-4">
+              <Skeleton className="w-[70px] h-[70px] rounded-md" />
+              <div className="flex flex-col flex-1 justify-between gap-2">
+                <Skeleton className="h-4 w-full ml-auto max-w-[120px]" />
+                <div className="flex items-center justify-end gap-2">
+                  <Skeleton className="h-4 w-4 rounded-full" />
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-4 w-8 rounded" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </>
   );
 }
