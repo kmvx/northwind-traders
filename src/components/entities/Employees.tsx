@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useQueryEmployees } from '@/net';
-import { ErrorMessage, Flag, PanelStretched } from '@/ui';
+import { ErrorMessage, Flag, PanelStretched, ResponsiveGrid } from '@/ui';
 import { getEmployeeNameByData } from '@/utils';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
@@ -22,7 +22,7 @@ export default function Employees() {
     return (
       <>
         <div className="m-2">{data.length} employees</div>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] auto-rows-fr gap-4 max-[400px]:grid-cols-1 max-[400px]:auto-rows-auto">
+        <ResponsiveGrid minWidth="18rem">
           {data.map((item, index) => (
             <Link
               href={`/employees/${item.employeeId}`}
@@ -67,7 +67,7 @@ export default function Employees() {
               </Card>
             </Link>
           ))}
-        </div>
+        </ResponsiveGrid>
       </>
     );
   };
@@ -84,7 +84,7 @@ function LocalSceleton() {
   return (
     <>
       <Skeleton className="m-2 h-6 w-32" />
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] auto-rows-fr gap-4 max-[400px]:grid-cols-1 max-[400px]:auto-rows-auto">
+      <ResponsiveGrid minWidth="18rem">
         {Array.from({ length: 6 }).map((_, index) => (
           <Card className="h-full" key={index}>
             <CardHeader>
@@ -103,7 +103,7 @@ function LocalSceleton() {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </ResponsiveGrid>
     </>
   );
 }
