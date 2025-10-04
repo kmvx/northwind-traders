@@ -95,7 +95,7 @@ function LocalSceleton() {
               <div className="flex flex-col flex-1 justify-between gap-2">
                 <Skeleton className="h-4 w-full ml-auto max-w-[120px]" />
                 <div className="flex items-center justify-end gap-2">
-                  <Skeleton className="h-4 w-4 rounded-full" />
+                  <MapPinIcon className="size-4 text-accent" />
                   <Skeleton className="h-4 w-20" />
                   <Skeleton className="h-4 w-8 rounded" />
                 </div>
