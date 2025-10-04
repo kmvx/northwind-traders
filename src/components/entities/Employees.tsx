@@ -24,14 +24,10 @@ export default function Employees() {
   let filteredData = data;
   if (stringFilter) {
     filteredData = filteredData?.filter((item) =>
-      ['title', 'country', 'city'].some((name) => {
+      (['title', 'country', 'city'] as const).some((name) => {
         if (isStringIncludes(getEmployeeNameByData(item), stringFilter))
           return true;
-        return isStringIncludes(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (item as Record<string, any>)[name],
-          stringFilter,
-        );
+        return isStringIncludes(item[name], stringFilter);
       }),
     );
   }
