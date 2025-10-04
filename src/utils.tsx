@@ -1,5 +1,13 @@
 import { IEmployee } from './models';
 
+export function isStringIncludes(str: string, search: string): boolean {
+  const strConverted = typeof str === 'string' ? str : '' + str;
+  const searchConverted = typeof search === 'string' ? search : '' + search;
+  return (
+    strConverted.toLowerCase().indexOf(searchConverted.toLowerCase()) !== -1
+  );
+}
+
 export function getEmployeeNameByData(data: IEmployee) {
   return data.titleOfCourtesy + ' ' + data.lastName + ' ' + data.firstName;
 }

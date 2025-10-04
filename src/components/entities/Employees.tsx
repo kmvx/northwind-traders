@@ -3,27 +3,49 @@
 import { MapPinIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import { useQueryEmployees } from '@/net';
 import { ErrorMessage, Flag, PanelStretched, ResponsiveGrid } from '@/ui';
-import { getEmployeeNameByData } from '@/utils';
+import { getEmployeeNameByData, isStringIncludes } from '@/utils';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Input } from '../ui/input';
 import { Skeleton } from '../ui/skeleton';
 
 export default function Employees() {
+  // Filters
+  const [stringFilter, setStringFilter] = useState('');
+
+  // Network data
   const { data, isLoading, error, refetch } = useQueryEmployees();
+
+  // Filter data
+  let filteredData = data;
+  if (stringFilter) {
+    filteredData = filteredData?.filter((item) =>
+      ['title', 'country', 'city'].some((name) => {
+        if (isStringIncludes(getEmployeeNameByData(item), stringFilter))
+          return true;
+        return isStringIncludes(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (item as Record<string, any>)[name],
+          stringFilter,
+        );
+      }),
+    );
+  }
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
     if (isLoading) return <LocalSceleton />;
-    if (!data) return null;
+    if (!filteredData) return null;
 
     return (
       <>
-        <div className="m-2">{data.length} employees</div>
+        <div className="m-2">{filteredData.length} employees</div>
         <ResponsiveGrid minWidth="18rem">
-          {data.map((item, index) => (
+          {filteredData.map((item, index) => (
             <Link
               href={`/employees/${item.employeeId}`}
               key={item.employeeId}
@@ -75,6 +97,17 @@ export default function Employees() {
   return (
     <PanelStretched>
       <h2 className="m-2 text-center text-4xl">Employees</h2>
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="flex-grow">
+          <Input
+            type="search"
+            placeholder="Enter filter string here"
+            value={stringFilter}
+            onChange={(e) => setStringFilter(e.target.value)}
+            title="String filter"
+          />
+        </div>
+      </div>
       {getContent()}
     </PanelStretched>
   );
