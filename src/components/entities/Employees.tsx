@@ -9,6 +9,7 @@ import { useQueryEmployees } from '@/net';
 import {
   ErrorMessage,
   FilterCountry,
+  FiltersClearButton,
   Flag,
   PanelStretched,
   ResponsiveGrid,
@@ -21,20 +22,25 @@ import { Skeleton } from '../ui/skeleton';
 
 export default function Employees() {
   // Filters
-  const [stringFilter, setStringFilter] = useState('');
+  const [filterString, setFilterString] = useState('');
   const [filterCountry, setFilterCountry] = useState('');
+  const hasFilter = !!filterString || !!filterCountry;
+  function handleFilterClear() {
+    setFilterString('');
+    setFilterCountry('');
+  }
 
   // Network data
   const { data, isLoading, error, refetch } = useQueryEmployees();
 
   // Filter data
   let filteredData = data;
-  if (stringFilter) {
+  if (filterString) {
     filteredData = filteredData?.filter((item) =>
       (['title', 'country', 'city'] as const).some((name) => {
-        if (isStringIncludes(getEmployeeNameByData(item), stringFilter))
+        if (isStringIncludes(getEmployeeNameByData(item), filterString))
           return true;
-        return isStringIncludes(item[name], stringFilter);
+        return isStringIncludes(item[name], filterString);
       }),
     );
   }
@@ -111,8 +117,8 @@ export default function Employees() {
           <Input
             type="search"
             placeholder="Enter filter string here"
-            value={stringFilter}
-            onChange={(e) => setStringFilter(e.target.value)}
+            value={filterString}
+            onChange={(event) => setFilterString(event.target.value)}
             title="String filter"
           />
         </div>
@@ -121,6 +127,7 @@ export default function Employees() {
           setFilterCountry={setFilterCountry}
           countries={countries}
         />
+        <FiltersClearButton disabled={!hasFilter} onClick={handleFilterClear} />
       </div>
       {getContent()}
     </PanelStretched>

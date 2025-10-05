@@ -10,7 +10,8 @@
     "lint": "eslint --max-warnings 0 --fix",
     "prettier": "NODE_OPTIONS=\"--experimental-strip-types\" prettier --write .",
     "format": "npm run lint && npm run prettier",
-    "test": "npm run format && echo OK"
+    "tsc": "tsc",
+    "test": "npm run format && npm run tsc && echo OK"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
