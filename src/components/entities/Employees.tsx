@@ -3,7 +3,7 @@
 import { MapPinIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useQueryState } from 'nuqs';
 
 import { useQueryEmployees } from '@/net';
 import {
@@ -22,10 +22,14 @@ import { Skeleton } from '../ui/skeleton';
 
 export default function Employees() {
   // Filters
-  const [filterString, setFilterString] = useState('');
-  const [filterCountry, setFilterCountry] = useState('');
-  const hasFilter = !!filterString || !!filterCountry;
-  function handleFilterClear() {
+  const [filterString, setFilterString] = useQueryState('q', {
+    defaultValue: '',
+  });
+  const [filterCountry, setFilterCountry] = useQueryState('country', {
+    defaultValue: '',
+  });
+  const hasFilters = !!filterString || !!filterCountry;
+  function handleFiltersClear() {
     setFilterString('');
     setFilterCountry('');
   }
@@ -127,7 +131,10 @@ export default function Employees() {
           setFilterCountry={setFilterCountry}
           countries={countries}
         />
-        <FiltersClearButton disabled={!hasFilter} onClick={handleFilterClear} />
+        <FiltersClearButton
+          disabled={!hasFilters}
+          onClick={handleFiltersClear}
+        />
       </div>
       {getContent()}
     </PanelStretched>
