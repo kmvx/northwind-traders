@@ -8,6 +8,10 @@ export function isStringIncludes(str: string, search: string): boolean {
   );
 }
 
+export const buildTitle = (...args: (string | undefined)[]): string => {
+  return [...args, 'Northwind Traders'].filter(Boolean).join(' \u2014 ');
+};
+
 export function getEmployeeNameByData(data: IEmployee) {
   return data.titleOfCourtesy + ' ' + data.lastName + ' ' + data.firstName;
 }

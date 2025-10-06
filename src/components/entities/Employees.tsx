@@ -4,7 +4,6 @@ import { MapPinIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
-import React from 'react';
 
 import { IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';

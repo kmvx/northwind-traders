@@ -2,9 +2,10 @@ import { Metadata } from 'next';
 
 import { Employees } from '@/components/entities';
 import { getEmployees } from '@/net';
+import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {
-  title: 'Employees \u2014 Northwind Traders',
+  title: buildTitle('Employees'),
 };
 
 export default async function EmployeesPage() {

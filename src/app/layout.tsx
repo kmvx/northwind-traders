@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { AppSidebar } from '@/components';
 import Providers from '@/components/Providers';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { buildTitle } from '@/utils';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -18,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Northwind Traders',
+  title: buildTitle(),
   description: 'Northwind Traders demo application',
   icons: {
     icon: '/favicon.png',
