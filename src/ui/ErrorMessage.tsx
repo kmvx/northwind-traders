@@ -31,7 +31,7 @@ const ErrorMessage: React.FC<{
             onClick={retry}
             title="Refetch network request"
             size="sm"
-            variant="default"
+            variant="outline"
           >
             Retry
           </Button>
