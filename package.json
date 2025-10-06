@@ -4,14 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack --hostname 127.0.0.1",
+    "dev: public": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint --max-warnings 0 --fix",
     "prettier": "NODE_OPTIONS=\"--experimental-strip-types\" prettier --write .",
     "format": "npm run lint && npm run prettier",
     "tsc": "tsc",
-    "test": "npm run format && npm run tsc && echo OK"
+    "test": "npm run format && npm run tsc && echo OK",
+    "deploy:prod": "vercel build --prod && vercel deploy --prebuilt --prod && echo OK",
+    "deploy": "vercel build && vercel deploy --prebuilt && echo OK"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",

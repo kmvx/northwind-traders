@@ -3,7 +3,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import React from 'react';
+import React, { Suspense } from 'react';
+
+import { WaitSpinner } from '@/ui';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +37,9 @@ interface ProvidersProps {
 const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <NuqsAdapter>{children}</NuqsAdapter>
+      <Suspense fallback={<WaitSpinner />}>
+        <NuqsAdapter>{children}</NuqsAdapter>
+      </Suspense>
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
