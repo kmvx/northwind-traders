@@ -11,3 +11,7 @@ export const useQueryEmployees = () => {
     queryKey: [API_URL + '/Employees'],
   });
 };
+
+export const getEmployees = async (): Promise<IEmployees> => {
+  return await (await fetch(API_URL + '/Employees')).json();
+};

@@ -4,7 +4,9 @@ import { MapPinIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
+import React from 'react';
 
+import { IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';
 import {
   ErrorMessage,
@@ -20,7 +22,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Input } from '../ui/input';
 import { Skeleton } from '../ui/skeleton';
 
-export default function Employees() {
+export default function Employees({
+  initialData,
+}: {
+  initialData: IEmployees;
+}) {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
     defaultValue: '',
@@ -38,7 +44,7 @@ export default function Employees() {
   const { data, isLoading, error, refetch } = useQueryEmployees();
 
   // Filter data
-  let filteredData = data;
+  let filteredData = data ? data : isLoading ? initialData : [];
   if (filterString) {
     filteredData = filteredData?.filter((item) =>
       (['title', 'country', 'city'] as const).some((name) => {
@@ -57,7 +63,7 @@ export default function Employees() {
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
-    if (isLoading) return <LocalSceleton />;
+    if (isLoading && filteredData.length === 0) return <LocalSceleton />;
     if (!filteredData) return null;
 
     return (
