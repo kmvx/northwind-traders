@@ -13,6 +13,7 @@ import {
   FiltersClearButton,
   Flag,
   PanelStretched,
+  ReloadButton,
   ResponsiveGrid,
 } from '@/ui';
 import { getEmployeeNameByData, isStringIncludes } from '@/utils';
@@ -40,7 +41,7 @@ export default function Employees({
   }
 
   // Network data
-  const { data, isLoading, error, refetch } = useQueryEmployees();
+  const { data, isLoading, isFetching, error, refetch } = useQueryEmployees();
 
   // Filter data
   let filteredData = data ? data : isLoading ? initialData : [];
@@ -140,6 +141,7 @@ export default function Employees({
           disabled={!hasFilters}
           onClick={handleFiltersClear}
         />
+        <ReloadButton onClick={() => refetch()} isLoading={isFetching} />
       </div>
       {getContent()}
     </PanelStretched>
