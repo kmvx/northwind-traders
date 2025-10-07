@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 
-import { IEmployees } from '@/models';
+import { type IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';
 import {
   ErrorMessage,

@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 
 import { Employees } from '@/components/entities';
 import { getEmployees } from '@/net';

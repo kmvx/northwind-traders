@@ -1,4 +1,4 @@
-import { IEmployee } from './models';
+import { type IEmployee } from './models';
 
 export function isStringIncludes(str: string, search: string): boolean {
   const strConverted = typeof str === 'string' ? str : '' + str;

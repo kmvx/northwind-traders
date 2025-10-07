@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { IEmployee } from './models';
+import { type IEmployee } from './models';
 import {
   buildTitle,
   escapeHtml,

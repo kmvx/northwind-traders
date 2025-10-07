@@ -1,4 +1,4 @@
-import { HouseIcon, LucideIcon, UserIcon } from 'lucide-react';
+import { HouseIcon, type LucideIcon, UserIcon } from 'lucide-react';
 
 import {
   Sidebar,

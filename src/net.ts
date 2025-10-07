@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { IEmployees } from './models';
+import { type IEmployees } from './models';
 
 const API_URL = 'https://demodata.grapecity.com/northwind/api/v1';
 
