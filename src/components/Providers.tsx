@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React, { Suspense } from 'react';
 
+import { Toaster } from '@/components/ui/sonner';
 import { WaitSpinner } from '@/ui';
 
 const queryClient = new QueryClient({
@@ -40,6 +41,7 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
       <Suspense fallback={<WaitSpinner />}>
         <NuqsAdapter>{children}</NuqsAdapter>
       </Suspense>
+      <Toaster position="top-center" richColors />
       <ReactQueryDevtools />
     </QueryClientProvider>
   );

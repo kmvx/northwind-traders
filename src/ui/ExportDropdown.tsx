@@ -1,5 +1,6 @@
 import { ChevronDownIcon, DownloadIcon, Loader2Icon } from 'lucide-react';
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui';
 import {
@@ -120,8 +121,10 @@ const copyTextToClipboard = async (
     } else {
       await navigator.clipboard.writeText(text);
     }
+    toast.success(`${type} text copied to clipboard!`);
   } catch (err) {
-    console.error(`Failed to copy ${type} text to clipboard: `, err);
+    console.error(`Failed to copy ${type} text to clipboard.`, err);
+    toast.error(`Failed to copy ${type} text to clipboard. ${err}`);
   }
 };
 
