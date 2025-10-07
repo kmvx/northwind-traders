@@ -1,4 +1,5 @@
 export { default as ErrorMessage } from './ErrorMessage';
+export { default as ExportDropdown } from './ExportDropdown';
 export { default as FilterCountry } from './FilterCountry';
 export { default as FiltersClearButton } from './FiltersClearButton';
 export { default as Flag } from './Flag';

@@ -9,6 +9,7 @@ import { IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';
 import {
   ErrorMessage,
+  ExportDropdown,
   FilterCountry,
   FiltersClearButton,
   Flag,
@@ -140,6 +141,13 @@ export default function Employees({
         <FiltersClearButton
           disabled={!hasFilters}
           onClick={handleFiltersClear}
+        />
+        <ExportDropdown
+          data={// eslint-disable-next-line @typescript-eslint/no-unused-vars
+          filteredData?.map(({ photo: _photo, ...item }) => ({
+            ...item,
+          }))}
+          name="Employees"
         />
         <ReloadButton onClick={() => refetch()} isLoading={isFetching} />
       </div>

@@ -57,3 +57,17 @@ export function getFlagEmojiByCountryName(country: string): string | undefined {
 export function getCountries(): string[] {
   return Object.keys(countryFlagEmojiByCountryName);
 }
+
+export const escapeHtml = (text: string): string => {
+  return text.replace(/[&<>"'/]/g, (char) => {
+    const escapeMap: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+    };
+    return escapeMap[char] || char;
+  });
+};

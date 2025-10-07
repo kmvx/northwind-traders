@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { IEmployee } from './models';
 import {
   buildTitle,
+  escapeHtml,
   getCountries,
   getEmployeeNameByData,
   getFlagEmojiByCountryName,
@@ -88,5 +89,17 @@ describe('getCountries', () => {
     expect(countries).toContain('Argentina');
     expect(countries).toContain('USA');
     expect(countries.length).toBe(25);
+  });
+});
+
+describe('escapeHtml', () => {
+  it('escapes special HTML characters', () => {
+    expect(escapeHtml('&<>"\'/')).toBe('&amp;&lt;&gt;&quot;&#39;&#x2F;');
+  });
+
+  it('handles mixed string with special and non-special characters', () => {
+    const input = 'Hello & <World>!';
+    const expected = 'Hello &amp; &lt;World&gt;!';
+    expect(escapeHtml(input)).toBe(expected);
   });
 });
