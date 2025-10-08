@@ -13,7 +13,7 @@ export const buildTitle = (...args: (string | undefined)[]): string => {
 };
 
 export function getEmployeeNameByData(data: IEmployee) {
-  return data.titleOfCourtesy + ' ' + data.lastName + ' ' + data.firstName;
+  return data.titleOfCourtesy + ' ' + data.firstName + ' ' + data.lastName;
 }
 
 const countryFlagEmojiByCountryName: Record<string, string> = {

@@ -62,7 +62,7 @@ describe('getEmployeeNameByData', () => {
       postalCode: '62701',
       region: 'IL',
     };
-    expect(getEmployeeNameByData(employee)).toBe('Mr. Doe John');
+    expect(getEmployeeNameByData(employee)).toBe('Mr. John Doe');
   });
 });
 
