@@ -1,3 +1,4 @@
+export { default as CopyButton } from './CopyButton';
 export { default as ErrorMessage } from './ErrorMessage';
 export { default as ExportDropdown } from './ExportDropdown';
 export { default as FilterCountry } from './FilterCountry';

@@ -5,6 +5,8 @@ import React from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 
+import CopyButton from './CopyButton';
+
 const ErrorMessage: React.FC<{
   error: Error;
   retry?: () => void;
@@ -26,6 +28,7 @@ const ErrorMessage: React.FC<{
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{text}</AlertDescription>
         </div>
+        <CopyButton content={text} />
         {retry && (
           <Button
             onClick={retry}

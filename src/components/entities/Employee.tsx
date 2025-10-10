@@ -16,7 +16,13 @@ import {
   useQueryEmployee,
   useQueryRegions,
 } from '@/net';
-import { ErrorMessage, Flag, PanelCentred, WaitSpinner } from '@/ui';
+import {
+  CopyButton,
+  ErrorMessage,
+  Flag,
+  PanelCentred,
+  WaitSpinner,
+} from '@/ui';
 import {
   formatDateFromString,
   formatYearsOldFromDateString,
@@ -132,7 +138,7 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
               <span className="flex items-center gap-2">
                 <b>{data.homePhone}</b>
                 <span>Home</span>
-                {/* <CopyButton content={data.homePhone} /> */}
+                <CopyButton content={data.homePhone} />
               </span>
             </div>
 
