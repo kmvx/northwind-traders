@@ -1,14 +1,75 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { type IEmployee } from './models';
 import {
   buildTitle,
   escapeHtml,
+  formatDateFromString,
+  formatYearsOldFromDateString,
   getCountries,
   getEmployeeNameByData,
   getFlagEmojiByCountryName,
   isStringIncludes,
+  joinFields,
+  setDocumentTitle,
 } from './utils';
+
+describe('joinFields', () => {
+  it('joins non-empty strings with comma', () => {
+    expect(joinFields('a', 'b', 'c')).toBe('a, b, c');
+  });
+
+  it('filters out falsy values', () => {
+    expect(joinFields('a', '', 'b', undefined as unknown as string)).toBe(
+      'a, b',
+    );
+  });
+});
+
+describe('formatDateFromString', () => {
+  it('returns N/A for null', () => {
+    expect(formatDateFromString(null)).toBe('N/A');
+  });
+
+  it('returns formatted date for valid string', () => {
+    const result = formatDateFromString('2020-01-15T00:00:00Z');
+    expect(result).toMatch(/Jan 15, 2020/);
+  });
+
+  it('returns stringified Date for invalid date', () => {
+    const result = formatDateFromString('invalid-date');
+    expect(result).toContain('Invalid Date');
+  });
+});
+
+describe('formatYearsOldFromDateString', () => {
+  it('returns empty fragment when no dateString', () => {
+    const el = formatYearsOldFromDateString('');
+    expect(el).toBe(null);
+  });
+
+  it('returns correct years old string', () => {
+    const now = new Date();
+    const birth = new Date(
+      now.getFullYear() - 25,
+      now.getMonth(),
+      now.getDate() - 1,
+    );
+    const str = formatYearsOldFromDateString(birth.toISOString());
+    expect(str).toMatch(/25 years old/);
+  });
+
+  it('handles not yet birthday in current year', () => {
+    const now = new Date();
+    const birth = new Date(
+      now.getFullYear() - 25,
+      now.getMonth(),
+      now.getDate() + 1,
+    );
+    const str = formatYearsOldFromDateString(birth.toISOString());
+    expect(str).toMatch(/24 years old/);
+  });
+});
 
 describe('isStringIncludes', () => {
   it('should return true when search string is found (exact case)', () => {
@@ -38,6 +99,34 @@ describe('buildTitle', () => {
     expect(buildTitle('Products', 'Categories')).toBe(
       'Products — Categories — Northwind Traders',
     );
+  });
+});
+
+const originalDocument = global.document;
+
+describe('setDocumentTitle', () => {
+  beforeEach(() => {
+    // @ts-expect-error Override
+    global.document = { title: '' };
+  });
+
+  afterEach(() => {
+    global.document = originalDocument;
+  });
+
+  it('sets document.title using buildTitle', () => {
+    const spy = vi
+      .spyOn(global, 'document', 'get')
+      .mockReturnValue({ title: '' } as typeof originalDocument);
+    setDocumentTitle('Test');
+    expect(global.document.title).toBe(buildTitle('Test'));
+    spy.mockRestore();
+  });
+
+  it('does nothing if document is undefined', () => {
+    // @ts-expect-error Intentionally undefined
+    global.document = undefined;
+    expect(() => setDocumentTitle('Ignored')).not.toThrow();
   });
 });
 

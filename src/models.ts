@@ -20,3 +20,16 @@ export interface IEmployee extends IAddress {
   photoPath: string;
 }
 export type IEmployees = IEmployee[];
+
+export interface ITerritory {
+  territoryId: number;
+  territoryDescription: string;
+  regionId: number;
+}
+export type ITerritories = ITerritory[];
+
+export interface IRegion {
+  regionId: number;
+  regionDescription: string;
+}
+export type IRegions = IRegion[];

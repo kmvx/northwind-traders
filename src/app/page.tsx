@@ -14,6 +14,7 @@ const About: React.FC = () => {
           className="w-full h-full object-cover"
           width="1959"
           height="1073"
+          priority
         />
       </div>
       <div className="flex flex-col justify-center text-white xl:w-2/5 sm:p-[2vw]">

@@ -25,8 +25,10 @@ import { Skeleton } from '../ui/skeleton';
 
 export default function Employees({
   initialData,
+  reportsTo,
 }: {
-  initialData: IEmployees;
+  initialData?: IEmployees;
+  reportsTo?: string;
 }) {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
@@ -45,7 +47,16 @@ export default function Employees({
   const { data, isLoading, isFetching, error, refetch } = useQueryEmployees();
 
   // Filter data
-  let filteredData = data ? data : isLoading ? initialData : [];
+  let filteredData = data
+    ? data
+    : isLoading && initialData?.length
+      ? initialData
+      : [];
+  if (reportsTo) {
+    filteredData = filteredData?.filter(
+      (item) => String(item.reportsTo) == reportsTo,
+    );
+  }
   if (filterString) {
     filteredData = filteredData?.filter((item) =>
       (['title', 'country', 'city'] as const).some((name) => {
@@ -69,7 +80,10 @@ export default function Employees({
 
     return (
       <>
-        <div className="m-2">{filteredData.length} employees</div>
+        <div className="m-2">
+          {filteredData.length}{' '}
+          {reportsTo ? 'direct subordinates' : 'employees'}
+        </div>
         <ResponsiveGrid minWidth="18rem">
           {filteredData.map((item, index) => (
             <Link
@@ -120,9 +134,15 @@ export default function Employees({
     );
   };
 
+  if (reportsTo && !filteredData?.length && !hasFilters) {
+    return null;
+  }
+
   return (
     <PanelStretched>
-      <h2 className="m-2 text-center text-4xl">Employees</h2>
+      <h2 className="m-2 text-center text-4xl">
+        {reportsTo ? 'Direct subordinates' : 'Employees'}
+      </h2>
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex-grow">
           <Input

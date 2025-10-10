@@ -1,5 +1,32 @@
 import { type IEmployee } from './models';
 
+export function joinFields(...args: string[]): string {
+  return [...args].filter(Boolean).join(', ');
+}
+
+export function formatDateFromString(date: string | null): string {
+  if (!date) return 'N/A';
+  const dataObject = new Date(date);
+  if (isNaN(dataObject as unknown as number)) return `${dataObject}`;
+  return `${dataObject.toLocaleString('default', {
+    month: 'short',
+  })} ${dataObject.getDate()}, ${dataObject.getFullYear()}`;
+}
+
+export function formatYearsOldFromDateString(
+  dateString: string,
+): string | null {
+  if (!dateString) return null;
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return `${age} years old`;
+}
+
 export function isStringIncludes(str: string, search: string): boolean {
   const strConverted = typeof str === 'string' ? str : '' + str;
   const searchConverted = typeof search === 'string' ? search : '' + search;
@@ -10,6 +37,11 @@ export function isStringIncludes(str: string, search: string): boolean {
 
 export const buildTitle = (...args: (string | undefined)[]): string => {
   return [...args, 'Northwind Traders'].filter(Boolean).join(' \u2014 ');
+};
+
+export const setDocumentTitle = (...args: (string | undefined)[]): void => {
+  if (typeof document === 'undefined') return;
+  document.title = buildTitle(...args);
 };
 
 export function getEmployeeNameByData(data: IEmployee) {
