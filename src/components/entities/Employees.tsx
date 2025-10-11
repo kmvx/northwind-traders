@@ -16,6 +16,7 @@ import {
   PanelStretched,
   ReloadButton,
   ResponsiveGrid,
+  Typography,
 } from '@/ui';
 import { getEmployeeNameByData, isStringIncludes } from '@/utils';
 
@@ -139,10 +140,10 @@ export default function Employees({
   }
 
   return (
-    <PanelStretched>
-      <h2 className="m-2 text-center text-4xl">
+    <PanelStretched className="flex flex-col gap-4">
+      <Typography variant={reportsTo ? 'header2' : 'header1'}>
         {reportsTo ? 'Direct subordinates' : 'Employees'}
-      </h2>
+      </Typography>
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex-grow">
           <Input

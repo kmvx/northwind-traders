@@ -21,6 +21,7 @@ import {
   ErrorMessage,
   Flag,
   PanelCentred,
+  Typography,
   WaitSpinner,
 } from '@/ui';
 import {
@@ -107,10 +108,10 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
   if (!data) return <div>No data</div>;
 
   return (
-    <PanelCentred>
-      <h1 className="text-center text-4xl">{name}</h1>
-      <div className="my-4 flex flex-col gap-4 max-w-5xl">
-        <div className="text-center text-lg">
+    <PanelCentred className="flex flex-col gap-4">
+      <Typography.Header1>{name}</Typography.Header1>
+      <div className="flex flex-col gap-4 max-w-5xl">
+        <div className="text-center">
           <b>{data.title}</b>, employee
         </div>
 
@@ -171,7 +172,7 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
         )}
       </div>
 
-      <div className="my-4">
+      <div>
         <Employees reportsTo={id} />
       </div>
     </PanelCentred>

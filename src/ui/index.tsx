@@ -8,4 +8,5 @@ export { default as PanelCentred } from './PanelCentred';
 export { default as PanelStretched } from './PanelStretched';
 export { default as ReloadButton } from './ReloadButton';
 export { default as ResponsiveGrid } from './ResponsiveGrid';
+export { Typography } from './Typography';
 export { default as WaitSpinner } from './WaitSpinner';
