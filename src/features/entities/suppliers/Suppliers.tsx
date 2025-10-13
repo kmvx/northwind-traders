@@ -1,6 +1,5 @@
 'use client';
 
-import { MapPinIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 
@@ -26,7 +25,7 @@ import {
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
 
-import { Location } from '../shared';
+import { Location, LocationSkeleton } from '../shared';
 
 export default function Suppliers({
   initialData,
@@ -155,11 +154,7 @@ function LocalSkeleton() {
               <Skeleton className="h-6 w-3/4" />
             </CardHeader>
             <CardContent className="h-full flex flex-col justify-end">
-              <div className="flex items-center justify-end gap-2">
-                <MapPinIcon className="size-4 text-accent" />
-                <Skeleton className="h-4 w-20" />
-                <Skeleton className="h-4 w-8 rounded" />
-              </div>
+              <LocationSkeleton />
             </CardContent>
           </Card>
         ))}

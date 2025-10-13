@@ -1,6 +1,5 @@
 'use client';
 
-import { MapPinIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
@@ -27,7 +26,7 @@ import {
 } from '@/ui';
 import { getEmployeeNameByData, isStringIncludes } from '@/utils';
 
-import { Location } from '../shared';
+import { Location, LocationSkeleton } from '../shared';
 
 export default function Employees({
   initialData,
@@ -191,11 +190,7 @@ function LocalSkeleton() {
               <Skeleton className="w-[70px] h-[70px] rounded-md" />
               <div className="flex flex-col flex-1 justify-between gap-2">
                 <Skeleton className="h-4 w-full ml-auto max-w-[120px]" />
-                <div className="flex items-center justify-end gap-2">
-                  <MapPinIcon className="size-4 text-accent" />
-                  <Skeleton className="h-4 w-20" />
-                  <Skeleton className="h-4 w-8 rounded" />
-                </div>
+                <LocationSkeleton />
               </div>
             </CardContent>
           </Card>
