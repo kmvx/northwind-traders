@@ -1,22 +1,10 @@
 'use client';
 
-import {
-  CakeIcon,
-  FlagIcon,
-  Globe2Icon,
-  MapPinIcon,
-  PhoneIcon,
-} from 'lucide-react';
+import { CakeIcon, FlagIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
-import { Button } from '@/components/ui';
-import {
-  useEmployeeTeritories,
-  useQueryEmployee,
-  useQueryRegions,
-} from '@/net';
+import { useQueryEmployee } from '@/net';
 import {
   CopyButton,
   ErrorMessage,
@@ -33,65 +21,7 @@ import {
   setDocumentTitle,
 } from '@/utils';
 
-import { Employees } from '.';
-
-const Territories: React.FC<{ employeeId?: string }> = ({ employeeId }) => {
-  const { data, error, isLoading, refetch } = useEmployeeTeritories({
-    employeeId,
-  });
-  const { data: dataRegions } = useQueryRegions();
-
-  if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isLoading) return <WaitSpinner />;
-  if (!data) return <div>No data</div>;
-
-  const regionsMap = new Map<number, string>();
-  dataRegions?.forEach((region) =>
-    regionsMap.set(region.regionId, region.regionDescription),
-  );
-
-  return (
-    <div className="flex items-center flex-wrap my-2">
-      <Globe2Icon className="size-4 text-muted-foreground me-2" />
-      {data.map((item, i) => (
-        <React.Fragment key={item.territoryId}>
-          {i > 0 && <span>,&nbsp;</span>}
-          <b
-            title={`Index: ${item.territoryId}\nRegion: ${
-              regionsMap.get(item.regionId) || item.regionId
-            }`}
-          >
-            {item.territoryDescription}
-          </b>
-        </React.Fragment>
-      ))}
-    </div>
-  );
-};
-
-const EmployeeLink: React.FC<{ id: number; className?: string }> = ({
-  id,
-  className,
-}) => {
-  const hasReportsTo = Boolean(id);
-  const { data, error, isLoading, refetch } = useQueryEmployee({
-    id,
-    enabled: hasReportsTo,
-  });
-
-  if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isLoading) return hasReportsTo ? <WaitSpinner /> : null;
-  if (!data) return <div>No data</div>;
-
-  return (
-    <span className={className}>
-      <span>Reports to </span>
-      <Button variant="link" asChild className="p-0 text-blue-600">
-        <Link href={`/employees/${id}`}>{getEmployeeNameByData(data)}</Link>
-      </Button>
-    </span>
-  );
-};
+import { EmployeeLink, Employees, Territories } from '.';
 
 interface EmployeeProps {
   id: string;
