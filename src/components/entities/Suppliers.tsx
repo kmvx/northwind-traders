@@ -1,12 +1,11 @@
 'use client';
 
 import { MapPinIcon } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 
-import { type IEmployees } from '@/models';
-import { useQueryEmployees } from '@/net';
+import { type ISuppliers } from '@/models';
+import { useQuerySuppliers } from '@/net';
 import {
   ErrorMessage,
   ExportDropdown,
@@ -18,18 +17,16 @@ import {
   ResponsiveGrid,
   Typography,
 } from '@/ui';
-import { getEmployeeNameByData, isStringIncludes } from '@/utils';
+import { isStringIncludes } from '@/utils';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Input } from '../ui/input';
 import { Skeleton } from '../ui/skeleton';
 
-export default function Employees({
+export default function Suppliers({
   initialData,
-  reportsTo,
 }: {
-  initialData?: IEmployees;
-  reportsTo?: string;
+  initialData?: ISuppliers;
 }) {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
@@ -45,7 +42,7 @@ export default function Employees({
   }
 
   // Network data
-  const { data, isLoading, isFetching, error, refetch } = useQueryEmployees();
+  const { data, isLoading, isFetching, error, refetch } = useQuerySuppliers();
 
   // Filter data
   let filteredData = data
@@ -53,16 +50,9 @@ export default function Employees({
     : isLoading && initialData?.length
       ? initialData
       : [];
-  if (reportsTo) {
-    filteredData = filteredData?.filter(
-      (item) => String(item.reportsTo) == reportsTo,
-    );
-  }
   if (filterString) {
     filteredData = filteredData?.filter((item) =>
-      (['title', 'country', 'city'] as const).some((name) => {
-        if (isStringIncludes(getEmployeeNameByData(item), filterString))
-          return true;
+      (['companyName', 'country', 'city'] as const).some((name) => {
         return isStringIncludes(item[name], filterString);
       }),
     );
@@ -81,51 +71,31 @@ export default function Employees({
 
     return (
       <>
-        <div className="m-2">
-          {filteredData.length}{' '}
-          {reportsTo ? 'direct subordinates' : 'employees'}
-        </div>
-        <ResponsiveGrid minWidth="18rem">
-          {filteredData.map((item, index) => (
+        <div className="m-2">{filteredData.length} suppliers</div>
+        <ResponsiveGrid minWidth="15rem">
+          {filteredData.map((item) => (
             <Link
-              href={`/employees/${item.employeeId}`}
-              key={item.employeeId}
+              href={`/suppliers/${item.supplierId}`}
+              key={item.supplierId}
               className="block"
             >
               <Card className="hover:shadow-lg transition h-full">
                 <CardHeader>
                   <CardTitle title="Employee name">
-                    {getEmployeeNameByData(item)}
+                    {item.companyName}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="flex gap-2">
-                  <Image
-                    src={`/assets/img/database/${item.firstName.toLowerCase()}.jpg`}
-                    alt=""
-                    title="Employee photo"
-                    className="w-[70px] h-[70px] object-cover rounded-md"
-                    width="70"
-                    height="70"
-                    priority={index === 0}
-                  />
-                  <div className="flex flex-col flex-1 justify-between">
-                    <span
-                      className="text-sm text-right font-medium"
-                      title="Employee title"
-                    >
-                      {item.title}
+                <CardContent className="h-full flex flex-col justify-end">
+                  <span
+                    className="flex items-center justify-end gap-2 text-sm text-muted-foreground flex-wrap"
+                    title="Employee location"
+                  >
+                    <MapPinIcon className="size-4" />
+                    <span>
+                      {item.country}, {item.city}
                     </span>
-                    <span
-                      className="flex items-center justify-end gap-2 text-sm text-muted-foreground flex-wrap"
-                      title="Employee location"
-                    >
-                      <MapPinIcon className="size-4" />
-                      <span>
-                        {item.country}, {item.city}
-                      </span>
-                      <Flag country={item.country} />
-                    </span>
-                  </div>
+                    <Flag country={item.country} />
+                  </span>
                 </CardContent>
               </Card>
             </Link>
@@ -135,15 +105,13 @@ export default function Employees({
     );
   };
 
-  if (reportsTo && !filteredData?.length && !hasFilters) {
+  if (!filteredData?.length && !hasFilters) {
     return null;
   }
 
   return (
     <PanelStretched className="flex flex-col gap-4">
-      <Typography variant={reportsTo ? 'header2' : 'header1'}>
-        {reportsTo ? 'Direct subordinates' : 'Employees'}
-      </Typography>
+      <Typography variant="header1">Suppliers</Typography>
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex-grow">
           <Input
@@ -164,11 +132,10 @@ export default function Employees({
           onClick={handleFiltersClear}
         />
         <ExportDropdown
-          data={// eslint-disable-next-line @typescript-eslint/no-unused-vars
-          filteredData?.map(({ photo: _photo, ...item }) => ({
+          data={filteredData?.map(({ ...item }) => ({
             ...item,
           }))}
-          name="Employees"
+          name="Suppliers"
         />
         <ReloadButton onClick={() => refetch()} isLoading={isFetching} />
       </div>
@@ -181,21 +148,17 @@ function LocalSkeleton() {
   return (
     <>
       <Skeleton className="m-2 h-6 w-32" />
-      <ResponsiveGrid minWidth="18rem">
+      <ResponsiveGrid minWidth="15rem">
         {Array.from({ length: 6 }).map((_, index) => (
           <Card className="h-full" key={index}>
             <CardHeader>
               <Skeleton className="h-6 w-3/4" />
             </CardHeader>
-            <CardContent className="flex gap-2">
-              <Skeleton className="w-[70px] h-[70px] rounded-md" />
-              <div className="flex flex-col flex-1 justify-between gap-2">
-                <Skeleton className="h-4 w-full ml-auto max-w-[120px]" />
-                <div className="flex items-center justify-end gap-2">
-                  <MapPinIcon className="size-4 text-accent" />
-                  <Skeleton className="h-4 w-20" />
-                  <Skeleton className="h-4 w-8 rounded" />
-                </div>
+            <CardContent className="h-full flex flex-col justify-end">
+              <div className="flex items-center justify-end gap-2">
+                <MapPinIcon className="size-4 text-accent" />
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-8 rounded" />
               </div>
             </CardContent>
           </Card>

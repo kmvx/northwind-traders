@@ -1,4 +1,4 @@
-import { HouseIcon, type LucideIcon, UserIcon } from 'lucide-react';
+import { AxeIcon, HouseIcon, type LucideIcon, UserIcon } from 'lucide-react';
 
 import {
   Sidebar,
@@ -28,6 +28,11 @@ const items: SidebarItem[] = [
     title: 'Employees',
     url: '/employees',
     icon: UserIcon,
+  },
+  {
+    title: 'Suppliers',
+    url: '/suppliers',
+    icon: AxeIcon,
   },
 ];
 

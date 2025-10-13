@@ -4,6 +4,8 @@ import {
   type IEmployee,
   type IEmployees,
   type IRegions,
+  type ISupplier,
+  type ISuppliers,
   type ITerritories,
 } from './models';
 
@@ -47,5 +49,26 @@ export const useEmployeeTeritories = ({
 export const useQueryRegions = () => {
   return useQuery<IRegions>({
     queryKey: [API_URL + '/Regions'],
+  });
+};
+
+// Suppliers
+
+export const useQuerySuppliers = () => {
+  return useQuery<ISuppliers>({
+    queryKey: [API_URL + '/Suppliers'],
+  });
+};
+
+export const useQuerySupplier = ({
+  id,
+  enabled = true,
+}: {
+  id: string | number | undefined;
+  enabled?: boolean;
+}) => {
+  return useQuery<ISupplier>({
+    queryKey: [API_URL + '/Suppliers/' + id],
+    enabled,
   });
 };
