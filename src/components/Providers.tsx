@@ -7,6 +7,7 @@ import React, { Suspense } from 'react';
 
 import { Toaster } from '@/components/ui/sonner';
 import { WaitSpinner } from '@/ui';
+import FetchError from '@/utils/FetchError';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,15 +17,21 @@ const queryClient = new QueryClient({
         const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error(
-            `Network fetch error: ${response.status} ${response.statusText}`,
-          );
+          throw new FetchError(response);
         }
 
         const data = await response.json();
         // if (Math.random() < 0.5) throw new Error('Test network error');
         return data;
       },
+      retry: (failureCount, error: unknown) => {
+        //return false;
+        if (error instanceof FetchError) {
+          if (error.status >= 400 && error.status < 500) return false;
+        }
+        return failureCount < 3;
+      },
+
       staleTime: 60e3, // 1 min
       //refetchOnWindowFocus: false,
     },
