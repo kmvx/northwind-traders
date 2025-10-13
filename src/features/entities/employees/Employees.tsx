@@ -20,13 +20,14 @@ import {
   ExportDropdown,
   FilterCountry,
   FiltersClearButton,
-  Flag,
   PanelStretched,
   ReloadButton,
   ResponsiveGrid,
   Typography,
 } from '@/ui';
 import { getEmployeeNameByData, isStringIncludes } from '@/utils';
+
+import { Location } from '../shared';
 
 export default function Employees({
   initialData,
@@ -119,16 +120,11 @@ export default function Employees({
                     >
                       {item.title}
                     </span>
-                    <span
-                      className="flex items-center justify-end gap-2 text-sm text-muted-foreground flex-wrap"
+                    <Location
+                      country={item.country}
+                      city={item.city}
                       title="Employee location"
-                    >
-                      <MapPinIcon className="size-4" />
-                      <span>
-                        {item.country}, {item.city}
-                      </span>
-                      <Flag country={item.country} />
-                    </span>
+                    />
                   </div>
                 </CardContent>
               </Card>

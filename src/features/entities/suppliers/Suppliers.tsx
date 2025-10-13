@@ -19,13 +19,14 @@ import {
   ExportDropdown,
   FilterCountry,
   FiltersClearButton,
-  Flag,
   PanelStretched,
   ReloadButton,
   ResponsiveGrid,
   Typography,
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
+
+import { Location } from '../shared';
 
 export default function Suppliers({
   initialData,
@@ -85,21 +86,16 @@ export default function Suppliers({
             >
               <Card className="hover:shadow-lg transition h-full">
                 <CardHeader>
-                  <CardTitle title="Employee name">
+                  <CardTitle title="Supplier name">
                     {item.companyName}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="h-full flex flex-col justify-end">
-                  <span
-                    className="flex items-center justify-end gap-2 text-sm text-muted-foreground flex-wrap"
-                    title="Employee location"
-                  >
-                    <MapPinIcon className="size-4" />
-                    <span>
-                      {item.country}, {item.city}
-                    </span>
-                    <Flag country={item.country} />
-                  </span>
+                  <Location
+                    country={item.country}
+                    city={item.city}
+                    title="Supplier location"
+                  />
                 </CardContent>
               </Card>
             </Link>
