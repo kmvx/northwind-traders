@@ -1,6 +1,6 @@
 import { type Metadata } from 'next';
 
-import { Suppliers } from '@/components/entities';
+import { Suppliers } from '@/features/entities/suppliers';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {

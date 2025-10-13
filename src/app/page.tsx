@@ -1,4 +1,4 @@
-import { About } from '@/components/entities';
+import { About } from '@/components';
 
 export default function HomePage() {
   return <About />;

@@ -4,6 +4,14 @@ import { MapPinIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+  Skeleton,
+} from '@/components/ui';
 import { type ISuppliers } from '@/models';
 import { useQuerySuppliers } from '@/net';
 import {
@@ -18,10 +26,6 @@ import {
   Typography,
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
-
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Input } from '../ui/input';
-import { Skeleton } from '../ui/skeleton';
 
 export default function Suppliers({
   initialData,

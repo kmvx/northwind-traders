@@ -1,6 +1,6 @@
 import { type Metadata } from 'next';
 
-import { Employees } from '@/components/entities';
+import { Employees } from '@/features/entities/employees';
 import { getEmployees } from '@/net';
 import { buildTitle } from '@/utils';
 

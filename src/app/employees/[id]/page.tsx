@@ -1,4 +1,4 @@
-import { Employee } from '@/components/entities';
+import { Employee } from '@/features/entities/employees';
 
 export default async function EmployeePage({
   params,

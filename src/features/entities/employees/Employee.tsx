@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { Button } from '@/components/ui';
 import {
   useEmployeeTeritories,
   useQueryEmployee,
@@ -32,7 +33,6 @@ import {
   setDocumentTitle,
 } from '@/utils';
 
-import { Button } from '../ui';
 import { Employees } from '.';
 
 const Territories: React.FC<{ employeeId?: string }> = ({ employeeId }) => {

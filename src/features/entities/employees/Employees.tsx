@@ -5,6 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+  Skeleton,
+} from '@/components/ui';
 import { type IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';
 import {
@@ -19,10 +27,6 @@ import {
   Typography,
 } from '@/ui';
 import { getEmployeeNameByData, isStringIncludes } from '@/utils';
-
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Input } from '../ui/input';
-import { Skeleton } from '../ui/skeleton';
 
 export default function Employees({
   initialData,
