@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
 import {
+  type ICustomer,
+  type ICustomers,
   type IEmployee,
   type IEmployees,
   type IRegions,
@@ -70,5 +72,19 @@ export const useQuerySupplier = ({
   return useQuery<ISupplier>({
     queryKey: [API_URL + '/Suppliers/' + id],
     enabled,
+  });
+};
+
+// Customers
+
+export const useQueryCustomers = () => {
+  return useQuery<ICustomers>({
+    queryKey: [API_URL + '/Customers'],
+  });
+};
+
+export const useQueryCustomer = ({ id }: { id: string | undefined }) => {
+  return useQuery<ICustomer>({
+    queryKey: [API_URL + '/Customers/' + id],
   });
 };
