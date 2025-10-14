@@ -1,7 +1,7 @@
 import { RotateCwIcon } from 'lucide-react';
+import React, { memo } from 'react';
 
 import ButtonWithTooltip from './ButtonWithTooltip';
-import React, { memo } from 'react';
 
 function ReloadButton({
   onClick,

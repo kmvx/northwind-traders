@@ -81,43 +81,42 @@ export default function Customers({
     if (error) return <ErrorMessage error={error} retry={refetch} />;
     if (isLoading && filteredData.length === 0) return <LocalSkeleton />;
     if (!filteredData) return null;
+    if (filteredData.length === 0) return <div>Customers not found</div>;
 
     return (
-      <>
-        <Pagination
-          data={filteredData}
-          defaultLimit={20}
-          renderPage={(items) => (
-            <ResponsiveGrid minWidth="18rem">
-              {items.map((item) => (
-                <Link
-                  href={`/customers/${item.customerId}`}
-                  key={item.customerId}
-                  className="block"
-                >
-                  <Card className="hover:shadow-lg transition h-full">
-                    <CardHeader>
-                      <CardTitle title="Customer name">
-                        {item.companyName}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="h-full flex flex-col justify-end">
-                      <div className="text-end" title="Customer company ID">
-                        {item.customerId}
-                      </div>
-                      <Location
-                        country={item.country}
-                        city={item.city}
-                        title="Customer HQ location"
-                      />
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </ResponsiveGrid>
-          )}
-        />
-      </>
+      <Pagination
+        data={filteredData}
+        defaultLimit={20}
+        renderPage={(items) => (
+          <ResponsiveGrid minWidth="18rem">
+            {items.map((item) => (
+              <Link
+                href={`/customers/${item.customerId}`}
+                key={item.customerId}
+                className="block"
+              >
+                <Card className="hover:shadow-lg transition h-full">
+                  <CardHeader>
+                    <CardTitle title="Customer name">
+                      {item.companyName}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="h-full flex flex-col justify-end">
+                    <div className="text-end" title="Customer company ID">
+                      {item.customerId}
+                    </div>
+                    <Location
+                      country={item.country}
+                      city={item.city}
+                      title="Customer HQ location"
+                    />
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </ResponsiveGrid>
+        )}
+      />
     );
   };
 
