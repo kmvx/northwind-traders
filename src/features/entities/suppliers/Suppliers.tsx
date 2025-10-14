@@ -136,7 +136,7 @@ export default function Suppliers({
           }))}
           name="Suppliers"
         />
-        <ReloadButton onClick={() => refetch()} isLoading={isFetching} />
+        <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
       {getContent()}
     </PanelStretched>

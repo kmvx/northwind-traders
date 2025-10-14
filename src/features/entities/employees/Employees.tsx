@@ -169,7 +169,7 @@ export default function Employees({
           }))}
           name="Employees"
         />
-        <ReloadButton onClick={() => refetch()} isLoading={isFetching} />
+        <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
       {getContent()}
     </PanelStretched>

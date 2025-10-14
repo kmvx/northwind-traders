@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 
 import {
   Select,
@@ -58,4 +58,4 @@ function Item({ option }: { option: string }) {
   );
 }
 
-export default FilterCountry;
+export default memo(FilterCountry);

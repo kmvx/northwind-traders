@@ -50,7 +50,10 @@ export default function Customers({
   // Network data
   const { data, isLoading, isFetching, error, refetch } = useQueryCustomers();
 
-  const countries = [...new Set(data?.map((item) => item.country))].sort();
+  const countries = useMemo(
+    () => [...new Set(data?.map((item) => item.country))].sort(),
+    [data],
+  );
 
   // Filter data
   const filteredData = useMemo(() => {
@@ -150,7 +153,7 @@ export default function Customers({
           }))}
           name="Customers"
         />
-        <ReloadButton onClick={() => refetch()} isLoading={isFetching} />
+        <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
       {getContent()}
     </PanelStretched>
