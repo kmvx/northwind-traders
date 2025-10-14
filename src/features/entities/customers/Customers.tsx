@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
+import React, { useMemo } from 'react';
 
 import {
   Card,
@@ -18,6 +19,7 @@ import {
   ExportDropdown,
   FilterCountry,
   FiltersClearButton,
+  Pagination,
   PanelStretched,
   ReloadButton,
   ResponsiveGrid,
@@ -48,28 +50,29 @@ export default function Customers({
   // Network data
   const { data, isLoading, isFetching, error, refetch } = useQueryCustomers();
 
-  // Filter data
-  let filteredData = data
-    ? data
-    : isLoading && initialData?.length
-      ? initialData
-      : [];
-  if (filterString) {
-    filteredData = filteredData?.filter((item) =>
-      (['companyName', 'country', 'city'] as const).some((name) => {
-        return isStringIncludes(item[name], filterString);
-      }),
-    );
-  }
   const countries = [...new Set(data?.map((item) => item.country))].sort();
-  if (filterCountry) {
-    filteredData = filteredData?.filter(
-      (item) => item.country === filterCountry,
-    );
-  }
 
-  // TODO: Remove
-  filteredData = filteredData.slice(0, 20);
+  // Filter data
+  const filteredData = useMemo(() => {
+    let filteredData = data
+      ? data
+      : isLoading && initialData?.length
+        ? initialData
+        : [];
+    if (filterString) {
+      filteredData = filteredData?.filter((item) =>
+        (['companyName', 'country', 'city'] as const).some((name) => {
+          return isStringIncludes(item[name], filterString);
+        }),
+      );
+    }
+    if (filterCountry) {
+      filteredData = filteredData?.filter(
+        (item) => item.country === filterCountry,
+      );
+    }
+    return filteredData;
+  }, [data, initialData, filterCountry, filterString, isLoading]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
@@ -78,34 +81,39 @@ export default function Customers({
 
     return (
       <>
-        <div className="m-2">{filteredData.length} customers</div>
-        <ResponsiveGrid minWidth="18rem">
-          {filteredData.map((item) => (
-            <Link
-              href={`/customers/${item.customerId}`}
-              key={item.customerId}
-              className="block"
-            >
-              <Card className="hover:shadow-lg transition h-full">
-                <CardHeader>
-                  <CardTitle title="Customer name">
-                    {item.companyName}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="h-full flex flex-col justify-end">
-                  <div className="text-end" title="Customer company ID">
-                    {item.customerId}
-                  </div>
-                  <Location
-                    country={item.country}
-                    city={item.city}
-                    title="Customer HQ location"
-                  />
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </ResponsiveGrid>
+        <Pagination
+          data={filteredData}
+          defaultLimit={20}
+          renderPage={(items) => (
+            <ResponsiveGrid minWidth="18rem">
+              {items.map((item) => (
+                <Link
+                  href={`/customers/${item.customerId}`}
+                  key={item.customerId}
+                  className="block"
+                >
+                  <Card className="hover:shadow-lg transition h-full">
+                    <CardHeader>
+                      <CardTitle title="Customer name">
+                        {item.companyName}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="h-full flex flex-col justify-end">
+                      <div className="text-end" title="Customer company ID">
+                        {item.customerId}
+                      </div>
+                      <Location
+                        country={item.country}
+                        city={item.city}
+                        title="Customer HQ location"
+                      />
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </ResponsiveGrid>
+          )}
+        />
       </>
     );
   };
@@ -152,7 +160,6 @@ export default function Customers({
 function LocalSkeleton() {
   return (
     <>
-      <Skeleton className="m-2 h-6 w-32" />
       <ResponsiveGrid minWidth="15rem">
         {Array.from({ length: 6 }).map((_, index) => (
           <Card className="h-full" key={index}>

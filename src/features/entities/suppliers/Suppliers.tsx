@@ -75,8 +75,8 @@ export default function Suppliers({
 
     return (
       <>
-        <div className="m-2">{filteredData.length} suppliers</div>
-        <ResponsiveGrid minWidth="15rem">
+        <div className="mx-2">{filteredData.length} suppliers</div>
+        <ResponsiveGrid minWidth="16rem">
           {filteredData.map((item) => (
             <Link
               href={`/suppliers/${item.supplierId}`}
@@ -146,7 +146,7 @@ export default function Suppliers({
 function LocalSkeleton() {
   return (
     <>
-      <Skeleton className="m-2 h-6 w-32" />
+      <Skeleton className="mx-2 h-6 w-32" />
       <ResponsiveGrid minWidth="15rem">
         {Array.from({ length: 6 }).map((_, index) => (
           <Card className="h-full" key={index}>

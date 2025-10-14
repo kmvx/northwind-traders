@@ -85,7 +85,7 @@ export default function Employees({
 
     return (
       <>
-        <div className="m-2">
+        <div className="mx-2">
           {filteredData.length}{' '}
           {reportsTo ? 'direct subordinates' : 'employees'}
         </div>
@@ -179,7 +179,7 @@ export default function Employees({
 function LocalSkeleton() {
   return (
     <>
-      <Skeleton className="m-2 h-6 w-32" />
+      <Skeleton className="mx-2 h-6 w-32" />
       <ResponsiveGrid minWidth="18rem">
         {Array.from({ length: 6 }).map((_, index) => (
           <Card className="h-full" key={index}>
