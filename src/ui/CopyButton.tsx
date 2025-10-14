@@ -4,7 +4,7 @@ import { CheckIcon, CopyIcon } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui';
 import { HIDE_DELAY } from '@/constants';
 
 const CopyButton: React.FC<{

@@ -3,9 +3,8 @@ import { TriangleAlertIcon } from 'lucide-react';
 import React from 'react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
 
-import CopyButton from './CopyButton';
+import { ButtonWithTooltip, CopyButton } from '.';
 
 const ErrorMessage: React.FC<{
   error: Error;
@@ -30,14 +29,14 @@ const ErrorMessage: React.FC<{
         </div>
         <CopyButton content={text} />
         {retry && (
-          <Button
+          <ButtonWithTooltip
             onClick={retry}
             title="Refetch network request"
             size="sm"
             variant="outline"
           >
             Retry
-          </Button>
+          </ButtonWithTooltip>
         )}
       </Alert>
     </div>

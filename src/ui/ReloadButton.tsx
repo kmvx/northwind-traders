@@ -1,6 +1,6 @@
 import { RotateCwIcon } from 'lucide-react';
 
-import { Button } from '@/components/ui';
+import ButtonWithTooltip from './ButtonWithTooltip';
 
 export default function ReloadButton({
   onClick,
@@ -10,7 +10,7 @@ export default function ReloadButton({
   isLoading?: boolean;
 }) {
   return (
-    <Button
+    <ButtonWithTooltip
       type="button"
       variant="outline"
       size="icon"
@@ -19,6 +19,6 @@ export default function ReloadButton({
       disabled={isLoading}
     >
       <RotateCwIcon className={`size-4 ${isLoading ? 'animate-spin' : ''}`} />
-    </Button>
+    </ButtonWithTooltip>
   );
 }
