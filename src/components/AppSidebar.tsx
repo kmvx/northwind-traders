@@ -1,4 +1,10 @@
-import { AxeIcon, DollarSignIcon, HouseIcon, type LucideIcon, UserIcon } from 'lucide-react';
+import {
+  AxeIcon,
+  DollarSignIcon,
+  HouseIcon,
+  type LucideIcon,
+  UserIcon,
+} from 'lucide-react';
 
 import {
   Sidebar,
