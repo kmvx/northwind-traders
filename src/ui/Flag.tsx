@@ -8,7 +8,7 @@ const Flag: React.FC<{
   country: string;
 }> = ({ className, country }) => {
   return (
-    <span className={clsx('u-flag', className)} style={{ fontSize: '2rem' }}>
+    <span className={clsx('font-emoji', className)} style={{ fontSize: '2rem' }}>
       {getFlagEmojiByCountryName(country)}
     </span>
   );
