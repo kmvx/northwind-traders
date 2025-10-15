@@ -12,23 +12,31 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-interface SidebarItem {
-  title: string;
-  url: string;
-  icon: LucideIcon;
-}
+type SidebarItem =
+  | {
+      title: string;
+      url: string;
+      icon: LucideIcon;
+    }
+  | {
+      title: string;
+    };
 
 const items: SidebarItem[] = [
   {
     title: 'About',
     url: '/',
     icon: HouseIcon,
+  },
+  {
+    title: 'Entities',
   },
   {
     title: 'Customers',
@@ -55,16 +63,22 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item) =>
+                'url' in item ? (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ) : (
+                  <SidebarGroupLabel key={item.title}>
+                    {item.title}
+                  </SidebarGroupLabel>
+                ),
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
