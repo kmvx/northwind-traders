@@ -37,11 +37,7 @@ const FilterCountry: React.FC<{
       </SelectTrigger>
       <SelectContent>
         {options.map((option) => (
-          <SelectItem
-            key={option}
-            value={option || EMPTY_OPTION_VALUE}
-            className="font-emoji"
-          >
+          <SelectItem key={option} value={option || EMPTY_OPTION_VALUE}>
             <Item option={option} />
           </SelectItem>
         ))}
@@ -52,7 +48,7 @@ const FilterCountry: React.FC<{
 
 function Item({ option }: { option: string }) {
   return (
-    <span>
+    <span className="font-flags">
       {getFlagEmojiByCountryName(option)} &nbsp; {option || 'World'}
     </span>
   );
