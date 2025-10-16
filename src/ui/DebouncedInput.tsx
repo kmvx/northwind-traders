@@ -34,6 +34,8 @@ const DebouncedInput = ({
       <Input
         type="search"
         placeholder={placeholder}
+        // For performance testing:
+        // onChange={(event) => setValue(event.target.value)}
         onChange={(event) => setLocalValue(event.target.value)}
         title={title}
       />
