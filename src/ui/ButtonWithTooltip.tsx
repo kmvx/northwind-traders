@@ -13,7 +13,7 @@ interface ButtonWithTooltipProps extends React.ComponentProps<typeof Button> {
 const ButtonWithTooltip = React.forwardRef<
   HTMLButtonElement,
   ButtonWithTooltipProps
->(({ title, children, ...props }, ref) => {
+>(function ButtonWithTooltip({ title, children, ...props }, ref) {
   return (
     <BasicTooltip title={title}>
       <Button {...props} ref={ref}>
@@ -22,7 +22,5 @@ const ButtonWithTooltip = React.forwardRef<
     </BasicTooltip>
   );
 });
-
-ButtonWithTooltip.displayName = 'ButtonWithTooltip';
 
 export default ButtonWithTooltip;
