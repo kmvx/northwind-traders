@@ -9,12 +9,12 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  Input,
   Skeleton,
 } from '@/components/ui';
 import { type ICustomers } from '@/models';
 import { useQueryCustomers } from '@/net';
 import {
+  DebouncedInput,
   ErrorMessage,
   ExportDropdown,
   FilterCountry,
@@ -129,11 +129,10 @@ export default function Customers({
       <Typography variant="header1">Customers</Typography>
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex-grow">
-          <Input
-            type="search"
+          <DebouncedInput
             placeholder="Enter filter string here"
             value={filterString}
-            onChange={(event) => setFilterString(event.target.value)}
+            setValue={setFilterString}
             title="String filter"
           />
         </div>

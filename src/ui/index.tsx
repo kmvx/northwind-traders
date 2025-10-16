@@ -1,6 +1,7 @@
 export { default as BasicTooltip } from './BasicTooltip';
 export { default as ButtonWithTooltip } from './ButtonWithTooltip';
 export { default as CopyButton } from './CopyButton';
+export { default as DebouncedInput } from './DebouncedInput';
 export { default as ErrorMessage } from './ErrorMessage';
 export { default as ExportDropdown } from './ExportDropdown';
 export { default as FilterCountry } from './FilterCountry';
