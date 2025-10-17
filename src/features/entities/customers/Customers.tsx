@@ -146,9 +146,7 @@ export default function Customers({
           onClick={handleFiltersClear}
         />
         <ExportDropdown
-          data={filteredData?.map(({ ...item }) => ({
-            ...item,
-          }))}
+          data={filteredData as object[] as Record<string, unknown>[]}
           name="Customers"
         />
         <ReloadButton onClick={refetch} isLoading={isFetching} />

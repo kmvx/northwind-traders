@@ -20,10 +20,12 @@ import {
   type DataType,
 } from '@/utils/convertTo';
 
-const ExportDropdown: React.FC<{ data: DataType; name: string }> = ({
-  data,
-  name,
-}) => {
+type ExportDropdownProps = {
+  data: DataType;
+  name: string;
+};
+
+const ExportDropdown = ({ data, name }: ExportDropdownProps) => {
   const handleCopyCSV = async () => {
     const text = convertToCSV(data);
     await copyTextToClipboard(text, 'CSV', false);

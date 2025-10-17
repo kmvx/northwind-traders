@@ -110,9 +110,7 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
           onClick={handleFiltersClear}
         />
         <ExportDropdown
-          data={filteredData.map(({ ...item }) => ({
-            ...item,
-          }))}
+          data={filteredData as object[] as Record<string, unknown>[]}
           name="Products"
         />
         <ReloadButton onClick={refetch} isLoading={isFetching} />
