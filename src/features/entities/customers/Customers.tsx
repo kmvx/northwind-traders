@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import {
   Card,
@@ -11,7 +11,7 @@ import {
   CardTitle,
   Skeleton,
 } from '@/components/ui';
-import { type ICustomers } from '@/models';
+import { type ICustomer, type ICustomers } from '@/models';
 import { useQueryCustomers } from '@/net';
 import {
   DebouncedInput,
@@ -90,29 +90,7 @@ export default function Customers({
         renderPage={(items) => (
           <ResponsiveGrid minWidth="18rem">
             {items.map((item) => (
-              <Link
-                href={`/customers/${item.customerId}`}
-                key={item.customerId}
-                className="block"
-              >
-                <Card className="hover:shadow-lg transition h-full">
-                  <CardHeader>
-                    <CardTitle title="Customer name">
-                      {item.companyName}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="h-full flex flex-col justify-end">
-                    <div className="text-end" title="Customer company ID">
-                      {item.customerId}
-                    </div>
-                    <Location
-                      country={item.country}
-                      city={item.city}
-                      title="Customer HQ location"
-                    />
-                  </CardContent>
-                </Card>
-              </Link>
+              <CustomerPreview item={item} key={item.customerId} />
             ))}
           </ResponsiveGrid>
         )}
@@ -155,6 +133,32 @@ export default function Customers({
     </PanelStretched>
   );
 }
+
+const CustomerPreview = memo(function CustomerPreview({
+  item,
+}: {
+  item: ICustomer;
+}) {
+  return (
+    <Link href={`/customers/${item.customerId}`} className="block">
+      <Card className="hover:shadow-lg transition h-full">
+        <CardHeader>
+          <CardTitle title="Customer name">{item.companyName}</CardTitle>
+        </CardHeader>
+        <CardContent className="h-full flex flex-col justify-end">
+          <div className="text-end" title="Customer company ID">
+            {item.customerId}
+          </div>
+          <Location
+            country={item.country}
+            city={item.city}
+            title="Customer HQ location"
+          />
+        </CardContent>
+      </Card>
+    </Link>
+  );
+});
 
 function LocalSkeleton() {
   return (
