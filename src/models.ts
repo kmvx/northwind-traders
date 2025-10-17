@@ -66,6 +66,7 @@ export interface IOrderDetail {
 export type IOrderDetails = IOrderDetail[];
 
 export interface IProduct {
+  productId: number;
   categoryId: number;
   discontinued: boolean;
   productName: string;

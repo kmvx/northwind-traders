@@ -1,6 +1,7 @@
 import {
   AxeIcon,
   DollarSignIcon,
+  EggFriedIcon,
   HouseIcon,
   type LucideIcon,
   UserIcon,
@@ -47,6 +48,11 @@ const items: SidebarItem[] = [
     title: 'Employees',
     url: '/employees',
     icon: UserIcon,
+  },
+  {
+    title: 'Products',
+    url: '/products',
+    icon: EggFriedIcon,
   },
   {
     title: 'Suppliers',

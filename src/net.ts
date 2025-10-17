@@ -5,6 +5,7 @@ import {
   type ICustomers,
   type IEmployee,
   type IEmployees,
+  type IProducts,
   type IRegions,
   type ISupplier,
   type ISuppliers,
@@ -72,6 +73,14 @@ export const useQuerySupplier = ({
   return useQuery<ISupplier>({
     queryKey: [API_URL + '/Suppliers/' + id],
     enabled,
+  });
+};
+
+// Products
+
+export const useQueryProducts = () => {
+  return useQuery<IProducts>({
+    queryKey: [API_URL + '/Products'],
   });
 };
 
