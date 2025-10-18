@@ -1,3 +1,5 @@
+'use client';
+
 import { ChevronDownIcon, DownloadIcon, Loader2Icon } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';

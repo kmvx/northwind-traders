@@ -1,10 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 import React, { useMemo } from 'react';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { type IProducts } from '@/models';
 import { useQueryProducts } from '@/net';
 import {
@@ -15,11 +13,12 @@ import {
   Pagination,
   PanelStretched,
   ReloadButton,
-  ResponsiveGrid,
   Typography,
   WaitSpinner,
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
+
+import { ProductsCards } from '.';
 
 export default function Products({ initialData }: { initialData?: IProducts }) {
   // Filters
@@ -61,30 +60,7 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
       <Pagination
         data={filteredData}
         defaultLimit={20}
-        renderPage={(items) => (
-          <ResponsiveGrid minWidth="18rem">
-            {items.map((item) => (
-              <Link
-                href={`/products/${item.productId}`}
-                key={item.productName}
-                className="block"
-              >
-                <Card className="hover:shadow-lg transition h-full">
-                  <CardHeader>
-                    <CardTitle title="Product name">
-                      {item.productName}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="h-full flex flex-col justify-end">
-                    <div className="text-end" title="Quantity per unit">
-                      {item.quantityPerUnit}
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </ResponsiveGrid>
-        )}
+        renderPage={(items) => <ProductsCards items={items} />}
       />
     );
   };
