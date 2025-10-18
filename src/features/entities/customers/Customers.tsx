@@ -50,11 +50,6 @@ export default function Customers({
   // Network data
   const { data, isLoading, isFetching, error, refetch } = useQueryCustomers();
 
-  const countries = useMemo(
-    () => [...new Set(data?.map((item) => item.country))].sort(),
-    [data],
-  );
-
   // Filter data
   const filteredData = useMemo(() => {
     let filteredData = data
@@ -117,7 +112,7 @@ export default function Customers({
         <FilterCountry
           filterCountry={filterCountry}
           setFilterCountry={setFilterCountry}
-          countries={countries}
+          data={data}
         />
         <FiltersClearButton
           disabled={!hasFilters}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 
 import {
   Select,
@@ -13,12 +13,29 @@ import { getCountries, getFlagEmojiByCountryName } from '@/utils';
 
 const EMPTY_OPTION_VALUE = 'world';
 
-const FilterCountry: React.FC<{
+type FilterCountryProps<T extends string> = {
   filterCountry: string;
   setFilterCountry: (country: string) => void;
-  countries?: string[];
-}> = ({ filterCountry, setFilterCountry, countries }) => {
-  const options = ['', ...(countries || getCountries())];
+  countryPropertyName?: T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: Record<T, any>[] | undefined;
+};
+
+const FilterCountry = <T extends string>({
+  filterCountry,
+  setFilterCountry,
+  countryPropertyName = 'country' as T,
+  data,
+}: FilterCountryProps<T>) => {
+  const options = useMemo(() => {
+    return [
+      '',
+      ...((
+        countryPropertyName &&
+        data?.map((item) => String(item[countryPropertyName]))
+      )?.sort() ?? getCountries()),
+    ];
+  }, [countryPropertyName, data]);
 
   const handleValueChange = useCallback(
     (country: string) => {

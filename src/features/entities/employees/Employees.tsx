@@ -71,7 +71,6 @@ export default function Employees({
       }),
     );
   }
-  const countries = [...new Set(data?.map((item) => item.country))].sort();
   if (filterCountry) {
     filteredData = filteredData?.filter(
       (item) => item.country === filterCountry,
@@ -156,7 +155,7 @@ export default function Employees({
         <FilterCountry
           filterCountry={filterCountry}
           setFilterCountry={setFilterCountry}
-          countries={countries}
+          data={data}
         />
         <FiltersClearButton
           disabled={!hasFilters}
