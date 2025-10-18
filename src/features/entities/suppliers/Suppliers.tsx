@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
+import { useMemo } from 'react';
 
 import {
   Card,
@@ -49,23 +50,26 @@ export default function Suppliers({
   const { data, isLoading, isFetching, error, refetch } = useQuerySuppliers();
 
   // Filter data
-  let filteredData = data
-    ? data
-    : isLoading && initialData?.length
-      ? initialData
-      : [];
-  if (filterString) {
-    filteredData = filteredData?.filter((item) =>
-      (['companyName', 'country', 'city'] as const).some((name) => {
-        return isStringIncludes(item[name], filterString);
-      }),
-    );
-  }
-  if (filterCountry) {
-    filteredData = filteredData?.filter(
-      (item) => item.country === filterCountry,
-    );
-  }
+  const filteredData = useMemo(() => {
+    let filteredData = data
+      ? data
+      : isLoading && initialData?.length
+        ? initialData
+        : [];
+    if (filterString) {
+      filteredData = filteredData?.filter((item) =>
+        (['companyName', 'country', 'city'] as const).some((name) => {
+          return isStringIncludes(item[name], filterString);
+        }),
+      );
+    }
+    if (filterCountry) {
+      filteredData = filteredData?.filter(
+        (item) => item.country === filterCountry,
+      );
+    }
+    return filteredData;
+  }, [data, initialData, isLoading, filterString, filterCountry]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;

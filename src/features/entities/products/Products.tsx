@@ -49,7 +49,7 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
       );
     }
     return filteredData;
-  }, [data, initialData, filterString, isLoading]);
+  }, [data, initialData, isLoading, filterString]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;

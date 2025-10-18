@@ -70,7 +70,7 @@ export default function Customers({
       );
     }
     return filteredData;
-  }, [data, initialData, filterCountry, filterString, isLoading]);
+  }, [data, initialData, isLoading, filterString, filterCountry]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
