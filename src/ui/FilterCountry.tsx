@@ -32,7 +32,9 @@ const FilterCountry = <T extends string>({
       '',
       ...((
         countryPropertyName &&
-        data?.map((item) => String(item[countryPropertyName]))
+        data && [
+          ...new Set(data.map((item) => String(item[countryPropertyName]))),
+        ]
       )?.sort() ?? getCountries()),
     ];
   }, [countryPropertyName, data]);
