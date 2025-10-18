@@ -3,15 +3,21 @@ import { memo } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import type { IProduct, IProducts } from '@/models';
-import { ResponsiveGrid } from '@/ui';
+import { Pagination, ResponsiveGrid } from '@/ui';
 
-export default function ProductsCards({ items }: { items: IProducts }) {
+export default function ProductsCards({ data }: { data: IProducts }) {
   return (
-    <ResponsiveGrid minWidth="18rem">
-      {items.map((item) => (
-        <ProductCard item={item} key={item.productId} />
-      ))}
-    </ResponsiveGrid>
+    <Pagination
+      data={data}
+      defaultLimit={20}
+      renderPage={(items) => (
+        <ResponsiveGrid minWidth="18rem">
+          {items.map((item) => (
+            <ProductCard item={item} key={item.productId} />
+          ))}
+        </ResponsiveGrid>
+      )}
+    />
   );
 }
 

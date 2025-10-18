@@ -8,6 +8,7 @@ export { default as FilterCountry } from './FilterCountry';
 export { default as FiltersClearButton } from './FiltersClearButton';
 export { default as Flag } from './Flag';
 export { default as Pagination } from './Pagination';
+export { default as PaginationControls } from './PaginationControls';
 export { default as PanelCentred } from './PanelCentred';
 export { default as PanelStretched } from './PanelStretched';
 export { default as ReloadButton } from './ReloadButton';

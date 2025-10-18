@@ -10,7 +10,6 @@ import {
   ErrorMessage,
   ExportDropdown,
   FiltersClearButton,
-  Pagination,
   PanelStretched,
   ReloadButton,
   Typography,
@@ -18,7 +17,7 @@ import {
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
 
-import { ProductsCards } from '.';
+import { ProductsTable } from '.';
 
 export default function Products({ initialData }: { initialData?: IProducts }) {
   // Filters
@@ -56,13 +55,7 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
     if (!filteredData) return null;
     if (filteredData.length === 0) return <div>Products not found</div>;
 
-    return (
-      <Pagination
-        data={filteredData}
-        defaultLimit={20}
-        renderPage={(items) => <ProductsCards items={items} />}
-      />
-    );
+    return <ProductsTable data={filteredData} />;
   };
 
   if (!filteredData?.length && !hasFilters) {
