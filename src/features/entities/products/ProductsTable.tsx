@@ -3,7 +3,6 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
-  type Row,
   useReactTable,
 } from '@tanstack/react-table';
 import Link from 'next/link';
@@ -21,9 +20,10 @@ import {
 import type { IProduct, IProducts } from '@/models';
 import { PaginationControls } from '@/ui';
 
-const createColumnHeader = (title: string) => (
-  () => <div className="text-center font-bold">{title}</div>
-);
+const createColumnHeader = (title: string) =>
+  function CreateColumnHeader() {
+    return <div className="text-center font-bold">{title}</div>;
+  };
 
 const columns: ColumnDef<IProduct>[] = [
   {

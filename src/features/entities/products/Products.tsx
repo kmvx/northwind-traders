@@ -3,6 +3,7 @@
 import { useQueryState } from 'nuqs';
 import React, { useMemo } from 'react';
 
+import { usePageWidth } from '@/hooks';
 import { type IProducts } from '@/models';
 import { useQueryProducts } from '@/net';
 import {
@@ -17,7 +18,7 @@ import {
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
 
-import { ProductsTable } from '.';
+import { ProductsCards, ProductsTable } from '.';
 
 export default function Products({ initialData }: { initialData?: IProducts }) {
   // Filters
@@ -49,13 +50,19 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
     return filteredData;
   }, [data, initialData, isLoading, filterString]);
 
+  const isWidePage = usePageWidth() >= 1024;
+
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
     if (isLoading && filteredData.length === 0) return <WaitSpinner />;
     if (!filteredData) return null;
     if (filteredData.length === 0) return <div>Products not found</div>;
 
-    return <ProductsTable data={filteredData} />;
+    return isWidePage ? (
+      <ProductsTable data={filteredData} />
+    ) : (
+      <ProductsCards data={filteredData} />
+    );
   };
 
   if (!filteredData?.length && !hasFilters) {
