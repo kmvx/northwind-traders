@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
 export default function usePageWidth(): number {
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [width, setWidth] = useState<number>(
+    typeof window === 'undefined' ? 0 : window.innerWidth,
+  );
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
