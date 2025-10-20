@@ -1,4 +1,4 @@
-import { type IEmployee } from './models';
+import { type ICategories, type IEmployee } from './models';
 
 export function joinFields(...args: string[]): string {
   return [...args].filter(Boolean).join(', ');
@@ -46,6 +46,16 @@ export const setDocumentTitle = (...args: (string | undefined)[]): void => {
 
 export function getEmployeeNameByData(data: IEmployee) {
   return data.titleOfCourtesy + ' ' + data.firstName + ' ' + data.lastName;
+}
+
+export function getCategoryNameById(
+  dataCategories?: ICategories,
+  id?: number,
+): string | undefined {
+  const category = dataCategories?.find((item) => item.categoryId === id);
+  if (category) return category.categoryName;
+  else if (id == undefined) return id;
+  else return String(id);
 }
 
 const countryFlagEmojiByCountryName: Record<string, string> = {

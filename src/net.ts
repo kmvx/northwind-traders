@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
 import {
+  type ICategories,
   type ICustomer,
   type ICustomers,
   type IEmployee,
   type IEmployees,
+  type IProduct,
   type IProducts,
   type IRegions,
   type ISupplier,
@@ -81,6 +83,18 @@ export const useQuerySupplier = ({
 export const useQueryProducts = () => {
   return useQuery<IProducts>({
     queryKey: [API_URL + '/Products'],
+  });
+};
+
+export const useQueryProduct = ({ id }: { id: string | undefined }) => {
+  return useQuery<IProduct>({
+    queryKey: [API_URL + '/Products/' + id],
+  });
+};
+
+export const useQueryCategories = () => {
+  return useQuery<ICategories>({
+    queryKey: [API_URL + '/Categories'],
   });
 };
 
