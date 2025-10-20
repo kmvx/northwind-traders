@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { useQueryCategories, useQueryProduct } from '@/net';
 import { ErrorMessage, PanelCentred, Typography, WaitSpinner } from '@/ui';
@@ -82,7 +82,7 @@ const Product: React.FC<ProductProps> = ({ id }) => {
 
         <div className="grid grid-cols-2 items-center gap-2">
           {items.map(({ name, description, value }) => (
-            <>
+            <Fragment key={name}>
               <div>
                 <div>{name}:</div>
                 <div className="text-xs text-muted-foreground indent-4">
@@ -90,7 +90,7 @@ const Product: React.FC<ProductProps> = ({ id }) => {
                 </div>
               </div>
               <b className="text-end">{value}</b>
-            </>
+            </Fragment>
           ))}
         </div>
       </div>
