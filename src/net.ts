@@ -12,6 +12,8 @@ import {
   type IProduct,
   type IProducts,
   type IRegions,
+  type IShipper,
+  type IShippers,
   type ISupplier,
   type ISuppliers,
   type ITerritories,
@@ -109,6 +111,20 @@ export const useEmployeeTeritories = ({
 export const useQueryRegions = () => {
   return useQuery<IRegions>({
     queryKey: [API_URL + '/Regions'],
+  });
+};
+
+// Shippers
+
+export const useQueryShippers = () => {
+  return useQuery<IShippers>({
+    queryKey: [API_URL + '/Shippers'],
+  });
+};
+
+export const useQueryOrderShipper = ({ id }: { id: string | undefined }) => {
+  return useQuery<IShipper>({
+    queryKey: [API_URL + '/Orders/' + id + '/Shipper'],
   });
 };
 

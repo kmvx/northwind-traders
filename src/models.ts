@@ -39,11 +39,11 @@ export interface IEmployee extends IAddress {
 export type IEmployees = IEmployee[];
 
 export interface IOrder {
+  orderId: number;
   customerId: string;
   employeeId: number;
   freight: number;
   orderDate: string;
-  orderId: number;
   requiredDate: string;
   shipAddress: string;
   shipCity: string;

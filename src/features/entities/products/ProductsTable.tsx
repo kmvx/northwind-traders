@@ -1,9 +1,18 @@
-import { type ColumnDef } from '@tanstack/react-table';
+import { type ColumnDef, type RowData } from '@tanstack/react-table';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui';
 import { DataTable } from '@/features/table';
-import type { IProduct, IProducts } from '@/models';
+import type { ICategories, IProduct, IProducts } from '@/models';
+import { useQueryCategories } from '@/net';
+import { getCategoryNameById } from '@/utils';
+
+declare module '@tanstack/table-core' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface TableMeta<TData extends RowData> {
+    dataCategories?: ICategories;
+  }
+}
 
 const columns: ColumnDef<IProduct>[] = [
   {
@@ -23,16 +32,25 @@ const columns: ColumnDef<IProduct>[] = [
     },
   },
   {
+    accessorKey: 'categoryId',
+    header: 'Category',
+    cell: ({ row, table }) => {
+      return getCategoryNameById(
+        table?.options?.meta?.dataCategories,
+        row.original.categoryId,
+      );
+    },
+  },
+  {
     accessorKey: 'quantityPerUnit',
     header: 'Quantity per Unit',
   },
   {
     accessorKey: 'unitPrice',
     header: 'Unit price',
-    cell: ({ getValue }) => {
-      return '$' + getValue<string>();
+    cell: ({ row }) => {
+      return '$' + row.original.unitPrice;
     },
-
   },
   {
     accessorKey: 'unitsInStock',
@@ -49,12 +67,14 @@ const columns: ColumnDef<IProduct>[] = [
   {
     accessorKey: 'discontinued',
     header: 'Discontinued',
-    cell: ({ getValue }) => {
-      return getValue<boolean>() ? 'Discontinued' : 'Active';
+    cell: ({ row }) => {
+      return row.original.discontinued ? 'Discontinued' : 'Active';
     },
   },
 ];
 
 export default function ProductsTable({ data }: { data: IProducts }) {
-  return <DataTable data={data} columns={columns} />;
+  const { data: dataCategories } = useQueryCategories();
+
+  return <DataTable data={data} columns={columns} meta={{ dataCategories }} />;
 }

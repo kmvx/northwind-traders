@@ -3,6 +3,7 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  type TableMeta,
   useReactTable,
 } from '@tanstack/react-table';
 import { useCallback } from 'react';
@@ -20,9 +21,11 @@ import { PaginationControls } from '@/ui';
 export default function DataTable<TData>({
   data,
   columns,
+  meta,
 }: {
   data: TData[];
   columns: ColumnDef<TData>[];
+  meta?: TableMeta<TData>;
 }) {
   const table = useReactTable<TData>({
     data,
@@ -34,6 +37,7 @@ export default function DataTable<TData>({
         pageSize: 20,
       },
     },
+    meta,
   });
 
   const getHeader = () => (

@@ -60,8 +60,8 @@ export function getEmployeeNameByData(data: IEmployee) {
 }
 
 export function getCategoryNameById(
-  dataCategories?: ICategories,
-  id?: number,
+  dataCategories: ICategories | undefined,
+  id: number | undefined,
 ): string | undefined {
   const category = dataCategories?.find((item) => item.categoryId === id);
   if (category) return category.categoryName;
