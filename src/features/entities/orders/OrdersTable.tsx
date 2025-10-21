@@ -88,23 +88,21 @@ const columns: ColumnDef<OrderFormatted>[] = [
     accessorKey: 'orderDateObject',
     header: 'Order date',
     cell: ({ row }) => {
-      return formatDateFromString(row.original.orderDateObject.toISOString());
+      return formatDateFromString(row.original.orderDate);
     },
   },
   {
     accessorKey: 'shippedDateObject',
     header: 'Shipped date',
     cell: ({ row }) => {
-      return formatDateFromString(row.original.shippedDateObject.toISOString());
+      return formatDateFromString(row.original.shippedDate);
     },
   },
   {
     accessorKey: 'requiredDateObject',
     header: 'Required date',
     cell: ({ row }) => {
-      return formatDateFromString(
-        row.original.requiredDateObject.toISOString(),
-      );
+      return formatDateFromString(row.original.requiredDate);
     },
   },
   {
