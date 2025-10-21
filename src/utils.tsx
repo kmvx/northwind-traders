@@ -101,7 +101,7 @@ export function getFlagEmojiByCountryName(country: string): string | undefined {
   if (!country) return '🇺🇳';
   const emoji = countryFlagEmojiByCountryName[country];
   if (!emoji) {
-    console.log('Unknown country', country);
+    console.error('Unknown country', country);
     return '🏴‍☠';
   }
   return emoji;

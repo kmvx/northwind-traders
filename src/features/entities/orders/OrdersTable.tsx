@@ -69,7 +69,7 @@ const columns: ColumnDef<OrderFormatted>[] = [
       const dataShippers = table?.options?.meta?.dataShippers;
       const shipVia = row.original.shipVia;
       const shipper = dataShippers?.find((item) => item.shipperId === shipVia);
-      if (!shipper) return shipper;
+      if (!shipper) return shipVia;
       return (
         <div className="flex flex-col gap-1">
           <div>{shipper.companyName}</div>

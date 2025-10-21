@@ -165,7 +165,7 @@ describe('getFlagEmojiByCountryName', () => {
   });
 
   it('should return pirate flag and log for unknown country', () => {
-    const consoleSpy = vi.spyOn(console, 'log');
+    const consoleSpy = vi.spyOn(console, 'error');
     expect(getFlagEmojiByCountryName('Narnia')).toBe('🏴‍☠');
     expect(consoleSpy).toHaveBeenCalledWith('Unknown country', 'Narnia');
     consoleSpy.mockRestore();

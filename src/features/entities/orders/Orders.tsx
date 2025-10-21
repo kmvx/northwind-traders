@@ -9,6 +9,7 @@ import {
   DebouncedInput,
   ErrorMessage,
   ExportDropdown,
+  FilterCountry,
   FiltersClearButton,
   PanelStretched,
   ReloadButton,
@@ -24,9 +25,13 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
   const [filterString, setFilterString] = useQueryState('q', {
     defaultValue: '',
   });
-  const hasFilters = !!filterString;
+  const [filterCountry, setFilterCountry] = useQueryState('country', {
+    defaultValue: '',
+  });
+  const hasFilters = !!filterString || !!filterCountry;
   function handleFiltersClear() {
     setFilterString('');
+    setFilterCountry('');
   }
 
   // Network data
@@ -46,8 +51,13 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
         }),
       );
     }
+    if (filterCountry) {
+      filteredData = filteredData?.filter(
+        (item) => item.shipCountry === filterCountry,
+      );
+    }
     return filteredData;
-  }, [data, initialData, isLoading, filterString]);
+  }, [data, initialData, isLoading, filterString, filterCountry]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
@@ -74,6 +84,12 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
             title="String filter"
           />
         </div>
+        <FilterCountry
+          filterCountry={filterCountry}
+          setFilterCountry={setFilterCountry}
+          data={data}
+          countryPropertyName="shipCountry"
+        />
         <FiltersClearButton
           disabled={!hasFilters}
           onClick={handleFiltersClear}
