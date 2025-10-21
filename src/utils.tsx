@@ -27,6 +27,17 @@ export function formatYearsOldFromDateString(
   return `${age} years old`;
 }
 
+export function dateFromString(str: string | null): Date {
+  if (str == null) return new Date(NaN);
+
+  // If the string is in ISO format without timezone, append 'Z' to treat it as UTC
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(str)) {
+    return new Date(str + 'Z');
+  }
+
+  return new Date(str);
+}
+
 export function isStringIncludes(str: string, search: string): boolean {
   const strConverted = typeof str === 'string' ? str : '' + str;
   const searchConverted = typeof search === 'string' ? search : '' + search;

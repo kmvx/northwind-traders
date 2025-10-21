@@ -1,5 +1,6 @@
 import {
   AxeIcon,
+  CreditCardIcon,
   DollarSignIcon,
   EggFriedIcon,
   HouseIcon,
@@ -48,6 +49,11 @@ const items: SidebarItem[] = [
     title: 'Employees',
     url: '/employees',
     icon: UserIcon,
+  },
+  {
+    title: 'Orders',
+    url: '/orders',
+    icon: CreditCardIcon,
   },
   {
     title: 'Products',

@@ -6,6 +6,9 @@ import {
   type ICustomers,
   type IEmployee,
   type IEmployees,
+  type IOrder,
+  type IOrderDetails,
+  type IOrders,
   type IProduct,
   type IProducts,
   type IRegions,
@@ -15,6 +18,58 @@ import {
 } from './models';
 
 const API_URL = 'https://demodata.grapecity.com/northwind/api/v1';
+
+// Orders
+
+export const useQueryOrders = ({
+  isCustomersPage,
+  isEmployeesPage,
+  isShippersPage,
+  id,
+}: {
+  isCustomersPage?: boolean;
+  isEmployeesPage?: boolean;
+  isShippersPage?: boolean;
+  id?: string;
+} = {}) => {
+  return useQuery<IOrders>({
+    queryKey: [
+      API_URL +
+        (isCustomersPage
+          ? '/Customers/'
+          : isEmployeesPage
+            ? '/Employees/'
+            : isShippersPage
+              ? '/Shippers/'
+              : '') +
+        (id || '') +
+        '/Orders',
+    ],
+  });
+};
+
+export const useQueryOrder = ({ id }: { id: string | undefined }) => {
+  return useQuery<IOrder>({
+    queryKey: [API_URL + '/Orders/' + id],
+  });
+};
+
+export const useQueryOrderDetails = ({
+  isOrdersPage,
+  id,
+}: {
+  isOrdersPage: boolean;
+  id: string | undefined;
+}) => {
+  return useQuery<IOrderDetails>({
+    queryKey: [
+      API_URL +
+        (isOrdersPage ? '/Orders/' : '/Products/') +
+        id +
+        '/OrderDetails',
+    ],
+  });
+};
 
 // Employees
 
