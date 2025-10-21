@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/select';
 import { getCountries, getFlagEmojiByCountryName } from '@/utils';
 
-const EMPTY_OPTION_VALUE = 'world';
+const EMPTY_OPTION_VALUE = 'worldwide';
 
 type FilterCountryProps<T extends string> = {
   filterCountry: string;
@@ -68,7 +68,7 @@ const FilterCountry = <T extends string>({
 function Item({ option }: { option: string }) {
   return (
     <span className="font-flags">
-      {getFlagEmojiByCountryName(option)} &nbsp; {option || 'World'}
+      {getFlagEmojiByCountryName(option)} &nbsp; {option || 'Worldwide'}
     </span>
   );
 }
