@@ -18,8 +18,8 @@ import {
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface TableMeta<TData extends RowData> {
-    dataEmployees?: IEmployees;
-    dataShippers?: IShippers;
+    dataEmployees?: IEmployees | undefined;
+    dataShippers?: IShippers | undefined;
   }
 }
 
