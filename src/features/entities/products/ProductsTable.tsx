@@ -1,10 +1,9 @@
 import { type ColumnDef, type RowData } from '@tanstack/react-table';
-import Link from 'next/link';
 
-import { Button } from '@/components/ui';
 import { DataTable } from '@/features/table';
 import type { ICategories, IProduct, IProducts } from '@/models';
 import { useQueryCategories } from '@/net';
+import { BasicLink } from '@/ui';
 import { getCategoryNameById } from '@/utils';
 
 declare module '@tanstack/table-core' {
@@ -25,9 +24,7 @@ const columns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       const { productId, productName } = row.original;
       return (
-        <Button variant="link" asChild className="p-0 text-blue-600 h-auto">
-          <Link href={`/products/${productId}`}>{productName}</Link>
-        </Button>
+        <BasicLink href={`/products/${productId}`}>{productName}</BasicLink>
       );
     },
   },

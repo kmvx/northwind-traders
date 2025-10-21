@@ -1,13 +1,11 @@
 import type { ColumnDef, RowData } from '@tanstack/react-table';
 import { PhoneIcon } from 'lucide-react';
-import Link from 'next/link';
 import { useMemo } from 'react';
 
-import { Button } from '@/components/ui';
 import { DataTable } from '@/features/table';
 import type { IEmployees, IOrder, IOrders, IShippers } from '@/models';
 import { useQueryEmployees, useQueryShippers } from '@/net';
-import { Flag } from '@/ui';
+import { BasicLink, Flag } from '@/ui';
 import {
   dateFromString,
   formatDateFromString,
@@ -36,11 +34,7 @@ const columns: ColumnDef<OrderFormatted>[] = [
     header: '#',
     cell: ({ row }) => {
       const orderId = row.original.orderId;
-      return (
-        <Button variant="link" asChild className="p-0 text-blue-600 h-auto">
-          <Link href={`/orders/${orderId}`}>{orderId}</Link>
-        </Button>
-      );
+      return <BasicLink href={`/orders/${orderId}`}>{orderId}</BasicLink>;
     },
   },
   {
@@ -49,9 +43,7 @@ const columns: ColumnDef<OrderFormatted>[] = [
     cell: ({ row }) => {
       const customerId = row.original.customerId;
       return (
-        <Button variant="link" asChild className="p-0 text-blue-600 h-auto">
-          <Link href={`/customers/${customerId}`}>{customerId}</Link>
-        </Button>
+        <BasicLink href={`/customers/${customerId}`}>{customerId}</BasicLink>
       );
     },
   },
@@ -64,11 +56,9 @@ const columns: ColumnDef<OrderFormatted>[] = [
         (item) => item.employeeId === employeeId,
       );
       return (
-        <Button variant="link" asChild className="p-0 text-blue-600 h-auto">
-          <Link href={`/employees/${employeeId}`}>
-            {item ? getEmployeeNameByData(item) : employeeId}
-          </Link>
-        </Button>
+        <BasicLink href={`/employees/${employeeId}`}>
+          {item ? getEmployeeNameByData(item) : employeeId}
+        </BasicLink>
       );
     },
   },

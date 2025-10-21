@@ -1,10 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-
-import { Button } from '@/components/ui';
 import { useQueryEmployee } from '@/net';
-import { ErrorMessage, WaitSpinner } from '@/ui';
+import { BasicLink, ErrorMessage, WaitSpinner } from '@/ui';
 import { getEmployeeNameByData } from '@/utils';
 
 const EmployeeLink: React.FC<{ id: number; className?: string }> = ({
@@ -24,9 +21,9 @@ const EmployeeLink: React.FC<{ id: number; className?: string }> = ({
   return (
     <span className={className}>
       <span>Reports to </span>
-      <Button variant="link" asChild className="p-0 text-blue-600">
-        <Link href={`/employees/${id}`}>{getEmployeeNameByData(data)}</Link>
-      </Button>
+      <BasicLink href={`/employees/${id}`}>
+        {getEmployeeNameByData(data)}
+      </BasicLink>
     </span>
   );
 };
