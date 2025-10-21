@@ -37,7 +37,7 @@ export default function DataTable<TData>({
         pageSize: 20,
       },
     },
-    ...(meta ? meta : {}),
+    ...(meta ? { meta } : {}),
   });
 
   const getHeader = () => (
