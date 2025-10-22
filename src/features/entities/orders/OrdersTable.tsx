@@ -108,6 +108,9 @@ const columns: ColumnDef<OrderFormatted>[] = [
   {
     accessorKey: 'freight',
     header: 'Freight',
+    cell: ({ row }) => {
+      return '$' + row.original.freight;
+    },
   },
   {
     accessorKey: 'shipName',

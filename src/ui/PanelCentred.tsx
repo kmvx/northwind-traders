@@ -7,7 +7,7 @@ const PanelCentred: React.FC<{
 }> = ({ children, className }) => {
   return (
     <div className="container mx-auto flex flex-col items-center">
-      <section className={clsx('bg-gray-50 shadow rounded p-2', className)}>
+      <section className={clsx('bg-gray-50 shadow rounded p-4', className)}>
         {children}
       </section>
     </div>

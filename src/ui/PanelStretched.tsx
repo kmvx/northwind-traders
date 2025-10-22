@@ -9,7 +9,7 @@ const PanelStretched: React.FC<{
     <section
       className={clsx(
         className,
-        'container mx-auto bg-gray-50 shadow rounded p-2',
+        'container mx-auto bg-gray-50 shadow rounded p-4',
       )}
     >
       {children}

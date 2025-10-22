@@ -98,6 +98,12 @@ export const useQueryEmployee = ({
   });
 };
 
+export const useQueryOrderEmployee = ({ id }: { id: string | undefined }) => {
+  return useQuery<IEmployee>({
+    queryKey: [API_URL + '/Orders/' + id + '/Employee'],
+  });
+};
+
 export const useEmployeeTeritories = ({
   employeeId,
 }: {
@@ -180,5 +186,11 @@ export const useQueryCustomers = () => {
 export const useQueryCustomer = ({ id }: { id: string | undefined }) => {
   return useQuery<ICustomer>({
     queryKey: [API_URL + '/Customers/' + id],
+  });
+};
+
+export const useQueryOrderCustomer = ({ id }: { id: string | undefined }) => {
+  return useQuery<ICustomer>({
+    queryKey: [API_URL + '/Orders/' + id + '/Customer'],
   });
 };

@@ -12,6 +12,7 @@ export { default as Pagination } from './Pagination';
 export { default as PaginationControls } from './PaginationControls';
 export { default as PanelCentred } from './PanelCentred';
 export { default as PanelStretched } from './PanelStretched';
+export { default as PropertyGrid } from './PropertyGrid';
 export { default as ReloadButton } from './ReloadButton';
 export { default as ResponsiveGrid } from './ResponsiveGrid';
 export { Typography } from './Typography';

@@ -1,9 +1,15 @@
 'use client';
 
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { useQueryCategories, useQueryProduct } from '@/net';
-import { ErrorMessage, PanelCentred, Typography, WaitSpinner } from '@/ui';
+import {
+  ErrorMessage,
+  PanelCentred,
+  PropertyGrid,
+  Typography,
+  WaitSpinner,
+} from '@/ui';
 import { getCategoryNameById, setDocumentTitle } from '@/utils';
 
 interface ProductProps {
@@ -68,31 +74,14 @@ const Product: React.FC<ProductProps> = ({ id }) => {
       ),
       description: 'Indicates if the product is discontinued or active.',
     },
-  ] as const satisfies {
-    name: string;
-    description: string;
-    value: React.ReactNode;
-  }[];
+  ];
 
   return (
     <PanelCentred className="flex flex-col gap-4">
       <Typography.Header1>{data.productName}</Typography.Header1>
       <div className="flex flex-col gap-4">
         <div className="text-center">Product</div>
-
-        <div className="grid grid-cols-2 items-center gap-2">
-          {items.map(({ name, description, value }) => (
-            <Fragment key={name}>
-              <div>
-                <div>{name}:</div>
-                <div className="text-xs text-muted-foreground indent-4">
-                  {description}
-                </div>
-              </div>
-              <b className="text-end">{value}</b>
-            </Fragment>
-          ))}
-        </div>
+        <PropertyGrid items={items} />
       </div>
     </PanelCentred>
   );
