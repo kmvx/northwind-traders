@@ -18,7 +18,7 @@ export interface ICustomer extends IAddress {
   contactName: string;
   contactTitle: string;
   customerId: string;
-  fax: string;
+  fax: string | null;
   phone: string;
 }
 export type ICustomers = ICustomer[];

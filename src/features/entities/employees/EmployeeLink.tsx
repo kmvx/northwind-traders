@@ -1,8 +1,9 @@
 'use client';
 
 import { useQueryEmployee } from '@/net';
-import { BasicLink, ErrorMessage, WaitSpinner } from '@/ui';
-import { getEmployeeNameByData } from '@/utils';
+import { ErrorMessage, WaitSpinner } from '@/ui';
+
+import { EmployeeHoverCard } from '.';
 
 const EmployeeLink: React.FC<{ id: number; className?: string }> = ({
   id,
@@ -21,9 +22,7 @@ const EmployeeLink: React.FC<{ id: number; className?: string }> = ({
   return (
     <span className={className}>
       <span>Reports to </span>
-      <BasicLink href={`/employees/${id}`}>
-        {getEmployeeNameByData(data)}
-      </BasicLink>
+      <EmployeeHoverCard employee={data} employeeId={id} />
     </span>
   );
 };

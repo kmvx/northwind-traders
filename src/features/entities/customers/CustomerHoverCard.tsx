@@ -59,12 +59,14 @@ function CustomerHoverCard({ customerId, children }: CustomerHoverCardProps) {
           </span>
         </div>
 
-        <div className="flex items-center gap-2" title="Fax">
-          <PrinterIcon className="size-4 text-muted-foreground" />
-          <span className="flex items-center gap-2">
-            <b>{data.fax}</b>
-          </span>
-        </div>
+        {data.fax && (
+          <div className="flex items-center gap-2" title="Fax">
+            <PrinterIcon className="size-4 text-muted-foreground" />
+            <span className="flex items-center gap-2">
+              <b>{data.fax}</b>
+            </span>
+          </div>
+        )}
 
         <div className="flex items-center gap-2" title="ID">
           <HashIcon className="size-4 text-muted-foreground" />

@@ -11,7 +11,6 @@ import {
   useQueryOrderShipper,
 } from '@/net';
 import {
-  BasicLink,
   CopyButton,
   ErrorMessage,
   Flag,
@@ -20,14 +19,10 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import {
-  formatDateFromString,
-  getEmployeeNameByData,
-  joinFields,
-  setDocumentTitle,
-} from '@/utils';
+import { formatDateFromString, joinFields, setDocumentTitle } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
+import { EmployeeHoverCard } from '../employees';
 
 interface OrderProps {
   id: string;
@@ -68,9 +63,10 @@ const Order: React.FC<OrderProps> = ({ id }) => {
             name: 'Employee',
             value: (
               <span className="inline-flex items-center gap-2">
-                <BasicLink href={'/employees/' + dataEmployee.employeeId}>
-                  {getEmployeeNameByData(dataEmployee)}
-                </BasicLink>
+                <EmployeeHoverCard
+                  employee={dataEmployee}
+                  employeeId={dataEmployee.employeeId}
+                />
                 <Flag country={dataEmployee.country} />
               </span>
             ),

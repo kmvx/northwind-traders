@@ -64,13 +64,15 @@ const Customer: React.FC<CustomerProps> = ({ id }) => {
                 </span>
               </div>
 
-              <div className="flex items-center gap-2 my-2" title="Fax">
-                <PrinterIcon className="size-4 text-muted-foreground" />
-                <span className="flex items-center gap-2">
-                  <b>{data.fax}</b>
-                  <CopyButton content={data.fax} />
-                </span>
-              </div>
+              {data.fax && (
+                <div className="flex items-center gap-2 my-2" title="Fax">
+                  <PrinterIcon className="size-4 text-muted-foreground" />
+                  <span className="flex items-center gap-2">
+                    <b>{data.fax}</b>
+                    <CopyButton content={data.fax} />
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 

@@ -7,14 +7,10 @@ import { DataTable } from '@/features/table';
 import type { IEmployees, IOrder, IOrders, IShippers } from '@/models';
 import { useQueryEmployees, useQueryShippers } from '@/net';
 import { BasicLink, Flag } from '@/ui';
-import {
-  dateFromString,
-  formatDateFromString,
-  getEmployeeNameByData,
-  joinFields,
-} from '@/utils';
+import { dateFromString, formatDateFromString, joinFields } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
+import { EmployeeHoverCard } from '../employees';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -53,22 +49,10 @@ const columns: ColumnDef<OrderFormatted>[] = [
     header: 'Employee',
     cell: ({ row, table }) => {
       const employeeId = row.original.employeeId;
-      const item = table?.options?.meta?.dataEmployees?.find(
+      const employee = table?.options?.meta?.dataEmployees?.find(
         (item) => item.employeeId === employeeId,
       );
-
-      return (
-        <BasicLink href={`/employees/${employeeId}`}>
-          {item ? (
-            getEmployeeNameByData(item)
-          ) : (
-            <span className="inline-flex items-center gap-2">
-              {employeeId}
-              <Spinner />
-            </span>
-          )}
-        </BasicLink>
-      );
+      return <EmployeeHoverCard employee={employee} employeeId={employeeId} />;
     },
   },
   {

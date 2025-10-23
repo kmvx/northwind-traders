@@ -4,6 +4,7 @@ import { CakeIcon, FlagIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
+import { Separator } from '@/components/ui';
 import { useQueryEmployee } from '@/net';
 import {
   CopyButton,
@@ -83,11 +84,13 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
           </div>
         </div>
 
+        <Separator />
+
         <div className="">
           <Image
             src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
-            width="103"
-            height="118"
+            width={103}
+            height={118}
             className="rounded-md border float-left mr-2"
             alt=""
           />
