@@ -3,6 +3,7 @@
 import { MapPinIcon, PhoneIcon } from 'lucide-react';
 import React from 'react';
 
+import { Separator } from '@/components/ui';
 import {
   useQueryOrder,
   useQueryOrderCustomer,
@@ -105,7 +106,7 @@ const Order: React.FC<OrderProps> = ({ id }) => {
     {
       name: 'Ship address',
       value: (
-        <div className="inline-flex items-center gap-2" title="Ship address">
+        <div className="inline-flex items-center gap-2">
           <MapPinIcon className="size-4 text-muted-foreground" />
           <Flag country={data.shipCountry} />
           <b className="my-2">
@@ -121,37 +122,42 @@ const Order: React.FC<OrderProps> = ({ id }) => {
       ),
       description: 'Street address for delivery of the order.',
     },
-    ...(dataShipper
-      ? [
-          {
-            name: 'Ship company name',
-            value: dataShipper.companyName,
-            description: 'Name of the shipping company or provider.',
-          },
-          {
-            name: 'Ship company phone',
-            value: (
-              <div
-                className="inline-flex items-center gap-2 my-2"
-                title="Phone"
-              >
-                <PhoneIcon className="size-4 text-muted-foreground" />
-                <span className="flex items-center gap-2">
-                  <b>{dataShipper.phone}</b>
-                  <CopyButton content={dataShipper.phone} />
-                </span>
-              </div>
-            ),
-            description: 'Contact phone number for the shipping company.',
-          },
-        ]
-      : []),
   ];
 
+  const itemsShipper = dataShipper
+    ? [
+        {
+          name: 'Ship company name',
+          value: dataShipper.companyName,
+          description: 'Name of the shipping company or provider.',
+        },
+        {
+          name: 'Ship company phone',
+          value: (
+            <div className="inline-flex items-center gap-2 my-2">
+              <PhoneIcon className="size-4 text-muted-foreground" />
+              <span className="flex items-center gap-2">
+                <b>{dataShipper.phone}</b>
+                <CopyButton content={dataShipper.phone} />
+              </span>
+            </div>
+          ),
+          description: 'Contact phone number for the shipping company.',
+        },
+      ]
+    : [];
+
   return (
-    <PanelCentred className="flex flex-col gap-8">
+    <PanelCentred className="flex flex-col gap-4">
       <Typography.Header1>Order #{data.orderId}</Typography.Header1>
       <PropertyGrid items={items} />
+      {dataShipper && (
+        <>
+          <Separator />
+          <Typography.Header2>Shipper</Typography.Header2>
+          <PropertyGrid items={itemsShipper} />
+        </>
+      )}
     </PanelCentred>
   );
 };
