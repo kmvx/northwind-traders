@@ -10,7 +10,9 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { getCategoryNameById, setDocumentTitle } from '@/utils';
+import { setDocumentTitle } from '@/utils';
+
+import { CategoryName } from '.';
 
 interface ProductProps {
   id: string;
@@ -35,7 +37,12 @@ const Product: React.FC<ProductProps> = ({ id }) => {
   const items = [
     {
       name: 'Category',
-      value: getCategoryNameById(dataCategories, data.categoryId),
+      value: (
+        <CategoryName
+          dataCategories={dataCategories}
+          categoryId={data.categoryId}
+        />
+      ),
       description: 'The category to which the product belongs.',
     },
     {

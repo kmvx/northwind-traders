@@ -4,7 +4,8 @@ import { DataTable } from '@/features/table';
 import type { ICategories, IProduct, IProducts } from '@/models';
 import { useQueryCategories } from '@/net';
 import { BasicLink } from '@/ui';
-import { getCategoryNameById } from '@/utils';
+
+import { CategoryName } from '.';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -32,9 +33,11 @@ const columns: ColumnDef<IProduct>[] = [
     accessorKey: 'categoryId',
     header: 'Category',
     cell: ({ row, table }) => {
-      return getCategoryNameById(
-        table?.options?.meta?.dataCategories,
-        row.original.categoryId,
+      return (
+        <CategoryName
+          dataCategories={table?.options?.meta?.dataCategories}
+          categoryId={row.original.categoryId}
+        />
       );
     },
   },
