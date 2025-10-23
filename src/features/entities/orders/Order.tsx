@@ -27,6 +27,8 @@ import {
   setDocumentTitle,
 } from '@/utils';
 
+import { CustomerHoverCard } from '../customers';
+
 interface OrderProps {
   id: string;
 }
@@ -50,9 +52,9 @@ const Order: React.FC<OrderProps> = ({ id }) => {
             name: 'Customer',
             value: (
               <span className="inline-flex items-center gap-2">
-                <BasicLink href={'/customers/' + dataCustomer.customerId}>
+                <CustomerHoverCard customerId={dataCustomer.customerId}>
                   <b>{dataCustomer.companyName}</b> ({dataCustomer.customerId})
-                </BasicLink>
+                </CustomerHoverCard>
                 <Flag country={dataCustomer.country} />
               </span>
             ),

@@ -183,9 +183,16 @@ export const useQueryCustomers = () => {
   });
 };
 
-export const useQueryCustomer = ({ id }: { id: string | undefined }) => {
+export const useQueryCustomer = ({
+  id,
+  enabled = true,
+}: {
+  id: string | undefined;
+  enabled?: boolean;
+}) => {
   return useQuery<ICustomer>({
     queryKey: [API_URL + '/Customers/' + id],
+    enabled,
   });
 };
 

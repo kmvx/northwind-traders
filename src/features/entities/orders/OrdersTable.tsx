@@ -13,6 +13,8 @@ import {
   joinFields,
 } from '@/utils';
 
+import { CustomerHoverCard } from '../customers';
+
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface TableMeta<TData extends RowData> {
@@ -42,9 +44,7 @@ const columns: ColumnDef<OrderFormatted>[] = [
     header: 'Customer ID',
     cell: ({ row }) => {
       const customerId = row.original.customerId;
-      return (
-        <BasicLink href={`/customers/${customerId}`}>{customerId}</BasicLink>
-      );
+      return <CustomerHoverCard customerId={customerId} />;
     },
   },
   {
