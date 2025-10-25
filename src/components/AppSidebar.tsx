@@ -7,6 +7,7 @@ import {
   type LucideIcon,
   UserIcon,
 } from 'lucide-react';
+import Link from 'next/link';
 import { Fragment } from 'react';
 
 import {
@@ -78,7 +79,15 @@ const items: {
 export default function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader />
+      <SidebarHeader>
+        <Link
+          href="/"
+          className="text-4xl font-serif italic font-black drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-teal-600 dark:from-blue-300 dark:to-teal-300"
+        >
+          Northwind Traders
+        </Link>
+        <Separator />
+      </SidebarHeader>
       <SidebarContent>
         {items.map((item, index) => (
           <Fragment key={index}>
