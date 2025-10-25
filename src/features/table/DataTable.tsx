@@ -27,6 +27,7 @@ export default function DataTable<TData>({
   columns: ColumnDef<TData>[];
   meta?: TableMeta<TData>;
 }) {
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable<TData>({
     data,
     columns,
