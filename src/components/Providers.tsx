@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ThemeProvider } from 'next-themes';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React, { Suspense } from 'react';
 
@@ -44,13 +45,15 @@ interface ProvidersProps {
 
 const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<WaitSpinner />}>
-        <NuqsAdapter>{children}</NuqsAdapter>
-      </Suspense>
-      <Toaster position="top-center" richColors />
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark">
+      <QueryClientProvider client={queryClient}>
+        <Suspense fallback={<WaitSpinner />}>
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </Suspense>
+        <Toaster position="top-center" richColors />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

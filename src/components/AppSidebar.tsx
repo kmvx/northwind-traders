@@ -7,6 +7,7 @@ import {
   type LucideIcon,
   UserIcon,
 } from 'lucide-react';
+import { Fragment } from 'react';
 
 import {
   Sidebar,
@@ -19,51 +20,58 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { ThemeToggle } from '@/ui';
 
-type SidebarItem =
-  | {
-      title: string;
-      url: string;
-      icon: LucideIcon;
-    }
-  | {
-      title: string;
-    };
+import { Separator } from './ui';
 
-const items: SidebarItem[] = [
+const items: {
+  title?: string;
+  children: {
+    title: string;
+    url: string;
+    icon: LucideIcon;
+  }[];
+}[] = [
   {
-    title: 'About',
-    url: '/',
-    icon: HouseIcon,
+    children: [
+      {
+        title: 'About',
+        url: '/',
+        icon: HouseIcon,
+      },
+    ],
   },
   {
-    title: 'Entities',
-  },
-  {
-    title: 'Customers',
-    url: '/customers',
-    icon: DollarSignIcon,
-  },
-  {
-    title: 'Employees',
-    url: '/employees',
-    icon: UserIcon,
-  },
-  {
-    title: 'Orders',
-    url: '/orders',
-    icon: CreditCardIcon,
-  },
-  {
-    title: 'Products',
-    url: '/products',
-    icon: EggFriedIcon,
-  },
-  {
-    title: 'Suppliers',
-    url: '/suppliers',
-    icon: AxeIcon,
+    title: 'Entites',
+    children: [
+      {
+        title: 'Customers',
+        url: '/customers',
+        icon: DollarSignIcon,
+      },
+      {
+        title: 'Employees',
+        url: '/employees',
+        icon: UserIcon,
+      },
+      {
+        title: 'Orders',
+        url: '/orders',
+        icon: CreditCardIcon,
+      },
+      {
+        title: 'Products',
+        url: '/products',
+        icon: EggFriedIcon,
+      },
+      {
+        title: 'Suppliers',
+        url: '/suppliers',
+        icon: AxeIcon,
+      },
+    ],
   },
 ];
 
@@ -72,26 +80,36 @@ export default function AppSidebar() {
     <Sidebar>
       <SidebarHeader />
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) =>
-                'url' in item ? (
-                  <SidebarMenuItem key={item.title}>
+        {items.map((item, index) => (
+          <Fragment key={index}>
+            {index > 0 && <Separator />}
+            <SidebarGroup>
+              {item.title && (
+                <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+              )}
+              <SidebarMenu>
+                {item.children.map((child) => (
+                  <SidebarMenuItem key={child.title}>
                     <SidebarMenuButton asChild>
-                      <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
+                      <a href={child.url}>
+                        <child.icon />
+                        <span>{child.title}</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                ) : (
-                  <SidebarGroupLabel key={item.title}>
-                    {item.title}
-                  </SidebarGroupLabel>
-                ),
-              )}
-            </SidebarMenu>
+                ))}
+              </SidebarMenu>
+            </SidebarGroup>
+          </Fragment>
+        ))}
+        <Separator />
+        <SidebarGroup>
+          <SidebarGroupLabel>Settings</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <div className="p-2 flex items-center gap-2">
+              <ThemeToggle />
+              <SidebarTrigger variant="outline" className="size-9" />
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

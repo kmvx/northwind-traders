@@ -121,6 +121,10 @@
   }
 }
 
+@theme {
+  --default-transition-duration: 500ms;
+}
+
 :root {
   scrollbar-gutter: stable;
 }
