@@ -271,7 +271,7 @@ function SidebarTrigger({
         onClick?.(event);
         toggleSidebar();
       }}
-      title="Toogle sidebar"
+      title="Toogle Sidebar"
       {...props}
     >
       {open ? <PanelRightOpenIcon /> : <PanelRightCloseIcon />}

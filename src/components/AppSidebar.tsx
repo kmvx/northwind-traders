@@ -22,7 +22,7 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { ThemeToggle } from '@/ui';
+import { FullscreenToggle, ThemeToggle } from '@/ui';
 
 import { Separator } from './ui';
 
@@ -108,6 +108,7 @@ export default function AppSidebar() {
           <SidebarGroupContent>
             <div className="p-2 flex items-center gap-2">
               <ThemeToggle />
+              <FullscreenToggle />
               <SidebarTrigger variant="outline" className="size-9" />
             </div>
           </SidebarGroupContent>
