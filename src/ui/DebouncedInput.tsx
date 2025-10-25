@@ -1,9 +1,8 @@
 'use client';
 
-import { LoaderIcon } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Input } from '@/components/ui';
+import { Input, Spinner } from '@/components/ui';
 import { useDebounce } from '@/hooks';
 import { cn } from '@/lib/utils';
 
@@ -45,7 +44,7 @@ const DebouncedInput = ({
         title={title}
       />
       <span className="absolute right-10 top-1/2 -translate-y-1/2 text-muted-foreground">
-        {isDebouncing && <LoaderIcon className="size-4 animate-spin" />}
+        {isDebouncing && <Spinner />}
       </span>
     </div>
   );
