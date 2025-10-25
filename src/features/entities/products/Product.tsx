@@ -38,10 +38,12 @@ const Product: React.FC<ProductProps> = ({ id }) => {
     {
       name: 'Category',
       value: (
-        <CategoryName
-          dataCategories={dataCategories}
-          categoryId={data.categoryId}
-        />
+        <span className="font-bold">
+          <CategoryName
+            dataCategories={dataCategories}
+            categoryId={data.categoryId}
+          />
+        </span>
       ),
       description: 'The category to which the product belongs.',
     },

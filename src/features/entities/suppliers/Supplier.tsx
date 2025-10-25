@@ -31,7 +31,7 @@ const Supplier: React.FC<SupplierProps> = ({ id }) => {
     <PanelCentred className="flex flex-col gap-4">
       <Typography.Header1>{data.companyName}</Typography.Header1>
       <div className="flex flex-col gap-4">
-        <div className="text-center">Supplier</div>
+        <div className="text-center">Supplier company</div>
 
         <div className="flex flex-col md:flex-row flex-wrap gap-2 gap-x-4">
           <div>
