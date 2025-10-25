@@ -8,7 +8,7 @@ import { useDebounce } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 type DebouncedInputProps = {
-  value?: string;
+  value: string;
   setValue: (value: string) => void;
   placeholder?: string;
   className?: string;
@@ -22,18 +22,23 @@ const DebouncedInput = ({
   className,
   title,
 }: DebouncedInputProps) => {
-  const [localValue, setLocalValue] = useState(value ?? '');
+  const [localValue, setLocalValue] = useState(value);
   const { debouncedValue, isDebouncing } = useDebounce(localValue);
 
   useEffect(() => {
     setValue(debouncedValue);
   }, [debouncedValue, setValue]);
 
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
   return (
     <div className={cn('relative', className)}>
       <Input
         type="search"
         placeholder={placeholder}
+        value={localValue}
         // For performance testing:
         // onChange={(event) => setValue(event.target.value)}
         onChange={(event) => setLocalValue(event.target.value)}
