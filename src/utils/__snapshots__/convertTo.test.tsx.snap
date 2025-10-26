@@ -1,8 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`convertTo 1`] = `
-"number,dateObject,dateTimeObject,stringDate,invalidDate,time
-1.2,2025-01-01T00:00:00.000Z,2025-03-03T10:05:06.999Z,1992-08-14T00:00:00,,2025-06-14T18:54:09"
+"number;dateObject;dateTimeObject;stringDate;invalidDate;time
+1.2;2025-01-01T00:00:00.000Z;2025-03-03T10:05:06.999Z;1992-08-14T00:00:00;;2025-06-14T18:54:09"
 `;
 
 exports[`convertTo 2`] = `

@@ -43,8 +43,10 @@ export const convertToCSV = (data: DataType): string => {
   const headers = getHeaders(data);
 
   const escapeCSV = (val: string): string => {
-    return /[,"\n\r]/.test(val) ? `"${val.replace(/"/g, '""')}"` : val;
+    return /[;,"\n\r]/.test(val) ? `"${val.replace(/"/g, '""')}"` : val;
   };
+
+  const SEPARATOR = ';';
 
   const rows = data.map((row) => {
     return headers
@@ -66,10 +68,10 @@ export const convertToCSV = (data: DataType): string => {
 
         return escapeCSV(String(val));
       })
-      .join(',');
+      .join(SEPARATOR);
   });
 
-  return [headers.join(','), ...rows].join('\n');
+  return [headers.join(SEPARATOR), ...rows].join('\n');
 };
 
 export const convertToMarkdown = (data: DataType, title: string): string => {
