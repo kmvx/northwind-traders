@@ -84,6 +84,7 @@ export default function AppSidebar() {
       }}
     >
       <SidebarHeader
+        className="h-max-sm:hidden"
         style={{
           paddingTop: 'env(safe-area-inset-top)',
         }}
@@ -96,7 +97,7 @@ export default function AppSidebar() {
         </Link>
         <Separator />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="h-max-sm:gap-0">
         {items.map((item, index) => (
           <Fragment key={index}>
             {index > 0 && <Separator />}
@@ -104,10 +105,10 @@ export default function AppSidebar() {
               {item.title && (
                 <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
               )}
-              <SidebarMenu>
+              <SidebarMenu className="h-max-sm:gap-0">
                 {item.children.map((child) => (
                   <SidebarMenuItem key={child.title}>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild className="h-max-sm:py-0">
                       <a href={child.url}>
                         <child.icon />
                         <span>{child.title}</span>
@@ -123,7 +124,7 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Settings</SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="p-2 flex items-center gap-2">
+            <div className="h-max-sm:py-0 p-2 flex items-center gap-2">
               <ThemeToggle />
               <FullscreenToggle />
               <SidebarTrigger variant="outline" className="size-9" />
