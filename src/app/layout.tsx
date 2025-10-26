@@ -1,6 +1,6 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import { AppSidebar } from '@/components';
@@ -26,6 +26,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,7 +48,7 @@ export default function RootLayout({
             <main className="w-full">
               <SidebarTrigger
                 variant="outline"
-                className="size-9 fixed top-2 left-2"
+                className="size-9 absolute top-2 left-2"
               />
               {children}
             </main>

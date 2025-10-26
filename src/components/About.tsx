@@ -48,7 +48,7 @@ const About: React.FC = () => {
               className="text-blue-400 inline-flex items-center gap-1 text-[length:inherit] h-auto p-0 has-[>svg]:px-0"
             >
               <a
-                href="https://kmvx.pages.dev/projects/northwind-traders"
+                href="https://kmvx.pages.dev/projects/northwind_traders"
                 target="_blank"
                 rel="noreferrer"
               >
