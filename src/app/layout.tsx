@@ -49,6 +49,9 @@ export default function RootLayout({
               <SidebarTrigger
                 variant="outline"
                 className="size-9 absolute top-2 left-2"
+                style={{
+                  marginLeft: 'env(safe-area-inset-left)',
+                }}
               />
               {children}
             </main>

@@ -78,8 +78,16 @@ const items: {
 
 export default function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarHeader>
+    <Sidebar
+      style={{
+        paddingLeft: 'env(safe-area-inset-left)',
+      }}
+    >
+      <SidebarHeader
+        style={{
+          paddingTop: 'env(safe-area-inset-top)',
+        }}
+      >
         <Link
           href="/"
           className="text-4xl font-serif italic font-black drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-teal-600 dark:from-blue-300 dark:to-teal-300"
