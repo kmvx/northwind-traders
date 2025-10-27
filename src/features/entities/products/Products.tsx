@@ -17,17 +17,23 @@ import {
   WaitSpinner,
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
+import { parseAsBooleanOrUndefined } from '@/utils/nuqs';
 
-import { ProductsCards, ProductsTable } from '.';
+import { FilterDiscontinued, ProductsCards, ProductsTable } from '.';
 
 export default function Products({ initialData }: { initialData?: IProducts }) {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
     defaultValue: '',
   });
-  const hasFilters = !!filterString;
+  const [filterDiscontinued, setDiscontinued] = useQueryState(
+    'discontinued',
+    parseAsBooleanOrUndefined,
+  );
+  const hasFilters = !!filterString || filterDiscontinued != null;
   function handleFiltersClear() {
     setFilterString('');
+    setDiscontinued(null);
   }
 
   // Network data
@@ -47,8 +53,13 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
         }),
       );
     }
+    if (filterDiscontinued != null) {
+      filteredData = filteredData.filter(
+        (item) => item.discontinued === filterDiscontinued,
+      );
+    }
     return filteredData;
-  }, [data, initialData, isLoading, filterString]);
+  }, [data, initialData, isLoading, filterString, filterDiscontinued]);
 
   const isWidePage = (usePageSize()?.width ?? 0) >= 1024;
 
@@ -81,6 +92,7 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
             title="String filter"
           />
         </div>
+        <FilterDiscontinued {...{ filterDiscontinued, setDiscontinued }} />
         <FiltersClearButton
           disabled={!hasFilters}
           onClick={handleFiltersClear}
