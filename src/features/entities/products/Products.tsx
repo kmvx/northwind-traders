@@ -1,9 +1,9 @@
 'use client';
 
 import { useQueryState } from 'nuqs';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { usePageWidth } from '@/hooks';
+import { usePageSize } from '@/hooks';
 import { type IProducts } from '@/models';
 import { useQueryProducts } from '@/net';
 import {
@@ -50,7 +50,7 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
     return filteredData;
   }, [data, initialData, isLoading, filterString]);
 
-  const isWidePage = usePageWidth() >= 1024;
+  const isWidePage = (usePageSize()?.width ?? 0) >= 1024;
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
