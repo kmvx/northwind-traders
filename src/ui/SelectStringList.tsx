@@ -1,3 +1,9 @@
+'use client';
+
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from '@/components/ui/native-select';
 import {
   Select,
   SelectContent,
@@ -5,12 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function SelectStringList({
   itemsInfo,
   value,
   setValue,
   title,
+  className,
 }: {
   itemsInfo: readonly {
     component?: React.ReactNode;
@@ -19,22 +27,48 @@ export default function SelectStringList({
   value: string;
   setValue: (value: string) => void;
   title?: string | undefined;
+  className?: string | undefined;
 }) {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <NativeSelect
+        value={value}
+        onChange={(event) => {
+          setValue(event.target.value);
+        }}
+        title={title}
+        className={className}
+      >
+        {itemsInfo.map((itemInfo, index) => (
+          <NativeSelectOption
+            key={index}
+            value={itemInfo.value}
+            className="bg-background"
+          >
+            {itemInfo.component ?? String(itemInfo.value)}
+          </NativeSelectOption>
+        ))}
+      </NativeSelect>
+    );
+  }
+
   return (
     <Select
       value={value}
-      onValueChange={(value: string) => {
+      onValueChange={(value) => {
         setValue(value);
       }}
     >
-      <SelectTrigger title={title}>
+      <SelectTrigger title={title} className={className}>
         <SelectValue
           placeholder={
             itemsInfo.find((itemInfo) => itemInfo.value === value)?.component
           }
         />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className={className}>
         {itemsInfo.map((itemInfo, index) => (
           <SelectItem key={index} value={itemInfo.value}>
             {itemInfo.component ?? String(itemInfo.value)}

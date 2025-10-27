@@ -1,8 +1,9 @@
 'use client';
 
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { getCountries, getFlagEmojiByCountryName } from '@/utils';
+
 import { SelectStringList } from '.';
 
 const EMPTY_OPTION_VALUE = 'worldwide';
@@ -33,33 +34,29 @@ const FilterCountry = <T extends string>({
     ];
   }, [countryPropertyName, data]);
 
-  const handleValueChange = useCallback(
-    (country: string) => {
-      setFilterCountry(country === EMPTY_OPTION_VALUE ? '' : country);
-    },
-    [setFilterCountry],
-  );
-
   return (
-    <SelectStringList
-      itemsInfo={options.map((option) => ({
-        component: <Item option={option} />,
-        value: option || EMPTY_OPTION_VALUE,
-      }))}
-      value={filterCountry || EMPTY_OPTION_VALUE}
-      setValue={(value) =>
-        setFilterCountry(value === EMPTY_OPTION_VALUE ? '' : value)
-      }
-      title="Filter by country"
-    />
+    <span className="font-flags">
+      <SelectStringList
+        itemsInfo={options.map((option) => ({
+          component: <Item option={option} />,
+          value: option || EMPTY_OPTION_VALUE,
+        }))}
+        value={filterCountry || EMPTY_OPTION_VALUE}
+        setValue={(value) =>
+          setFilterCountry(value === EMPTY_OPTION_VALUE ? '' : value)
+        }
+        title="Filter by country"
+        className="font-flags"
+      />
+    </span>
   );
 };
 
 function Item({ option }: { option: string }) {
   return (
-    <span className="font-flags">
+    <>
       {getFlagEmojiByCountryName(option)} &nbsp; {option || 'Worldwide'}
-    </span>
+    </>
   );
 }
 
