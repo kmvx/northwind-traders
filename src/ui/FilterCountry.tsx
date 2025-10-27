@@ -1,15 +1,9 @@
 'use client';
 
-import React, { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { getCountries, getFlagEmojiByCountryName } from '@/utils';
+import { SelectStringList } from '.';
 
 const EMPTY_OPTION_VALUE = 'worldwide';
 
@@ -47,21 +41,17 @@ const FilterCountry = <T extends string>({
   );
 
   return (
-    <Select
+    <SelectStringList
+      itemsInfo={options.map((option) => ({
+        component: <Item option={option} />,
+        value: option || EMPTY_OPTION_VALUE,
+      }))}
       value={filterCountry || EMPTY_OPTION_VALUE}
-      onValueChange={handleValueChange}
-    >
-      <SelectTrigger>
-        <SelectValue placeholder={<Item option={''} />} />
-      </SelectTrigger>
-      <SelectContent>
-        {options.map((option) => (
-          <SelectItem key={option} value={option || EMPTY_OPTION_VALUE}>
-            <Item option={option} />
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+      setValue={(value) =>
+        setFilterCountry(value === EMPTY_OPTION_VALUE ? '' : value)
+      }
+      title="Filter by country"
+    />
   );
 };
 
