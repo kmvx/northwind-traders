@@ -13,20 +13,6 @@ export function formatDateFromString(date: string | null): string {
   })} ${dataObject.getDate()}, ${dataObject.getFullYear()}`;
 }
 
-export function formatYearsOldFromDateString(
-  dateString: string,
-): string | null {
-  if (!dateString) return null;
-  const today = new Date();
-  const birthDate = new Date(dateString);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return `${age} years old`;
-}
-
 export function dateFromString(str: string | null): Date {
   if (str == null) return new Date(NaN);
 

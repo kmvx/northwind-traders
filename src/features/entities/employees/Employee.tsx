@@ -16,7 +16,6 @@ import {
 } from '@/ui';
 import {
   formatDateFromString,
-  formatYearsOldFromDateString,
   getEmployeeNameByData,
   joinFields,
   setDocumentTitle,
@@ -77,8 +76,7 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
             <div className="flex items-center gap-2 my-2">
               <CakeIcon className="size-4 text-muted-foreground" />
               <span>
-                Birth date: <b>{formatDateFromString(data.birthDate)}</b> (
-                {formatYearsOldFromDateString(data.birthDate)})
+                Birth date: <b>{formatDateFromString(data.birthDate)}</b>
               </span>
             </div>
           </div>

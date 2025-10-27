@@ -15,7 +15,6 @@ import { useQueryEmployee } from '@/net';
 import { BasicLink, CopyButton, ErrorMessage, Flag, WaitSpinner } from '@/ui';
 import {
   formatDateFromString,
-  formatYearsOldFromDateString,
   getEmployeeNameByData,
   joinFields,
 } from '@/utils';
@@ -83,8 +82,7 @@ function EmployeeHoverCard({ employee, employeeId }: EmployeeHoverCardProps) {
         <div className="flex items-center gap-2">
           <CakeIcon className="min-w-4 size-4 text-muted-foreground" />
           <span>
-            Birth date: <b>{formatDateFromString(data.birthDate)}</b> (
-            {formatYearsOldFromDateString(data.birthDate)})
+            Birth date: <b>{formatDateFromString(data.birthDate)}</b>
           </span>
         </div>
       </div>

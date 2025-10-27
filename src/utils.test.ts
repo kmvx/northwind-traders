@@ -5,7 +5,6 @@ import {
   buildTitle,
   escapeHtml,
   formatDateFromString,
-  formatYearsOldFromDateString,
   getCountries,
   getEmployeeNameByData,
   getFlagEmojiByCountryName,
@@ -39,35 +38,6 @@ describe('formatDateFromString', () => {
   it('returns stringified Date for invalid date', () => {
     const result = formatDateFromString('invalid-date');
     expect(result).toContain('Invalid Date');
-  });
-});
-
-describe('formatYearsOldFromDateString', () => {
-  it('returns empty fragment when no dateString', () => {
-    const el = formatYearsOldFromDateString('');
-    expect(el).toBe(null);
-  });
-
-  it('returns correct years old string', () => {
-    const now = new Date();
-    const birth = new Date(
-      now.getFullYear() - 25,
-      now.getMonth(),
-      now.getDate() - 1,
-    );
-    const str = formatYearsOldFromDateString(birth.toISOString());
-    expect(str).toMatch(/25 years old/);
-  });
-
-  it('handles not yet birthday in current year', () => {
-    const now = new Date();
-    const birth = new Date(
-      now.getFullYear() - 25,
-      now.getMonth(),
-      now.getDate() + 1,
-    );
-    const str = formatYearsOldFromDateString(birth.toISOString());
-    expect(str).toMatch(/24 years old/);
   });
 });
 
