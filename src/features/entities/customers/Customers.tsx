@@ -140,7 +140,7 @@ const CustomerPreview = memo(function CustomerPreview({
         <CardHeader>
           <CardTitle title="Customer name">{item.companyName}</CardTitle>
         </CardHeader>
-        <CardContent className="h-full flex flex-col justify-end">
+        <CardContent className="h-full flex flex-col justify-end gap-4">
           <div className="text-end" title="Customer company ID">
             {item.customerId}
           </div>

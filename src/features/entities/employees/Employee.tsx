@@ -45,12 +45,12 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
           <b>{data.title}</b>, employee
         </div>
 
-        <div className="flex flex-col md:flex-row flex-wrap gap-2">
-          <div>
+        <div className="flex flex-col md:flex-row flex-wrap gap-2 gap-x-4">
+          <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2" title="Address">
               <MapPinIcon className="size-4 text-muted-foreground" />
               <Flag country={data.country} />
-              <b className="my-2">
+              <b>
                 {joinFields(
                   data.country,
                   data.region,
@@ -64,7 +64,7 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2 my-2" title="Home phone">
+            <div className="flex items-center gap-2" title="Home phone">
               <PhoneIcon className="size-4 text-muted-foreground" />
               <span className="flex items-center gap-2">
                 <b>{data.homePhone}</b>
@@ -73,7 +73,7 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
               </span>
             </div>
 
-            <div className="flex items-center gap-2 my-2">
+            <div className="flex items-center gap-2">
               <CakeIcon className="size-4 text-muted-foreground" />
               <span>
                 Birth date: <b>{formatDateFromString(data.birthDate)}</b>
