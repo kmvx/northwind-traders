@@ -16,6 +16,7 @@ export { default as PanelStretched } from './PanelStretched';
 export { default as PropertyGrid } from './PropertyGrid';
 export { default as ReloadButton } from './ReloadButton';
 export { default as ResponsiveGrid } from './ResponsiveGrid';
+export { default as SelectGroup } from './SelectGroup';
 export { default as ThemeToggle } from './ThemeToggle';
 export { Typography } from './Typography';
 export { default as WaitSpinner } from './WaitSpinner';

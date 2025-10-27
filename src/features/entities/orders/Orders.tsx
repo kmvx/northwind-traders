@@ -1,7 +1,7 @@
 'use client';
 
-import { useQueryState } from 'nuqs';
-import React, { useMemo } from 'react';
+import { parseAsInteger, useQueryState } from 'nuqs';
+import { useMemo } from 'react';
 
 import { type IOrders } from '@/models';
 import { useQueryOrders } from '@/net';
@@ -16,9 +16,9 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { isStringIncludes } from '@/utils';
+import { dateFromString, isStringIncludes } from '@/utils';
 
-import { OrdersTable } from '.';
+import { FilterYear, OrdersTable } from '.';
 
 export default function Orders({ initialData }: { initialData?: IOrders }) {
   // Filters
@@ -28,14 +28,30 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
   const [filterCountry, setFilterCountry] = useQueryState('country', {
     defaultValue: '',
   });
+  const [filterYear, setFilterYear] = useQueryState('year', parseAsInteger);
   const hasFilters = !!filterString || !!filterCountry;
   function handleFiltersClear() {
     setFilterString('');
     setFilterCountry('');
+    setFilterYear(null);
   }
 
   // Network data
   const { data, isLoading, isFetching, error, refetch } = useQueryOrders();
+
+  // Compute orders creation years
+  const yearsSet = useMemo(() => {
+    const yearsSet = new Set<number>();
+    data?.map((item) => {
+      const orderDate = item.orderDate;
+      if (orderDate) {
+        const date = new Date(item.orderDate);
+        const year = date.getFullYear();
+        yearsSet.add(year);
+      }
+    });
+    return yearsSet;
+  }, [data]);
 
   // Filter data
   const filteredData = useMemo(() => {
@@ -44,6 +60,7 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
       : isLoading && initialData?.length
         ? initialData
         : [];
+
     if (filterString) {
       filteredData = filteredData?.filter((item) =>
         (['shipAddress', 'shipCity'] as const).some((name) => {
@@ -51,13 +68,22 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
         }),
       );
     }
+
     if (filterCountry) {
       filteredData = filteredData?.filter(
         (item) => item.shipCountry === filterCountry,
       );
     }
+
+    if (filterYear != null) {
+      filteredData = filteredData?.filter((item) => {
+        // TODO: Cache dateFromString() result
+        return dateFromString(item.orderDate).getFullYear() === filterYear;
+      });
+    }
+
     return filteredData;
-  }, [data, initialData, isLoading, filterString, filterCountry]);
+  }, [data, initialData, isLoading, filterString, filterCountry, filterYear]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
@@ -84,6 +110,7 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
             title="String filter"
           />
         </div>
+        <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
         <FilterCountry
           filterCountry={filterCountry}
           setFilterCountry={setFilterCountry}

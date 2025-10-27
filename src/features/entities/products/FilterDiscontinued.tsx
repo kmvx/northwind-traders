@@ -1,13 +1,10 @@
-import { Button, ButtonGroup } from '@/components/ui';
+import { SelectGroup } from '@/ui';
 
-const BUTTONS_INFO: {
-  name: string;
-  value: boolean | null;
-}[] = [
-  { name: 'All', value: null },
-  { name: 'Discontinued', value: true },
-  { name: 'Active', value: false },
-];
+const itemsInfo = [
+  { component: 'All', value: null },
+  { component: 'Discontinued', value: true },
+  { component: 'Active', value: false },
+] as const;
 
 export default function FilterDiscontinued({
   filterDiscontinued,
@@ -16,19 +13,13 @@ export default function FilterDiscontinued({
   filterDiscontinued: boolean | null;
   setDiscontinued: (value: boolean | null) => void;
 }) {
+  const LocalSelectGroup = SelectGroup<boolean | null>;
   return (
-    <ButtonGroup title="Product discontinued status">
-      {BUTTONS_INFO.map((button) => (
-        <Button
-          variant={
-            filterDiscontinued === button.value ? 'default' : 'secondary'
-          }
-          onClick={() => setDiscontinued(button.value)}
-          key={button.name}
-        >
-          {button.name}
-        </Button>
-      ))}
-    </ButtonGroup>
+    <LocalSelectGroup
+      state={filterDiscontinued}
+      setState={setDiscontinued}
+      itemsInfo={itemsInfo}
+      title="Product discontinued status"
+    />
   );
 }
