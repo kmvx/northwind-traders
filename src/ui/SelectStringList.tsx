@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks';
 
 export default function SelectStringList({
   itemsInfo,

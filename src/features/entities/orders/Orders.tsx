@@ -1,10 +1,11 @@
 'use client';
 
 import { parseAsInteger, useQueryState } from 'nuqs';
-import { useMemo } from 'react';
+import { useState } from 'react';
 
+import { useMemoWaitCursor } from '@/hooks';
 import { type IOrders } from '@/models';
-import { useQueryOrders } from '@/net';
+import { useQueryEmployees, useQueryOrders } from '@/net';
 import {
   DebouncedInput,
   ErrorMessage,
@@ -16,9 +17,15 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { dateFromString, isStringIncludes } from '@/utils';
+import {
+  dateFromString,
+  formatDateFromString,
+  getEmployeeNameByData,
+  isStringIncludes,
+  joinFields,
+} from '@/utils';
 
-import { FilterYear, OrdersTable } from '.';
+import { FilterYear, type IOrderCustom, OrdersTable } from '.';
 
 export default function Orders({ initialData }: { initialData?: IOrders }) {
   // Filters
@@ -38,32 +45,77 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
 
   // Network data
   const { data, isLoading, isFetching, error, refetch } = useQueryOrders();
+  const { data: dataEmployees } = useQueryEmployees();
 
-  // Compute orders creation years
-  const yearsSet = useMemo(() => {
-    const yearsSet = new Set<number>();
-    data?.map((item) => {
-      const orderDate = item.orderDate;
-      if (orderDate) {
-        const date = new Date(item.orderDate);
-        const year = date.getFullYear();
-        yearsSet.add(year);
-      }
-    });
-    return yearsSet;
-  }, [data]);
+  // Prepare data
+  const [yearsSet, setYearsSet] = useState<Set<number>>(new Set());
+  const preparedData = useMemoWaitCursor(() => {
+    const yearsSetTemp = new Set<number>();
 
-  // Filter data
-  const filteredData = useMemo(() => {
-    let filteredData = data
+    const loadedData = data
       ? data
       : isLoading && initialData?.length
         ? initialData
         : [];
 
+    const preparedData = loadedData?.map((item) => {
+      const orderDate = item.orderDate;
+      if (orderDate) {
+        const date = new Date(item.orderDate);
+        const year = date.getFullYear();
+        yearsSetTemp.add(year);
+      }
+
+      const employee = dataEmployees?.find(
+        (employee) => employee.employeeId === item.employeeId,
+      );
+
+      const result: IOrderCustom = {
+        ...item,
+        employeeName: employee ? getEmployeeNameByData(employee) : '',
+        orderDate: formatDateFromString(item.orderDate),
+        shippedDate: formatDateFromString(item.shippedDate),
+        requiredDate: formatDateFromString(item.requiredDate),
+        orderDateObject: dateFromString(item.orderDate),
+        shippedDateObject: dateFromString(item.shippedDate),
+        requiredDateObject: dateFromString(item.requiredDate),
+        addressLine: joinFields(
+          item.shipCountry,
+          item.shipRegion,
+          item.shipCity,
+          item.shipAddress,
+          item.shipPostalCode,
+        ),
+      };
+
+      return result;
+    });
+
+    setYearsSet(yearsSetTemp);
+
+    return preparedData;
+  }, [data, dataEmployees]);
+
+  // Filter data
+  const filteredData = useMemoWaitCursor(() => {
+    let filteredData = preparedData;
+
     if (filterString) {
       filteredData = filteredData?.filter((item) =>
-        (['shipAddress', 'shipCity'] as const).some((name) => {
+        (
+          [
+            'orderId',
+            'customerId',
+            'employeeName',
+            'shipVia',
+            'orderDateObject',
+            'shippedDateObject',
+            'requiredDateObject',
+            'freight',
+            'shipName',
+            'addressLine',
+          ] as const
+        ).some((name) => {
           return isStringIncludes(String(item[name]), filterString);
         }),
       );
@@ -77,17 +129,23 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
 
     if (filterYear != null) {
       filteredData = filteredData?.filter((item) => {
-        // TODO: Cache dateFromString() result
-        return dateFromString(item.orderDate).getFullYear() === filterYear;
+        return item.orderDateObject.getFullYear() === filterYear;
       });
     }
 
     return filteredData;
-  }, [data, initialData, isLoading, filterString, filterCountry, filterYear]);
+  }, [
+    preparedData,
+    initialData,
+    isLoading,
+    filterString,
+    filterCountry,
+    filterYear,
+  ]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
-    if (isLoading && filteredData.length === 0) return <WaitSpinner />;
+    if (isLoading && filteredData?.length === 0) return <WaitSpinner />;
     if (!filteredData) return null;
     if (filteredData.length === 0) return <div>Orders not found</div>;
 
