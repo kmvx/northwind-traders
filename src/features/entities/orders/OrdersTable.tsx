@@ -1,3 +1,5 @@
+'use client';
+
 import type { ColumnDef, RowData } from '@tanstack/react-table';
 import { PhoneIcon } from 'lucide-react';
 import { useMemo } from 'react';
