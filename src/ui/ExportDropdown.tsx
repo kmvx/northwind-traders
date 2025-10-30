@@ -64,7 +64,7 @@ const ExportDropdown = ({ data, name }: ExportDropdownProps) => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="m-2 flex items-center gap-2"
+          className="flex items-center gap-2"
           disabled={!data?.length}
           title="Export filtered data"
         >

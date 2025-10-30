@@ -14,7 +14,7 @@ const ErrorMessage: React.FC<{
   const text = 'Error: ' + error.message;
 
   return (
-    <div className={clsx('m-2 text-red-600', className)}>
+    <div className={clsx('text-red-600', className)}>
       <Alert
         variant="destructive"
         className="flex flex-wrap items-center gap-2 bg-red-50"

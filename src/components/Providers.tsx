@@ -26,7 +26,7 @@ const queryClient = new QueryClient({
         return data;
       },
       retry: (failureCount, error: unknown) => {
-        //return false;
+        // return false;
         if (error instanceof FetchError) {
           if (error.status >= 400 && error.status < 500) return false;
         }

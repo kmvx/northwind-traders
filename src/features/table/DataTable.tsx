@@ -90,6 +90,7 @@ export default function DataTable<TData>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  className="even:bg-neutral-500/10"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

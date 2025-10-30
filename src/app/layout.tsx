@@ -45,15 +45,15 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider>
             <AppSidebar />
-            <main className="w-full">
+            <main className="w-full pt-2 sm:px-2">
+              {children}
               <SidebarTrigger
                 variant="outline"
-                className="size-9 absolute top-2 left-2"
+                className="size-9 fixed bottom-2 left-2 sm:absolute sm:top-4 sm:left-4"
                 style={{
                   marginLeft: 'env(safe-area-inset-left)',
                 }}
               />
-              {children}
             </main>
           </SidebarProvider>
         </Providers>

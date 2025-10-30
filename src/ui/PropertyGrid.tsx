@@ -14,7 +14,7 @@ export default function PropertyGrid({ items }: PropertyGridProps) {
   return (
     <div
       className={cn(
-        'grid grid-cols-1 items-center gap-y-2 gap-x-8',
+        'grid grid-cols-1 items-center gap-x-8 gap-y-8 sm:gap-y-4',
         items.length > 1 && '2xl:grid-cols-2',
       )}
     >
@@ -27,7 +27,7 @@ export default function PropertyGrid({ items }: PropertyGridProps) {
 
 function Item({ item }: { item: PropertyGridItemType }) {
   return (
-    <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+    <div className="flex flex-col sm:flex-row flex-wrap gap-x-4 gap-y-2">
       <div className="">
         <div>{item.name}:</div>
         {item.description && (
