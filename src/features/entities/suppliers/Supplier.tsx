@@ -1,10 +1,11 @@
 'use client';
 
-import { MapPinIcon, UserIcon } from 'lucide-react';
+import { MapPinIcon } from 'lucide-react';
 import React from 'react';
 
 import { useQuerySupplier } from '@/net';
 import {
+  ContactPerson,
   ContactPhone,
   ErrorMessage,
   Flag,
@@ -52,15 +53,10 @@ const Supplier: React.FC<SupplierProps> = ({ id }) => {
             <ContactPhone phone={data.phone} />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <div className="flex items-start gap-2 my-2" title="Contact">
-              <UserIcon className="size-4 text-muted-foreground mt-1" />
-              <div className="flex flex-col">
-                <b>{data.contactName}</b>
-                <span>{data.contactTitle}</span>
-              </div>
-            </div>
-          </div>
+          <ContactPerson
+            name={data.contactName}
+            contactTitle={data.contactTitle}
+          />
         </div>
       </div>
     </PanelCentred>

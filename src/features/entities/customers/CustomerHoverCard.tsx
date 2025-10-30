@@ -1,6 +1,6 @@
 'use client';
 
-import { HashIcon, MapPinIcon, UserIcon } from 'lucide-react';
+import { HashIcon, MapPinIcon } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import {
@@ -9,7 +9,14 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { useQueryCustomer } from '@/net';
-import { BasicLink, ContactPhone, ErrorMessage, Flag, WaitSpinner } from '@/ui';
+import {
+  BasicLink,
+  ContactPerson,
+  ContactPhone,
+  ErrorMessage,
+  Flag,
+  WaitSpinner,
+} from '@/ui';
 import { joinFields } from '@/utils';
 
 type CustomerHoverCardProps = {
@@ -56,13 +63,11 @@ function CustomerHoverCard({ customerId, children }: CustomerHoverCardProps) {
           </span>
         </div>
 
-        <div className="flex items-start gap-2" title="Contact">
-          <UserIcon className="size-4 text-muted-foreground mt-1" />
-          <div className="flex flex-col">
-            <b>{data.contactName}</b>
-            <span>{data.contactTitle}</span>
-          </div>
-        </div>
+        <ContactPerson
+          name={data.contactName}
+          contactTitle={data.contactTitle}
+          title="Contact name and title"
+        />
       </div>
     );
   };

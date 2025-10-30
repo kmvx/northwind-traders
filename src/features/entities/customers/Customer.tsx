@@ -1,10 +1,11 @@
 'use client';
 
-import { MapPinIcon, UserIcon } from 'lucide-react';
+import { MapPinIcon } from 'lucide-react';
 import React from 'react';
 
 import { useQueryCustomer } from '@/net';
 import {
+  ContactPerson,
   ContactPhone,
   ErrorMessage,
   Flag,
@@ -51,15 +52,10 @@ const Customer: React.FC<CustomerProps> = ({ id }) => {
     {
       name: 'Contact name and title',
       value: (
-        <div className="flex items-start gap-2">
-          <UserIcon className="size-4 text-muted-foreground mt-1" />
-          <div className="flex flex-col">
-            <b>{data.contactName}</b>
-            <span className="text-sm text-muted-foreground">
-              {data.contactTitle}
-            </span>
-          </div>
-        </div>
+        <ContactPerson
+          name={data.contactName}
+          contactTitle={data.contactTitle}
+        />
       ),
       description:
         'The name and job title of the primary contact person for the customer.',
