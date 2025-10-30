@@ -11,6 +11,7 @@ import {
   ErrorMessage,
   Flag,
   PanelCentred,
+  PropertyGrid,
   Typography,
   WaitSpinner,
 } from '@/ui';
@@ -37,54 +38,71 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
   if (isLoading) return <WaitSpinner />;
   if (!data) return <div>No data</div>;
 
+  const items = [
+    {
+      name: 'Address',
+      value: (
+        <div className="inline-flex items-center gap-2">
+          <MapPinIcon className="size-4 text-muted-foreground" />
+          <Flag country={data.country} />
+          <b>
+            {joinFields(
+              data.country,
+              data.region,
+              data.city,
+              data.address,
+              data.postalCode,
+            )}
+          </b>
+        </div>
+      ),
+      description: 'Employee’s home mailing street address.',
+    },
+    {
+      name: 'Territories',
+      value: <Territories employeeId={id} />,
+      description: 'Sales regions.',
+    },
+    {
+      name: 'Home phone',
+      value: (
+        <div className="flex items-center gap-2">
+          <PhoneIcon className="size-4 text-muted-foreground" />
+          <span className="flex items-center gap-2">
+            <b>{data.homePhone}</b>
+            <CopyButton content={data.homePhone} />
+          </span>
+        </div>
+      ),
+      description: 'Contact phone number.',
+    },
+    {
+      name: 'Birth date',
+      value: (
+        <div className="flex items-center gap-2">
+          <CakeIcon className="size-4 text-muted-foreground" />
+          <span className="flex items-center gap-2">
+            <b>{formatDateFromString(data.birthDate)}</b>
+          </span>
+        </div>
+      ),
+      description: 'The specific day, month, and year the employee was born.',
+    },
+  ];
+
   return (
     <PanelCentred className="flex flex-col gap-4">
       <Typography.Header1>{name}</Typography.Header1>
-      <div className="flex flex-col gap-4 max-w-5xl">
+      <div className="flex flex-col gap-4">
         <div className="text-center">
           <b>{data.title}</b>, employee
         </div>
 
-        <div className="flex flex-col md:flex-row flex-wrap gap-2 gap-x-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2" title="Address">
-              <MapPinIcon className="size-4 text-muted-foreground" />
-              <Flag country={data.country} />
-              <b>
-                {joinFields(
-                  data.country,
-                  data.region,
-                  data.city,
-                  data.address,
-                  data.postalCode,
-                )}
-              </b>
-            </div>
-            <Territories employeeId={id} />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2" title="Home phone">
-              <PhoneIcon className="size-4 text-muted-foreground" />
-              <span className="flex items-center gap-2">
-                <b>{data.homePhone}</b>
-                <span>Home</span>
-                <CopyButton content={data.homePhone} />
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <CakeIcon className="size-4 text-muted-foreground" />
-              <span>
-                Birth date: <b>{formatDateFromString(data.birthDate)}</b>
-              </span>
-            </div>
-          </div>
-        </div>
+        <PropertyGrid items={items} />
 
         <Separator />
 
-        <div className="">
+        <div>
           <Image
             src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
             width={103}
