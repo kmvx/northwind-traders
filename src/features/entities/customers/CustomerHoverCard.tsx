@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  HashIcon,
-  MapPinIcon,
-  PhoneIcon,
-  PrinterIcon,
-  UserIcon,
-} from 'lucide-react';
+import { HashIcon, MapPinIcon, UserIcon } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import {
@@ -15,7 +9,7 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { useQueryCustomer } from '@/net';
-import { BasicLink, CopyButton, ErrorMessage, Flag, WaitSpinner } from '@/ui';
+import { BasicLink, ContactPhone, ErrorMessage, Flag, WaitSpinner } from '@/ui';
 import { joinFields } from '@/utils';
 
 type CustomerHoverCardProps = {
@@ -51,22 +45,9 @@ function CustomerHoverCard({ customerId, children }: CustomerHoverCardProps) {
           </b>
         </div>
 
-        <div className="flex items-center gap-2" title="Phone">
-          <PhoneIcon className="size-4 text-muted-foreground" />
-          <span className="flex items-center gap-2">
-            <b>{data.phone}</b>
-            <CopyButton content={data.phone} />
-          </span>
-        </div>
+        <ContactPhone phone={data.phone} />
 
-        {data.fax && (
-          <div className="flex items-center gap-2" title="Fax">
-            <PrinterIcon className="size-4 text-muted-foreground" />
-            <span className="flex items-center gap-2">
-              <b>{data.fax}</b>
-            </span>
-          </div>
-        )}
+        {data.fax && <ContactPhone phone={data.fax} isFax />}
 
         <div className="flex items-center gap-2" title="ID">
           <HashIcon className="size-4 text-muted-foreground" />

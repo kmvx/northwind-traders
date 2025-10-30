@@ -1,6 +1,6 @@
 'use client';
 
-import { MapPinIcon, PhoneIcon } from 'lucide-react';
+import { MapPinIcon } from 'lucide-react';
 import React from 'react';
 
 import { Separator } from '@/components/ui';
@@ -11,7 +11,7 @@ import {
   useQueryOrderShipper,
 } from '@/net';
 import {
-  CopyButton,
+  ContactPhone,
   ErrorMessage,
   Flag,
   PanelCentred,
@@ -131,15 +131,7 @@ const Order: React.FC<OrderProps> = ({ id }) => {
         },
         {
           name: 'Ship company phone',
-          value: (
-            <div className="inline-flex items-center gap-2 my-2">
-              <PhoneIcon className="size-4 text-muted-foreground" />
-              <span className="flex items-center gap-2">
-                <b>{dataShipper.phone}</b>
-                <CopyButton content={dataShipper.phone} />
-              </span>
-            </div>
-          ),
+          value: <ContactPhone phone={dataShipper.phone} />,
           description: 'Contact phone number for the shipping company.',
         },
       ]

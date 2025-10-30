@@ -1,6 +1,7 @@
 export { default as BasicLink } from './BasicLink';
 export { default as BasicTooltip } from './BasicTooltip';
 export { default as ButtonWithTooltip } from './ButtonWithTooltip';
+export { default as ContactPhone } from './ContactPhone';
 export { default as CopyButton } from './CopyButton';
 export { default as DebouncedInput } from './DebouncedInput';
 export { default as ErrorMessage } from './ErrorMessage';

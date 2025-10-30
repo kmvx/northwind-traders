@@ -1,11 +1,11 @@
 'use client';
 
-import { MapPinIcon, PhoneIcon, PrinterIcon, UserIcon } from 'lucide-react';
+import { MapPinIcon, UserIcon } from 'lucide-react';
 import React from 'react';
 
 import { useQueryCustomer } from '@/net';
 import {
-  CopyButton,
+  ContactPhone,
   ErrorMessage,
   Flag,
   PanelCentred,
@@ -66,30 +66,12 @@ const Customer: React.FC<CustomerProps> = ({ id }) => {
     },
     {
       name: 'Phone',
-      value: (
-        <div className="flex items-center gap-2 my-2">
-          <PhoneIcon className="size-4 text-muted-foreground" />
-          <span className="flex items-center gap-2">
-            <b>{data.phone}</b>
-            <CopyButton content={data.phone} />
-          </span>
-        </div>
-      ),
+      value: <ContactPhone phone={data.phone} />,
       description: 'The customer’s contact phone number.',
     },
     {
       name: 'Fax',
-      value: data.fax ? (
-        <div className="flex items-center gap-2 my-2">
-          <PrinterIcon className="size-4 text-muted-foreground" />
-          <span className="flex items-center gap-2">
-            <b>{data.fax}</b>
-            <CopyButton content={data.fax} />
-          </span>
-        </div>
-      ) : (
-        'None'
-      ),
+      value: data.fax ? <ContactPhone phone={data.fax} isFax /> : 'None',
       description: 'The customer’s fax number.',
     },
     {

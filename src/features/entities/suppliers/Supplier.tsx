@@ -1,11 +1,11 @@
 'use client';
 
-import { MapPinIcon, PhoneIcon, UserIcon } from 'lucide-react';
+import { MapPinIcon, UserIcon } from 'lucide-react';
 import React from 'react';
 
 import { useQuerySupplier } from '@/net';
 import {
-  CopyButton,
+  ContactPhone,
   ErrorMessage,
   Flag,
   PanelCentred,
@@ -49,13 +49,7 @@ const Supplier: React.FC<SupplierProps> = ({ id }) => {
               </b>
             </div>
 
-            <div className="flex items-center gap-2 my-2" title="Phone">
-              <PhoneIcon className="size-4 text-muted-foreground" />
-              <span className="flex items-center gap-2">
-                <b>{data.phone}</b>
-                <CopyButton content={data.phone} />
-              </span>
-            </div>
+            <ContactPhone phone={data.phone} />
           </div>
 
           <div className="flex flex-col gap-2">

@@ -1,6 +1,6 @@
 'use client';
 
-import { CakeIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
+import { CakeIcon, MapPinIcon } from 'lucide-react';
 import Image from 'next/image';
 import { memo, useState } from 'react';
 
@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/hover-card';
 import type { IEmployee } from '@/models';
 import { useQueryEmployee } from '@/net';
-import { BasicLink, CopyButton, ErrorMessage, Flag, WaitSpinner } from '@/ui';
+import { BasicLink, ContactPhone, ErrorMessage, Flag, WaitSpinner } from '@/ui';
 import {
   formatDateFromString,
   getEmployeeNameByData,
@@ -70,14 +70,7 @@ function EmployeeHoverCard({ employee, employeeId }: EmployeeHoverCardProps) {
           </b>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2" title="Home phone">
-          <PhoneIcon className="min-w-4 size-4 text-muted-foreground mt-1" />
-          <b className="whitespace-pre">{data.homePhone}</b>
-          <CopyButton content={data.homePhone} />
-          <span className="text-muted-foreground text-sm whitespace-pre">
-            Home phone
-          </span>
-        </div>
+        <ContactPhone phone={data.homePhone} description="Home phone" />
 
         <div className="flex items-center gap-2">
           <CakeIcon className="min-w-4 size-4 text-muted-foreground" />

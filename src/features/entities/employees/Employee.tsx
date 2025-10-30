@@ -1,13 +1,13 @@
 'use client';
 
-import { CakeIcon, FlagIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
+import { CakeIcon, FlagIcon, MapPinIcon } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
 import { Separator } from '@/components/ui';
 import { useQueryEmployee } from '@/net';
 import {
-  CopyButton,
+  ContactPhone,
   ErrorMessage,
   Flag,
   PanelCentred,
@@ -65,15 +65,7 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
     },
     {
       name: 'Home phone',
-      value: (
-        <div className="flex items-center gap-2">
-          <PhoneIcon className="size-4 text-muted-foreground" />
-          <span className="flex items-center gap-2">
-            <b>{data.homePhone}</b>
-            <CopyButton content={data.homePhone} />
-          </span>
-        </div>
-      ),
+      value: <ContactPhone phone={data.homePhone} />,
       description: 'Contact phone number.',
     },
     {
