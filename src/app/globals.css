@@ -126,7 +126,7 @@
 }
 
 @custom-variant h-max-sm {
-  @media (max-height: 32rem) {
+  @media (height < 32rem) {
     & {
       @slot;
     }
