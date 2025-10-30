@@ -1,12 +1,3 @@
-import {
-  AxeIcon,
-  CreditCardIcon,
-  DollarSignIcon,
-  EggFriedIcon,
-  HouseIcon,
-  type LucideIcon,
-  UserIcon,
-} from 'lucide-react';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
@@ -23,58 +14,10 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { FullscreenToggle, ThemeToggle } from '@/ui';
+import { navigationItems } from '@/constants';
+import { FullscreenToggle, Logo, ThemeToggle } from '@/ui';
 
 import { Separator } from './ui';
-
-const items: {
-  title?: string;
-  children: {
-    title: string;
-    url: string;
-    icon: LucideIcon;
-  }[];
-}[] = [
-  {
-    children: [
-      {
-        title: 'About',
-        url: '/',
-        icon: HouseIcon,
-      },
-    ],
-  },
-  {
-    title: 'Entites',
-    children: [
-      {
-        title: 'Customers',
-        url: '/customers',
-        icon: DollarSignIcon,
-      },
-      {
-        title: 'Employees',
-        url: '/employees',
-        icon: UserIcon,
-      },
-      {
-        title: 'Orders',
-        url: '/orders',
-        icon: CreditCardIcon,
-      },
-      {
-        title: 'Products',
-        url: '/products',
-        icon: EggFriedIcon,
-      },
-      {
-        title: 'Suppliers',
-        url: '/suppliers',
-        icon: AxeIcon,
-      },
-    ],
-  },
-];
 
 export default function AppSidebar() {
   return (
@@ -93,7 +36,7 @@ export default function AppSidebar() {
         <Separator />
       </SidebarHeader>
       <SidebarContent className="h-max-sm:gap-0">
-        {items.map((item, index) => (
+        {navigationItems.map((item, index) => (
           <Fragment key={index}>
             {index > 0 && <Separator />}
             <SidebarGroup>
@@ -104,10 +47,10 @@ export default function AppSidebar() {
                 {item.children.map((child) => (
                   <SidebarMenuItem key={child.title}>
                     <SidebarMenuButton asChild className="h-max-sm:py-0">
-                      <a href={child.url}>
+                      <Link href={child.url}>
                         <child.icon />
                         <span>{child.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -132,16 +75,5 @@ export default function AppSidebar() {
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
-  );
-}
-
-function Logo() {
-  return (
-    <Link
-      href="/"
-      className="text-4xl font-serif italic font-black drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-teal-600 dark:from-blue-300 dark:to-teal-300"
-    >
-      Northwind Traders
-    </Link>
   );
 }
