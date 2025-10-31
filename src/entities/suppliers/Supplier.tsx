@@ -3,16 +3,10 @@
 import React from 'react';
 
 import { useQuerySupplier } from '@/net';
-import {
-  ContactAddress,
-  ContactPerson,
-  ContactPhone,
-  ErrorMessage,
-  PanelCentred,
-  Typography,
-  WaitSpinner,
-} from '@/ui';
+import { ErrorMessage, PanelCentred, Typography, WaitSpinner } from '@/ui';
 import { joinFields, setDocumentTitle } from '@/utils';
+
+import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface SupplierProps {
   id: string;

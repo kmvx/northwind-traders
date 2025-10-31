@@ -17,7 +17,6 @@ import { useQuerySuppliers } from '@/net';
 import {
   ErrorMessage,
   ExportDropdown,
-  FilterCountry,
   FiltersClearButton,
   PanelStretched,
   ReloadButton,
@@ -26,7 +25,7 @@ import {
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
 
-import { Location, LocationSkeleton } from '../shared';
+import { FilterCountry, Location, LocationSkeleton } from '../shared';
 
 export default function Suppliers({
   initialData,

@@ -1,6 +1,6 @@
 import { PhoneIcon, PrinterIcon } from 'lucide-react';
 
-import CopyButton from './CopyButton';
+import CopyButton from '../../ui/CopyButton';
 
 export default function ContactPhone({
   phone,

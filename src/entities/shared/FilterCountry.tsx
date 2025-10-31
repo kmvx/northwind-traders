@@ -4,7 +4,7 @@ import { memo, useMemo } from 'react';
 
 import { getCountries, getFlagEmojiByCountryName } from '@/utils';
 
-import { SelectStringList } from '.';
+import { SelectStringList } from '../../ui';
 
 const EMPTY_OPTION_VALUE = 'worldwide';
 

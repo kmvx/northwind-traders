@@ -4,9 +4,6 @@ import React from 'react';
 
 import { useQueryCustomer } from '@/net';
 import {
-  ContactAddress,
-  ContactPerson,
-  ContactPhone,
   ErrorMessage,
   PanelCentred,
   PropertyGrid,
@@ -14,6 +11,8 @@ import {
   WaitSpinner,
 } from '@/ui';
 import { joinFields, setDocumentTitle } from '@/utils';
+
+import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface CustomerProps {
   id: string;

@@ -18,7 +18,6 @@ import { useQueryEmployees } from '@/net';
 import {
   ErrorMessage,
   ExportDropdown,
-  FilterCountry,
   FiltersClearButton,
   PanelStretched,
   ReloadButton,
@@ -27,7 +26,7 @@ import {
 } from '@/ui';
 import { getEmployeeNameByData, isStringIncludes } from '@/utils';
 
-import { Location, LocationSkeleton } from '../shared';
+import { FilterCountry, Location, LocationSkeleton } from '../shared';
 
 export default function Employees({
   initialData,

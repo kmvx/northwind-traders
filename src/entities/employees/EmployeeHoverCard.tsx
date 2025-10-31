@@ -12,19 +12,14 @@ import {
 } from '@/components/ui/hover-card';
 import type { IEmployee } from '@/models';
 import { useQueryEmployee } from '@/net';
-import {
-  BasicLink,
-  ContactAddress,
-  ContactPhone,
-  ErrorMessage,
-  WaitSpinner,
-} from '@/ui';
+import { BasicLink, ErrorMessage, WaitSpinner } from '@/ui';
 import {
   formatDateFromString,
   getEmployeeNameByData,
   joinFields,
 } from '@/utils';
 
+import { ContactAddress, ContactPhone } from '../shared';
 import Territories from './Territories';
 
 type EmployeeHoverCardProps = {

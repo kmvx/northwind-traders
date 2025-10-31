@@ -8,11 +8,12 @@ import { Spinner } from '@/components/ui';
 import { DataTable } from '@/features/table';
 import type { IEmployees, IOrder, IOrders, IShippers } from '@/models';
 import { useQueryEmployees, useQueryShippers } from '@/net';
-import { BasicLink, Flag } from '@/ui';
+import { BasicLink } from '@/ui';
 import { dateFromString, formatDateFromString, joinFields } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
+import { Flag } from '../shared';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

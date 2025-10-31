@@ -10,7 +10,6 @@ import {
   DebouncedInput,
   ErrorMessage,
   ExportDropdown,
-  FilterCountry,
   FiltersClearButton,
   PanelStretched,
   ReloadButton,
@@ -25,6 +24,7 @@ import {
   joinFields,
 } from '@/utils';
 
+import { FilterCountry } from '../shared';
 import { FilterYear, type IOrderCustom, OrdersTable } from '.';
 
 export default function Orders({ initialData }: { initialData?: IOrders }) {

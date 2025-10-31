@@ -17,7 +17,6 @@ import {
   DebouncedInput,
   ErrorMessage,
   ExportDropdown,
-  FilterCountry,
   FiltersClearButton,
   Pagination,
   PanelStretched,
@@ -27,7 +26,7 @@ import {
 } from '@/ui';
 import { isStringIncludes } from '@/utils';
 
-import { Location, LocationSkeleton } from '../shared';
+import { FilterCountry, Location, LocationSkeleton } from '../shared';
 
 export default function Customers({
   initialData,

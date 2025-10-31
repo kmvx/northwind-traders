@@ -7,8 +7,6 @@ import React from 'react';
 import { Separator } from '@/components/ui';
 import { useQueryEmployee } from '@/net';
 import {
-  ContactAddress,
-  ContactPhone,
   ErrorMessage,
   PanelCentred,
   PropertyGrid,
@@ -22,6 +20,7 @@ import {
   setDocumentTitle,
 } from '@/utils';
 
+import { ContactAddress, ContactPhone } from '../shared';
 import { EmployeeLink, Employees, Territories } from '.';
 
 interface EmployeeProps {

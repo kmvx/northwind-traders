@@ -9,15 +9,10 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { useQueryCustomer } from '@/net';
-import {
-  BasicLink,
-  ContactAddress,
-  ContactPerson,
-  ContactPhone,
-  ErrorMessage,
-  WaitSpinner,
-} from '@/ui';
+import { BasicLink, ErrorMessage, WaitSpinner } from '@/ui';
 import { joinFields } from '@/utils';
+
+import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 type CustomerHoverCardProps = {
   customerId: string;

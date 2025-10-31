@@ -1,16 +1,11 @@
 export { default as BasicLink } from './BasicLink';
 export { default as BasicTooltip } from './BasicTooltip';
 export { default as ButtonWithTooltip } from './ButtonWithTooltip';
-export { default as ContactAddress } from './ContactAddress';
-export { default as ContactPerson } from './ContactPerson';
-export { default as ContactPhone } from './ContactPhone';
 export { default as CopyButton } from './CopyButton';
 export { default as DebouncedInput } from './DebouncedInput';
 export { default as ErrorMessage } from './ErrorMessage';
 export { default as ExportDropdown } from './ExportDropdown';
-export { default as FilterCountry } from './FilterCountry';
 export { default as FiltersClearButton } from './FiltersClearButton';
-export { default as Flag } from './Flag';
 export { default as FullscreenToggle } from './FullscreenToggle';
 export { default as Logo } from './Logo';
 export { default as Pagination } from './Pagination';

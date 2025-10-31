@@ -10,10 +10,7 @@ import {
   useQueryOrderShipper,
 } from '@/net';
 import {
-  ContactAddress,
-  ContactPhone,
   ErrorMessage,
-  Flag,
   PanelCentred,
   PropertyGrid,
   Typography,
@@ -23,6 +20,7 @@ import { formatDateFromString, joinFields, setDocumentTitle } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
+import { ContactAddress, ContactPhone, Flag } from '../shared';
 
 interface OrderProps {
   id: string;
