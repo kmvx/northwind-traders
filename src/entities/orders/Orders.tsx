@@ -36,7 +36,7 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
     defaultValue: '',
   });
   const [filterYear, setFilterYear] = useQueryState('year', parseAsInteger);
-  const hasFilters = !!filterString || !!filterCountry;
+  const hasFilters = !!filterString || !!filterCountry || !!filterYear;
   function handleFiltersClear() {
     setFilterString('');
     setFilterCountry('');
