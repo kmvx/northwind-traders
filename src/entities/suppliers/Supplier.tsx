@@ -16,7 +16,7 @@ import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface SupplierProps {
   id: string;
-  isEmbedded: boolean;
+  isEmbedded?: boolean;
 }
 
 const Supplier: React.FC<SupplierProps> = ({ id, isEmbedded = false }) => {
