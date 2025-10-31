@@ -12,6 +12,7 @@ import {
 } from '@/ui';
 import { setDocumentTitle } from '@/utils';
 
+import { Supplier } from '../suppliers';
 import { CategoryName } from '.';
 
 interface ProductProps {
@@ -91,6 +92,7 @@ const Product: React.FC<ProductProps> = ({ id }) => {
       <div className="flex flex-col gap-4">
         <div className="text-center">Product</div>
         <PropertyGrid items={items} />
+        <Supplier id={String(data.supplierId)} isEmbedded />
       </div>
     </PanelCentred>
   );

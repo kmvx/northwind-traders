@@ -16,12 +16,15 @@ import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface SupplierProps {
   id: string;
+  isEmbedded: boolean;
 }
 
-const Supplier: React.FC<SupplierProps> = ({ id }) => {
+const Supplier: React.FC<SupplierProps> = ({ id, isEmbedded = false }) => {
   const { data, error, isLoading, refetch } = useQuerySupplier({ id });
 
-  setDocumentTitle(data?.companyName, 'Supplier');
+  if (!isEmbedded) {
+    setDocumentTitle(data?.companyName, 'Supplier');
+  }
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isLoading) return <WaitSpinner />;
@@ -62,9 +65,11 @@ const Supplier: React.FC<SupplierProps> = ({ id }) => {
     },
   ];
 
+  const Header = isEmbedded ? Typography.Header2 : Typography.Header1;
+
   return (
     <PanelCentred className="flex flex-col gap-4">
-      <Typography.Header1>{data.companyName}</Typography.Header1>
+      <Header>{data.companyName}</Header>
       <div className="flex flex-col gap-4">
         <div className="text-center">Supplier company</div>
         <PropertyGrid items={items} />
