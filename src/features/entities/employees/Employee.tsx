@@ -1,15 +1,15 @@
 'use client';
 
-import { CakeIcon, FlagIcon, MapPinIcon } from 'lucide-react';
+import { CakeIcon, FlagIcon } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
 import { Separator } from '@/components/ui';
 import { useQueryEmployee } from '@/net';
 import {
+  ContactAddress,
   ContactPhone,
   ErrorMessage,
-  Flag,
   PanelCentred,
   PropertyGrid,
   Typography,
@@ -42,19 +42,16 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
     {
       name: 'Address',
       value: (
-        <div className="inline-flex items-center gap-2">
-          <MapPinIcon className="size-4 text-muted-foreground" />
-          <Flag country={data.country} />
-          <b>
-            {joinFields(
-              data.country,
-              data.region,
-              data.city,
-              data.address,
-              data.postalCode,
-            )}
-          </b>
-        </div>
+        <ContactAddress
+          country={data.country}
+          address={joinFields(
+            data.country,
+            data.region,
+            data.city,
+            data.address,
+            data.postalCode,
+          )}
+        />
       ),
       description: 'Employee’s home mailing street address.',
     },

@@ -12,7 +12,7 @@ export default function ContactPhone({
   isFax?: boolean;
 }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2" title={isFax ? 'Fax' : 'Phone'}>
       {isFax ? (
         <PrinterIcon className="min-w-4 size-4 text-muted-foreground" />
       ) : (

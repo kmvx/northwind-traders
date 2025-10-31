@@ -1,6 +1,6 @@
 'use client';
 
-import { CakeIcon, MapPinIcon } from 'lucide-react';
+import { CakeIcon } from 'lucide-react';
 import Image from 'next/image';
 import { memo, useState } from 'react';
 
@@ -12,7 +12,13 @@ import {
 } from '@/components/ui/hover-card';
 import type { IEmployee } from '@/models';
 import { useQueryEmployee } from '@/net';
-import { BasicLink, ContactPhone, ErrorMessage, Flag, WaitSpinner } from '@/ui';
+import {
+  BasicLink,
+  ContactAddress,
+  ContactPhone,
+  ErrorMessage,
+  WaitSpinner,
+} from '@/ui';
 import {
   formatDateFromString,
   getEmployeeNameByData,
@@ -56,19 +62,16 @@ function EmployeeHoverCard({ employee, employeeId }: EmployeeHoverCardProps) {
           </div>
         </div>
 
-        <div className="flex items-center gap-2" title="Address">
-          <MapPinIcon className="min-w-4 size-4 text-muted-foreground" />
-          <Flag country={data.country} />
-          <b>
-            {joinFields(
-              data.country,
-              data.region,
-              data.city,
-              data.address,
-              data.postalCode,
-            )}
-          </b>
-        </div>
+        <ContactAddress
+          country={data.country}
+          address={joinFields(
+            data.country,
+            data.region,
+            data.city,
+            data.address,
+            data.postalCode,
+          )}
+        />
 
         <ContactPhone phone={data.homePhone} description="Home phone" />
 

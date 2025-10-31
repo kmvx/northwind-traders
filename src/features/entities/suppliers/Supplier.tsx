@@ -1,14 +1,13 @@
 'use client';
 
-import { MapPinIcon } from 'lucide-react';
 import React from 'react';
 
 import { useQuerySupplier } from '@/net';
 import {
+  ContactAddress,
   ContactPerson,
   ContactPhone,
   ErrorMessage,
-  Flag,
   PanelCentred,
   Typography,
   WaitSpinner,
@@ -35,20 +34,17 @@ const Supplier: React.FC<SupplierProps> = ({ id }) => {
         <div className="text-center">Supplier company</div>
 
         <div className="flex flex-col md:flex-row flex-wrap gap-2 gap-x-4">
-          <div>
-            <div className="flex items-center gap-2" title="Address">
-              <MapPinIcon className="size-4 text-muted-foreground" />
-              <Flag country={data.country} />
-              <b className="my-2">
-                {joinFields(
-                  data.country,
-                  data.region,
-                  data.city,
-                  data.address,
-                  data.postalCode,
-                )}
-              </b>
-            </div>
+          <div className="flex flex-col gap-4">
+            <ContactAddress
+              country={data.country}
+              address={joinFields(
+                data.country,
+                data.region,
+                data.city,
+                data.address,
+                data.postalCode,
+              )}
+            />
 
             <ContactPhone phone={data.phone} />
           </div>

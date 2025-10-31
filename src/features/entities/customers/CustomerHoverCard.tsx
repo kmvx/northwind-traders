@@ -1,6 +1,6 @@
 'use client';
 
-import { HashIcon, MapPinIcon } from 'lucide-react';
+import { HashIcon } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import {
@@ -11,10 +11,10 @@ import {
 import { useQueryCustomer } from '@/net';
 import {
   BasicLink,
+  ContactAddress,
   ContactPerson,
   ContactPhone,
   ErrorMessage,
-  Flag,
   WaitSpinner,
 } from '@/ui';
 import { joinFields } from '@/utils';
@@ -38,19 +38,16 @@ function CustomerHoverCard({ customerId, children }: CustomerHoverCardProps) {
 
     return (
       <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-2" title="Address">
-          <MapPinIcon className="size-4 text-muted-foreground" />
-          <Flag country={data.country} />
-          <b className="my-2">
-            {joinFields(
-              data.country,
-              data.region,
-              data.city,
-              data.address,
-              data.postalCode,
-            )}
-          </b>
-        </div>
+        <ContactAddress
+          country={data.country}
+          address={joinFields(
+            data.country,
+            data.region,
+            data.city,
+            data.address,
+            data.postalCode,
+          )}
+        />
 
         <ContactPhone phone={data.phone} />
 

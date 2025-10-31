@@ -1,6 +1,5 @@
 'use client';
 
-import { MapPinIcon } from 'lucide-react';
 import React from 'react';
 
 import { Separator } from '@/components/ui';
@@ -11,6 +10,7 @@ import {
   useQueryOrderShipper,
 } from '@/net';
 import {
+  ContactAddress,
   ContactPhone,
   ErrorMessage,
   Flag,
@@ -104,19 +104,16 @@ const Order: React.FC<OrderProps> = ({ id }) => {
     {
       name: 'Ship address',
       value: (
-        <div className="inline-flex items-center gap-2">
-          <MapPinIcon className="size-4 text-muted-foreground" />
-          <Flag country={data.shipCountry} />
-          <b className="my-2">
-            {joinFields(
-              data.shipCountry,
-              data.shipRegion,
-              data.shipCity,
-              data.shipAddress,
-              data.shipPostalCode,
-            )}
-          </b>
-        </div>
+        <ContactAddress
+          country={data.shipCountry}
+          address={joinFields(
+            data.shipCountry,
+            data.shipRegion,
+            data.shipCity,
+            data.shipAddress,
+            data.shipPostalCode,
+          )}
+        />
       ),
       description: 'Street address for delivery of the order.',
     },

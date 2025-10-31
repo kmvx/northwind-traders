@@ -1,14 +1,13 @@
 'use client';
 
-import { MapPinIcon } from 'lucide-react';
 import React from 'react';
 
 import { useQueryCustomer } from '@/net';
 import {
+  ContactAddress,
   ContactPerson,
   ContactPhone,
   ErrorMessage,
-  Flag,
   PanelCentred,
   PropertyGrid,
   Typography,
@@ -33,19 +32,16 @@ const Customer: React.FC<CustomerProps> = ({ id }) => {
     {
       name: 'Address',
       value: (
-        <div className="inline-flex items-center gap-2">
-          <MapPinIcon className="size-4 text-muted-foreground" />
-          <Flag country={data.country} />
-          <b className="my-2">
-            {joinFields(
-              data.country,
-              data.region,
-              data.city,
-              data.address,
-              data.postalCode,
-            )}
-          </b>
-        </div>
+        <ContactAddress
+          country={data.country}
+          address={joinFields(
+            data.country,
+            data.region,
+            data.city,
+            data.address,
+            data.postalCode,
+          )}
+        />
       ),
       description: 'Customer’s business street address.',
     },
