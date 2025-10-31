@@ -1,4 +1,4 @@
-import { Order } from '@/features/entities/orders';
+import { Order } from '@/entities/orders';
 
 export default async function OrderPage({
   params,

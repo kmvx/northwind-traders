@@ -1,4 +1,4 @@
-import { Product } from '@/features/entities/products';
+import { Product } from '@/entities/products';
 
 export default async function ProductPage({
   params,

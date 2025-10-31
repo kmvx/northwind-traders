@@ -1,6 +1,6 @@
 import { type Metadata } from 'next';
 
-import { Customers } from '@/features/entities/customers';
+import { Customers } from '@/entities/customers';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {

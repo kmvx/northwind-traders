@@ -1,4 +1,4 @@
-import { Supplier } from '@/features/entities/suppliers';
+import { Supplier } from '@/entities/suppliers';
 
 export default async function SupplierPage({
   params,

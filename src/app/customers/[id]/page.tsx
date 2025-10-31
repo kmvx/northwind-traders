@@ -1,4 +1,4 @@
-import { Customer } from '@/features/entities/customers';
+import { Customer } from '@/entities/customers';
 
 export default async function CustomerPage({
   params,
