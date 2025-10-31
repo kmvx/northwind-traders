@@ -3,7 +3,7 @@
 import { parseAsInteger, useQueryState } from 'nuqs';
 import { useState } from 'react';
 
-import { useMemoWaitCursor } from '@/hooks';
+import { useMemoWaitCursor, usePageSize } from '@/hooks';
 import { type IOrders } from '@/models';
 import { useQueryEmployees, useQueryOrders } from '@/net';
 import {
@@ -25,7 +25,7 @@ import {
 } from '@/utils';
 
 import { FilterCountry } from '../shared';
-import { FilterYear, type IOrderCustom, OrdersTable } from '.';
+import { FilterYear, type IOrderCustom, OrdersCards, OrdersTable } from '.';
 
 export default function Orders({ initialData }: { initialData?: IOrders }) {
   // Filters
@@ -143,13 +143,19 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
     filterYear,
   ]);
 
+  const isWidePage = (usePageSize()?.width ?? 0) >= 1024;
+
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
     if (isLoading && filteredData?.length === 0) return <WaitSpinner />;
     if (!filteredData) return null;
     if (filteredData.length === 0) return <div>Orders not found</div>;
 
-    return <OrdersTable data={filteredData} />;
+    return isWidePage ? (
+      <OrdersTable data={filteredData} />
+    ) : (
+      <OrdersCards data={filteredData} />
+    );
   };
 
   if (!filteredData?.length && !hasFilters) {
