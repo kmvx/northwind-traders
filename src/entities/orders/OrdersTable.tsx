@@ -6,14 +6,14 @@ import { useMemo } from 'react';
 
 import { Spinner } from '@/components/ui';
 import { DataTable } from '@/features/table';
-import type { IEmployees, IOrder, IOrders, IShippers } from '@/models';
+import type { IEmployees, IShippers } from '@/models';
 import { useQueryEmployees, useQueryShippers } from '@/net';
 import { BasicLink } from '@/ui';
-import { dateFromString, formatDateFromString, joinFields } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
 import { Flag } from '../shared';
+import type { IOrderFormatted } from '.';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,14 +23,7 @@ declare module '@tanstack/table-core' {
   }
 }
 
-interface OrderFormatted extends IOrder {
-  orderDateObject: Date;
-  shippedDateObject: Date;
-  requiredDateObject: Date;
-  addressLine: string;
-}
-
-const columns: ColumnDef<OrderFormatted>[] = [
+const allColumns: ColumnDef<IOrderFormatted>[] = [
   {
     accessorKey: 'orderId',
     header: '#',
@@ -94,21 +87,21 @@ const columns: ColumnDef<OrderFormatted>[] = [
     accessorKey: 'orderDateObject',
     header: 'Order date',
     cell: ({ row }) => {
-      return formatDateFromString(row.original.orderDate);
+      return row.original.orderDateFormatted;
     },
   },
   {
     accessorKey: 'shippedDateObject',
     header: 'Shipped date',
     cell: ({ row }) => {
-      return formatDateFromString(row.original.shippedDate);
+      return row.original.shippedDateFormatted;
     },
   },
   {
     accessorKey: 'requiredDateObject',
     header: 'Required date',
     cell: ({ row }) => {
-      return formatDateFromString(row.original.requiredDate);
+      return row.original.requiredDateFormatted;
     },
   },
   {
@@ -136,29 +129,35 @@ const columns: ColumnDef<OrderFormatted>[] = [
   },
 ];
 
-export default function OrdersTable({ data }: { data: IOrders }) {
-  const dataFormatted: OrderFormatted[] = useMemo(() => {
-    return data.map((item) => ({
-      ...item,
-      orderDateObject: dateFromString(item.orderDate),
-      shippedDateObject: dateFromString(item.shippedDate),
-      requiredDateObject: dateFromString(item.requiredDate),
-      addressLine: joinFields(
-        item.shipCountry,
-        item.shipRegion,
-        item.shipCity,
-        item.shipAddress,
-        item.shipPostalCode,
-      ),
-    }));
-  }, [data]);
-
+export default function OrdersTable({
+  data,
+  isCustomerPage,
+  isEmployeePage,
+}: {
+  data: IOrderFormatted[];
+  isCustomerPage?: boolean | undefined;
+  isEmployeePage?: boolean | undefined;
+}) {
   const { data: dataEmployees } = useQueryEmployees();
   const { data: dataShippers } = useQueryShippers();
 
+  const columns = useMemo(() => {
+    return allColumns.filter((column) => {
+      if ('accessorKey' in column) {
+        if (isCustomerPage && column.accessorKey === 'customerId') {
+          return false;
+        }
+        if (isEmployeePage && column.accessorKey === 'employeeId') {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [isCustomerPage, isEmployeePage]);
+
   return (
     <DataTable
-      data={dataFormatted}
+      data={data}
       columns={columns}
       meta={{ dataEmployees, dataShippers }}
     />

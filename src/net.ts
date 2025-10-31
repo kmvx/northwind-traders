@@ -24,27 +24,25 @@ const API_URL = 'https://demodata.grapecity.com/northwind/api/v1';
 // Orders
 
 export const useQueryOrders = ({
-  isCustomersPage,
-  isEmployeesPage,
-  isShippersPage,
-  id,
+  customerId,
+  employeeId,
+  shipperId,
 }: {
-  isCustomersPage?: boolean;
-  isEmployeesPage?: boolean;
-  isShippersPage?: boolean;
-  id?: string;
+  customerId?: string | undefined;
+  employeeId?: string | undefined;
+  shipperId?: string | undefined;
 } = {}) => {
   return useQuery<IOrders>({
     queryKey: [
       API_URL +
-        (isCustomersPage
+        (customerId
           ? '/Customers/'
-          : isEmployeesPage
+          : employeeId
             ? '/Employees/'
-            : isShippersPage
+            : shipperId
               ? '/Shippers/'
               : '') +
-        (id || '') +
+        (customerId || employeeId || shipperId || '') +
         '/Orders',
     ],
   });

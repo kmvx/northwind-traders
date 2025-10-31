@@ -25,9 +25,17 @@ import {
 } from '@/utils';
 
 import { FilterCountry } from '../shared';
-import { FilterYear, type IOrderCustom, OrdersCards, OrdersTable } from '.';
+import { FilterYear, type IOrderFormatted, OrdersCards, OrdersTable } from '.';
 
-export default function Orders({ initialData }: { initialData?: IOrders }) {
+export default function Orders({
+  initialData,
+  customerId,
+  employeeId,
+}: {
+  initialData?: IOrders;
+  customerId?: string;
+  employeeId?: string;
+}) {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
     defaultValue: '',
@@ -44,7 +52,10 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
   }
 
   // Network data
-  const { data, isLoading, isFetching, error, refetch } = useQueryOrders();
+  const { data, isLoading, isFetching, error, refetch } = useQueryOrders({
+    customerId,
+    employeeId,
+  });
   const { data: dataEmployees } = useQueryEmployees();
 
   // Prepare data
@@ -70,12 +81,12 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
         (employee) => employee.employeeId === item.employeeId,
       );
 
-      const result: IOrderCustom = {
+      const result: IOrderFormatted = {
         ...item,
         employeeName: employee ? getEmployeeNameByData(employee) : '',
-        orderDate: formatDateFromString(item.orderDate),
-        shippedDate: formatDateFromString(item.shippedDate),
-        requiredDate: formatDateFromString(item.requiredDate),
+        orderDateFormatted: formatDateFromString(item.orderDate),
+        shippedDateFormatted: formatDateFromString(item.shippedDate),
+        requiredDateFormatted: formatDateFromString(item.requiredDate),
         orderDateObject: dateFromString(item.orderDate),
         shippedDateObject: dateFromString(item.shippedDate),
         requiredDateObject: dateFromString(item.requiredDate),
@@ -152,7 +163,11 @@ export default function Orders({ initialData }: { initialData?: IOrders }) {
     if (filteredData.length === 0) return <div>Orders not found</div>;
 
     return isWidePage ? (
-      <OrdersTable data={filteredData} />
+      <OrdersTable
+        data={filteredData}
+        isCustomerPage={!!customerId}
+        isEmployeePage={!!employeeId}
+      />
     ) : (
       <OrdersCards data={filteredData} />
     );

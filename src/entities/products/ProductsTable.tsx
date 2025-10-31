@@ -14,7 +14,7 @@ declare module '@tanstack/table-core' {
   }
 }
 
-const columns: ColumnDef<IProduct>[] = [
+const allColumns: ColumnDef<IProduct>[] = [
   {
     accessorKey: 'productId',
     header: '#',
@@ -76,5 +76,7 @@ const columns: ColumnDef<IProduct>[] = [
 export default function ProductsTable({ data }: { data: IProducts }) {
   const { data: dataCategories } = useQueryCategories();
 
-  return <DataTable data={data} columns={columns} meta={{ dataCategories }} />;
+  return (
+    <DataTable data={data} columns={allColumns} meta={{ dataCategories }} />
+  );
 }

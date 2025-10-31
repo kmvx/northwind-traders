@@ -12,6 +12,7 @@ import {
 } from '@/ui';
 import { joinFields, setDocumentTitle } from '@/utils';
 
+import { Orders } from '../orders';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface CustomerProps {
@@ -79,6 +80,7 @@ const Customer: React.FC<CustomerProps> = ({ id }) => {
         <div className="text-center">Customer company</div>
         <PropertyGrid items={items} />
       </div>
+      <Orders customerId={id} />
     </PanelCentred>
   );
 };

@@ -20,6 +20,7 @@ import {
   setDocumentTitle,
 } from '@/utils';
 
+import { Orders } from '../orders';
 import { ContactAddress, ContactPhone } from '../shared';
 import { EmployeeLink, Employees, Territories } from '.';
 
@@ -112,6 +113,7 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
       <div>
         <Employees reportsTo={id} />
       </div>
+      <Orders employeeId={id} />
     </PanelCentred>
   );
 };

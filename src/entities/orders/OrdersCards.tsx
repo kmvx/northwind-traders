@@ -2,19 +2,18 @@ import Link from 'next/link';
 import { Fragment, memo } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
-import type { IOrder, IOrders } from '@/models';
 import { Pagination, ResponsiveGrid } from '@/ui';
-import { formatDateFromString, joinFields } from '@/utils';
 
 import { ContactAddress } from '../shared';
+import type { IOrderFormatted } from '.';
 
-export default function OrdersCards({ data }: { data: IOrders }) {
+export default function OrdersCards({ data }: { data: IOrderFormatted[] }) {
   return (
     <Pagination
       data={data}
       defaultLimit={20}
       renderPage={(items) => (
-        <ResponsiveGrid minWidth="22rem">
+        <ResponsiveGrid minWidth="15rem">
           {items.map((item) => (
             <OrderCard item={item} key={item.orderId} />
           ))}
@@ -24,11 +23,11 @@ export default function OrdersCards({ data }: { data: IOrders }) {
   );
 }
 
-const OrderCard = memo(function OrderCard({ item }: { item: IOrder }) {
+const OrderCard = memo(function OrderCard({ item }: { item: IOrderFormatted }) {
   const items = [
-    { name: 'Order date', value: formatDateFromString(item.orderDate) },
-    { name: 'Shipped date', value: formatDateFromString(item.shippedDate) },
-    { name: 'Required date', value: formatDateFromString(item.requiredDate) },
+    { name: 'Order date', value: item.orderDateFormatted },
+    { name: 'Shipped date', value: item.shippedDateFormatted },
+    { name: 'Required date', value: item.requiredDateFormatted },
     { name: 'Freight', value: '$' + item.freight },
   ];
   return (
@@ -37,7 +36,7 @@ const OrderCard = memo(function OrderCard({ item }: { item: IOrder }) {
         <CardHeader>
           <CardTitle title="Ship name">Order #{item.orderId}</CardTitle>
         </CardHeader>
-        <CardContent className="h-full flex flex-col justify-end gap-2 text-sm">
+        <CardContent className="h-full flex flex-col justify-end gap-4 text-sm">
           <div className="grid grid-cols-2 gap-x-4 gap-y-1">
             {items.map((item) => (
               <Fragment key={item.name}>
@@ -48,13 +47,7 @@ const OrderCard = memo(function OrderCard({ item }: { item: IOrder }) {
           </div>
           <ContactAddress
             country={item.shipCountry}
-            address={joinFields(
-              item.shipCountry,
-              item.shipRegion,
-              item.shipCity,
-              item.shipAddress,
-              item.shipPostalCode,
-            )}
+            address={item.addressLine}
             title="Ship address"
             className="font-normal"
           />
