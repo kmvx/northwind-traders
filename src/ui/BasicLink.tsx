@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import { Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
-interface BasicLinkProps {
+interface BasicLinkProps extends React.ComponentProps<typeof Button> {
   href: string;
   children: React.ReactNode;
   className?: string;

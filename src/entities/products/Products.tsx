@@ -69,7 +69,7 @@ export default function Products({
     return filteredData;
   }, [data, initialData, isLoading, filterString, filterDiscontinued]);
 
-  const isWidePage = (usePageSize()?.width ?? 0) >= 1024;
+  const isWidePage = usePageSize().isWidePage;
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;

@@ -1,16 +1,23 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
-type StateType =
-  | {
-      width: number;
-      height: number;
-    }
-  | undefined;
+const MOBILE_BREAKPOINT = 768;
+
+type StateType = {
+  width?: number;
+  height?: number;
+  isWidePage: boolean;
+};
 
 const getState = (): StateType => {
   return typeof window === 'undefined'
-    ? undefined
-    : { width: window.innerWidth, height: window.innerHeight };
+    ? { isWidePage: true }
+    : {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        isWidePage: window.innerWidth >= MOBILE_BREAKPOINT,
+      };
 };
 
 export default function usePageSize(): StateType {

@@ -55,17 +55,18 @@ export const useQueryOrder = ({ id }: { id: string | undefined }) => {
 };
 
 export const useQueryOrderDetails = ({
-  isOrdersPage,
-  id,
+  orderId,
+  productId,
 }: {
-  isOrdersPage: boolean;
-  id: string | undefined;
+  orderId?: string | undefined;
+  productId?: string | undefined;
 }) => {
   return useQuery<IOrderDetails>({
     queryKey: [
       API_URL +
-        (isOrdersPage ? '/Orders/' : '/Products/') +
-        id +
+        (orderId != undefined ? '/Orders/' : '') +
+        (productId != undefined ? '/Products/' : '') +
+        (orderId ?? productId ?? '') +
         '/OrderDetails',
     ],
   });
@@ -157,15 +158,21 @@ export const useQuerySupplier = ({
 
 export const useQueryProducts = ({
   supplierId,
+  orderId,
+  enabled = true,
 }: {
-  supplierId: number | undefined;
+  supplierId?: number | undefined;
+  orderId?: string | undefined;
+  enabled?: boolean;
 }) => {
   return useQuery<IProducts>({
     queryKey: [
       API_URL +
         (supplierId != undefined ? '/Suppliers/' + supplierId : '') +
+        (orderId != undefined ? '/Orders/' + orderId : '') +
         '/Products',
     ],
+    enabled,
   });
 };
 

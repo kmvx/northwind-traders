@@ -21,6 +21,7 @@ import { formatDateFromString, joinFields, setDocumentTitle } from '@/utils';
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
 import { ContactAddress, ContactPhone, Flag } from '../shared';
+import { OrderDetails } from '.';
 
 interface OrderProps {
   id: string;
@@ -143,6 +144,7 @@ const Order: React.FC<OrderProps> = ({ id }) => {
           <PropertyGrid items={itemsShipper} />
         </>
       )}
+      <OrderDetails orderId={id} />
     </PanelCentred>
   );
 };

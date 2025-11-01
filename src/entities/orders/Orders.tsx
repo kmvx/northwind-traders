@@ -154,7 +154,7 @@ export default function Orders({
     filterYear,
   ]);
 
-  const isWidePage = (usePageSize()?.width ?? 0) >= 1024;
+  const isWidePage = usePageSize().isWidePage;
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
