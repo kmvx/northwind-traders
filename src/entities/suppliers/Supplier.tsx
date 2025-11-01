@@ -12,6 +12,7 @@ import {
 } from '@/ui';
 import { joinFields, setDocumentTitle } from '@/utils';
 
+import { Products } from '../products';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface SupplierProps {
@@ -74,6 +75,7 @@ const Supplier: React.FC<SupplierProps> = ({ id, isEmbedded = false }) => {
         <div className="text-center">Supplier company</div>
         <PropertyGrid items={items} />
       </div>
+      <Products supplierId={data.supplierId} />
     </PanelCentred>
   );
 };

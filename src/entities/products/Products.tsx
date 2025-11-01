@@ -21,9 +21,15 @@ import { parseAsBooleanOrUndefined } from '@/utils/nuqs';
 
 import { FilterDiscontinued, ProductsCards, ProductsTable } from '.';
 
-export default function Products({ initialData }: { initialData?: IProducts }) {
+export default function Products({
+  supplierId,
+  initialData,
+}: {
+  supplierId?: number;
+  initialData?: IProducts;
+}) {
   // Filters
-  const [filterString, setFilterString] = useQueryState('q', {
+  const [filterString, setFilterString] = useQueryState('productsFilter', {
     defaultValue: '',
   });
   const [filterDiscontinued, setDiscontinued] = useQueryState(
@@ -37,7 +43,9 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
   }
 
   // Network data
-  const { data, isLoading, isFetching, error, refetch } = useQueryProducts();
+  const { data, isLoading, isFetching, error, refetch } = useQueryProducts({
+    supplierId,
+  });
 
   // Filter data
   const filteredData = useMemo(() => {
@@ -80,9 +88,12 @@ export default function Products({ initialData }: { initialData?: IProducts }) {
     return null;
   }
 
+  const Header =
+    supplierId == undefined ? Typography.Header1 : Typography.Header2;
+
   return (
     <PanelStretched className="flex flex-col gap-4">
-      <Typography variant="header1">Products</Typography>
+      <Header>Products</Header>
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex-grow">
           <DebouncedInput

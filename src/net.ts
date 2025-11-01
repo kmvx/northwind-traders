@@ -35,14 +35,14 @@ export const useQueryOrders = ({
   return useQuery<IOrders>({
     queryKey: [
       API_URL +
-        (customerId
+        (customerId != undefined
           ? '/Customers/'
-          : employeeId
+          : employeeId != undefined
             ? '/Employees/'
-            : shipperId
+            : shipperId != undefined
               ? '/Shippers/'
               : '') +
-        (customerId || employeeId || shipperId || '') +
+        (customerId ?? employeeId ?? shipperId ?? '') +
         '/Orders',
     ],
   });
@@ -155,9 +155,17 @@ export const useQuerySupplier = ({
 
 // Products
 
-export const useQueryProducts = () => {
+export const useQueryProducts = ({
+  supplierId,
+}: {
+  supplierId: number | undefined;
+}) => {
   return useQuery<IProducts>({
-    queryKey: [API_URL + '/Products'],
+    queryKey: [
+      API_URL +
+        (supplierId != undefined ? '/Suppliers/' + supplierId : '') +
+        '/Products',
+    ],
   });
 };
 

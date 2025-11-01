@@ -37,10 +37,10 @@ export default function Orders({
   employeeId?: string;
 }) {
   // Filters
-  const [filterString, setFilterString] = useQueryState('q', {
+  const [filterString, setFilterString] = useQueryState('ordersFilter', {
     defaultValue: '',
   });
-  const [filterCountry, setFilterCountry] = useQueryState('country', {
+  const [filterCountry, setFilterCountry] = useQueryState('ordersCountry', {
     defaultValue: '',
   });
   const [filterYear, setFilterYear] = useQueryState('year', parseAsInteger);
@@ -177,9 +177,14 @@ export default function Orders({
     return null;
   }
 
+  const Header =
+    customerId == undefined && employeeId == undefined
+      ? Typography.Header1
+      : Typography.Header2;
+
   return (
     <PanelStretched className="flex flex-col gap-4">
-      <Typography variant="header1">Orders</Typography>
+      <Header>Orders</Header>
       <div className="flex flex-wrap items-center gap-2">
         <div className="flex-grow">
           <DebouncedInput
