@@ -16,11 +16,11 @@ import { Orders } from '../orders';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface CustomerProps {
-  id: string;
+  customerId: string;
 }
 
-const Customer: React.FC<CustomerProps> = ({ id }) => {
-  const { data, error, isLoading, refetch } = useQueryCustomer({ id });
+const Customer: React.FC<CustomerProps> = ({ customerId }) => {
+  const { data, error, isLoading, refetch } = useQueryCustomer({ customerId });
 
   setDocumentTitle(data?.companyName, 'Customer');
 
@@ -80,7 +80,7 @@ const Customer: React.FC<CustomerProps> = ({ id }) => {
         <div className="text-center">Customer company</div>
         <PropertyGrid items={items} />
       </div>
-      <Orders customerId={id} />
+      <Orders customerId={customerId} />
     </PanelCentred>
   );
 };

@@ -5,5 +5,5 @@ export default async function EmployeePage({
 }: {
   params: { id: string };
 }) {
-  return <Employee id={(await params).id} />;
+  return <Employee employeeId={(await params).id} />;
 }

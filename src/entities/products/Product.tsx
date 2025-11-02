@@ -16,11 +16,11 @@ import { Supplier } from '../suppliers';
 import { CategoryName } from '.';
 
 interface ProductProps {
-  id: string;
+  productId: string;
 }
 
-const Product: React.FC<ProductProps> = ({ id }) => {
-  const { data, error, isLoading, refetch } = useQueryProduct({ id });
+const Product: React.FC<ProductProps> = ({ productId }) => {
+  const { data, error, isLoading, refetch } = useQueryProduct({ productId });
   const { data: dataCategories } = useQueryCategories();
 
   setDocumentTitle(data?.productName, 'Product');
@@ -92,7 +92,7 @@ const Product: React.FC<ProductProps> = ({ id }) => {
       <div className="flex flex-col gap-4">
         <div className="text-center">Product</div>
         <PropertyGrid items={items} />
-        <Supplier id={String(data.supplierId)} isEmbedded />
+        <Supplier supplierId={String(data.supplierId)} isEmbedded />
       </div>
     </PanelCentred>
   );

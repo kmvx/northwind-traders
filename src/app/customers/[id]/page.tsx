@@ -5,5 +5,5 @@ export default async function CustomerPage({
 }: {
   params: { id: string };
 }) {
-  return <Customer id={(await params).id} />;
+  return <Customer customerId={(await params).id} />;
 }

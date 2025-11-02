@@ -5,5 +5,5 @@ export default async function SupplierPage({
 }: {
   params: { id: string };
 }) {
-  return <Supplier id={(await params).id} />;
+  return <Supplier supplierId={(await params).id} />;
 }

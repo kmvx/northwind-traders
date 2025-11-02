@@ -16,12 +16,15 @@ import { Products } from '../products';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface SupplierProps {
-  id: string;
+  supplierId: string;
   isEmbedded?: boolean;
 }
 
-const Supplier: React.FC<SupplierProps> = ({ id, isEmbedded = false }) => {
-  const { data, error, isLoading, refetch } = useQuerySupplier({ id });
+const Supplier: React.FC<SupplierProps> = ({
+  supplierId,
+  isEmbedded = false,
+}) => {
+  const { data, error, isLoading, refetch } = useQuerySupplier({ supplierId });
 
   if (!isEmbedded) {
     setDocumentTitle(data?.companyName, 'Supplier');

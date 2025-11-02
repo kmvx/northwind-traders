@@ -24,14 +24,16 @@ import { ContactAddress, ContactPhone, Flag } from '../shared';
 import { OrderDetails } from '.';
 
 interface OrderProps {
-  id: string;
+  orderId: string;
 }
 
-const Order: React.FC<OrderProps> = ({ id }) => {
-  const { data, error, isLoading, refetch } = useQueryOrder({ id });
-  const { data: dataCustomer } = useQueryOrderCustomer({ id });
-  const { data: dataEmployee } = useQueryOrderEmployee({ id });
-  const { data: dataShipper } = useQueryOrderShipper({ id });
+const Order: React.FC<OrderProps> = ({ orderId }) => {
+  const { data, error, isLoading, refetch } = useQueryOrder({
+    orderId,
+  });
+  const { data: dataCustomer } = useQueryOrderCustomer({ orderId });
+  const { data: dataEmployee } = useQueryOrderEmployee({ orderId });
+  const { data: dataShipper } = useQueryOrderShipper({ orderId });
 
   setDocumentTitle(`Order${data ? ' #' + data.orderId : ''}`);
 
@@ -144,7 +146,7 @@ const Order: React.FC<OrderProps> = ({ id }) => {
           <PropertyGrid items={itemsShipper} />
         </>
       )}
-      <OrderDetails orderId={id} />
+      <OrderDetails orderId={orderId} />
     </PanelCentred>
   );
 };

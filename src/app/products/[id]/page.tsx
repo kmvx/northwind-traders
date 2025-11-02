@@ -5,5 +5,5 @@ export default async function ProductPage({
 }: {
   params: { id: string };
 }) {
-  return <Product id={(await params).id} />;
+  return <Product productId={(await params).id} />;
 }

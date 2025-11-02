@@ -30,7 +30,7 @@ type EmployeeHoverCardProps = {
 function EmployeeHoverCard({ employee, employeeId }: EmployeeHoverCardProps) {
   const [open, setOpen] = useState(false);
   const { data, error, isLoading, refetch } = useQueryEmployee({
-    id: employeeId,
+    employeeId,
     enabled: open,
   });
 

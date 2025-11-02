@@ -22,7 +22,7 @@ type CustomerHoverCardProps = {
 function CustomerHoverCard({ customerId, children }: CustomerHoverCardProps) {
   const [open, setOpen] = useState(false);
   const { data, error, isLoading, refetch } = useQueryCustomer({
-    id: customerId,
+    customerId,
     enabled: open,
   });
 

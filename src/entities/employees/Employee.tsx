@@ -25,11 +25,11 @@ import { ContactAddress, ContactPhone } from '../shared';
 import { EmployeeLink, Employees, Territories } from '.';
 
 interface EmployeeProps {
-  id: string;
+  employeeId: string;
 }
 
-const Employee: React.FC<EmployeeProps> = ({ id }) => {
-  const { data, error, isLoading, refetch } = useQueryEmployee({ id });
+const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
+  const { data, error, isLoading, refetch } = useQueryEmployee({ employeeId });
 
   const name = data ? getEmployeeNameByData(data) : undefined;
   setDocumentTitle(name, 'Employee');
@@ -57,7 +57,7 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
     },
     {
       name: 'Territories',
-      value: <Territories employeeId={id} />,
+      value: <Territories employeeId={employeeId} />,
       description: 'Sales regions.',
     },
     {
@@ -111,9 +111,9 @@ const Employee: React.FC<EmployeeProps> = ({ id }) => {
       </div>
 
       <div>
-        <Employees reportsTo={id} />
+        <Employees reportsTo={employeeId} />
       </div>
-      <Orders employeeId={id} />
+      <Orders employeeId={employeeId} />
     </PanelCentred>
   );
 };

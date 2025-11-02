@@ -11,7 +11,7 @@ const EmployeeLink: React.FC<{ id: number; className?: string }> = ({
 }) => {
   const hasReportsTo = Boolean(id);
   const { data, error, isLoading, refetch } = useQueryEmployee({
-    id,
+    employeeId: id,
     enabled: hasReportsTo,
   });
 
