@@ -16,7 +16,7 @@ import { Supplier } from '../suppliers';
 import { CategoryName } from '.';
 
 interface ProductProps {
-  productId: string;
+  productId: number;
 }
 
 const Product: React.FC<ProductProps> = ({ productId }) => {
@@ -92,7 +92,7 @@ const Product: React.FC<ProductProps> = ({ productId }) => {
       <div className="flex flex-col gap-4">
         <div className="text-center">Product</div>
         <PropertyGrid items={items} />
-        <Supplier supplierId={String(data.supplierId)} isEmbedded />
+        <Supplier supplierId={data.supplierId} isEmbedded />
       </div>
     </PanelCentred>
   );

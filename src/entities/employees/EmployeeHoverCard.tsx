@@ -53,7 +53,7 @@ function EmployeeHoverCard({ employee, employeeId }: EmployeeHoverCardProps) {
           <div className="flex flex-col gap-2">
             <b>{data.title}</b>
 
-            <Territories employeeId={String(employeeId)} />
+            <Territories employeeId={employeeId} />
           </div>
         </div>
 

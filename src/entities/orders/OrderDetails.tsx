@@ -11,7 +11,7 @@ import {
 import { OrderDetailsCards, OrderDetailsTable } from '.';
 import { getTotalCost, roundMoney } from './utils';
 
-export default function OrderDetails({ orderId }: { orderId: string }) {
+export default function OrderDetails({ orderId }: { orderId: number }) {
   // Network data
   const { data, error, isLoading, refetch } = useQueryOrderDetails({
     orderId,

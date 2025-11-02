@@ -5,13 +5,13 @@ import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import { EmployeeHoverCard } from '.';
 
-const EmployeeLink: React.FC<{ id: number; className?: string }> = ({
-  id,
+const EmployeeLink: React.FC<{ employeeId: number; className?: string }> = ({
+  employeeId,
   className,
 }) => {
-  const hasReportsTo = Boolean(id);
+  const hasReportsTo = Boolean(employeeId);
   const { data, error, isLoading, refetch } = useQueryEmployee({
-    employeeId: id,
+    employeeId,
     enabled: hasReportsTo,
   });
 
@@ -22,7 +22,7 @@ const EmployeeLink: React.FC<{ id: number; className?: string }> = ({
   return (
     <span className={className}>
       <span>Reports to </span>
-      <EmployeeHoverCard employee={data} employeeId={id} />
+      <EmployeeHoverCard employee={data} employeeId={employeeId} />
     </span>
   );
 };

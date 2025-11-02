@@ -24,7 +24,7 @@ import { ContactAddress, ContactPhone, Flag } from '../shared';
 import { OrderDetails } from '.';
 
 interface OrderProps {
-  orderId: string;
+  orderId: number;
 }
 
 const Order: React.FC<OrderProps> = ({ orderId }) => {

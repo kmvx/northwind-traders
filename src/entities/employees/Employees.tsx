@@ -33,7 +33,7 @@ export default function Employees({
   reportsTo,
 }: {
   initialData?: IEmployees;
-  reportsTo?: string;
+  reportsTo?: number;
 }) {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
@@ -60,7 +60,7 @@ export default function Employees({
         : [];
     if (reportsTo) {
       filteredData = filteredData?.filter(
-        (item) => String(item.reportsTo) == reportsTo,
+        (item) => item.reportsTo == reportsTo,
       );
     }
     if (filterString) {

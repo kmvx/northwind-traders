@@ -34,7 +34,7 @@ export default function Orders({
 }: {
   initialData?: IOrders;
   customerId?: string;
-  employeeId?: string;
+  employeeId?: number;
 }) {
   // Filters
   const [filterString, setFilterString] = useQueryState('ordersFilter', {

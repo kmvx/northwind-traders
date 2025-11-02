@@ -25,7 +25,7 @@ import { ContactAddress, ContactPhone } from '../shared';
 import { EmployeeLink, Employees, Territories } from '.';
 
 interface EmployeeProps {
-  employeeId: string;
+  employeeId: number;
 }
 
 const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
@@ -105,7 +105,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
         {data.reportsTo && (
           <div className="flex items-center gap-2">
             <FlagIcon className="size-4 text-muted-foreground" />
-            <EmployeeLink id={data.reportsTo} />
+            <EmployeeLink employeeId={data.reportsTo} />
           </div>
         )}
       </div>

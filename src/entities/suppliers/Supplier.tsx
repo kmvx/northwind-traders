@@ -16,7 +16,7 @@ import { Products } from '../products';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface SupplierProps {
-  supplierId: string;
+  supplierId: number;
   isEmbedded?: boolean;
 }
 

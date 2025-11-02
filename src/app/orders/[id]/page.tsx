@@ -5,5 +5,5 @@ export default async function OrderPage({
 }: {
   params: { id: string };
 }) {
-  return <Order orderId={(await params).id} />;
+  return <Order orderId={+(await params).id} />;
 }

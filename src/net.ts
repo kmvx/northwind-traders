@@ -29,22 +29,22 @@ export const useQueryOrders = ({
   shipperId,
 }: {
   customerId?: string | undefined;
-  employeeId?: string | undefined;
-  shipperId?: string | undefined;
+  employeeId?: number | undefined;
+  shipperId?: number | undefined;
 } = {}) => {
   return useQuery<IOrders>({
     queryKey: [
       API_URL +
-        (customerId != undefined ? '/Customers/' : '') +
-        (employeeId != undefined ? '/Employees/' : '') +
-        (shipperId != undefined ? '/Shippers/' : '') +
+        (customerId ? '/Customers/' : '') +
+        (employeeId ? '/Employees/' : '') +
+        (shipperId ? '/Shippers/' : '') +
         (customerId ?? employeeId ?? shipperId ?? '') +
         '/Orders',
     ],
   });
 };
 
-export const useQueryOrder = ({ orderId }: { orderId: string | undefined }) => {
+export const useQueryOrder = ({ orderId }: { orderId: number | undefined }) => {
   return useQuery<IOrder>({
     queryKey: [API_URL + '/Orders/' + orderId],
   });
@@ -54,14 +54,14 @@ export const useQueryOrderDetails = ({
   orderId,
   productId,
 }: {
-  orderId?: string | undefined;
-  productId?: string | undefined;
+  orderId?: number | undefined;
+  productId?: number | undefined;
 }) => {
   return useQuery<IOrderDetails>({
     queryKey: [
       API_URL +
-        (orderId != undefined ? '/Orders/' : '') +
-        (productId != undefined ? '/Products/' : '') +
+        (orderId ? '/Orders/' : '') +
+        (productId ? '/Products/' : '') +
         (orderId ?? productId ?? '') +
         '/OrderDetails',
     ],
@@ -84,7 +84,7 @@ export const useQueryEmployee = ({
   employeeId,
   enabled = true,
 }: {
-  employeeId: string | number | undefined;
+  employeeId: number | undefined;
   enabled?: boolean;
 }) => {
   return useQuery<IEmployee>({
@@ -96,7 +96,7 @@ export const useQueryEmployee = ({
 export const useQueryOrderEmployee = ({
   orderId,
 }: {
-  orderId: string | undefined;
+  orderId: number | undefined;
 }) => {
   return useQuery<IEmployee>({
     queryKey: [API_URL + '/Orders/' + orderId + '/Employee'],
@@ -106,7 +106,7 @@ export const useQueryOrderEmployee = ({
 export const useEmployeeTeritories = ({
   employeeId,
 }: {
-  employeeId: string | undefined;
+  employeeId: number | undefined;
 }) => {
   return useQuery<ITerritories>({
     queryKey: [API_URL + '/Employees/' + employeeId + '/Territories'],
@@ -130,7 +130,7 @@ export const useQueryShippers = () => {
 export const useQueryOrderShipper = ({
   orderId,
 }: {
-  orderId: string | undefined;
+  orderId: number | undefined;
 }) => {
   return useQuery<IShipper>({
     queryKey: [API_URL + '/Orders/' + orderId + '/Shipper'],
@@ -149,7 +149,7 @@ export const useQuerySupplier = ({
   supplierId,
   enabled = true,
 }: {
-  supplierId: string | number | undefined;
+  supplierId: number | undefined;
   enabled?: boolean;
 }) => {
   return useQuery<ISupplier>({
@@ -166,14 +166,14 @@ export const useQueryProducts = ({
   enabled = true,
 }: {
   supplierId?: number | undefined;
-  orderId?: string | undefined;
+  orderId?: number | undefined;
   enabled?: boolean;
 }) => {
   return useQuery<IProducts>({
     queryKey: [
       API_URL +
-        (supplierId != undefined ? '/Suppliers/' + supplierId : '') +
-        (orderId != undefined ? '/Orders/' + orderId : '') +
+        (supplierId ? '/Suppliers/' + supplierId : '') +
+        (orderId ? '/Orders/' + orderId : '') +
         '/Products',
     ],
     enabled,
@@ -183,7 +183,7 @@ export const useQueryProducts = ({
 export const useQueryProduct = ({
   productId,
 }: {
-  productId: string | undefined;
+  productId: number | undefined;
 }) => {
   return useQuery<IProduct>({
     queryKey: [API_URL + '/Products/' + productId],
@@ -220,7 +220,7 @@ export const useQueryCustomer = ({
 export const useQueryOrderCustomer = ({
   orderId,
 }: {
-  orderId: string | undefined;
+  orderId: number | undefined;
 }) => {
   return useQuery<ICustomer>({
     queryKey: [API_URL + '/Orders/' + orderId + '/Customer'],
