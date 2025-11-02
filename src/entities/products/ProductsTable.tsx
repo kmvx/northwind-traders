@@ -1,4 +1,5 @@
 import { type ColumnDef, type RowData } from '@tanstack/react-table';
+import React from 'react';
 
 import { DataTable } from '@/features/table';
 import type { ICategories, IProduct, IProducts } from '@/models';
@@ -73,10 +74,16 @@ const allColumns: ColumnDef<IProduct>[] = [
   },
 ];
 
-export default function ProductsTable({ data }: { data: IProducts }) {
+interface ProductsTableProps {
+  data: IProducts;
+}
+
+const ProductsTable: React.FC<ProductsTableProps> = ({ data }) => {
   const { data: dataCategories } = useQueryCategories();
 
   return (
     <DataTable data={data} columns={allColumns} meta={{ dataCategories }} />
   );
-}
+};
+
+export default ProductsTable;

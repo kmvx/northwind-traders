@@ -18,15 +18,13 @@ import {
 } from '@/components/ui/table';
 import { PaginationControls } from '@/ui';
 
-export default function DataTable<TData>({
-  data,
-  columns,
-  meta,
-}: {
+interface DataTableProps<TData> {
   data: TData[];
   columns: ColumnDef<TData>[];
   meta?: TableMeta<TData>;
-}) {
+}
+
+function DataTable<TData>({ data, columns, meta }: DataTableProps<TData>) {
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable<TData>({
     data,
@@ -124,3 +122,5 @@ export default function DataTable<TData>({
     </div>
   );
 }
+
+export default DataTable;

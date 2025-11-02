@@ -7,9 +7,11 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui';
 import { HIDE_DELAY } from '@/constants';
 
-const CopyButton: React.FC<{
+interface CopyButtonProps {
   content: string;
-}> = ({ content }) => {
+}
+
+const CopyButton: React.FC<CopyButtonProps> = ({ content }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {

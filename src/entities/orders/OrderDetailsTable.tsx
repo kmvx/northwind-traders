@@ -1,4 +1,5 @@
 import type { ColumnDef, RowData } from '@tanstack/react-table';
+import React from 'react';
 
 import { Spinner } from '@/components/ui';
 import { DataTable } from '@/features/table';
@@ -62,12 +63,16 @@ const allColumns: ColumnDef<IOrderDetail>[] = [
   },
 ];
 
-export default function OrderDetailsTable({
-  data,
-  dataProducts,
-}: {
+interface OrderDetailsTableProps {
   data: IOrderDetails;
   dataProducts: IProducts | undefined;
-}) {
-  return <DataTable data={data} columns={allColumns} meta={{ dataProducts }} />;
 }
+
+const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
+  data,
+  dataProducts,
+}) => {
+  return <DataTable data={data} columns={allColumns} meta={{ dataProducts }} />;
+};
+
+export default OrderDetailsTable;

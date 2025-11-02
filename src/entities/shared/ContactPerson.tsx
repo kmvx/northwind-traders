@@ -1,14 +1,17 @@
 import { UserIcon } from 'lucide-react';
+import React from 'react';
 
-export default function ContactPerson({
-  name,
-  contactTitle,
-  title,
-}: {
+interface ContactPersonProps {
   name: string;
   contactTitle: string;
   title?: string;
-}) {
+}
+
+const ContactPerson: React.FC<ContactPersonProps> = ({
+  name,
+  contactTitle,
+  title,
+}) => {
   return (
     <div className="flex items-start gap-2" title={title}>
       <UserIcon className="size-4 text-muted-foreground mt-1" />
@@ -18,4 +21,6 @@ export default function ContactPerson({
       </div>
     </div>
   );
-}
+};
+
+export default ContactPerson;

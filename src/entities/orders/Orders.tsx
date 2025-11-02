@@ -1,7 +1,7 @@
 'use client';
 
 import { parseAsInteger, useQueryState } from 'nuqs';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { useMemoWaitCursor, usePageSize } from '@/hooks';
 import { type IOrders } from '@/models';
@@ -27,15 +27,17 @@ import {
 import { FilterCountry } from '../shared';
 import { FilterYear, type IOrderFormatted, OrdersCards, OrdersTable } from '.';
 
-export default function Orders({
-  initialData,
-  customerId,
-  employeeId,
-}: {
+interface OrdersProps {
   initialData?: IOrders;
   customerId?: string;
   employeeId?: number;
-}) {
+}
+
+const Orders: React.FC<OrdersProps> = ({
+  initialData,
+  customerId,
+  employeeId,
+}) => {
   // Filters
   const [filterString, setFilterString] = useQueryState('ordersFilter', {
     defaultValue: '',
@@ -214,4 +216,6 @@ export default function Orders({
       {getContent()}
     </PanelStretched>
   );
-}
+};
+
+export default Orders;

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import { getCountries, getFlagEmojiByCountryName } from '@/utils';
 
@@ -8,13 +8,13 @@ import { SelectStringList } from '../../ui';
 
 const EMPTY_OPTION_VALUE = 'worldwide';
 
-type FilterCountryProps<T extends string> = {
+interface FilterCountryProps<T extends string> {
   filterCountry: string;
   setFilterCountry: (country: string) => void;
   countryPropertyName?: T;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: Record<T, any>[] | undefined;
-};
+}
 
 const FilterCountry = <T extends string>({
   filterCountry,
@@ -52,12 +52,16 @@ const FilterCountry = <T extends string>({
   );
 };
 
-function Item({ option }: { option: string }) {
+interface ItemProps {
+  option: string;
+}
+
+const Item: React.FC<ItemProps> = ({ option }) => {
   return (
     <>
       {getFlagEmojiByCountryName(option)} &nbsp; {option || 'Worldwide'}
     </>
   );
-}
+};
 
 export default memo(FilterCountry);

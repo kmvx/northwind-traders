@@ -13,13 +13,7 @@ import {
 } from '@/components/ui/select';
 import { useIsMobile } from '@/hooks';
 
-export default function SelectStringList({
-  itemsInfo,
-  value,
-  setValue,
-  title,
-  className,
-}: {
+interface SelectStringListProps {
   itemsInfo: readonly {
     component?: React.ReactNode;
     value: string;
@@ -28,7 +22,15 @@ export default function SelectStringList({
   setValue: (value: string) => void;
   title?: string | undefined;
   className?: string | undefined;
-}) {
+}
+
+const SelectStringList: React.FC<SelectStringListProps> = ({
+  itemsInfo,
+  value,
+  setValue,
+  title,
+  className,
+}) => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
@@ -77,4 +79,6 @@ export default function SelectStringList({
       </SelectContent>
     </Select>
   );
-}
+};
+
+export default SelectStringList;

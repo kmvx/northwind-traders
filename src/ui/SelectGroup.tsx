@@ -1,11 +1,6 @@
 import { Button, ButtonGroup } from '@/components/ui';
 
-export default function SelectGroup<T>({
-  itemsInfo,
-  state,
-  setState,
-  title,
-}: {
+interface SelectGroupProps<T> {
   itemsInfo: readonly {
     component?: string;
     value: T;
@@ -13,7 +8,14 @@ export default function SelectGroup<T>({
   state: T;
   setState: (state: T) => void;
   title?: string | undefined;
-}) {
+}
+
+function SelectGroup<T>({
+  itemsInfo,
+  state,
+  setState,
+  title,
+}: SelectGroupProps<T>) {
   return (
     <ButtonGroup title={title}>
       {itemsInfo.map((itemInfo, index) => (
@@ -28,3 +30,5 @@ export default function SelectGroup<T>({
     </ButtonGroup>
   );
 }
+
+export default SelectGroup;

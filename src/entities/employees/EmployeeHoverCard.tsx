@@ -27,7 +27,10 @@ type EmployeeHoverCardProps = {
   employeeId: number;
 };
 
-function EmployeeHoverCard({ employee, employeeId }: EmployeeHoverCardProps) {
+const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
+  employee,
+  employeeId,
+}) => {
   const [open, setOpen] = useState(false);
   const { data, error, isLoading, refetch } = useQueryEmployee({
     employeeId,
@@ -97,6 +100,6 @@ function EmployeeHoverCard({ employee, employeeId }: EmployeeHoverCardProps) {
       <HoverCardContent className="sm:w-100">{getContent()}</HoverCardContent>
     </HoverCard>
   );
-}
+};
 
 export default memo(EmployeeHoverCard);

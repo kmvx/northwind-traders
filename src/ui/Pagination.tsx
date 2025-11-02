@@ -13,7 +13,7 @@ type PaginationProps<T> = {
   className?: string;
 };
 
-export default function Pagination<T>({
+function Pagination<T>({
   data,
   renderPage,
   defaultLimit,
@@ -63,3 +63,5 @@ export default function Pagination<T>({
     </div>
   );
 }
+
+export default Pagination;

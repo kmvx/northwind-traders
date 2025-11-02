@@ -10,7 +10,7 @@ interface PropertyGridProps {
   items: PropertyGridItemType[];
 }
 
-export default function PropertyGrid({ items }: PropertyGridProps) {
+const PropertyGrid: React.FC<PropertyGridProps> = ({ items }) => {
   return (
     <div
       className={cn(
@@ -23,7 +23,7 @@ export default function PropertyGrid({ items }: PropertyGridProps) {
       ))}
     </div>
   );
-}
+};
 
 function Item({ item }: { item: PropertyGridItemType }) {
   return (
@@ -46,3 +46,5 @@ function Item({ item }: { item: PropertyGridItemType }) {
     </div>
   );
 }
+
+export default PropertyGrid;

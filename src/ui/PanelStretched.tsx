@@ -1,10 +1,15 @@
 import clsx from 'clsx';
 import React from 'react';
 
-const PanelStretched: React.FC<{
+interface PanelStretchedProps {
   children: React.ReactNode;
   className?: string;
-}> = ({ children, className }) => {
+}
+
+const PanelStretched: React.FC<PanelStretchedProps> = ({
+  children,
+  className,
+}) => {
   return (
     <section
       className={clsx(

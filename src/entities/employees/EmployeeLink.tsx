@@ -5,7 +5,12 @@ import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import { EmployeeHoverCard } from '.';
 
-const EmployeeLink: React.FC<{ employeeId: number; className?: string }> = ({
+interface EmployeeLinkProps {
+  employeeId: number;
+  className?: string;
+}
+
+const EmployeeLink: React.FC<EmployeeLinkProps> = ({
   employeeId,
   className,
 }) => {

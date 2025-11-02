@@ -1,4 +1,5 @@
 import { MapPinIcon } from 'lucide-react';
+import React from 'react';
 
 import { Flag } from '.';
 
@@ -8,7 +9,7 @@ interface LocationProps {
   title: string;
 }
 
-export default function Location({ country, city, title }: LocationProps) {
+const Location: React.FC<LocationProps> = ({ country, city, title }) => {
   return (
     <span
       className="flex items-center justify-end gap-2 text-sm text-muted-foreground flex-wrap"
@@ -21,4 +22,6 @@ export default function Location({ country, city, title }: LocationProps) {
       <Flag country={country} />
     </span>
   );
-}
+};
+
+export default Location;

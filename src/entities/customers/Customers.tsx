@@ -28,11 +28,11 @@ import { isStringIncludes } from '@/utils';
 
 import { FilterCountry, Location, LocationSkeleton } from '../shared';
 
-export default function Customers({
-  initialData,
-}: {
+interface CustomersProps {
   initialData?: ICustomers;
-}) {
+}
+
+const Customers: React.FC<CustomersProps> = ({ initialData }) => {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
     defaultValue: '',
@@ -81,10 +81,10 @@ export default function Customers({
       <Pagination
         data={filteredData}
         defaultLimit={20}
-        renderPage={(items) => (
+        renderPage={(customers) => (
           <ResponsiveGrid minWidth="18rem">
-            {items.map((item) => (
-              <CustomerPreview item={item} key={item.customerId} />
+            {customers.map((customer) => (
+              <CustomerPreview customer={customer} key={customer.customerId} />
             ))}
           </ResponsiveGrid>
         )}
@@ -126,33 +126,35 @@ export default function Customers({
       {getContent()}
     </PanelStretched>
   );
+};
+
+interface CustomerPreviewProps {
+  customer: ICustomer;
 }
 
-const CustomerPreview = memo(function CustomerPreview({
-  item,
-}: {
-  item: ICustomer;
-}) {
-  return (
-    <Link href={`/customers/${item.customerId}`} className="block">
-      <Card className="hover:shadow-lg transition h-full">
-        <CardHeader>
-          <CardTitle title="Customer name">{item.companyName}</CardTitle>
-        </CardHeader>
-        <CardContent className="h-full flex flex-col justify-end gap-4">
-          <div className="text-end" title="Customer company ID">
-            {item.customerId}
-          </div>
-          <Location
-            country={item.country}
-            city={item.city}
-            title="Customer HQ location"
-          />
-        </CardContent>
-      </Card>
-    </Link>
-  );
-});
+const CustomerPreview: React.FC<CustomerPreviewProps> = memo(
+  function CustomerPreview({ customer }) {
+    return (
+      <Link href={`/customers/${customer.customerId}`} className="block">
+        <Card className="hover:shadow-lg transition h-full">
+          <CardHeader>
+            <CardTitle title="Customer name">{customer.companyName}</CardTitle>
+          </CardHeader>
+          <CardContent className="h-full flex flex-col justify-end gap-4">
+            <div className="text-end" title="Customer company ID">
+              {customer.customerId}
+            </div>
+            <Location
+              country={customer.country}
+              city={customer.city}
+              title="Customer HQ location"
+            />
+          </CardContent>
+        </Card>
+      </Link>
+    );
+  },
+);
 
 function LocalSkeleton() {
   return (
@@ -173,3 +175,5 @@ function LocalSkeleton() {
     </>
   );
 }
+
+export default Customers;

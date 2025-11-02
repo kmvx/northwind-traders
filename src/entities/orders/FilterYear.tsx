@@ -1,14 +1,18 @@
+import React from 'react';
+
 import { SelectGroup } from '@/ui';
 
-export default function FilterYear({
-  years,
-  filterYear,
-  setFilterYear,
-}: {
+interface FilterYearProps {
   years: Iterable<number> | ArrayLike<number>;
   filterYear: number | null;
   setFilterYear: (filterYear: number | null) => void;
-}) {
+}
+
+const FilterYear: React.FC<FilterYearProps> = ({
+  years,
+  filterYear,
+  setFilterYear,
+}) => {
   const LocalSelectGroup = SelectGroup<number | null>;
   return (
     <LocalSelectGroup
@@ -21,4 +25,6 @@ export default function FilterYear({
       title="Filter by order creation year"
     />
   );
-}
+};
+
+export default FilterYear;

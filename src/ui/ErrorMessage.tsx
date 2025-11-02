@@ -6,11 +6,17 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 import { ButtonWithTooltip, CopyButton } from '.';
 
-const ErrorMessage: React.FC<{
+interface ErrorMessageProps {
   error: Error;
   retry?: () => void;
   className?: string;
-}> = ({ error, retry, className }) => {
+}
+
+const ErrorMessage: React.FC<ErrorMessageProps> = ({
+  error,
+  retry,
+  className,
+}) => {
   const text = 'Error: ' + error.message;
 
   return (

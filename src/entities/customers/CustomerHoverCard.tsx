@@ -19,7 +19,10 @@ type CustomerHoverCardProps = {
   children?: React.ReactNode;
 };
 
-function CustomerHoverCard({ customerId, children }: CustomerHoverCardProps) {
+const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
+  customerId,
+  children,
+}) => {
   const [open, setOpen] = useState(false);
   const { data, error, isLoading, refetch } = useQueryCustomer({
     customerId,
@@ -74,6 +77,6 @@ function CustomerHoverCard({ customerId, children }: CustomerHoverCardProps) {
       <HoverCardContent>{getContent()}</HoverCardContent>
     </HoverCard>
   );
-}
+};
 
 export default memo(CustomerHoverCard);

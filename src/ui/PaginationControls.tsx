@@ -7,17 +7,19 @@ import {
 
 import { ButtonWithTooltip } from '.';
 
-export default function PaginationControls({
-  offset,
-  limit,
-  totalItems,
-  goToPage,
-}: {
+interface PaginationControlsProps {
   offset: number;
   limit: number;
   totalItems: number;
   goToPage: (page: number) => void;
-}) {
+}
+
+const PaginationControls: React.FC<PaginationControlsProps> = ({
+  offset,
+  limit,
+  totalItems,
+  goToPage,
+}) => {
   const totalPages = Math.ceil(totalItems / limit);
   const currentPage = Math.floor(offset / limit);
   if (totalPages <= 1) return null;
@@ -69,4 +71,6 @@ export default function PaginationControls({
       </ButtonWithTooltip>
     </div>
   );
-}
+};
+
+export default PaginationControls;

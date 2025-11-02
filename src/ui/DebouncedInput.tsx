@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Input, Spinner } from '@/components/ui';
 import { useDebounce } from '@/hooks';
@@ -14,13 +14,13 @@ type DebouncedInputProps = {
   title?: string;
 };
 
-const DebouncedInput = ({
+const DebouncedInput: React.FC<DebouncedInputProps> = ({
   value,
   setValue,
   placeholder,
   className,
   title,
-}: DebouncedInputProps) => {
+}) => {
   const [localValue, setLocalValue] = useState(value);
 
   const { debouncedValue, isDebouncing } = useDebounce(localValue);

@@ -19,7 +19,7 @@ import { FullscreenToggle, Logo, ThemeToggle } from '@/ui';
 
 import { Separator } from './ui';
 
-export default function AppSidebar() {
+const AppSidebar: React.FC = () => {
   return (
     <Sidebar
       style={{
@@ -76,4 +76,6 @@ export default function AppSidebar() {
       <SidebarFooter />
     </Sidebar>
   );
-}
+};
+
+export default AppSidebar;

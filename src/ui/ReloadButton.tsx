@@ -3,13 +3,12 @@ import React, { memo } from 'react';
 
 import ButtonWithTooltip from './ButtonWithTooltip';
 
-function ReloadButton({
-  onClick,
-  isLoading,
-}: {
+interface ReloadButtonProps {
   onClick: () => void;
   isLoading?: boolean;
-}) {
+}
+
+const ReloadButton: React.FC<ReloadButtonProps> = ({ onClick, isLoading }) => {
   return (
     <ButtonWithTooltip
       type="button"
@@ -22,6 +21,6 @@ function ReloadButton({
       <RotateCwIcon className={`size-4 ${isLoading ? 'animate-spin' : ''}`} />
     </ButtonWithTooltip>
   );
-}
+};
 
 export default memo(ReloadButton);

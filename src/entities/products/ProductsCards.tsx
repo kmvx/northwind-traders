@@ -1,11 +1,15 @@
 import Link from 'next/link';
-import { memo } from 'react';
+import React, { memo } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import type { IProduct, IProducts } from '@/models';
 import { Pagination, ResponsiveGrid } from '@/ui';
 
-export default function ProductsCards({ data }: { data: IProducts }) {
+interface ProductsCardsProps {
+  data: IProducts;
+}
+
+const ProductsCards: React.FC<ProductsCardsProps> = ({ data }) => {
   return (
     <Pagination
       data={data}
@@ -19,9 +23,15 @@ export default function ProductsCards({ data }: { data: IProducts }) {
       )}
     />
   );
+};
+
+interface ProductCardProps {
+  item: IProduct;
 }
 
-const ProductCard = memo(function ProductCard({ item }: { item: IProduct }) {
+const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
+  item,
+}) {
   return (
     <Link href={`/products/${item.productId}`} className="block">
       <Card className="hover:shadow-lg transition h-full">
@@ -37,3 +47,5 @@ const ProductCard = memo(function ProductCard({ item }: { item: IProduct }) {
     </Link>
   );
 });
+
+export default ProductsCards;

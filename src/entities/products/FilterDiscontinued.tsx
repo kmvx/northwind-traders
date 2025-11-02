@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { SelectGroup } from '@/ui';
 
 const itemsInfo = [
@@ -6,13 +8,15 @@ const itemsInfo = [
   { component: 'Active', value: false },
 ] as const;
 
-export default function FilterDiscontinued({
-  filterDiscontinued,
-  setDiscontinued,
-}: {
+interface FilterDiscontinuedProps {
   filterDiscontinued: boolean | null;
   setDiscontinued: (value: boolean | null) => void;
-}) {
+}
+
+const FilterDiscontinued: React.FC<FilterDiscontinuedProps> = ({
+  filterDiscontinued,
+  setDiscontinued,
+}) => {
   const LocalSelectGroup = SelectGroup<boolean | null>;
   return (
     <LocalSelectGroup
@@ -22,4 +26,6 @@ export default function FilterDiscontinued({
       title="Product discontinued status"
     />
   );
-}
+};
+
+export default FilterDiscontinued;

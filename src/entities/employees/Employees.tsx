@@ -28,13 +28,12 @@ import { getEmployeeNameByData, isStringIncludes } from '@/utils';
 
 import { FilterCountry, Location, LocationSkeleton } from '../shared';
 
-export default function Employees({
-  initialData,
-  reportsTo,
-}: {
+interface EmployeesProps {
   initialData?: IEmployees;
   reportsTo?: number;
-}) {
+}
+
+const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
     defaultValue: '',
@@ -176,7 +175,7 @@ export default function Employees({
       {getContent()}
     </PanelStretched>
   );
-}
+};
 
 function LocalSkeleton() {
   return (
@@ -201,3 +200,5 @@ function LocalSkeleton() {
     </>
   );
 }
+
+export default Employees;

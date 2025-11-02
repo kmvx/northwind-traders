@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
   Card,
@@ -27,11 +27,11 @@ import { isStringIncludes } from '@/utils';
 
 import { FilterCountry, Location, LocationSkeleton } from '../shared';
 
-export default function Suppliers({
-  initialData,
-}: {
+interface SuppliersProps {
   initialData?: ISuppliers;
-}) {
+}
+
+const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
   // Filters
   const [filterString, setFilterString] = useQueryState('q', {
     defaultValue: '',
@@ -141,7 +141,7 @@ export default function Suppliers({
       {getContent()}
     </PanelStretched>
   );
-}
+};
 
 function LocalSkeleton() {
   return (
@@ -162,3 +162,5 @@ function LocalSkeleton() {
     </>
   );
 }
+
+export default Suppliers;

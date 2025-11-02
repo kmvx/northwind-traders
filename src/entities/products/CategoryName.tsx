@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Spinner } from '@/components/ui';
 import type { ICategories } from '@/models';
 
@@ -6,10 +8,10 @@ interface CategoryNameProps {
   categoryId: number | undefined;
 }
 
-export default function CategoryName({
+const CategoryName: React.FC<CategoryNameProps> = ({
   dataCategories,
   categoryId,
-}: CategoryNameProps) {
+}) => {
   const category = dataCategories?.find(
     (item) => item.categoryId === categoryId,
   );
@@ -22,4 +24,6 @@ export default function CategoryName({
       <Spinner />
     </span>
   );
-}
+};
+
+export default CategoryName;

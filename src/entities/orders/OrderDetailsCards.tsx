@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Card,
   CardContent,
@@ -10,13 +12,15 @@ import { BasicLink, ResponsiveGrid } from '@/ui';
 
 import { getTotalCost, roundMoney } from './utils';
 
-export default function OrderDetailsCards({
-  data,
-  dataProducts,
-}: {
+interface OrderDetailsCardsProps {
   data: IOrderDetails;
   dataProducts: IProducts | undefined;
-}) {
+}
+
+const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
+  data,
+  dataProducts,
+}) => {
   return (
     <ResponsiveGrid minWidth="15rem">
       {data.map((orderDetail) => {
@@ -57,4 +61,6 @@ export default function OrderDetailsCards({
       })}
     </ResponsiveGrid>
   );
-}
+};
+
+export default OrderDetailsCards;

@@ -6,7 +6,11 @@ import React from 'react';
 import { useEmployeeTeritories, useQueryRegions } from '@/net';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
-const Territories: React.FC<{ employeeId?: number }> = ({ employeeId }) => {
+interface TerritoriesProps {
+  employeeId?: number;
+}
+
+const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
   const { data, error, isLoading, refetch } = useEmployeeTeritories({
     employeeId,
   });

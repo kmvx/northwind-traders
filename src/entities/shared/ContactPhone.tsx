@@ -1,16 +1,19 @@
 import { PhoneIcon, PrinterIcon } from 'lucide-react';
+import React from 'react';
 
 import CopyButton from '../../ui/CopyButton';
 
-export default function ContactPhone({
-  phone,
-  description,
-  isFax = false,
-}: {
+interface ContactPhoneProps {
   phone: string;
   description?: string;
   isFax?: boolean;
-}) {
+}
+
+const ContactPhone: React.FC<ContactPhoneProps> = ({
+  phone,
+  description,
+  isFax = false,
+}) => {
   const IconComponent = isFax ? PrinterIcon : PhoneIcon;
 
   return (
@@ -27,4 +30,6 @@ export default function ContactPhone({
       </span>
     </div>
   );
-}
+};
+
+export default ContactPhone;

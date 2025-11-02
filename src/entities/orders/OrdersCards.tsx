@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Fragment, memo } from 'react';
+import React, { Fragment, memo } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { Pagination, ResponsiveGrid } from '@/ui';
@@ -7,7 +7,11 @@ import { Pagination, ResponsiveGrid } from '@/ui';
 import { ContactAddress } from '../shared';
 import type { IOrderFormatted } from '.';
 
-export default function OrdersCards({ data }: { data: IOrderFormatted[] }) {
+interface OrdersCardsProps {
+  data: IOrderFormatted[];
+}
+
+const OrdersCards: React.FC<OrdersCardsProps> = ({ data }) => {
   return (
     <Pagination
       data={data}
@@ -21,9 +25,13 @@ export default function OrdersCards({ data }: { data: IOrderFormatted[] }) {
       )}
     />
   );
+};
+
+interface OrderCardProps {
+  item: IOrderFormatted;
 }
 
-const OrderCard = memo(function OrderCard({ item }: { item: IOrderFormatted }) {
+const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({ item }) {
   const items = [
     { name: 'Order date', value: item.orderDateFormatted },
     { name: 'Shipped date', value: item.shippedDateFormatted },
@@ -56,3 +64,5 @@ const OrderCard = memo(function OrderCard({ item }: { item: IOrderFormatted }) {
     </Link>
   );
 });
+
+export default OrdersCards;

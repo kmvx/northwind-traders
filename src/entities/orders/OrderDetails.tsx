@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { usePageSize } from '@/hooks';
 import { useQueryOrderDetails, useQueryProducts } from '@/net';
 import {
@@ -11,7 +13,11 @@ import {
 import { OrderDetailsCards, OrderDetailsTable } from '.';
 import { getTotalCost, roundMoney } from './utils';
 
-export default function OrderDetails({ orderId }: { orderId: number }) {
+interface OrderDetailsProps {
+  orderId: number;
+}
+
+const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
   // Network data
   const { data, error, isLoading, refetch } = useQueryOrderDetails({
     orderId,
@@ -52,4 +58,6 @@ export default function OrderDetails({ orderId }: { orderId: number }) {
       {getContent()}
     </Panel>
   );
-}
+};
+
+export default OrderDetails;

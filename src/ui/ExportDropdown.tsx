@@ -27,7 +27,7 @@ type ExportDropdownProps = {
   name: string;
 };
 
-const ExportDropdown = ({ data, name }: ExportDropdownProps) => {
+const ExportDropdown: React.FC<ExportDropdownProps> = ({ data, name }) => {
   const handleCopyCSV = async () => {
     const text = convertToCSV(data);
     await copyTextToClipboard(text, 'CSV', false);

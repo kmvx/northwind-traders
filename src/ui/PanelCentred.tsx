@@ -1,10 +1,12 @@
 import clsx from 'clsx';
 import React from 'react';
 
-const PanelCentred: React.FC<{
+interface PanelCentredProps {
   children: React.ReactNode;
   className?: string;
-}> = ({ children, className }) => {
+}
+
+const PanelCentred: React.FC<PanelCentredProps> = ({ children, className }) => {
   return (
     <div className="container mx-auto flex flex-col items-center">
       <section className={clsx('border rounded p-4 bg-sidebar', className)}>

@@ -2,7 +2,7 @@
 
 import type { ColumnDef, RowData } from '@tanstack/react-table';
 import { PhoneIcon } from 'lucide-react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { Spinner } from '@/components/ui';
 import { DataTable } from '@/features/table';
@@ -129,15 +129,17 @@ const allColumns: ColumnDef<IOrderFormatted>[] = [
   },
 ];
 
-export default function OrdersTable({
+interface OrdersTableProps {
+  data: IOrderFormatted[];
+  isCustomerPage?: boolean;
+  isEmployeePage?: boolean;
+}
+
+const OrdersTable: React.FC<OrdersTableProps> = ({
   data,
   isCustomerPage,
   isEmployeePage,
-}: {
-  data: IOrderFormatted[];
-  isCustomerPage?: boolean | undefined;
-  isEmployeePage?: boolean | undefined;
-}) {
+}) => {
   const { data: dataEmployees } = useQueryEmployees();
   const { data: dataShippers } = useQueryShippers();
 
@@ -162,4 +164,6 @@ export default function OrdersTable({
       meta={{ dataEmployees, dataShippers }}
     />
   );
-}
+};
+
+export default OrdersTable;

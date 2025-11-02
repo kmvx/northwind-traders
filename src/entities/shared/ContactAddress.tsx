@@ -1,20 +1,23 @@
 import { MapPinIcon } from 'lucide-react';
+import React from 'react';
 
 import { cn } from '@/lib/utils';
 
 import { Flag } from '.';
 
-export default function ContactAddress({
-  country,
-  address,
-  title,
-  className,
-}: {
+interface ContactAddressProps {
   country: string;
   address: string;
   title?: string;
   className?: string;
-}) {
+}
+
+const ContactAddress: React.FC<ContactAddressProps> = ({
+  country,
+  address,
+  title,
+  className,
+}) => {
   return (
     <div
       className={cn('flex items-center gap-2 font-bold', className)}
@@ -25,4 +28,6 @@ export default function ContactAddress({
       <span>{address}</span>
     </div>
   );
-}
+};
+
+export default ContactAddress;
