@@ -1,5 +1,6 @@
 import {
   AxeIcon,
+  ChartLineIcon,
   CreditCardIcon,
   DollarSignIcon,
   EggFriedIcon,
@@ -24,6 +25,11 @@ export const navigationItems: {
         title: 'About',
         url: '/',
         icon: HouseIcon,
+      },
+      {
+        title: 'Charts',
+        url: '/charts',
+        icon: ChartLineIcon,
       },
     ],
   },

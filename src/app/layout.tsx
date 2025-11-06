@@ -3,8 +3,7 @@ import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
-import { AppSidebar } from '@/components';
-import Providers from '@/components/Providers';
+import { AppSidebar, Providers } from '@/components';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { buildTitle } from '@/utils';
 
@@ -49,7 +48,7 @@ export default function RootLayout({
               {children}
               <SidebarTrigger
                 variant="outline"
-                className="size-9 absolute top-4 left-4"
+                className="size-9 absolute top-4 left-4 bg-transparent"
                 style={{
                   marginLeft: 'env(safe-area-inset-left)',
                 }}
