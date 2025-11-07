@@ -1,6 +1,6 @@
 import { type Metadata } from 'next';
 
-import { Charts } from '@/components';
+import { Charts } from '@/features/charts';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {

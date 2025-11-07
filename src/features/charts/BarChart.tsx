@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { useQueryCustomers, useQueryOrders, useQuerySuppliers } from '@/net';
-import { ErrorMessage, PanelBasic, Typography, WaitSpinner } from '@/ui';
+import { ErrorMessage, PanelBasic, WaitSpinner } from '@/ui';
 
+import { HeaderChart } from '.';
 import { addTooltip } from './utilsCharts';
 
 function updateChart({
@@ -200,9 +201,7 @@ const BarChart: React.FC<{
 
   return (
     <PanelBasic className="flex flex-col items-center gap-4">
-      <Typography.Header2>
-        Distribution of count of <u>{name}</u> by countries
-      </Typography.Header2>
+      <HeaderChart name={name} />
       <div
         className="relative min-h-100 min-w-full sm:min-w-150"
         style={{ '--chart-text-color': '#888' } as React.CSSProperties}
