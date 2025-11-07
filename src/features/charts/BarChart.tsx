@@ -85,7 +85,7 @@ function updateChart({
   svg
     .append('g')
     .style('color', 'var(--chart-text-color)')
-    .call(d3.axisLeft(y))
+    .call(d3.axisLeft(y).tickFormat(d3.format('d')))
     .selectAll('text')
     .attr('fill', 'var(--chart-text-color)')
     .style('font-size', '9pt');
