@@ -108,7 +108,7 @@ function updateChart({
     .selectAll('.whatever')
     .data(itemsPerCountryCountArray)
     .join('rect')
-    .attr('class', 'hover:cursor-pointer hover:opacity-50')
+    .attr('class', 'hover:opacity-50')
     .attr('data-country', (d) => d.country)
     .attr('data-count', (d) => d.count)
     .attr('x', function (d) {
@@ -122,8 +122,8 @@ function updateChart({
     .attr('height', function (d) {
       return Math.max(0, heightChart - y(d.count));
     })
-    .attr('fill', `hsla(${hue}, 100%, 70%, 50%)`)
-    .attr('stroke', `hsla(${hue}, 100%, 50%, 50%)`)
+    .attr('fill', `hsl(${hue} 100% 70% / 0.5)`)
+    .attr('stroke', `hsl(${hue} 100% 50% / 0.5)`)
     .attr('stroke-width', 2);
 
   addTooltip({ svg: svgBase, hue, name, navigate });
@@ -199,12 +199,12 @@ const BarChart: React.FC<{
   };
 
   return (
-    <PanelBasic className="flex flex-col items-center">
+    <PanelBasic className="flex flex-col items-center gap-4">
       <Typography.Header2>
         Distribution of count of <u>{name}</u> by countries
       </Typography.Header2>
       <div
-        className="min-h-100 min-w-full sm:min-w-150 relative"
+        className="relative min-h-100 min-w-full sm:min-w-150"
         style={{ '--chart-text-color': '#888' } as React.CSSProperties}
       >
         {getContent()}
