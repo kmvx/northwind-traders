@@ -6,6 +6,7 @@ import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
+import type { CountriesQueryResultType } from './types';
 import { addTooltip } from './utilsCharts';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -111,15 +112,8 @@ function updateChart({
   });
 }
 
-interface CountriesQueryResultType {
-  countries: string[] | undefined;
-  error: Error | null;
-  isLoading: boolean;
-  refetch: () => void;
-}
-
 const WorldMapChart: React.FC<{
-  name: string;
+  name: 'orders' | 'customers' | 'suppliers';
   countriesQueryResult: CountriesQueryResultType;
   hue?: number | undefined;
   allowZoom?: boolean | undefined;
@@ -201,6 +195,8 @@ const WorldMapChart: React.FC<{
   );
 };
 
+export default WorldMapChart;
+
 export const CustomersWorldMapChart: React.FC<{
   countriesQueryResult: CountriesQueryResultType;
   hue?: number;
@@ -208,10 +204,8 @@ export const CustomersWorldMapChart: React.FC<{
 }> = ({ countriesQueryResult, hue, allowZoom }) => {
   return (
     <WorldMapChart
-      countriesQueryResult={countriesQueryResult}
       name="customers"
-      hue={hue}
-      allowZoom={allowZoom}
+      {...{ countriesQueryResult, hue, allowZoom }}
     />
   );
 };
@@ -223,10 +217,8 @@ export const OrdersWorldMapChart: React.FC<{
 }> = ({ countriesQueryResult, hue, allowZoom }) => {
   return (
     <WorldMapChart
-      countriesQueryResult={countriesQueryResult}
       name="orders"
-      hue={hue}
-      allowZoom={allowZoom}
+      {...{ countriesQueryResult, hue, allowZoom }}
     />
   );
 };
@@ -238,10 +230,8 @@ export const SuppliersWorldMapChart: React.FC<{
 }> = ({ countriesQueryResult, hue, allowZoom }) => {
   return (
     <WorldMapChart
-      countriesQueryResult={countriesQueryResult}
       name="suppliers"
-      hue={hue}
-      allowZoom={allowZoom}
+      {...{ countriesQueryResult, hue, allowZoom }}
     />
   );
 };

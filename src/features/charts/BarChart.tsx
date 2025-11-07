@@ -4,9 +4,9 @@ import * as d3 from 'd3';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 
-import { useQueryCustomers, useQueryOrders, useQuerySuppliers } from '@/net';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
+import type { CountriesQueryResultType } from './types';
 import { addTooltip } from './utilsCharts';
 
 function updateChart({
@@ -130,15 +130,14 @@ function updateChart({
 }
 
 const BarChart: React.FC<{
-  name: string;
+  name: 'orders' | 'customers' | 'suppliers';
+  countriesQueryResult: CountriesQueryResultType;
   hue: number;
-  queryResult: {
-    countries: string[] | undefined;
-    error: Error | null;
-    isLoading: boolean;
-    refetch: () => void;
-  };
-}> = ({ name, hue, queryResult: { countries, error, isLoading, refetch } }) => {
+}> = ({
+  name,
+  hue,
+  countriesQueryResult: { countries, error, isLoading, refetch },
+}) => {
   // Prepare data for the chart
   const { itemsPerCountryCount, maxItemsCountPerCountry } = useMemo(() => {
     const itemsPerCountryCount = new Map<string, number>();
@@ -208,50 +207,4 @@ const BarChart: React.FC<{
   );
 };
 
-export const CustomersBarChart: React.FC = () => {
-  const { data, error, isLoading, refetch } = useQueryCustomers();
-
-  const countries = useMemo(() => {
-    return data?.map((dataItem) => dataItem.country);
-  }, [data]);
-
-  return (
-    <BarChart
-      name="customers"
-      hue={30}
-      queryResult={{ countries, error, isLoading, refetch }}
-    />
-  );
-};
-
-export const OrdersBarChart: React.FC = () => {
-  const { data, error, isLoading, refetch } = useQueryOrders();
-
-  const countries = useMemo(() => {
-    return data?.map((dataItem) => dataItem.shipCountry);
-  }, [data]);
-
-  return (
-    <BarChart
-      name="orders"
-      hue={216}
-      queryResult={{ countries, error, isLoading, refetch }}
-    />
-  );
-};
-
-export const SuppliersBarChart: React.FC = () => {
-  const { data, error, isLoading, refetch } = useQuerySuppliers();
-
-  const countries = useMemo(() => {
-    return data?.map((dataItem) => dataItem.country);
-  }, [data]);
-
-  return (
-    <BarChart
-      name="suppliers"
-      hue={120}
-      queryResult={{ countries, error, isLoading, refetch }}
-    />
-  );
-};
+export default BarChart;
