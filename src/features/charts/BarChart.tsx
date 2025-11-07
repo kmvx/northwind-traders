@@ -3,6 +3,7 @@
 import * as d3 from 'd3';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import invariant from 'tiny-invariant';
 
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
@@ -57,6 +58,7 @@ function updateChart({
       }),
     )
     .padding(0.2);
+
   svg
     .append('g')
     .attr('transform', `translate(0, ${5 + heightChart})`)
@@ -74,18 +76,15 @@ function updateChart({
     .range([heightChart, 0])
     .nice();
 
-  // Remove fractional ticks
-  const ticksOld = y.ticks;
-  y.ticks = function () {
-    // eslint-disable-next-line prefer-rest-params, @typescript-eslint/no-explicit-any
-    const result = ticksOld.apply(this, arguments as any);
-    return result.filter((value) => Number.isInteger(value));
-  };
-
   svg
     .append('g')
     .style('color', 'var(--chart-text-color)')
-    .call(d3.axisLeft(y).tickFormat(d3.format('d')))
+    .call(
+      d3
+        .axisLeft(y)
+        .tickValues(y.ticks().filter((d) => Number.isInteger(d)))
+        .tickFormat(d3.format('d')),
+    )
     .selectAll('text')
     .attr('fill', 'var(--chart-text-color)')
     .style('font-size', '9pt');
@@ -112,8 +111,9 @@ function updateChart({
     .attr('data-country', (d) => d.country)
     .attr('data-count', (d) => d.count)
     .attr('x', function (d) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return x(d.country) as any;
+      const result = x(d.country);
+      invariant(result);
+      return result;
     })
     .attr('y', function (d) {
       return y(d.count);

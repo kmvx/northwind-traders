@@ -3,13 +3,20 @@
 import * as d3 from 'd3';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import invariant from 'tiny-invariant';
 
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import type { CountriesQueryResultType } from './types';
 import { addTooltip } from './utilsCharts';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+interface IWorldGeo {
+  features: IWorldGeoFeature[];
+}
+
+type IWorldGeoFeature = d3.GeoPermissibleObjects & {
+  properties: { name: string };
+};
 
 function updateChart({
   current,
@@ -32,9 +39,11 @@ function updateChart({
   name: string;
   navigate: (path: string) => void;
 }) {
-  d3.json(
+  d3.json<IWorldGeo>(
     'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson',
-  ).then(function (data: any) {
+  ).then(function (data) {
+    invariant(data);
+
     const projection = d3
       .geoNaturalEarth1()
       //.geoAzimuthalEqualArea()
@@ -59,23 +68,24 @@ function updateChart({
       .attr('fill-opacity', 0.1);
 
     // Countries
-    function getCountryName(d: any) {
+    function getCountryName(d: IWorldGeoFeature) {
       const country = d.properties.name;
       if (country === 'England') return 'UK';
       else return country;
     }
+
     svgGroup
       .append('g')
       .selectAll('path')
       .data(data.features)
       .join('path')
       .attr('class', 'hover:opacity-50 stroke-neutral-500/30')
-      .attr('data-country', (d: any) => getCountryName(d))
+      .attr('data-country', (d) => getCountryName(d))
       .attr(
         'data-count',
-        (d: any) => itemsPerCountryCount.get(getCountryName(d)) || 'no',
+        (d) => itemsPerCountryCount.get(getCountryName(d)) || 'no',
       )
-      .attr('fill', function (d: any) {
+      .attr('fill', function (d) {
         const count = itemsPerCountryCount.get(getCountryName(d));
         if (count) {
           return `hsl(${hue} 100% ${
@@ -83,14 +93,14 @@ function updateChart({
           }%)`;
         } else return 'hsl(0 0% 75%)';
       })
-      .attr('d', d3.geoPath().projection(projection) as any);
+      .attr('d', d3.geoPath().projection(projection));
 
     // Zoom
     if (allowZoom) {
       const zoomObject = d3
-        .zoom()
+        .zoom<SVGSVGElement, unknown>()
         .scaleExtent([1, 4])
-        .on('zoom', function (event) {
+        .on('zoom', function (event: d3.D3ZoomEvent<SVGSVGElement, unknown>) {
           function isFloatSame(a: number, b: number) {
             return Math.abs(a - b) < 1e-5;
           }
@@ -100,11 +110,14 @@ function updateChart({
           ) {
             // Reset scale and translate values on scale out
             setTimeout(() => {
-              zoomObject.transform(svgGroup as any, d3.zoomIdentity);
+              svgGroup.attr('transform', d3.zoomIdentity.toString());
             }, 1e3);
-          } else svgGroup.attr('transform', event.transform);
+          } else {
+            svgGroup.attr('transform', event.transform.toString());
+          }
         });
-      svg.call(zoomObject as any);
+
+      svg.call(zoomObject);
     }
 
     // Tooltip
