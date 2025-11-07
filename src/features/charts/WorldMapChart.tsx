@@ -4,9 +4,8 @@ import * as d3 from 'd3';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 
-import { ErrorMessage, PanelBasic, WaitSpinner } from '@/ui';
+import { ErrorMessage, WaitSpinner } from '@/ui';
 
-import { HeaderChart } from '.';
 import { addTooltip } from './utilsCharts';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -196,12 +195,9 @@ const WorldMapChart: React.FC<{
   };
 
   return (
-    <PanelBasic className="flex flex-col items-center gap-4">
-      <HeaderChart name={name} />
-      <div className="relative min-h-100 min-w-full sm:min-w-150">
-        {getContent()}
-      </div>
-    </PanelBasic>
+    <div className="relative min-h-100 min-w-full sm:min-w-150">
+      {getContent()}
+    </div>
   );
 };
 
