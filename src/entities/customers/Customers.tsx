@@ -106,6 +106,7 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
                 isLoading,
                 refetch,
               }}
+              showHeader
             />
           </>
         )}

@@ -195,6 +195,7 @@ const Orders: React.FC<OrdersProps> = ({
                 isLoading,
                 refetch,
               }}
+              showHeader
             />
           </>
         )}

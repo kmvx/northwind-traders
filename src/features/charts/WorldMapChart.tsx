@@ -125,12 +125,21 @@ function updateChart({
   });
 }
 
-const WorldMapChart: React.FC<{
+interface WorldMapChartProps {
   name: 'orders' | 'customers' | 'suppliers';
   countriesQueryResult: CountriesQueryResultType;
   hue?: number | undefined;
   allowZoom?: boolean | undefined;
-}> = ({ name, countriesQueryResult, hue = 216, allowZoom = false }) => {
+  showHeader?: boolean | undefined;
+}
+
+const WorldMapChart: React.FC<WorldMapChartProps> = ({
+  name,
+  countriesQueryResult,
+  hue = 216,
+  allowZoom = false,
+  showHeader = false,
+}) => {
   // Prepare data for the chart
   const { itemsPerCountryCount, maxItemsCountPerCountry } = useMemo(() => {
     const itemsPerCountryCount = new Map<string, number>();
@@ -202,12 +211,19 @@ const WorldMapChart: React.FC<{
   };
 
   return (
-    <div
-      className="relative min-h-100 min-w-full sm:min-w-150 aspect-[1.5]"
-      style={CHART_STYLES}
-    >
-      {getContent()}
-    </div>
+    <>
+      {showHeader && (
+        <h3 className="text-center text-2xl">
+          Distribution of count of <b>{name}</b> by countries
+        </h3>
+      )}
+      <div
+        className="relative min-h-100 min-w-full sm:min-w-150 aspect-[1.5]"
+        style={CHART_STYLES}
+      >
+        {getContent()}
+      </div>
+    </>
   );
 };
 

@@ -115,6 +115,7 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
                 isLoading,
                 refetch,
               }}
+              showHeader
             />
           </>
         )}
