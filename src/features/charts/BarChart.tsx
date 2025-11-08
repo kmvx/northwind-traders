@@ -199,7 +199,7 @@ const BarChart: React.FC<{
 
   return (
     <div
-      className="relative min-h-100 min-w-full sm:min-w-150"
+      className="relative min-h-100 min-w-full sm:min-w-150 flex justify-center"
       style={CHART_STYLES}
     >
       {getContent()}

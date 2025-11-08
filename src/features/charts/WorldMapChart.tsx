@@ -218,7 +218,7 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
         </h3>
       )}
       <div
-        className="relative sm:min-h-100 min-w-full sm:min-w-150 aspect-[1.5]"
+        className="relative sm:min-h-100 min-w-full sm:min-w-150 aspect-[1.5] flex justify-center"
         style={CHART_STYLES}
       >
         {getContent()}
