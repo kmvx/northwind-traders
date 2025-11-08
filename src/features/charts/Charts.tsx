@@ -2,11 +2,12 @@
 
 import { useMemo } from 'react';
 
+import { Separator } from '@/components/ui';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useQueryCustomers, useQueryOrders, useQuerySuppliers } from '@/net';
 import { PanelCentred } from '@/ui';
 
-import { BarChart, WorldMapChart } from '.';
+import { BarChart, OrdersChart, WorldMapChart } from '.';
 
 const Charts: React.FC = () => {
   const tabInfos = [
@@ -17,29 +18,41 @@ const Charts: React.FC = () => {
 
   return (
     <PanelCentred>
-      <Tabs defaultValue={tabInfos[0].name}>
-        <TabsList>
+      <div
+        className="flex flex-col gap-8"
+        style={
+          {
+            '--chart-text-color': '#888',
+            '--chart-line-color': '#0d6efd',
+          } as React.CSSProperties
+        }
+      >
+        <OrdersChart />
+        <Separator />
+        <Tabs defaultValue={tabInfos[0].name} className="items-center">
+          <TabsList>
+            {tabInfos.map((info) => (
+              <TabsTrigger
+                value={info.name}
+                key={info.name}
+                className="cursor-pointer"
+              >
+                {info.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
           {tabInfos.map((info) => (
-            <TabsTrigger
-              value={info.name}
-              key={info.name}
-              className="cursor-pointer"
-            >
-              {info.label}
-            </TabsTrigger>
+            <TabsContent value={info.name} key={info.name}>
+              <div className="flex flex-col gap-4">
+                <h3 className="text-center text-2xl">
+                  Distribution of count of <b>{info.name}</b> by countries
+                </h3>
+                {info.content}
+              </div>
+            </TabsContent>
           ))}
-        </TabsList>
-        {tabInfos.map((info) => (
-          <TabsContent value={info.name} key={info.name}>
-            <div className="flex flex-col gap-4">
-              <h3 className="text-center text-2xl">
-                Distribution of count of <b>{info.name}</b> by countries
-              </h3>
-              {info.content}
-            </div>
-          </TabsContent>
-        ))}
-      </Tabs>
+        </Tabs>
+      </div>
     </PanelCentred>
   );
 };

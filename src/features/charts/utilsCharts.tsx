@@ -16,10 +16,7 @@ export function addTooltip({
 
   const tooltip = svgParent
     .append('div')
-    .attr(
-      'class',
-      'u-chart-tooltip absolute pointer-events-none px-2 py-1 border bg-white/80 dark:bg-black/80 text-center z-100 text-xs',
-    )
+    .attr('class', 'u-chart-tooltip ' + CHART_TOOLTIP_CLASS_NAMES)
     .style('border-color', `hsl(${hue} 100% 50%`)
     .style('visibility', 'hidden');
 
@@ -59,3 +56,6 @@ export function addTooltip({
       }
     });
 }
+
+export const CHART_TOOLTIP_CLASS_NAMES =
+  'absolute pointer-events-none px-2 py-1 border bg-white/80 dark:bg-black/80 text-center z-100 text-xs';

@@ -1,0 +1,421 @@
+'use client';
+
+import * as d3 from 'd3';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+
+import { FilterYear } from '@/entities/orders';
+import type { IOrders } from '@/models';
+import { useQueryOrders } from '@/net';
+import { ErrorMessage, WaitSpinner } from '@/ui';
+
+import { CHART_TOOLTIP_CLASS_NAMES } from './utilsCharts';
+
+const months = [
+  'JAN',
+  'FEB',
+  'MAR',
+  'APR',
+  'MAY',
+  'JUN',
+  'JUL',
+  'AUG',
+  'SEP',
+  'NOV',
+  'OCT',
+  'DEC',
+] as const;
+
+const GRID_PADDING_X = 20;
+type Selection = d3.Selection<SVGGElement, unknown, null, undefined>;
+
+class SVGBuilder {
+  private create(ref: React.RefObject<SVGSVGElement | null>) {
+    if (this.svgLines) return; // Already created
+    if (!this.updateSizes(ref)) return;
+    const svg = this.svg;
+    if (!svg) return;
+
+    {
+      const maxValue = 200;
+      const ordersCountByMonth = this.ordersCountByMonth;
+
+      // Build SVG
+      this.updateY(maxValue);
+      const y = this.y;
+
+      this.updateX();
+      const x = this.x;
+
+      // Create data shapes
+      this.svgArea = svg
+        .append('path')
+        .datum(ordersCountByMonth)
+        .attr('fill', 'var(--chart-line-color)')
+        .attr('fill-opacity', 0.1)
+        .attr(
+          'd',
+          d3
+            .area<number>()
+            .curve(d3.curveNatural)
+            .x((_, index: number) => x(index))
+            .y0(this.height)
+            .y1((d) => y(d)),
+        );
+      this.svgLines = svg
+        .append('path')
+        .datum(ordersCountByMonth)
+        .attr('fill', 'none')
+        .attr('stroke', 'var(--chart-line-color)')
+        .attr('stroke-width', 2)
+        .attr(
+          'd',
+          d3
+            .line<number>()
+            .curve(d3.curveNatural)
+            .x((_, index: number) => x(index))
+            .y((d) => y(d)),
+        );
+      this.svgCircles = svg
+        .selectAll('.whatever-circle')
+        .data(ordersCountByMonth)
+        .enter()
+        .append('circle')
+        .attr(
+          'fill',
+          'color-mix(in srgb, var(--chart-line-color) 25%, transparent)',
+        )
+        .attr('class', 'pointer-events-auto hover:opacity-50')
+        .attr('stroke', 'var(--chart-line-color)')
+        .attr('stroke-width', 2)
+        .attr('r', 10)
+        .attr('cx', (_, index: number) => x(index))
+        .attr('cy', (d) => y(d));
+    }
+
+    // Focus line
+    const focusElement = svg.append('g').style('visibility', 'hidden');
+    this.focusLine = focusElement
+      .append('line')
+      .attr('x1', -GRID_PADDING_X)
+      //.attr('x2', this.width + GRID_PADDING_X)
+      .attr('stroke', 'var(--chart-line-color)')
+      .style('stroke-dasharray', '2 3');
+    const focusText = focusElement
+      .append('text')
+      .attr('fill', 'var(--chart-line-color)')
+      .attr('font-size', '9pt')
+      .attr('font-weight', 'bold')
+      .attr('alignment-baseline', 'middle')
+      .attr('text-anchor', 'end');
+
+    // Tooltip
+    const svgParent = d3.select(svg.node()?.parentNode?.parentNode as Element);
+    svgParent.selectAll('.u-chart-tooltip').remove();
+    const tooltip = svgParent
+      .append('div')
+      .attr('class', 'u-chart-tooltip ' + CHART_TOOLTIP_CLASS_NAMES)
+      .style('border-color', 'var(--chart-line-color)')
+      .style('visibility', 'hidden');
+
+    // Mouse event handlers
+    svgParent
+      .on('mouseover', () => {
+        focusElement.style('visibility', 'visible');
+        tooltip.style('visibility', 'visible');
+      })
+      .on('mousemove', (event: MouseEvent) => {
+        // Move focus line
+        const focusLineY = event.offsetY - 0.5 - this.margin.top;
+        this.focusLine?.attr('y1', focusLineY).attr('y2', focusLineY);
+        const focusValue = Math.round(this.y.invert(focusLineY));
+        focusText
+          .attr('x', -GRID_PADDING_X - 30)
+          .attr('y', focusLineY)
+          .text(focusValue);
+        focusElement.style(
+          'visibility',
+          focusValue >= 0 ? 'visible' : 'hidden',
+        );
+
+        // Find nearest value for tooltip
+        let nearestIndex;
+        let nearestDistance = Infinity;
+        this.scaledArray.forEach((value, index) => {
+          const distance = Math.sqrt(
+            (value.x - event.offsetX) ** 2 + (value.y - event.offsetY) ** 2,
+          );
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+        if (nearestIndex === undefined || nearestDistance > 100) {
+          tooltip.style('visibility', 'hidden');
+        } else {
+          const ordersCount = this.ordersCountByMonth[nearestIndex];
+
+          // Position tooltip
+          tooltip
+            .style(
+              'left',
+              this.margin.left +
+                this.x(nearestIndex) -
+                (tooltip.node()?.offsetWidth || 0) / 2 +
+                'px',
+            )
+            .style(
+              'top',
+              this.margin.top +
+                this.y(ordersCount) -
+                (tooltip.node()?.offsetHeight || 0) -
+                15 +
+                'px',
+            )
+            .html(
+              `<b style="font-size: 10pt;">${ordersCount}</b> orders in ${months[nearestIndex]}`,
+            )
+            .style('visibility', 'visible');
+        }
+      })
+      .on('mouseout', () => {
+        focusElement.style('visibility', 'hidden');
+        tooltip.style('visibility', 'hidden');
+      });
+  }
+  setData(
+    data: IOrders,
+    ref: React.RefObject<SVGSVGElement | null>,
+    setYears: (yearsArray: Set<number>) => void,
+    filterYear: number | null,
+  ) {
+    this.create(ref);
+
+    // Prepare data
+    const ordersCountByMonth = this.ordersCountByMonth.fill(0);
+    const years = new Set<number>();
+    data.forEach((item) => {
+      const orderDate = item.orderDate;
+      if (!orderDate) return;
+      const date = new Date(item.orderDate);
+      const year = date.getFullYear();
+      years.add(year);
+      if (filterYear == null || year === filterYear)
+        ordersCountByMonth[date.getMonth()]++;
+    });
+    setYears(years);
+    const maxValue = this.ordersCountByMonth.reduce((p, v) => Math.max(p, v));
+
+    // Upate scales
+    if (!this.updateSizes(ref)) return;
+    this.updateX();
+    const x = this.x;
+    this.updateY(maxValue);
+    const y = this.y;
+
+    // Update data shapes
+    this.svgArea
+      ?.transition()
+      .duration(1e3)
+      .attr(
+        'd',
+        d3
+          .area<number>()
+          .curve(d3.curveNatural)
+          .x((_, index: number) => x(index))
+          .y0(this.height)
+          .y1((d) => y(d)),
+      );
+    this.svgLines
+      ?.transition()
+      .duration(1e3)
+      .attr(
+        'd',
+        d3
+          .line<number>()
+          .curve(d3.curveNatural)
+          .x((_, index: number) => x(index))
+          .y((d) => y(d)),
+      );
+    this.svgCircles
+      ?.data(ordersCountByMonth)
+      .transition()
+      .duration(1e3)
+      .attr('cx', (_, index: number) => x(index))
+      .attr('cy', (d) => y(d));
+
+    this.scaledArray = ordersCountByMonth.map((d, index) => {
+      return { x: x(index) + this.margin.left, y: y(d) + this.margin.top };
+    });
+  }
+  private updateSizes(ref: React.RefObject<SVGSVGElement | null>) {
+    if (!ref.current) return; // HTML Element not created yet
+    const parentNode = ref.current.parentNode as HTMLElement;
+    if (!parentNode) return false;
+    const parentWidth = parentNode.clientWidth;
+    const parentHeight = parentNode.clientHeight;
+    const margin = this.margin;
+    this.svg = d3
+      .select(ref.current)
+      .attr('width', parentWidth)
+      .attr('height', parentHeight)
+      .append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    this.width = parentWidth - margin.left - margin.right;
+    this.height = parentHeight - margin.top - margin.bottom;
+    return true;
+  }
+  private updateX() {
+    this.x = d3
+      .scaleLinear()
+      .domain([0, this.ordersCountByMonth.length - 1])
+      .range([0, this.width]);
+    const x = this.x;
+    const y = this.y;
+
+    // x axis
+    this.svgXAxis?.remove();
+    this.svgXAxis = this.svg
+      ?.append('g')
+      .attr('transform', `translate(0, ${this.height})`)
+      .call(
+        d3.axisBottom(x).tickFormat((domainValue: d3.NumberValue) => {
+          const d = domainValue as number;
+          return months[d];
+        }),
+      )
+      .call((g: Selection) => g.select('.domain').remove())
+      .call((g: Selection) => g.selectAll('line').remove())
+      .call((g: Selection) =>
+        g
+          .selectAll('text')
+          .attr('fill', 'var(--chart-text-color)')
+          .attr('font-size', '9pt'),
+      );
+
+    // x grid
+    this.svgXGrid?.remove();
+    this.svgXGrid = this.svg
+      ?.selectAll('.whatever-grid')
+      .data(y.ticks(6))
+      .enter()
+      .append('line')
+      .attr('x1', -GRID_PADDING_X)
+      .attr('y1', (d: number) => Math.round(y(d)) + 0.5)
+      .attr('x2', this.width + GRID_PADDING_X)
+      .attr('y2', (d: number) => Math.round(y(d)) + 0.5)
+      .style('stroke', 'var(--chart-text-color)')
+      .style('stroke-dasharray', '2 3')
+      .style('opacity', 0.3);
+
+    // Update focus line width
+    this.focusLine?.attr('x2', this.width + GRID_PADDING_X);
+  }
+  private updateY(maxValue: number) {
+    this.y = d3.scaleLinear().domain([0, maxValue]).range([this.height, 0]);
+
+    // y axis
+    this.svgYAxis?.remove();
+    this.svgYAxis = this.svg
+      ?.append('g')
+      .attr('transform', 'translate(-' + GRID_PADDING_X + ', 0)')
+      .call(
+        d3
+          .axisLeft(this.y)
+          .ticks(6)
+          .tickFormat((domainValue: d3.NumberValue) => {
+            const d = domainValue as number;
+            return d >= 1e3 ? d / 1e3 + 'k' : String(d);
+          }),
+      )
+      .call((g: Selection) => g.select('.domain').remove())
+      .call((g: Selection) => g.selectAll('line').remove())
+      .call((g: Selection) =>
+        g
+          .selectAll('text')
+          .attr('fill', 'var(--chart-text-color)')
+          .attr('font-size', '9pt'),
+      );
+  }
+
+  private ordersCountByMonth: Array<number> = new Array(12).fill(0);
+  private width: number = 0;
+  private height: number = 0;
+  private x: d3.ScaleLinear<number, number, never> = d3.scaleLinear();
+  private y: d3.ScaleLinear<number, number, never> = d3.scaleLinear();
+  private svg?: d3.Selection<SVGGElement, unknown, null, undefined>;
+  private svgXAxis?:
+    | d3.Selection<SVGGElement, unknown, null, undefined>
+    | undefined;
+  private svgXGrid?:
+    | d3.Selection<SVGLineElement, number, SVGGElement, unknown>
+    | undefined;
+  private focusLine?: d3.Selection<SVGLineElement, unknown, null, undefined>;
+  private svgYAxis?:
+    | d3.Selection<SVGGElement, unknown, null, undefined>
+    | undefined;
+  private svgArea?: d3.Selection<SVGPathElement, number[], null, undefined>;
+  private svgLines?: d3.Selection<SVGPathElement, number[], null, undefined>;
+  private svgCircles?: d3.Selection<
+    SVGCircleElement,
+    number,
+    SVGGElement,
+    undefined
+  >;
+  private scaledArray: { x: number; y: number }[] = [];
+  private margin = { left: 70, right: 30, top: 30, bottom: 50 } as const;
+}
+
+const OrdersChart: React.FC<{
+  employeeId?: number;
+}> = ({ employeeId }) => {
+  // Load data
+  const { data, error, isLoading, refetch } = useQueryOrders({
+    employeeId,
+  });
+
+  // State
+  const [filterYear, setFilterYear] = useState<number | null>(null);
+  const [years, setYears] = useState<Set<number>>(new Set());
+  const [svgBuilder] = useState(new SVGBuilder());
+
+  // Connect SVG element
+  const ref = useRef<SVGSVGElement | null>(null);
+  useLayoutEffect(() => {
+    function update() {
+      if (!data) return;
+      svgBuilder.setData(data, ref, setYears, filterYear);
+    }
+    update();
+    const element = ref.current?.parentElement;
+    const resizeObserver = new ResizeObserver(update);
+    if (element) resizeObserver.observe(element);
+    return () => {
+      if (element) resizeObserver.unobserve(element);
+    };
+  }, [data, filterYear, svgBuilder]);
+
+  const getContent = () => {
+    if (error) return <ErrorMessage error={error} retry={refetch} />;
+    if (isLoading) return <WaitSpinner />;
+    return (
+      <svg
+        ref={ref}
+        className="absolute cursor-crosshair *:pointer-events-none"
+      />
+    );
+  };
+
+  return (
+    <div className="flex flex-col gap-2">
+      <h3 className="text-center text-2xl">
+        Distribution of count of <b>orders</b> by month
+      </h3>
+      <div className="flex justify-end">
+        <FilterYear {...{ years, filterYear, setFilterYear }} />
+      </div>
+      <div className="relative h-75">{getContent()}</div>
+    </div>
+  );
+};
+
+export default OrdersChart;

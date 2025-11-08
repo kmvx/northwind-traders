@@ -198,10 +198,7 @@ const BarChart: React.FC<{
   };
 
   return (
-    <div
-      className="relative min-h-100 min-w-full sm:min-w-150"
-      style={{ '--chart-text-color': '#888' } as React.CSSProperties}
-    >
+    <div className="relative min-h-100 min-w-full sm:min-w-150">
       {getContent()}
     </div>
   );
