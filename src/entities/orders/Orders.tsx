@@ -1,8 +1,9 @@
 'use client';
 
 import { parseAsInteger, useQueryState } from 'nuqs';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
+import { OrdersChart } from '@/features/charts';
 import { useMemoWaitCursor, usePageSize } from '@/hooks';
 import { type IOrders } from '@/models';
 import { useQueryEmployees, useQueryOrders } from '@/net';
@@ -54,10 +55,11 @@ const Orders: React.FC<OrdersProps> = ({
   }
 
   // Network data
-  const { data, isLoading, isFetching, error, refetch } = useQueryOrders({
+  const queryResult = useQueryOrders({
     customerId,
     employeeId,
   });
+  const { data, isLoading, isFetching, error, refetch } = queryResult;
   const { data: dataEmployees } = useQueryEmployees();
 
   // Prepare data
@@ -156,6 +158,12 @@ const Orders: React.FC<OrdersProps> = ({
     filterYear,
   ]);
 
+  const filteredQueryResult = useMemo(() => {
+    const result = { ...queryResult };
+    result.data = filteredData;
+    return result;
+  }, [queryResult, filteredData]);
+
   const isWidePage = usePageSize().isWidePage;
 
   const getContent = () => {
@@ -214,6 +222,7 @@ const Orders: React.FC<OrdersProps> = ({
         <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
       {getContent()}
+      <OrdersChart queryResult={filteredQueryResult} />
     </PanelStretched>
   );
 };

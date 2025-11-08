@@ -8,7 +8,7 @@ import invariant from 'tiny-invariant';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import type { CountriesQueryResultType } from './types';
-import { addTooltip } from './utilsCharts';
+import { addTooltip, CHART_STYLES } from './utilsCharts';
 
 function updateChart({
   current,
@@ -198,7 +198,10 @@ const BarChart: React.FC<{
   };
 
   return (
-    <div className="relative min-h-100 min-w-full sm:min-w-150">
+    <div
+      className="relative min-h-100 min-w-full sm:min-w-150"
+      style={CHART_STYLES}
+    >
       {getContent()}
     </div>
   );

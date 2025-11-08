@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Separator } from '@/components/ui';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { FilterYear } from '@/entities/orders';
 import { useQueryCustomers, useQueryOrders, useQuerySuppliers } from '@/net';
 import { PanelCentred } from '@/ui';
 
@@ -18,16 +19,8 @@ const Charts: React.FC = () => {
 
   return (
     <PanelCentred>
-      <div
-        className="flex flex-col gap-8"
-        style={
-          {
-            '--chart-text-color': '#888',
-            '--chart-line-color': '#0d6efd',
-          } as React.CSSProperties
-        }
-      >
-        <OrdersChart />
+      <div className="flex flex-col gap-8">
+        <OrdersChartsWithFilter />
         <Separator />
         <Tabs defaultValue={tabInfos[0].name} className="items-center">
           <TabsList>
@@ -54,6 +47,41 @@ const Charts: React.FC = () => {
         </Tabs>
       </div>
     </PanelCentred>
+  );
+};
+
+const OrdersChartsWithFilter: React.FC = () => {
+  const queryResult = useQueryOrders();
+  const [filterYear, setFilterYear] = useState<number | null>(null);
+
+  const years = useMemo(() => {
+    const result = new Set<number>();
+    queryResult.data?.forEach((order) => {
+      result.add(new Date(order.orderDate).getFullYear());
+    });
+    return result;
+  }, [queryResult.data]);
+
+  const filteredQueryResult = useMemo(() => {
+    const result = { ...queryResult };
+    result.data = queryResult.data?.filter((order) => {
+      // TODO: Optimize
+      return (
+        filterYear == null ||
+        new Date(order.orderDate).getFullYear() === filterYear
+      );
+    });
+    return result;
+  }, [filterYear, queryResult]);
+
+  return (
+    <div className="flex flex-col gap-2">
+      <OrdersChart queryResult={filteredQueryResult}>
+        <div className="flex justify-end">
+          <FilterYear {...{ years, filterYear, setFilterYear }} />
+        </div>
+      </OrdersChart>
+    </div>
   );
 };
 

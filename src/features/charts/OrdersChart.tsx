@@ -1,14 +1,13 @@
 'use client';
 
+import type { UseQueryResult } from '@tanstack/react-query';
 import * as d3 from 'd3';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 
-import { FilterYear } from '@/entities/orders';
 import type { IOrders } from '@/models';
-import { useQueryOrders } from '@/net';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
-import { CHART_TOOLTIP_CLASS_NAMES } from './utilsCharts';
+import { CHART_STYLES, CHART_TOOLTIP_CLASS_NAMES } from './utilsCharts';
 
 const months = [
   'JAN',
@@ -182,27 +181,17 @@ class SVGBuilder {
         tooltip.style('visibility', 'hidden');
       });
   }
-  setData(
-    data: IOrders,
-    ref: React.RefObject<SVGSVGElement | null>,
-    setYears: (yearsArray: Set<number>) => void,
-    filterYear: number | null,
-  ) {
+  setData(data: IOrders, ref: React.RefObject<SVGSVGElement | null>) {
     this.create(ref);
 
     // Prepare data
     const ordersCountByMonth = this.ordersCountByMonth.fill(0);
-    const years = new Set<number>();
     data.forEach((item) => {
       const orderDate = item.orderDate;
       if (!orderDate) return;
       const date = new Date(item.orderDate);
-      const year = date.getFullYear();
-      years.add(year);
-      if (filterYear == null || year === filterYear)
-        ordersCountByMonth[date.getMonth()]++;
+      ordersCountByMonth[date.getMonth()]++;
     });
-    setYears(years);
     const maxValue = this.ordersCountByMonth.reduce((p, v) => Math.max(p, v));
 
     // Upate scales
@@ -365,17 +354,15 @@ class SVGBuilder {
   private margin = { left: 70, right: 30, top: 30, bottom: 50 } as const;
 }
 
-const OrdersChart: React.FC<{
-  employeeId?: number;
-}> = ({ employeeId }) => {
-  // Load data
-  const { data, error, isLoading, refetch } = useQueryOrders({
-    employeeId,
-  });
+interface OrdersChartProps {
+  queryResult: UseQueryResult<IOrders>;
+  children?: React.ReactNode;
+}
+
+const OrdersChart: React.FC<OrdersChartProps> = ({ queryResult, children }) => {
+  const { data, error, isLoading, refetch } = queryResult;
 
   // State
-  const [filterYear, setFilterYear] = useState<number | null>(null);
-  const [years, setYears] = useState<Set<number>>(new Set());
   const [svgBuilder] = useState(new SVGBuilder());
 
   // Connect SVG element
@@ -383,7 +370,7 @@ const OrdersChart: React.FC<{
   useLayoutEffect(() => {
     function update() {
       if (!data) return;
-      svgBuilder.setData(data, ref, setYears, filterYear);
+      svgBuilder.setData(data, ref);
     }
     update();
     const element = ref.current?.parentElement;
@@ -392,7 +379,7 @@ const OrdersChart: React.FC<{
     return () => {
       if (element) resizeObserver.unobserve(element);
     };
-  }, [data, filterYear, svgBuilder]);
+  }, [data, svgBuilder]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
@@ -406,13 +393,11 @@ const OrdersChart: React.FC<{
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2" style={CHART_STYLES}>
       <h3 className="text-center text-2xl">
         Distribution of count of <b>orders</b> by month
       </h3>
-      <div className="flex justify-end">
-        <FilterYear {...{ years, filterYear, setFilterYear }} />
-      </div>
+      {children}
       <div className="relative h-75">{getContent()}</div>
     </div>
   );

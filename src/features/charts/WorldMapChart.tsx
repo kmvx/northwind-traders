@@ -8,7 +8,7 @@ import invariant from 'tiny-invariant';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import type { CountriesQueryResultType } from './types';
-import { addTooltip } from './utilsCharts';
+import { addTooltip, CHART_STYLES } from './utilsCharts';
 
 interface IWorldGeo {
   features: IWorldGeoFeature[];
@@ -202,49 +202,13 @@ const WorldMapChart: React.FC<{
   };
 
   return (
-    <div className="relative min-h-100 min-w-full sm:min-w-150">
+    <div
+      className="relative min-h-100 min-w-full sm:min-w-150"
+      style={CHART_STYLES}
+    >
       {getContent()}
     </div>
   );
 };
 
 export default WorldMapChart;
-
-export const CustomersWorldMapChart: React.FC<{
-  countriesQueryResult: CountriesQueryResultType;
-  hue?: number;
-  allowZoom?: boolean;
-}> = ({ countriesQueryResult, hue, allowZoom }) => {
-  return (
-    <WorldMapChart
-      name="customers"
-      {...{ countriesQueryResult, hue, allowZoom }}
-    />
-  );
-};
-
-export const OrdersWorldMapChart: React.FC<{
-  countriesQueryResult: CountriesQueryResultType;
-  hue?: number;
-  allowZoom?: boolean;
-}> = ({ countriesQueryResult, hue, allowZoom }) => {
-  return (
-    <WorldMapChart
-      name="orders"
-      {...{ countriesQueryResult, hue, allowZoom }}
-    />
-  );
-};
-
-export const SuppliersWorldMapChart: React.FC<{
-  countriesQueryResult: CountriesQueryResultType;
-  hue?: number;
-  allowZoom?: boolean;
-}> = ({ countriesQueryResult, hue, allowZoom }) => {
-  return (
-    <WorldMapChart
-      name="suppliers"
-      {...{ countriesQueryResult, hue, allowZoom }}
-    />
-  );
-};

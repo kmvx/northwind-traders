@@ -59,3 +59,8 @@ export function addTooltip({
 
 export const CHART_TOOLTIP_CLASS_NAMES =
   'absolute pointer-events-none px-2 py-1 border bg-white/80 dark:bg-black/80 text-center z-100 text-xs';
+
+export const CHART_STYLES = {
+  '--chart-text-color': '#888',
+  '--chart-line-color': '#0d6efd',
+} as React.CSSProperties;
