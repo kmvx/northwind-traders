@@ -3,7 +3,8 @@
 import { parseAsInteger, useQueryState } from 'nuqs';
 import React, { useMemo, useState } from 'react';
 
-import { OrdersChart } from '@/features/charts';
+import { Separator } from '@/components/ui';
+import { OrdersChart, WorldMapChart } from '@/features/charts';
 import { useMemoWaitCursor, usePageSize } from '@/hooks';
 import { type IOrders } from '@/models';
 import { useQueryEmployees, useQueryOrders } from '@/net';
@@ -172,14 +173,34 @@ const Orders: React.FC<OrdersProps> = ({
     if (!filteredData) return null;
     if (filteredData.length === 0) return <div>Orders not found</div>;
 
-    return isWidePage ? (
-      <OrdersTable
-        data={filteredData}
-        isCustomerPage={!!customerId}
-        isEmployeePage={!!employeeId}
-      />
-    ) : (
-      <OrdersCards data={filteredData} />
+    return (
+      <>
+        {isWidePage ? (
+          <OrdersTable
+            data={filteredData}
+            isCustomerPage={!!customerId}
+            isEmployeePage={!!employeeId}
+          />
+        ) : (
+          <OrdersCards data={filteredData} />
+        )}
+        {!customerId && !filterCountry && (
+          <>
+            <Separator />
+            <WorldMapChart
+              name="orders"
+              countriesQueryResult={{
+                countries: filteredData?.map((item) => item.shipCountry),
+                error,
+                isLoading,
+                refetch,
+              }}
+            />
+          </>
+        )}
+        <Separator />
+        <OrdersChart queryResult={filteredQueryResult} />
+      </>
     );
   };
 
@@ -222,7 +243,6 @@ const Orders: React.FC<OrdersProps> = ({
         <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
       {getContent()}
-      <OrdersChart queryResult={filteredQueryResult} />
     </PanelStretched>
   );
 };

@@ -9,8 +9,10 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  Separator,
   Skeleton,
 } from '@/components/ui';
+import { WorldMapChart } from '@/features/charts';
 import { type ICustomer, type ICustomers } from '@/models';
 import { useQueryCustomers } from '@/net';
 import {
@@ -78,17 +80,36 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
     if (filteredData.length === 0) return <div>Customers not found</div>;
 
     return (
-      <Pagination
-        data={filteredData}
-        defaultLimit={20}
-        renderPage={(customers) => (
-          <ResponsiveGrid minWidth="18rem">
-            {customers.map((customer) => (
-              <CustomerPreview customer={customer} key={customer.customerId} />
-            ))}
-          </ResponsiveGrid>
+      <>
+        <Pagination
+          data={filteredData}
+          defaultLimit={20}
+          renderPage={(customers) => (
+            <ResponsiveGrid minWidth="18rem">
+              {customers.map((customer) => (
+                <CustomerPreview
+                  customer={customer}
+                  key={customer.customerId}
+                />
+              ))}
+            </ResponsiveGrid>
+          )}
+        />
+        {!filterCountry && (
+          <>
+            <Separator />
+            <WorldMapChart
+              name="customers"
+              countriesQueryResult={{
+                countries: filteredData?.map((item) => item.country),
+                error,
+                isLoading,
+                refetch,
+              }}
+            />
+          </>
         )}
-      />
+      </>
     );
   };
 

@@ -10,8 +10,10 @@ import {
   CardHeader,
   CardTitle,
   Input,
+  Separator,
   Skeleton,
 } from '@/components/ui';
+import { WorldMapChart } from '@/features/charts';
 import { type ISuppliers } from '@/models';
 import { useQuerySuppliers } from '@/net';
 import {
@@ -102,6 +104,20 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
             </Link>
           ))}
         </ResponsiveGrid>
+        {!filterCountry && (
+          <>
+            <Separator />
+            <WorldMapChart
+              name="suppliers"
+              countriesQueryResult={{
+                countries: filteredData?.map((item) => item.country),
+                error,
+                isLoading,
+                refetch,
+              }}
+            />
+          </>
+        )}
       </>
     );
   };

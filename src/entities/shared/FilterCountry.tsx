@@ -34,6 +34,9 @@ const FilterCountry = <T extends string>({
     ];
   }, [countryPropertyName, data]);
 
+  // Hide if there are no countries to choose.
+  if (options.length <= 2) return null;
+
   return (
     <span className="font-flags">
       <SelectStringList
