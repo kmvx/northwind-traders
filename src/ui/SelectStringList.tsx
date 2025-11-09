@@ -13,11 +13,13 @@ import {
 } from '@/components/ui/select';
 import { useIsMobile } from '@/hooks';
 
+export interface SelectStringListInfoType {
+  component?: React.ReactNode;
+  value: string;
+}
+
 interface SelectStringListProps {
-  itemsInfo: readonly {
-    component?: React.ReactNode;
-    value: string;
-  }[];
+  itemsInfo: readonly SelectStringListInfoType[];
   value: string;
   setValue: (value: string) => void;
   title?: string | undefined;

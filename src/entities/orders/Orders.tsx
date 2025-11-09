@@ -26,6 +26,7 @@ import {
   joinFields,
 } from '@/utils';
 
+import { FilterEmployee } from '../employees';
 import { FilterCountry } from '../shared';
 import { FilterYear, type IOrderFormatted, OrdersCards, OrdersTable } from '.';
 
@@ -48,11 +49,17 @@ const Orders: React.FC<OrdersProps> = ({
     defaultValue: '',
   });
   const [filterYear, setFilterYear] = useQueryState('year', parseAsInteger);
-  const hasFilters = !!filterString || !!filterCountry || !!filterYear;
+  const [filterEmployeeId, setFilterEmployeeId] = useQueryState(
+    'employeeId',
+    parseAsInteger,
+  );
+  const hasFilters =
+    !!filterString || !!filterCountry || !!filterYear || !!filterEmployeeId;
   function handleFiltersClear() {
     setFilterString('');
     setFilterCountry('');
     setFilterYear(null);
+    setFilterEmployeeId(null);
   }
 
   // Network data
@@ -152,6 +159,12 @@ const Orders: React.FC<OrdersProps> = ({
       });
     }
 
+    if (filterEmployeeId != null) {
+      filteredData = filteredData?.filter((item) => {
+        return item.employeeId === filterEmployeeId;
+      });
+    }
+
     return filteredData;
   }, [
     preparedData,
@@ -160,6 +173,7 @@ const Orders: React.FC<OrdersProps> = ({
     filterString,
     filterCountry,
     filterYear,
+    filterEmployeeId,
   ]);
 
   const filteredQueryResult = useMemo(() => {
@@ -236,6 +250,9 @@ const Orders: React.FC<OrdersProps> = ({
           data={data}
           countryPropertyName="shipCountry"
         />
+        {!employeeId && (
+          <FilterEmployee {...{ filterEmployeeId, setFilterEmployeeId }} />
+        )}
         <FiltersClearButton
           disabled={!hasFilters}
           onClick={handleFiltersClear}
