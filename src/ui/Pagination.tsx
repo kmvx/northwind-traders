@@ -52,6 +52,7 @@ function Pagination<T>({
         limit={limit}
         totalItems={totalItems}
         goToPage={goToPage}
+        showAtLeastItemsCount
       />
       {renderPage(visibleItems)}
       <PaginationControls
@@ -59,6 +60,7 @@ function Pagination<T>({
         limit={limit}
         totalItems={totalItems}
         goToPage={goToPage}
+        showAtLeastItemsCount={false}
       />
     </div>
   );

@@ -12,6 +12,7 @@ interface PaginationControlsProps {
   limit: number;
   totalItems: number;
   goToPage: (page: number) => void;
+  showAtLeastItemsCount: boolean;
 }
 
 const PaginationControls: React.FC<PaginationControlsProps> = ({
@@ -19,10 +20,15 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   limit,
   totalItems,
   goToPage,
+  showAtLeastItemsCount,
 }) => {
   const totalPages = Math.ceil(totalItems / limit);
   const currentPage = Math.floor(offset / limit);
-  if (totalPages <= 1) return null;
+
+  if (totalPages <= 1) {
+    return showAtLeastItemsCount ? <div>{totalItems} items</div> : null;
+  }
+
   return (
     <div className="flex items-center justify-center gap-2">
       <ButtonWithTooltip

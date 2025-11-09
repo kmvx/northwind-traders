@@ -60,9 +60,11 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
         : [];
     if (filterString) {
       filteredData = filteredData?.filter((item) =>
-        (['companyName', 'country', 'city'] as const).some((name) => {
-          return isStringIncludes(item[name], filterString);
-        }),
+        (['companyName', 'country', 'city', 'customerId'] as const).some(
+          (name) => {
+            return isStringIncludes(item[name], filterString);
+          },
+        ),
       );
     }
     if (filterCountry) {

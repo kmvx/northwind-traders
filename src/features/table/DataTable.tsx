@@ -78,6 +78,7 @@ function DataTable<TData>({ data, columns, meta }: DataTableProps<TData>) {
         limit={limit}
         totalItems={totalItems}
         goToPage={goToPage}
+        showAtLeastItemsCount
       />
       <div className="overflow-hidden rounded-md border">
         <Table>
@@ -118,6 +119,7 @@ function DataTable<TData>({ data, columns, meta }: DataTableProps<TData>) {
         limit={limit}
         totalItems={totalItems}
         goToPage={goToPage}
+        showAtLeastItemsCount={false}
       />
     </div>
   );
