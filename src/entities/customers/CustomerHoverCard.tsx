@@ -42,8 +42,8 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
             data.country,
             data.region,
             data.city,
-            data.address,
             data.postalCode,
+            data.address,
           )}
         />
 

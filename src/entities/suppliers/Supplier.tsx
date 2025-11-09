@@ -44,8 +44,8 @@ const Supplier: React.FC<SupplierProps> = ({
             data.country,
             data.region,
             data.city,
-            data.address,
             data.postalCode,
+            data.address,
           )}
         />
       ),

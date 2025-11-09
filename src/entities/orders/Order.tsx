@@ -111,8 +111,8 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
             data.shipCountry,
             data.shipRegion,
             data.shipCity,
-            data.shipAddress,
             data.shipPostalCode,
+            data.shipAddress,
           )}
         />
       ),

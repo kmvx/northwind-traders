@@ -1,9 +1,9 @@
 interface IAddress {
-  address: string;
-  city: string;
   country: string;
-  postalCode: string;
   region: string;
+  city: string;
+  postalCode: string;
+  address: string;
 }
 
 export interface ICategory {
@@ -45,12 +45,12 @@ export interface IOrder {
   freight: number;
   orderDate: string;
   requiredDate: string;
-  shipAddress: string;
-  shipCity: string;
-  shipCountry: string;
   shipName: string;
-  shipPostalCode: string;
+  shipCountry: string;
   shipRegion: string;
+  shipCity: string;
+  shipPostalCode: string;
+  shipAddress: string;
   shipVia: number;
   shippedDate: string | null;
 }

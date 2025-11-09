@@ -95,11 +95,10 @@ const Orders: React.FC<OrdersProps> = ({
         orderDateObject: dateFromString(item.orderDate),
         shippedDateObject: dateFromString(item.shippedDate),
         requiredDateObject: dateFromString(item.requiredDate),
-        addressLine: joinFields(
+        shipLocation: joinFields(
           item.shipCountry,
           item.shipRegion,
           item.shipCity,
-          item.shipAddress,
           item.shipPostalCode,
         ),
       };
@@ -129,7 +128,11 @@ const Orders: React.FC<OrdersProps> = ({
             'requiredDateObject',
             'freight',
             'shipName',
-            'addressLine',
+            'shipCountry',
+            'shipRegion',
+            'shipCity',
+            'shipCity',
+            'shipAddress',
           ] as const
         ).some((name) => {
           return isStringIncludes(String(item[name]), filterString);

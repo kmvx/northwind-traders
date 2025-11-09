@@ -48,8 +48,8 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
             data.country,
             data.region,
             data.city,
-            data.address,
             data.postalCode,
+            data.address,
           )}
         />
       ),

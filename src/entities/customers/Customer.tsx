@@ -38,8 +38,8 @@ const Customer: React.FC<CustomerProps> = ({ customerId }) => {
             data.country,
             data.region,
             data.city,
-            data.address,
             data.postalCode,
+            data.address,
           )}
         />
       ),

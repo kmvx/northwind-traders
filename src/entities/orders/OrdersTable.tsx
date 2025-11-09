@@ -120,10 +120,13 @@ const allColumns: ColumnDef<IOrderFormatted>[] = [
     header: 'Ship address',
     cell: ({ row }) => {
       return (
-        <span className="inline-flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <Flag country={row.original.shipCountry} />
-          <span>{row.original.addressLine}</span>
-        </span>
+          <div className="flex flex-col">
+            <span>{row.original.shipLocation}</span>
+            <span>{row.original.shipAddress}</span>
+          </div>
+        </div>
       );
     },
   },

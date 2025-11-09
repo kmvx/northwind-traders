@@ -55,7 +55,7 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({ item }) {
           </div>
           <ContactAddress
             country={item.shipCountry}
-            address={item.addressLine}
+            address={item.shipLocation}
             title="Ship address"
             className="font-normal"
           />

@@ -8,5 +8,5 @@ export interface IOrderFormatted extends IOrder {
   orderDateObject: Date;
   shippedDateObject: Date;
   requiredDateObject: Date;
-  addressLine: string;
+  shipLocation: string;
 }

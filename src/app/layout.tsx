@@ -45,7 +45,7 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider>
             <AppSidebar />
-            <main className="w-full sm:px-2">
+            <main className="w-full sm:px-2 sm:pt-2">
               <div
                 className="p-2 sm:absolute sm:top-2 sm:left-2 flex gap-2"
                 style={{
