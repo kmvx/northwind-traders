@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-const MOBILE_BREAKPOINT = 768;
+const WITE_BREAKPOINT = 1536;
 
 type StateType = {
   width?: number;
@@ -16,7 +16,7 @@ const getState = (): StateType => {
     : {
         width: window.innerWidth,
         height: window.innerHeight,
-        isWidePage: window.innerWidth >= MOBILE_BREAKPOINT,
+        isWidePage: window.innerWidth >= WITE_BREAKPOINT,
       };
 };
 

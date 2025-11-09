@@ -38,9 +38,15 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
         <CardHeader>
           <CardTitle title="Product name">{item.productName}</CardTitle>
         </CardHeader>
-        <CardContent className="h-full flex flex-col justify-end">
-          <div className="text-end" title="Quantity per unit">
-            {item.quantityPerUnit}
+        <CardContent className="h-full flex flex-col justify-end gap-2">
+          <div className="flex flex-wrap justify-between items-baseline">
+            <span title="Unit price">${item.unitPrice}</span>
+            <span
+              title="Quantity per unit"
+              className="text-muted-foreground text-sm"
+            >
+              {item.quantityPerUnit}
+            </span>
           </div>
         </CardContent>
       </Card>

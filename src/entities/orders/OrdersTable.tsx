@@ -85,23 +85,14 @@ const allColumns: ColumnDef<IOrderFormatted>[] = [
   },
   {
     accessorKey: 'orderDateObject',
-    header: 'Order date',
+    header: 'Dates',
     cell: ({ row }) => {
-      return row.original.orderDateFormatted;
-    },
-  },
-  {
-    accessorKey: 'shippedDateObject',
-    header: 'Shipped date',
-    cell: ({ row }) => {
-      return row.original.shippedDateFormatted;
-    },
-  },
-  {
-    accessorKey: 'requiredDateObject',
-    header: 'Required date',
-    cell: ({ row }) => {
-      return row.original.requiredDateFormatted;
+      return (
+        <div className="flex flex-col gap-2">
+          <span title="Order date">{row.original.orderDateFormatted}</span>
+          <span title="Shipped date">{row.original.shippedDateFormatted}</span>
+        </div>
+      );
     },
   },
   {
