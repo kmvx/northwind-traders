@@ -286,7 +286,7 @@ class SVGBuilder {
     this.svgXGrid?.remove();
     this.svgXGrid = this.svg
       ?.selectAll('.whatever-grid')
-      .data(y.ticks(6))
+      .data(y.ticks(Math.min(6, y.domain()[1])))
       .enter()
       .append('line')
       .attr('x1', -GRID_PADDING_X)
@@ -311,7 +311,7 @@ class SVGBuilder {
       .call(
         d3
           .axisLeft(this.y)
-          .ticks(6)
+          .ticks(Math.min(6, this.y.domain()[1]))
           .tickFormat((domainValue: d3.NumberValue) => {
             const d = domainValue as number;
             return d >= 1e3 ? d / 1e3 + 'k' : String(d);
