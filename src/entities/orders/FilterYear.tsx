@@ -14,14 +14,20 @@ const FilterYear: React.FC<FilterYearProps> = ({
   setFilterYear,
 }) => {
   const LocalSelectGroup = SelectGroup<number | null>;
+  const yearsArray = Array.from(years);
+
   return (
     <LocalSelectGroup
       state={filterYear}
       setState={setFilterYear}
-      itemsInfo={[
-        { component: 'All', value: null },
-        ...Array.from(years).map((year) => ({ value: year })),
-      ]}
+      itemsInfo={
+        yearsArray.length === 0
+          ? []
+          : [
+              { component: 'All', value: null },
+              ...yearsArray.map((year) => ({ value: year })),
+            ]
+      }
       title="Filter by order creation year"
     />
   );
