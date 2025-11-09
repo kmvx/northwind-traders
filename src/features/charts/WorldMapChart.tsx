@@ -100,12 +100,25 @@ function updateChart({
       const zoomObject = d3
         .zoom<SVGSVGElement, unknown>()
         .scaleExtent([1, 4])
-        .on('zoom', function (event: d3.D3ZoomEvent<SVGSVGElement, unknown>) {
-          function isFloatSame(a: number, b: number) {
-            return Math.abs(a - b) < 1e-5;
+        .filter(function (
+          event: MouseEvent | PointerEvent | TouchEvent | WheelEvent,
+        ) {
+          // Don't block scrolling events if there is no zoom transform
+          if ('touches' in event) {
+            const touches = event.touches;
+            if (touches.length === 1) {
+              const node = svg.node();
+              invariant(node);
+              if (Math.abs(d3.zoomTransform(node).k - 1) < 1e-5) {
+                return false;
+              }
+            }
           }
+          return true;
+        })
+        .on('zoom', function (event: d3.D3ZoomEvent<SVGSVGElement, unknown>) {
           if (
-            isFloatSame(event.transform.k, 1) &&
+            Math.abs(event.transform.k - 1) < 1e-5 &&
             String(event.transform) !== String(d3.zoomIdentity)
           ) {
             // Reset scale and translate values on scale out
