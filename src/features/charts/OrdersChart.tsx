@@ -269,6 +269,7 @@ class SVGBuilder {
       .call(
         d3.axisBottom(x).tickFormat((domainValue: d3.NumberValue) => {
           const d = domainValue as number;
+          if (this.width < 300 && d % 2 === 1) return '';
           return months[d];
         }),
       )
