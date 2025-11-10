@@ -1,33 +1,30 @@
 'use client';
 
 import * as d3 from 'd3';
-import { useRouter } from 'next/navigation';
-import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import invariant from 'tiny-invariant';
 
+import { useNavigate } from '@/hooks';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
+import { useChartUpdate } from '.';
 import type { CountriesQueryResultType } from './types';
 import { addTooltip, CHART_STYLES } from './utilsCharts';
 
 function updateChart({
   current,
-  width,
-  height,
+  navigate,
   itemsPerCountryCount,
   maxItemsCountPerCountry,
   hue,
   name,
-  navigate,
 }: {
   current: SVGSVGElement;
-  width: number;
-  height: number;
+  navigate: (path: string) => void;
   itemsPerCountryCount: Map<string, number>;
   maxItemsCountPerCountry: number;
   hue: number;
   name: string;
-  navigate: (path: string) => void;
 }) {
   // Prepare data
   const itemsPerCountryCountArray = [...itemsPerCountryCount]
@@ -41,9 +38,15 @@ function updateChart({
   const svgBase = d3.select(current);
   svgBase.selectAll('*').remove();
 
+  const parentNode = current.parentNode as HTMLElement;
+  invariant(parentNode);
+  const parentWidth = parentNode.clientWidth;
+  const parentHeight = parentNode.clientHeight;
+  svgBase.attr('width', parentWidth).attr('height', parentHeight);
+
   const margin = { top: 30, right: 30, bottom: 100, left: 60 };
-  const widthChart = width - margin.left - margin.right;
-  const heightChart = height - margin.top - margin.bottom;
+  const widthChart = parentWidth - margin.left - margin.right;
+  const heightChart = parentHeight - margin.top - margin.bottom;
   const svg = svgBase
     .append('g')
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
@@ -150,46 +153,23 @@ const BarChart: React.FC<{
     return { itemsPerCountryCount, maxItemsCountPerCountry };
   }, [countries]);
 
-  // Navigate
-  const router = useRouter();
-  const navigate = useCallback(
-    (path: string) => {
-      router.push(path);
-    },
-    [router],
-  );
+  const navigate = useNavigate();
 
-  // SVG chart
-  const ref = useRef<SVGSVGElement>(null);
-  useLayoutEffect(() => {
-    function update() {
-      const current = ref.current;
-      if (!current) return;
-      const parentNode = current.parentNode as HTMLElement;
-      if (!parentNode) return;
-      const width = parentNode.clientWidth;
-      const height = parentNode.clientHeight;
-      d3.select(current).attr('width', width).attr('height', height);
+  const updateCallback = useCallback(
+    ({ current }: { current: SVGSVGElement }) => {
       updateChart({
         current,
-        width,
-        height,
+        navigate,
         itemsPerCountryCount,
         maxItemsCountPerCountry,
         hue,
         name,
-        navigate,
       });
-    }
-    update();
+    },
+    [itemsPerCountryCount, maxItemsCountPerCountry, hue, name, navigate],
+  );
 
-    const element = ref.current?.parentElement;
-    const resizeObserver = new ResizeObserver(update);
-    if (element) resizeObserver.observe(element);
-    return () => {
-      if (element) resizeObserver.unobserve(element);
-    };
-  }, [itemsPerCountryCount, maxItemsCountPerCountry, hue, name, navigate]);
+  const { ref } = useChartUpdate(updateCallback);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;

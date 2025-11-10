@@ -101,7 +101,7 @@ const CustomersCharts: React.FC = () => {
   const hue = 30;
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap justify-center gap-2">
       <WorldMapChart
         name="customers"
         {...{ countriesQueryResult, hue }}
@@ -128,7 +128,7 @@ const OrdersCharts: React.FC = () => {
   const hue = 216;
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap justify-center gap-2">
       <WorldMapChart
         name="orders"
         {...{ countriesQueryResult, hue }}
@@ -155,7 +155,7 @@ const SuppliersCharts: React.FC = () => {
   const hue = 120;
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap justify-center gap-2">
       <WorldMapChart
         name="suppliers"
         {...{ countriesQueryResult, hue }}

@@ -1,13 +1,14 @@
 'use client';
 
 import * as d3 from 'd3';
-import { useRouter } from 'next/navigation';
-import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import invariant from 'tiny-invariant';
 
+import { useNavigate } from '@/hooks';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import type { CountriesQueryResultType } from './types';
+import useChartUpdate from './useChartUpdate';
 import { addTooltip, CHART_STYLES } from './utilsCharts';
 
 interface IWorldGeo {
@@ -20,40 +21,42 @@ type IWorldGeoFeature = d3.GeoPermissibleObjects & {
 
 function updateChart({
   current,
-  width,
-  height,
+  navigate,
   itemsPerCountryCount,
   maxItemsCountPerCountry,
   hue,
-  allowZoom,
   name,
-  navigate,
+  allowZoom,
 }: {
   current: SVGSVGElement;
-  width: number;
-  height: number;
+  navigate: (path: string) => void;
   itemsPerCountryCount: Map<string, number>;
   maxItemsCountPerCountry: number;
   hue: number;
-  allowZoom: boolean;
   name: string;
-  navigate: (path: string) => void;
+  allowZoom: boolean;
 }) {
   d3.json<IWorldGeo>(
     'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson',
   ).then(function (data) {
     invariant(data);
 
+    // Draw the map
+    const svg = d3.select(current);
+    svg.selectAll('*').remove();
+
+    const parentNode = current.parentNode as HTMLElement;
+    invariant(parentNode);
+    const parentWidth = parentNode.clientWidth;
+    const parentHeight = parentNode.clientHeight;
+    svg.attr('width', parentWidth).attr('height', parentHeight);
+
     const projection = d3
       .geoNaturalEarth1()
       //.geoAzimuthalEqualArea()
       //.geoCylindricalEqualArea()
-      .scale(width / 1.5 / Math.PI)
-      .translate([width / 2.2, height / 2]);
-
-    // Draw the map
-    const svg = d3.select(current);
-    svg.selectAll('*').remove();
+      .scale(parentWidth / 1.5 / Math.PI)
+      .translate([parentWidth / 2.2, parentHeight / 2]);
 
     const svgGroup = svg.append('g');
 
@@ -62,8 +65,8 @@ function updateChart({
       .append('rect')
       .attr('x', 0)
       .attr('y', 0)
-      .attr('width', width)
-      .attr('height', height)
+      .attr('width', parentWidth)
+      .attr('height', parentHeight)
       .attr('fill', `hsl(${hue} 100% 50%)`)
       .attr('fill-opacity', 0.1);
 
@@ -165,53 +168,31 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
     return { itemsPerCountryCount, maxItemsCountPerCountry };
   }, [countriesQueryResult.countries]);
 
-  // Navigate
-  const router = useRouter();
-  const navigate = useCallback(
-    (path: string) => {
-      router.push(path);
-    },
-    [router],
-  );
+  const navigate = useNavigate();
 
-  // SVG chart
-  const ref = useRef<SVGSVGElement>(null);
-  useLayoutEffect(() => {
-    function update() {
-      const current = ref.current;
-      if (!current) return;
-      const parentNode = current.parentNode as HTMLElement;
-      if (!parentNode) return;
-      const width = parentNode.clientWidth;
-      const height = parentNode.clientHeight;
-      d3.select(current).attr('width', width).attr('height', height);
+  const updateCallback = useCallback(
+    ({ current }: { current: SVGSVGElement }) => {
       updateChart({
         current,
-        width,
-        height,
+        navigate,
         itemsPerCountryCount,
         maxItemsCountPerCountry,
         hue,
-        allowZoom,
         name,
-        navigate,
+        allowZoom,
       });
-    }
-    update();
-    const element = ref.current?.parentElement;
-    const resizeObserver = new ResizeObserver(update);
-    if (element) resizeObserver.observe(element);
-    return () => {
-      if (element) resizeObserver.unobserve(element);
-    };
-  }, [
-    itemsPerCountryCount,
-    maxItemsCountPerCountry,
-    hue,
-    allowZoom,
-    name,
-    navigate,
-  ]);
+    },
+    [
+      itemsPerCountryCount,
+      maxItemsCountPerCountry,
+      hue,
+      name,
+      allowZoom,
+      navigate,
+    ],
+  );
+
+  const { ref } = useChartUpdate(updateCallback);
 
   // Handle errors and loading state
   const { error, isLoading, refetch } = countriesQueryResult;

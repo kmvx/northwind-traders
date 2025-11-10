@@ -2,11 +2,13 @@
 
 import type { UseQueryResult } from '@tanstack/react-query';
 import * as d3 from 'd3';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import invariant from 'tiny-invariant';
 
 import type { IOrders } from '@/models';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
+import { useChartUpdate } from '.';
 import { CHART_STYLES, CHART_TOOLTIP_CLASS_NAMES } from './utilsCharts';
 
 const months = [
@@ -28,9 +30,9 @@ const GRID_PADDING_X = 20;
 type Selection = d3.Selection<SVGGElement, unknown, null, undefined>;
 
 class SVGBuilder {
-  private create(ref: React.RefObject<SVGSVGElement | null>) {
+  private create(current: SVGSVGElement) {
     if (this.svgLines) return; // Already created
-    if (!this.updateSizes(ref)) return;
+    if (!this.updateSizes(current)) return;
     const svg = this.svg;
     if (!svg) return;
 
@@ -181,8 +183,8 @@ class SVGBuilder {
         tooltip.style('visibility', 'hidden');
       });
   }
-  setData(data: IOrders, ref: React.RefObject<SVGSVGElement | null>) {
-    this.create(ref);
+  setData(data: IOrders, current: SVGSVGElement) {
+    this.create(current);
 
     // Prepare data
     const ordersCountByMonth = this.ordersCountByMonth.fill(0);
@@ -195,7 +197,7 @@ class SVGBuilder {
     const maxValue = this.ordersCountByMonth.reduce((p, v) => Math.max(p, v));
 
     // Upate scales
-    if (!this.updateSizes(ref)) return;
+    if (!this.updateSizes(current)) return;
     this.updateX();
     const x = this.x;
     this.updateY(maxValue);
@@ -236,15 +238,15 @@ class SVGBuilder {
       return { x: x(index) + this.margin.left, y: y(d) + this.margin.top };
     });
   }
-  private updateSizes(ref: React.RefObject<SVGSVGElement | null>) {
-    if (!ref.current) return; // HTML Element not created yet
-    const parentNode = ref.current.parentNode as HTMLElement;
-    if (!parentNode) return false;
+  private updateSizes(current: SVGSVGElement | null) {
+    if (!current) return; // HTML Element not created yet
+    const parentNode = current.parentNode as HTMLElement;
+    invariant(parentNode);
     const parentWidth = parentNode.clientWidth;
     const parentHeight = parentNode.clientHeight;
     const margin = this.margin;
     this.svg = d3
-      .select(ref.current)
+      .select(current)
       .attr('width', parentWidth)
       .attr('height', parentHeight)
       .append('g')
@@ -363,24 +365,17 @@ interface OrdersChartProps {
 const OrdersChart: React.FC<OrdersChartProps> = ({ queryResult, children }) => {
   const { data, error, isLoading, refetch } = queryResult;
 
-  // State
   const [svgBuilder] = useState(new SVGBuilder());
 
-  // Connect SVG element
-  const ref = useRef<SVGSVGElement | null>(null);
-  useLayoutEffect(() => {
-    function update() {
+  const updateCallback = useCallback(
+    ({ current }: { current: SVGSVGElement }) => {
       if (!data) return;
-      svgBuilder.setData(data, ref);
-    }
-    update();
-    const element = ref.current?.parentElement;
-    const resizeObserver = new ResizeObserver(update);
-    if (element) resizeObserver.observe(element);
-    return () => {
-      if (element) resizeObserver.unobserve(element);
-    };
-  }, [data, svgBuilder]);
+      svgBuilder.setData(data, current);
+    },
+    [svgBuilder, data],
+  );
+
+  const { ref } = useChartUpdate(updateCallback);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
