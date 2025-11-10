@@ -206,8 +206,8 @@ const Orders: React.FC<OrdersProps> = ({
             <Separator />
             <WorldMapChart
               name="orders"
-              countriesQueryResult={{
-                countries: filteredData?.map((item) => item.shipCountry),
+              categoriesQueryResult={{
+                categories: filteredData?.map((item) => item.shipCountry),
                 error,
                 isLoading,
                 refetch,

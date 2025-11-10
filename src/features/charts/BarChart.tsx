@@ -8,28 +8,28 @@ import { useNavigate } from '@/hooks';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import { useChartUpdate } from '.';
-import type { CountriesQueryResultType } from './types';
+import type { CategoriesQueryResultType } from './types';
 import { addTooltip, CHART_STYLES } from './utilsCharts';
 
 function updateChart({
   current,
   navigate,
-  itemsPerCountryCount,
-  maxItemsCountPerCountry,
+  itemsPerCategoryCount,
+  maxItemsCountPerCategory,
   hue,
   name,
 }: {
   current: SVGSVGElement;
   navigate: (path: string) => void;
-  itemsPerCountryCount: Map<string, number>;
-  maxItemsCountPerCountry: number;
+  itemsPerCategoryCount: Map<string, number>;
+  maxItemsCountPerCategory: number;
   hue: number;
   name: string;
 }) {
   // Prepare data
-  const itemsPerCountryCountArray = [...itemsPerCountryCount]
-    .map(([country, count]) => ({
-      country,
+  const itemsPerCategoryCountArray = [...itemsPerCategoryCount]
+    .map(([category, count]) => ({
+      category,
       count,
     }))
     .sort((a, b) => b.count - a.count);
@@ -56,8 +56,8 @@ function updateChart({
     .scaleBand()
     .range([0, widthChart])
     .domain(
-      itemsPerCountryCountArray.map(function (d) {
-        return d.country;
+      itemsPerCategoryCountArray.map(function (d) {
+        return d.category;
       }),
     )
     .padding(0.2);
@@ -75,7 +75,7 @@ function updateChart({
   // Y axis
   const y = d3
     .scaleLinear()
-    .domain([0, maxItemsCountPerCountry])
+    .domain([0, maxItemsCountPerCategory])
     .range([heightChart, 0])
     .nice();
 
@@ -108,13 +108,13 @@ function updateChart({
   // Bars
   svg
     .selectAll('.whatever')
-    .data(itemsPerCountryCountArray)
+    .data(itemsPerCategoryCountArray)
     .join('rect')
     .attr('class', 'hover:opacity-50')
-    .attr('data-country', (d) => d.country)
+    .attr('data-category', (d) => d.category)
     .attr('data-count', (d) => d.count)
     .attr('x', function (d) {
-      const result = x(d.country);
+      const result = x(d.category);
       invariant(result);
       return result;
     })
@@ -134,24 +134,27 @@ function updateChart({
 
 const BarChart: React.FC<{
   name: 'orders' | 'customers' | 'suppliers';
-  countriesQueryResult: CountriesQueryResultType;
+  categoriesQueryResult: CategoriesQueryResultType;
   hue: number;
 }> = ({
   name,
   hue,
-  countriesQueryResult: { countries, error, isLoading, refetch },
+  categoriesQueryResult: { categories, error, isLoading, refetch },
 }) => {
   // Prepare data for the chart
-  const { itemsPerCountryCount, maxItemsCountPerCountry } = useMemo(() => {
-    const itemsPerCountryCount = new Map<string, number>();
-    let maxItemsCountPerCountry = 0;
-    countries?.forEach((country) => {
-      const count = (itemsPerCountryCount.get(country) || 0) + 1;
-      maxItemsCountPerCountry = Math.max(maxItemsCountPerCountry, count);
-      itemsPerCountryCount.set(country, count);
+  const { itemsPerCategoryCount, maxItemsCountPerCategory } = useMemo(() => {
+    const itemsPerCategoryCount = new Map<string, number>();
+    let maxItemsCountPerCategory = 0;
+    categories?.forEach((category) => {
+      const count = (itemsPerCategoryCount.get(category) || 0) + 1;
+      maxItemsCountPerCategory = Math.max(maxItemsCountPerCategory, count);
+      itemsPerCategoryCount.set(category, count);
     });
-    return { itemsPerCountryCount, maxItemsCountPerCountry };
-  }, [countries]);
+    return {
+      itemsPerCategoryCount: itemsPerCategoryCount,
+      maxItemsCountPerCategory: maxItemsCountPerCategory,
+    };
+  }, [categories]);
 
   const navigate = useNavigate();
 
@@ -160,13 +163,13 @@ const BarChart: React.FC<{
       updateChart({
         current,
         navigate,
-        itemsPerCountryCount,
-        maxItemsCountPerCountry,
+        itemsPerCategoryCount,
+        maxItemsCountPerCategory,
         hue,
         name,
       });
     },
-    [itemsPerCountryCount, maxItemsCountPerCountry, hue, name, navigate],
+    [itemsPerCategoryCount, maxItemsCountPerCategory, hue, name, navigate],
   );
 
   const { ref } = useChartUpdate(updateCallback);

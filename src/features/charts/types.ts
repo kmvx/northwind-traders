@@ -1,5 +1,5 @@
-export interface CountriesQueryResultType {
-  countries: string[] | undefined;
+export interface CategoriesQueryResultType {
+  categories: string[] | undefined;
   error: Error | null;
   isLoading: boolean;
   refetch: () => void;

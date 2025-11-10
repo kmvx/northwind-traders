@@ -23,12 +23,12 @@ export function addTooltip({
   svgParent
     .on('mousemove', (event: MouseEvent) => {
       const target = d3.select(event.target as Element);
-      const country = target.attr('data-country');
+      const category = target.attr('data-category');
       let cursor = null;
-      if (country) {
+      if (category) {
         const count = target.attr('data-count');
         tooltip
-          .html(`<b>${country}</b>: <b>${count}</b> ${name}`)
+          .html(`<b>${category}</b>: <b>${count}</b> ${name}`)
           .style('visibility', 'visible');
         if (+count) {
           cursor = 'pointer';
@@ -52,7 +52,9 @@ export function addTooltip({
     .on('click', (event) => {
       const target = d3.select(event.target as Element);
       if (+target.attr('data-count')) {
-        navigate(`/${name}?country=${target.attr('data-country')}`);
+        navigate(
+          `/${name}?${name === 'orders' ? 'ordersCountry' : 'country'}=${target.attr('data-category')}`,
+        );
       }
     });
 }

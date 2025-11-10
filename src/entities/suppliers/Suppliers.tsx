@@ -109,8 +109,8 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
             <Separator />
             <WorldMapChart
               name="suppliers"
-              countriesQueryResult={{
-                countries: filteredData?.map((item) => item.country),
+              categoriesQueryResult={{
+                categories: filteredData?.map((item) => item.country),
                 error,
                 isLoading,
                 refetch,

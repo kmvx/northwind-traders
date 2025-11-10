@@ -7,7 +7,7 @@ import invariant from 'tiny-invariant';
 import { useNavigate } from '@/hooks';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
-import type { CountriesQueryResultType } from './types';
+import type { CategoriesQueryResultType } from './types';
 import useChartUpdate from './useChartUpdate';
 import { addTooltip, CHART_STYLES } from './utilsCharts';
 
@@ -22,16 +22,16 @@ type IWorldGeoFeature = d3.GeoPermissibleObjects & {
 function updateChart({
   current,
   navigate,
-  itemsPerCountryCount,
-  maxItemsCountPerCountry,
+  itemsPerCategoryCount,
+  maxItemsCountPerCategory,
   hue,
   name,
   allowZoom,
 }: {
   current: SVGSVGElement;
   navigate: (path: string) => void;
-  itemsPerCountryCount: Map<string, number>;
-  maxItemsCountPerCountry: number;
+  itemsPerCategoryCount: Map<string, number>;
+  maxItemsCountPerCategory: number;
   hue: number;
   name: string;
   allowZoom: boolean;
@@ -71,10 +71,10 @@ function updateChart({
       .attr('fill-opacity', 0.1);
 
     // Countries
-    function getCountryName(d: IWorldGeoFeature) {
-      const country = d.properties.name;
-      if (country === 'England') return 'UK';
-      else return country;
+    function getCategoryName(d: IWorldGeoFeature) {
+      const category = d.properties.name;
+      if (category === 'England') return 'UK';
+      else return category;
     }
 
     svgGroup
@@ -83,16 +83,16 @@ function updateChart({
       .data(data.features)
       .join('path')
       .attr('class', 'hover:opacity-50 stroke-neutral-500/30')
-      .attr('data-country', (d) => getCountryName(d))
+      .attr('data-category', (d) => getCategoryName(d))
       .attr(
         'data-count',
-        (d) => itemsPerCountryCount.get(getCountryName(d)) || 'no',
+        (d) => itemsPerCategoryCount.get(getCategoryName(d)) || 'no',
       )
       .attr('fill', function (d) {
-        const count = itemsPerCountryCount.get(getCountryName(d));
+        const count = itemsPerCategoryCount.get(getCategoryName(d));
         if (count) {
           return `hsl(${hue} 100% ${
-            80 - Math.round((count / maxItemsCountPerCountry) * 60)
+            80 - Math.round((count / maxItemsCountPerCategory) * 60)
           }%)`;
         } else return 'hsl(0 0% 75%)';
       })
@@ -143,7 +143,7 @@ function updateChart({
 
 interface WorldMapChartProps {
   name: 'orders' | 'customers' | 'suppliers';
-  countriesQueryResult: CountriesQueryResultType;
+  categoriesQueryResult: CategoriesQueryResultType;
   hue?: number | undefined;
   allowZoom?: boolean | undefined;
   showHeader?: boolean | undefined;
@@ -151,22 +151,25 @@ interface WorldMapChartProps {
 
 const WorldMapChart: React.FC<WorldMapChartProps> = ({
   name,
-  countriesQueryResult,
+  categoriesQueryResult,
   hue = 216,
   allowZoom = false,
   showHeader = false,
 }) => {
   // Prepare data for the chart
-  const { itemsPerCountryCount, maxItemsCountPerCountry } = useMemo(() => {
-    const itemsPerCountryCount = new Map<string, number>();
-    let maxItemsCountPerCountry = 0;
-    countriesQueryResult.countries?.forEach((country) => {
-      const count = (itemsPerCountryCount.get(country) || 0) + 1;
-      maxItemsCountPerCountry = Math.max(maxItemsCountPerCountry, count);
-      itemsPerCountryCount.set(country, count);
+  const { itemsPerCategoryCount, maxItemsCountPerCategory } = useMemo(() => {
+    const itemsPerCategoryCount = new Map<string, number>();
+    let maxItemsCountPerCategory = 0;
+    categoriesQueryResult.categories?.forEach((category) => {
+      const count = (itemsPerCategoryCount.get(category) || 0) + 1;
+      maxItemsCountPerCategory = Math.max(maxItemsCountPerCategory, count);
+      itemsPerCategoryCount.set(category, count);
     });
-    return { itemsPerCountryCount, maxItemsCountPerCountry };
-  }, [countriesQueryResult.countries]);
+    return {
+      itemsPerCategoryCount: itemsPerCategoryCount,
+      maxItemsCountPerCategory,
+    };
+  }, [categoriesQueryResult.categories]);
 
   const navigate = useNavigate();
 
@@ -175,16 +178,16 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
       updateChart({
         current,
         navigate,
-        itemsPerCountryCount,
-        maxItemsCountPerCountry,
+        itemsPerCategoryCount,
+        maxItemsCountPerCategory,
         hue,
         name,
         allowZoom,
       });
     },
     [
-      itemsPerCountryCount,
-      maxItemsCountPerCountry,
+      itemsPerCategoryCount,
+      maxItemsCountPerCategory,
       hue,
       name,
       allowZoom,
@@ -195,8 +198,8 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
   const { ref } = useChartUpdate(updateCallback);
 
   // Handle errors and loading state
-  const { error, isLoading, refetch } = countriesQueryResult;
-  if (!error && !isLoading && itemsPerCountryCount.size === 0) return <></>;
+  const { error, isLoading, refetch } = categoriesQueryResult;
+  if (!error && !isLoading && itemsPerCategoryCount.size === 0) return <></>;
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
@@ -208,7 +211,7 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
     <>
       {showHeader && (
         <h3 className="text-center text-2xl">
-          Distribution of count of <b>{name}</b> by countries
+          Distribution of count of <b>{name}</b> by <b>countries</b>
         </h3>
       )}
       <div

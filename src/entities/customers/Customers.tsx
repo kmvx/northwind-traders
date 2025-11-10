@@ -102,8 +102,8 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
             <Separator />
             <WorldMapChart
               name="customers"
-              countriesQueryResult={{
-                countries: filteredData?.map((item) => item.country),
+              categoriesQueryResult={{
+                categories: filteredData?.map((item) => item.country),
                 error,
                 isLoading,
                 refetch,

@@ -391,7 +391,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ queryResult, children }) => {
   return (
     <div className="flex flex-col gap-4" style={CHART_STYLES}>
       <h3 className="text-center text-2xl">
-        Distribution of count of <b>orders</b> by month
+        Distribution of count of <b>orders</b> by <b>month</b>
       </h3>
       {children}
       <div className="relative h-75 flex justify-center">{getContent()}</div>

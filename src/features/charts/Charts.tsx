@@ -38,7 +38,8 @@ const Charts: React.FC = () => {
             <TabsContent value={info.name} key={info.name}>
               <div className="flex flex-col gap-4">
                 <h3 className="text-center text-2xl">
-                  Distribution of count of <b>{info.name}</b> by countries
+                  Distribution of count of <b>{info.name}</b> by{' '}
+                  <b>countries</b>
                 </h3>
                 {info.content}
               </div>
@@ -88,9 +89,9 @@ const OrdersChartsWithFilter: React.FC = () => {
 const CustomersCharts: React.FC = () => {
   const { data, error, isLoading, refetch } = useQueryCustomers();
 
-  const countriesQueryResult = useMemo(
+  const categoriesQueryResult = useMemo(
     () => ({
-      countries: data?.map((item) => item.country),
+      categories: data?.map((item) => item.country),
       error,
       isLoading,
       refetch,
@@ -104,10 +105,10 @@ const CustomersCharts: React.FC = () => {
     <div className="flex flex-wrap justify-center gap-2">
       <WorldMapChart
         name="customers"
-        {...{ countriesQueryResult, hue }}
+        {...{ categoriesQueryResult, hue }}
         allowZoom
       />
-      <BarChart name="customers" {...{ countriesQueryResult, hue }} />
+      <BarChart name="customers" {...{ categoriesQueryResult, hue }} />
     </div>
   );
 };
@@ -115,9 +116,9 @@ const CustomersCharts: React.FC = () => {
 const OrdersCharts: React.FC = () => {
   const { data, error, isLoading, refetch } = useQueryOrders();
 
-  const countriesQueryResult = useMemo(
+  const categoriesQueryResult = useMemo(
     () => ({
-      countries: data?.map((item) => item.shipCountry),
+      categories: data?.map((item) => item.shipCountry),
       error,
       isLoading,
       refetch,
@@ -131,10 +132,10 @@ const OrdersCharts: React.FC = () => {
     <div className="flex flex-wrap justify-center gap-2">
       <WorldMapChart
         name="orders"
-        {...{ countriesQueryResult, hue }}
+        {...{ categoriesQueryResult, hue }}
         allowZoom
       />
-      <BarChart name="orders" {...{ countriesQueryResult, hue }} />
+      <BarChart name="orders" {...{ categoriesQueryResult, hue }} />
     </div>
   );
 };
@@ -142,9 +143,9 @@ const OrdersCharts: React.FC = () => {
 const SuppliersCharts: React.FC = () => {
   const { data, error, isLoading, refetch } = useQuerySuppliers();
 
-  const countriesQueryResult = useMemo(
+  const categoriesQueryResult = useMemo(
     () => ({
-      countries: data?.map((item) => item.country),
+      categories: data?.map((item) => item.country),
       error,
       isLoading,
       refetch,
@@ -158,10 +159,10 @@ const SuppliersCharts: React.FC = () => {
     <div className="flex flex-wrap justify-center gap-2">
       <WorldMapChart
         name="suppliers"
-        {...{ countriesQueryResult, hue }}
+        {...{ categoriesQueryResult, hue }}
         allowZoom
       />
-      <BarChart name="suppliers" {...{ countriesQueryResult, hue }} />
+      <BarChart name="suppliers" {...{ categoriesQueryResult, hue }} />
     </div>
   );
 };
