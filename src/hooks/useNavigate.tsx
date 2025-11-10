@@ -3,13 +3,19 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
-const useNavigate = () => {
+const useNavigate = ({
+  name,
+  categoryName,
+}: {
+  name: string;
+  categoryName: string;
+}) => {
   const router = useRouter();
   const navigate = useCallback(
-    (path: string) => {
-      router.push(path);
+    (category: string) => {
+      router.push(`/${name}?${categoryName}=${category}`);
     },
-    [router],
+    [router, name, categoryName],
   );
   return navigate;
 };

@@ -4,12 +4,12 @@ export function addTooltip({
   svg,
   hue,
   name,
-  navigate,
+  onCategoryClick,
 }: {
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>;
   hue: number;
   name: string;
-  navigate: (path: string) => void;
+  onCategoryClick: (category: string) => void;
 }) {
   const svgParent = d3.select(svg.node()?.parentNode as Element);
   svgParent.selectAll('.u-chart-tooltip').remove();
@@ -52,9 +52,7 @@ export function addTooltip({
     .on('click', (event) => {
       const target = d3.select(event.target as Element);
       if (+target.attr('data-count')) {
-        navigate(
-          `/${name}?${name === 'orders' ? 'ordersCountry' : 'country'}=${target.attr('data-category')}`,
-        );
+        onCategoryClick(target.attr('data-category'));
       }
     });
 }

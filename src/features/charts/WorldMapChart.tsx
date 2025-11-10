@@ -21,7 +21,7 @@ type IWorldGeoFeature = d3.GeoPermissibleObjects & {
 
 function updateChart({
   current,
-  navigate,
+  onCategoryClick,
   itemsPerCategoryCount,
   maxItemsCountPerCategory,
   hue,
@@ -29,7 +29,7 @@ function updateChart({
   allowZoom,
 }: {
   current: SVGSVGElement;
-  navigate: (path: string) => void;
+  onCategoryClick: (category: string) => void;
   itemsPerCategoryCount: Map<string, number>;
   maxItemsCountPerCategory: number;
   hue: number;
@@ -137,7 +137,7 @@ function updateChart({
     }
 
     // Tooltip
-    addTooltip({ svg, hue, name, navigate });
+    addTooltip({ svg, hue, name, onCategoryClick });
   });
 }
 
@@ -171,13 +171,16 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
     };
   }, [categoriesQueryResult.categories]);
 
-  const navigate = useNavigate();
+  const navigateLocal = useNavigate({
+    name,
+    categoryName: name === 'orders' ? 'ordersCountry' : 'country',
+  });
 
   const updateCallback = useCallback(
     ({ current }: { current: SVGSVGElement }) => {
       updateChart({
         current,
-        navigate,
+        onCategoryClick: navigateLocal,
         itemsPerCategoryCount,
         maxItemsCountPerCategory,
         hue,
@@ -191,7 +194,7 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
       hue,
       name,
       allowZoom,
-      navigate,
+      navigateLocal,
     ],
   );
 

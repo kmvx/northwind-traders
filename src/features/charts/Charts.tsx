@@ -8,7 +8,7 @@ import { FilterYear } from '@/entities/orders';
 import { useQueryCustomers, useQueryOrders, useQuerySuppliers } from '@/net';
 import { PanelCentred } from '@/ui';
 
-import { BarChart, OrdersChart, WorldMapChart } from '.';
+import { BarChart, EmployeesBarChart, OrdersChart, WorldMapChart } from '.';
 
 const Charts: React.FC = () => {
   const tabInfos = [
@@ -46,6 +46,8 @@ const Charts: React.FC = () => {
             </TabsContent>
           ))}
         </Tabs>
+        <Separator />
+        <EmployeesBarChart />
       </div>
     </PanelCentred>
   );

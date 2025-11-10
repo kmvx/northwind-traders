@@ -11,8 +11,10 @@ import {
   CardHeader,
   CardTitle,
   Input,
+  Separator,
   Skeleton,
 } from '@/components/ui';
+import { EmployeesBarChart } from '@/features/charts';
 import { type IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';
 import {
@@ -48,7 +50,7 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
   }
 
   // Network data
-  const { data, isLoading, isFetching, error, refetch } = useQueryEmployees();
+  const { data, error, isLoading, isFetching, refetch } = useQueryEmployees();
 
   // Filter data
   const filteredData = useMemo(() => {
@@ -173,6 +175,8 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
         <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
       {getContent()}
+      <Separator />
+      <EmployeesBarChart />
     </PanelStretched>
   );
 };

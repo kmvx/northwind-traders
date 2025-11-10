@@ -13,14 +13,14 @@ import { addTooltip, CHART_STYLES } from './utilsCharts';
 
 function updateChart({
   current,
-  navigate,
+  onCategoryClick,
   itemsPerCategoryCount,
   maxItemsCountPerCategory,
   hue,
   name,
 }: {
   current: SVGSVGElement;
-  navigate: (path: string) => void;
+  onCategoryClick: (category: string) => void;
   itemsPerCategoryCount: Map<string, number>;
   maxItemsCountPerCategory: number;
   hue: number;
@@ -44,7 +44,7 @@ function updateChart({
   const parentHeight = parentNode.clientHeight;
   svgBase.attr('width', parentWidth).attr('height', parentHeight);
 
-  const margin = { top: 30, right: 30, bottom: 100, left: 60 };
+  const margin = { top: 30, right: 30, bottom: 110, left: 60 };
   const widthChart = parentWidth - margin.left - margin.right;
   const heightChart = parentHeight - margin.top - margin.bottom;
   const svg = svgBase
@@ -129,15 +129,17 @@ function updateChart({
     .attr('stroke', `hsl(${hue} 100% 50% / 0.5)`)
     .attr('stroke-width', 2);
 
-  addTooltip({ svg: svgBase, hue, name, navigate });
+  addTooltip({ svg: svgBase, hue, name, onCategoryClick });
 }
 
 const BarChart: React.FC<{
   name: 'orders' | 'customers' | 'suppliers';
+  navigate?: (category: string) => void;
   categoriesQueryResult: CategoriesQueryResultType;
   hue: number;
 }> = ({
   name,
+  navigate,
   hue,
   categoriesQueryResult: { categories, error, isLoading, refetch },
 }) => {
@@ -156,20 +158,30 @@ const BarChart: React.FC<{
     };
   }, [categories]);
 
-  const navigate = useNavigate();
+  const navigateLocal = useNavigate({
+    name,
+    categoryName: name === 'orders' ? 'ordersCountry' : 'country',
+  });
 
   const updateCallback = useCallback(
     ({ current }: { current: SVGSVGElement }) => {
       updateChart({
         current,
-        navigate,
+        onCategoryClick: navigate ? navigate : navigateLocal,
         itemsPerCategoryCount,
         maxItemsCountPerCategory,
         hue,
         name,
       });
     },
-    [itemsPerCategoryCount, maxItemsCountPerCategory, hue, name, navigate],
+    [
+      itemsPerCategoryCount,
+      maxItemsCountPerCategory,
+      hue,
+      name,
+      navigate,
+      navigateLocal,
+    ],
   );
 
   const { ref } = useChartUpdate(updateCallback);
