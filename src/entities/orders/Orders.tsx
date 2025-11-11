@@ -120,11 +120,10 @@ const Orders: React.FC<OrdersProps> = ({
 
   // Filter data
   const filteredData = useMemoWaitCursor(() => {
-    let filteredData = preparedData;
-
-    if (filterString) {
-      filteredData = filteredData?.filter((item) =>
-        (
+    return preparedData?.filter((item) => {
+      if (
+        filterString &&
+        !(
           [
             'orderId',
             'customerId',
@@ -143,29 +142,23 @@ const Orders: React.FC<OrdersProps> = ({
           ] as const
         ).some((name) => {
           return isStringIncludes(String(item[name]), filterString);
-        }),
-      );
-    }
+        })
+      )
+        return false;
 
-    if (filterCountry) {
-      filteredData = filteredData?.filter(
-        (item) => item.shipCountry === filterCountry,
-      );
-    }
+      if (filterCountry && item.shipCountry !== filterCountry) return false;
 
-    if (filterYear != null) {
-      filteredData = filteredData?.filter((item) => {
-        return item.orderDateObject.getFullYear() === filterYear;
-      });
-    }
+      if (
+        filterYear != null &&
+        item.orderDateObject.getFullYear() !== filterYear
+      )
+        return false;
 
-    if (filterEmployeeId != null) {
-      filteredData = filteredData?.filter((item) => {
-        return item.employeeId === filterEmployeeId;
-      });
-    }
+      if (filterEmployeeId != null && item.employeeId !== filterEmployeeId)
+        return false;
 
-    return filteredData;
+      return true;
+    });
   }, [
     preparedData,
     initialData,
