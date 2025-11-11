@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 import {
@@ -52,12 +52,12 @@ export const useQueryOrdersFiltered = ({
 }: {
   filterYear?: number | null;
   setYearsSet: (yearsSet: Set<number>) => void;
-}) => {
+}): UseQueryResult<IOrders> => {
   const queryResult = useQuery<IOrders>({
     queryKey: [API_URL + '/Orders'],
   });
 
-  const data = queryResult.data;
+  const { data } = queryResult;
 
   const preparedData = useMemo(() => {
     const yearsSet = new Set<number>();
@@ -88,6 +88,10 @@ export const useQueryOrdersFiltered = ({
 
     return filteredData;
   }, [preparedData, filterYear]);
+
+  if (!filteredData || !queryResult.data) {
+    return queryResult;
+  }
 
   return { ...queryResult, data: filteredData };
 };

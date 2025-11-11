@@ -143,6 +143,7 @@ function updateChart({
 
 interface WorldMapChartProps {
   name: 'orders' | 'customers' | 'suppliers';
+  navigate?: (category: string) => void;
   categoriesQueryResult: CategoriesQueryResultType;
   hue?: number | undefined;
   allowZoom?: boolean | undefined;
@@ -151,6 +152,7 @@ interface WorldMapChartProps {
 
 const WorldMapChart: React.FC<WorldMapChartProps> = ({
   name,
+  navigate,
   categoriesQueryResult,
   hue = 216,
   allowZoom = false,
@@ -180,7 +182,7 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
     ({ current }: { current: SVGSVGElement }) => {
       updateChart({
         current,
-        onCategoryClick: navigateLocal,
+        onCategoryClick: navigate ? navigate : navigateLocal,
         itemsPerCategoryCount,
         maxItemsCountPerCategory,
         hue,
@@ -194,6 +196,7 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
       hue,
       name,
       allowZoom,
+      navigate,
       navigateLocal,
     ],
   );
