@@ -19,7 +19,10 @@ const CategoryName: React.FC<CategoryNameProps> = ({
   if (category) return category.categoryName;
 
   return (
-    <span className="inline-flex items-center gap-2">
+    <span
+      className="inline-flex items-center gap-2 text-muted-foreground"
+      title="Product category"
+    >
       {categoryId}
       <Spinner />
     </span>

@@ -51,7 +51,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
         <ChevronLeftIcon className="size-4" />
       </ButtonWithTooltip>
 
-      <span className="px-3 text-sm">
+      <span className="px-3 text-sm text-center text-balance">
         Items {offset + 1} - {Math.min(offset + limit, totalItems)} of{' '}
         {totalItems}, page {currentPage + 1} of {totalPages}
       </span>
