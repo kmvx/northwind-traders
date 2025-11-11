@@ -1,21 +1,27 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import invariant from 'tiny-invariant';
 
-import { useQueryEmployees, useQueryOrders } from '@/net';
+import { FilterYear } from '@/entities/orders';
+import { useQueryEmployees, useQueryOrdersFiltered } from '@/net';
 import { getEmployeeNameByData } from '@/utils';
 
 import { BarChart } from '.';
 
 const EmployeesBarChart: React.FC = () => {
+  // State
+  const [filterYear, setFilterYear] = useState<number | null>(null);
+  const [yearsSet, setYearsSet] = useState<Set<number>>(new Set());
+
+  // Network data
   const {
     data: dataOrders,
     error: errorOrders,
     isLoading: isLoadingOrders,
     refetch: refetchOrders,
-  } = useQueryOrders();
+  } = useQueryOrdersFiltered({ filterYear, setYearsSet });
   const {
     data: dataEmployees,
     error: errorEmployees,
@@ -67,9 +73,17 @@ const EmployeesBarChart: React.FC = () => {
       invariant(mapEmployeeToId);
       const employeeId = mapEmployeeToId.get(category);
       invariant((employeeId ?? 0) > 0);
-      router.push(`/employees/${employeeId}`);
+
+      // Build URL query string
+      const searchParams = new URLSearchParams();
+      if (filterYear) searchParams.append('year', String(filterYear));
+      const queryString = searchParams.toString();
+
+      router.push(
+        `/employees/${employeeId}${queryString ? `?${queryString}` : ''}`,
+      );
     },
-    [mapEmployeeToId, router],
+    [mapEmployeeToId, router, filterYear],
   );
 
   const hue = 216;
@@ -79,6 +93,9 @@ const EmployeesBarChart: React.FC = () => {
       <h3 className="text-center text-2xl">
         Distribution of count of <b>orders</b> by <b>employees</b>
       </h3>
+      <div className="flex justify-end">
+        <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
+      </div>
       <BarChart name="orders" {...{ categoriesQueryResult, hue, navigate }} />
     </div>
   );

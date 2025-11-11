@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 import {
   type ICategories,
@@ -18,6 +19,7 @@ import {
   type ISuppliers,
   type ITerritories,
 } from './models';
+import { dateFromString } from './utils';
 
 const API_URL = 'https://demodata.grapecity.com/northwind/api/v1';
 
@@ -42,6 +44,52 @@ export const useQueryOrders = ({
         '/Orders',
     ],
   });
+};
+
+export const useQueryOrdersFiltered = ({
+  filterYear,
+  setYearsSet,
+}: {
+  filterYear?: number | null;
+  setYearsSet: (yearsSet: Set<number>) => void;
+}) => {
+  const queryResult = useQuery<IOrders>({
+    queryKey: [API_URL + '/Orders'],
+  });
+
+  const data = queryResult.data;
+
+  const preparedData = useMemo(() => {
+    const yearsSet = new Set<number>();
+
+    const result = data?.map((item) => {
+      const orderDateObject = dateFromString(item.orderDate);
+      yearsSet.add(orderDateObject.getFullYear());
+      return {
+        ...item,
+        orderDateObject,
+      };
+    });
+
+    setYearsSet(yearsSet);
+    return result;
+  }, [data, setYearsSet]);
+
+  const filteredData = useMemo(() => {
+    if (!preparedData) return preparedData;
+
+    let filteredData = preparedData;
+
+    if (filterYear != null) {
+      filteredData = filteredData.filter(
+        (item) => item.orderDateObject.getFullYear() === filterYear,
+      );
+    }
+
+    return filteredData;
+  }, [preparedData, filterYear]);
+
+  return { ...queryResult, data: filteredData };
 };
 
 export const useQueryOrder = ({ orderId }: { orderId: number | undefined }) => {
