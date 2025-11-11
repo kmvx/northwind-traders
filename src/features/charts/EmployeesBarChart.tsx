@@ -1,10 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import invariant from 'tiny-invariant';
 
 import { FilterYear } from '@/entities/orders';
+import { useNavigate } from '@/hooks';
 import { useQueryEmployees, useQueryOrdersFiltered } from '@/net';
 import { getEmployeeNameByData } from '@/utils';
 
@@ -66,24 +66,19 @@ const EmployeesBarChart: React.FC = () => {
   }, [dataOrders, dataEmployees, error, isLoading, refetch]);
 
   // Navigation
-  const router = useRouter();
+  const navigateLocal = useNavigate({ name: 'employees' });
 
   const navigate = useCallback(
     (category: string) => {
       invariant(mapEmployeeToId);
       const employeeId = mapEmployeeToId.get(category);
-      invariant((employeeId ?? 0) > 0);
+      invariant(employeeId != undefined && employeeId > 0);
 
-      // Build URL query string
-      const searchParams = new URLSearchParams();
-      if (filterYear) searchParams.append('year', String(filterYear));
-      const queryString = searchParams.toString();
-
-      router.push(
-        `/employees/${employeeId}${queryString ? `?${queryString}` : ''}`,
-      );
+      navigateLocal(String(employeeId), {
+        year: filterYear ? String(filterYear) : '',
+      });
     },
-    [mapEmployeeToId, router, filterYear],
+    [mapEmployeeToId, navigateLocal, filterYear],
   );
 
   const hue = 216;

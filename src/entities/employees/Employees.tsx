@@ -175,8 +175,12 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
         <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
       {getContent()}
-      <Separator />
-      <EmployeesBarChart />
+      {!reportsTo && (
+        <>
+          <Separator />
+          <EmployeesBarChart />
+        </>
+      )}
     </PanelStretched>
   );
 };

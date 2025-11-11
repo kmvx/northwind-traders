@@ -5,6 +5,7 @@ import React, { useCallback, useMemo } from 'react';
 import invariant from 'tiny-invariant';
 
 import { useNavigate } from '@/hooks';
+import type { NavigateType } from '@/hooks/useNavigate';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import type { CategoriesQueryResultType } from './types';
@@ -21,7 +22,7 @@ type IWorldGeoFeature = d3.GeoPermissibleObjects & {
 
 function updateChart({
   current,
-  onCategoryClick,
+  navigate,
   itemsPerCategoryCount,
   maxItemsCountPerCategory,
   hue,
@@ -29,7 +30,7 @@ function updateChart({
   allowZoom,
 }: {
   current: SVGSVGElement;
-  onCategoryClick: (category: string) => void;
+  navigate: NavigateType;
   itemsPerCategoryCount: Map<string, number>;
   maxItemsCountPerCategory: number;
   hue: number;
@@ -137,7 +138,7 @@ function updateChart({
     }
 
     // Tooltip
-    addTooltip({ svg, hue, name, onCategoryClick });
+    addTooltip({ svg, hue, name, navigate });
   });
 }
 
@@ -175,14 +176,14 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
 
   const navigateLocal = useNavigate({
     name,
-    categoryName: name === 'orders' ? 'ordersCountry' : 'country',
+    categoryQueryName: name === 'orders' ? 'ordersCountry' : 'country',
   });
 
   const updateCallback = useCallback(
     ({ current }: { current: SVGSVGElement }) => {
       updateChart({
         current,
-        onCategoryClick: navigate ? navigate : navigateLocal,
+        navigate: navigate ? navigate : navigateLocal,
         itemsPerCategoryCount,
         maxItemsCountPerCategory,
         hue,

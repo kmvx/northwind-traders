@@ -5,6 +5,7 @@ import React, { useCallback, useMemo } from 'react';
 import invariant from 'tiny-invariant';
 
 import { useNavigate } from '@/hooks';
+import type { NavigateType } from '@/hooks/useNavigate';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import { useChartUpdate } from '.';
@@ -13,14 +14,14 @@ import { addTooltip, CHART_STYLES } from './utilsCharts';
 
 function updateChart({
   current,
-  onCategoryClick,
+  navigate,
   itemsPerCategoryCount,
   maxItemsCountPerCategory,
   hue,
   name,
 }: {
   current: SVGSVGElement;
-  onCategoryClick: (category: string) => void;
+  navigate: NavigateType;
   itemsPerCategoryCount: Map<string, number>;
   maxItemsCountPerCategory: number;
   hue: number;
@@ -129,12 +130,12 @@ function updateChart({
     .attr('stroke', `hsl(${hue} 100% 50% / 0.5)`)
     .attr('stroke-width', 2);
 
-  addTooltip({ svg: svgBase, hue, name, onCategoryClick });
+  addTooltip({ svg: svgBase, hue, name, navigate });
 }
 
 const BarChart: React.FC<{
   name: 'orders' | 'customers' | 'suppliers';
-  navigate?: (category: string) => void;
+  navigate?: NavigateType;
   categoriesQueryResult: CategoriesQueryResultType;
   hue: number;
 }> = ({
@@ -160,14 +161,14 @@ const BarChart: React.FC<{
 
   const navigateLocal = useNavigate({
     name,
-    categoryName: name === 'orders' ? 'ordersCountry' : 'country',
+    categoryQueryName: name === 'orders' ? 'ordersCountry' : 'country',
   });
 
   const updateCallback = useCallback(
     ({ current }: { current: SVGSVGElement }) => {
       updateChart({
         current,
-        onCategoryClick: navigate ? navigate : navigateLocal,
+        navigate: navigate ? navigate : navigateLocal,
         itemsPerCategoryCount,
         maxItemsCountPerCategory,
         hue,
