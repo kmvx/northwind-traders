@@ -45,7 +45,7 @@ function updateChart({
   const parentHeight = parentNode.clientHeight;
   svgBase.attr('width', parentWidth).attr('height', parentHeight);
 
-  const margin = { top: 30, right: 30, bottom: 110, left: 60 };
+  const margin = { top: 30, right: 30, bottom: 150, left: 60 };
   const widthChart = parentWidth - margin.left - margin.right;
   const heightChart = parentHeight - margin.top - margin.bottom;
   const svg = svgBase
@@ -69,8 +69,8 @@ function updateChart({
     .style('color', 'var(--chart-text-color)')
     .call(d3.axisBottom(x).tickSizeOuter(0))
     .selectAll('text')
+    .attr('class', 'text-xs')
     .attr('transform', 'translate(-10, 0) rotate(-45)')
-    .style('font-size', '9pt')
     .style('text-anchor', 'end');
 
   // Y axis
@@ -90,8 +90,8 @@ function updateChart({
         .tickFormat(d3.format('d')),
     )
     .selectAll('text')
-    .attr('fill', 'var(--chart-text-color)')
-    .style('font-size', '9pt');
+    .attr('class', 'text-xs')
+    .attr('fill', 'var(--chart-text-color)');
 
   // Y grid
   svg

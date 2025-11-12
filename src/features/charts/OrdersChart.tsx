@@ -88,7 +88,7 @@ class SVGBuilder {
         .attr('class', 'pointer-events-auto hover:opacity-50')
         .attr('stroke', 'var(--chart-line-color)')
         .attr('stroke-width', 2)
-        .attr('r', 10)
+        .attr('r', '1rem')
         .attr('cx', (_, index: number) => x(index))
         .attr('cy', (d) => y(d));
     }
@@ -103,8 +103,8 @@ class SVGBuilder {
       .style('stroke-dasharray', '2 3');
     const focusText = focusElement
       .append('text')
+      .attr('class', 'text-sm')
       .attr('fill', 'var(--chart-line-color)')
-      .attr('font-size', '9pt')
       .attr('font-weight', 'bold')
       .attr('alignment-baseline', 'middle')
       .attr('text-anchor', 'end');
@@ -168,9 +168,7 @@ class SVGBuilder {
                 15 +
                 'px',
             )
-            .html(
-              `<b style="font-size: 10pt;">${ordersCount}</b> orders in ${months[nearestIndex]}`,
-            )
+            .html(`<b>${ordersCount}</b> orders in ${months[nearestIndex]}`)
             .style('visibility', 'visible');
         }
       })
@@ -276,8 +274,8 @@ class SVGBuilder {
       .call((g: Selection) =>
         g
           .selectAll('text')
-          .attr('fill', 'var(--chart-text-color)')
-          .attr('font-size', '9pt'),
+          .attr('class', 'text-xs')
+          .attr('fill', 'var(--chart-text-color)'),
       );
 
     // x grid
@@ -320,8 +318,8 @@ class SVGBuilder {
       .call((g: Selection) =>
         g
           .selectAll('text')
-          .attr('fill', 'var(--chart-text-color)')
-          .attr('font-size', '9pt'),
+          .attr('class', 'text-sm')
+          .attr('fill', 'var(--chart-text-color)'),
       );
   }
 
@@ -350,7 +348,7 @@ class SVGBuilder {
     undefined
   >;
   private scaledArray: { x: number; y: number }[] = [];
-  private margin = { left: 70, right: 30, top: 30, bottom: 50 } as const;
+  private margin = { left: 90, right: 30, top: 30, bottom: 50 } as const;
 }
 
 interface OrdersChartProps {
