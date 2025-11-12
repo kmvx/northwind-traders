@@ -120,10 +120,6 @@ class SVGBuilder {
 
     // Mouse event handlers
     svgParent
-      .on('mouseover', () => {
-        focusElement.style('visibility', 'visible');
-        tooltip.style('visibility', 'visible');
-      })
       .on('mousemove', (event: MouseEvent) => {
         // Move focus line
         const focusLineY = event.offsetY - 0.5 - this.margin.top;
