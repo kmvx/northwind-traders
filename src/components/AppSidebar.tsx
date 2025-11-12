@@ -15,7 +15,7 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { navigationItems } from '@/constants';
-import { FullscreenToggle, Logo, ThemeToggle } from '@/ui';
+import { FontSizeControls, FullscreenToggle, Logo, ThemeToggle } from '@/ui';
 
 import { Separator } from './ui';
 
@@ -66,6 +66,7 @@ const AppSidebar: React.FC = () => {
               <ThemeToggle />
               <FullscreenToggle />
               <SidebarTrigger variant="outline" className="size-9" />
+              <FontSizeControls />
             </div>
           </SidebarGroupContent>
         </SidebarGroup>

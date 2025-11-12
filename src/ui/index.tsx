@@ -6,6 +6,7 @@ export { default as DebouncedInput } from './DebouncedInput';
 export { default as ErrorMessage } from './ErrorMessage';
 export { default as ExportDropdown } from './ExportDropdown';
 export { default as FiltersClearButton } from './FiltersClearButton';
+export { default as FontSizeControls } from './FontSizeControls';
 export { default as FullscreenToggle } from './FullscreenToggle';
 export { default as Logo } from './Logo';
 export { default as Pagination } from './Pagination';
