@@ -2,21 +2,25 @@
 
 import { useEffect, useState } from 'react';
 
-const WITE_BREAKPOINT = 1536;
+const WIDE_BREAKPOINT_REM = 96;
 
 type StateType = {
-  width?: number;
-  height?: number;
   isWidePage: boolean;
+};
+
+const remToPx = (rem: number): number => {
+  const rootFontSize =
+    typeof window === 'undefined'
+      ? 16
+      : parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return rem * rootFontSize;
 };
 
 const getState = (): StateType => {
   return typeof window === 'undefined'
     ? { isWidePage: true }
     : {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        isWidePage: window.innerWidth >= WITE_BREAKPOINT,
+        isWidePage: window.innerWidth >= remToPx(WIDE_BREAKPOINT_REM),
       };
 };
 
@@ -27,7 +31,12 @@ export default function usePageSize(): StateType {
     const handleResize = () => setState(getState());
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const observer = new ResizeObserver(handleResize);
+    observer.observe(document.documentElement);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
+    };
   }, []);
 
   return state;
