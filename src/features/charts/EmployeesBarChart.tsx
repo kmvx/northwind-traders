@@ -66,20 +66,26 @@ const EmployeesBarChart: React.FC = () => {
   }, [dataOrders, dataEmployees, error, isLoading, refetch]);
 
   // Navigation
-  const navigateLocal = useNavigate({ name: 'employees' });
-
-  const navigate = useCallback(
+  const queries = useMemo(
+    () => ({
+      year: filterYear ? String(filterYear) : '',
+    }),
+    [filterYear],
+  );
+  const categoryConverter = useCallback(
     (category: string) => {
       invariant(mapEmployeeToId);
       const employeeId = mapEmployeeToId.get(category);
       invariant(employeeId != undefined && employeeId > 0);
-
-      navigateLocal(String(employeeId), {
-        year: filterYear ? String(filterYear) : '',
-      });
+      return String(employeeId);
     },
-    [mapEmployeeToId, navigateLocal, filterYear],
+    [mapEmployeeToId],
   );
+  const navigate = useNavigate({
+    name: 'employees',
+    categoryConverter,
+    queries,
+  });
 
   const hue = 216;
 

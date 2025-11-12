@@ -82,7 +82,20 @@ function updateChart({
       .append('g')
       .selectAll('path')
       .data(data.features)
-      .join('path')
+      .enter()
+      .append((d) => {
+        return document.createElementNS(
+          d3.namespaces.svg,
+          itemsPerCategoryCount.get(getCategoryName(d)) ? 'a' : 'g',
+        );
+      })
+      .each(function (d) {
+        const category = getCategoryName(d);
+        if (itemsPerCategoryCount.get(category)) {
+          d3.select(this).attr('href', navigate.getURL(category));
+        }
+      })
+      .append('path')
       .attr('class', 'hover:opacity-50 stroke-neutral-500/30')
       .attr('data-category', (d) => getCategoryName(d))
       .attr(
@@ -138,13 +151,13 @@ function updateChart({
     }
 
     // Tooltip
-    addTooltip({ svg, hue, name, navigate });
+    addTooltip({ svg, hue, name });
   });
 }
 
 interface WorldMapChartProps {
   name: 'orders' | 'customers' | 'suppliers';
-  navigate?: (category: string) => void;
+  navigate?: NavigateType;
   categoriesQueryResult: CategoriesQueryResultType;
   hue?: number | undefined;
   allowZoom?: boolean | undefined;

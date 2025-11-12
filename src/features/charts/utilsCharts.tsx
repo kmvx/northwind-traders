@@ -1,17 +1,13 @@
 import * as d3 from 'd3';
 
-import type { NavigateType } from '@/hooks/useNavigate';
-
 export function addTooltip({
   svg,
   hue,
   name,
-  navigate,
 }: {
   svg: d3.Selection<SVGSVGElement, unknown, null, undefined>;
   hue: number;
   name: string;
-  navigate: NavigateType;
 }) {
   const svgParent = d3.select(svg.node()?.parentNode as Element);
   svgParent.selectAll('.u-chart-tooltip').remove();
@@ -50,12 +46,6 @@ export function addTooltip({
     })
     .on('mouseout', () => {
       tooltip.html('').style('visibility', 'hidden');
-    })
-    .on('click', (event) => {
-      const target = d3.select(event.target as Element);
-      if (+target.attr('data-count')) {
-        navigate(target.attr('data-category'));
-      }
     });
 }
 

@@ -1,47 +1,58 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import invariant from 'tiny-invariant';
 
-export type NavigateType = (
-  category: string,
-  queries?: Record<string, string>,
-) => void;
+export type NavigateType = {
+  getURL: (category: string, queries?: Record<string, string>) => string;
+};
 
 const useNavigate = ({
   name,
   categoryQueryName,
+  categoryConverter,
+  queries,
 }: {
   name: string;
   categoryQueryName?: string;
-}) => {
-  const router = useRouter();
-  const navigate: NavigateType = useCallback(
-    (category: string, queries?: Record<string, string>) => {
-      invariant(category);
+  categoryConverter?: (category: string) => string;
+  queries?: Record<string, string>;
+}): NavigateType => {
+  const getURL = useCallback(
+    (category: string, queriesArg?: Record<string, string>) => {
+      const categoryValue = categoryConverter
+        ? categoryConverter(category)
+        : category;
+      invariant(categoryValue);
 
       let url = '/' + name;
 
       const searchParams = new URLSearchParams();
 
       if (categoryQueryName) {
-        searchParams.append(categoryQueryName, category);
-      } else url += '/' + category;
+        searchParams.append(categoryQueryName, categoryValue);
+      } else url += '/' + categoryValue;
 
-      if (queries) {
-        for (const [name, value] of Object.entries(queries)) {
+      const addQueries = (queriesLocal?: Record<string, string>) => {
+        if (!queriesLocal) return;
+        for (const [name, value] of Object.entries(queriesLocal)) {
           if (value) searchParams.append(name, value);
         }
-      }
+      };
+
+      addQueries(queries);
+      addQueries(queriesArg);
 
       const queryString = searchParams.toString();
       if (queryString) url += '?' + queryString;
 
-      router.push(url);
+      return url;
     },
-    [router, name, categoryQueryName],
+    [name, categoryQueryName, categoryConverter, queries],
   );
+
+  const navigate = useMemo(() => ({ getURL }), [getURL]);
+
   return navigate;
 };
 

@@ -110,7 +110,9 @@ function updateChart({
   svg
     .selectAll('.whatever')
     .data(itemsPerCategoryCountArray)
-    .join('rect')
+    .join('a')
+    .attr('href', (d) => navigate.getURL(d.category))
+    .append('rect')
     .attr('class', 'hover:opacity-50')
     .attr('data-category', (d) => d.category)
     .attr('data-count', (d) => d.count)
@@ -130,7 +132,7 @@ function updateChart({
     .attr('stroke', `hsl(${hue} 100% 50% / 0.5)`)
     .attr('stroke-width', 2);
 
-  addTooltip({ svg: svgBase, hue, name, navigate });
+  addTooltip({ svg: svgBase, hue, name });
 }
 
 const BarChart: React.FC<{

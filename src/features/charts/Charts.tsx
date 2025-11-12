@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { Separator } from '@/components/ui';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FilterYear } from '@/entities/orders';
+import { useNavigate } from '@/hooks';
 import {
   useQueryCustomers,
   useQueryOrdersFiltered,
@@ -127,6 +128,19 @@ const OrdersCharts: React.FC = () => {
 
   const hue = 216;
 
+  // Navigation
+  const queries = useMemo(
+    () => ({
+      year: filterYear ? String(filterYear) : '',
+    }),
+    [filterYear],
+  );
+  const navigate = useNavigate({
+    name: 'orders',
+    categoryQueryName: 'ordersCountry',
+    queries,
+  });
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">
@@ -135,10 +149,10 @@ const OrdersCharts: React.FC = () => {
       <div className="flex flex-wrap justify-center gap-2">
         <WorldMapChart
           name="orders"
-          {...{ categoriesQueryResult, hue }}
+          {...{ categoriesQueryResult, hue, navigate }}
           allowZoom
         />
-        <BarChart name="orders" {...{ categoriesQueryResult, hue }} />
+        <BarChart name="orders" {...{ categoriesQueryResult, hue, navigate }} />
       </div>
     </div>
   );
