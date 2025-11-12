@@ -1,7 +1,8 @@
 'use client';
 
 import { AArrowDownIcon, AArrowUpIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
 
 import { Button } from '@/components/ui';
 
@@ -13,7 +14,10 @@ const config = {
 } as const;
 
 export default function FontSizeControls() {
-  const [fontSize, setFontSize] = useState<number>(config.DEFAULT);
+  const [fontSize, setFontSize] = useLocalStorage<number>(
+    'fontSize',
+    config.DEFAULT,
+  );
 
   const changeFontSize = (newFontSize: number) => {
     const clampedFontSize = Math.min(
@@ -21,8 +25,11 @@ export default function FontSizeControls() {
       config.MAX,
     );
     setFontSize(clampedFontSize);
-    document.documentElement.style.fontSize = `${clampedFontSize}px`;
   };
+
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${fontSize}px`;
+  }, [fontSize]);
 
   return (
     <div className="flex items-center gap-2">
