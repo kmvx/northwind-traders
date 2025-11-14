@@ -14,10 +14,12 @@ const isDateString = (value: string): boolean => {
 };
 
 const formatDate = (date: Date): string => {
-  if (date.getHours() || date.getMinutes() || date.getSeconds()) {
-    return date.toLocaleString();
+  if (isNaN(date.getTime())) return 'Invalid Date';
+
+  if (date.getUTCHours() || date.getUTCMinutes() || date.getUTCSeconds()) {
+    return date.toISOString();
   } else {
-    return date.toLocaleDateString();
+    return date.toISOString().split('T')[0];
   }
 };
 

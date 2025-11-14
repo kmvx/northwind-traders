@@ -2,15 +2,15 @@
 
 exports[`convertTo 1`] = `
 "number;dateObject;dateTimeObject;stringDate;invalidDate;time
-1.2;2025-01-01T00:00:00.000Z;2025-03-03T10:05:06.999Z;1992-08-14T00:00:00;;2025-06-14T18:54:09"
+1.2;2025-01-01T00:00:00.000Z;2025-03-03T10:05:06.999Z;1992-08-14T00:00:00Z;;2025-06-14T18:54:09Z"
 `;
 
 exports[`convertTo 2`] = `
 "# Datas
 
-| number | dateObject           | dateTimeObject        | stringDate | invalidDate  | time                  |
-| ------ | -------------------- | --------------------- | ---------- | ------------ | --------------------- |
-| 1.2    | 1/1/2025, 2:00:00 AM | 3/3/2025, 12:05:06 PM | 8/14/1992  | Invalid Date | 6/14/2025, 6:54:09 PM |"
+| number | dateObject | dateTimeObject           | stringDate | invalidDate  | time                     |
+| ------ | ---------- | ------------------------ | ---------- | ------------ | ------------------------ |
+| 1.2    | 2025-01-01 | 2025-03-03T10:05:06.999Z | 1992-08-14 | Invalid Date | 2025-06-14T18:54:09.000Z |"
 `;
 
 exports[`convertTo 3`] = `
@@ -19,9 +19,9 @@ exports[`convertTo 3`] = `
         "number": 1.2,
         "dateObject": "2025-01-01T00:00:00.000Z",
         "dateTimeObject": "2025-03-03T10:05:06.999Z",
-        "stringDate": "1992-08-14T00:00:00",
+        "stringDate": "1992-08-14T00:00:00Z",
         "invalidDate": null,
-        "time": "2025-06-14T18:54:09"
+        "time": "2025-06-14T18:54:09Z"
     }
 ]"
 `;
