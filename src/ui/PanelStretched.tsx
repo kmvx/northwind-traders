@@ -14,7 +14,7 @@ const PanelStretched: React.FC<PanelStretchedProps> = ({
     <section
       className={clsx(
         className,
-        'container mx-auto border rounded p-4 bg-sidebar',
+        'container mx-auto border rounded-md p-4 bg-sidebar',
       )}
     >
       {children}

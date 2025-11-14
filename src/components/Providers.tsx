@@ -7,6 +7,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React, { Suspense } from 'react';
 
 import { Toaster } from '@/components/ui/sonner';
+import { useInit } from '@/hooks';
 import { WaitSpinner } from '@/ui';
 import FetchError from '@/utils/FetchError';
 
@@ -48,13 +49,25 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
     <ThemeProvider attribute="class" defaultTheme="dark">
       <QueryClientProvider client={queryClient}>
         <Suspense fallback={<WaitSpinner />}>
-          <NuqsAdapter>{children}</NuqsAdapter>
+          <NuqsAdapter>
+            <ProvidersInit>{children}</ProvidersInit>
+          </NuqsAdapter>
         </Suspense>
         <Toaster position="top-center" richColors />
         <ReactQueryDevtools />
       </QueryClientProvider>
     </ThemeProvider>
   );
+};
+
+interface ProvidersInitProps {
+  children: React.ReactNode;
+}
+
+const ProvidersInit: React.FC<ProvidersInitProps> = ({ children }) => {
+  useInit();
+
+  return <>{children}</>;
 };
 
 export default Providers;

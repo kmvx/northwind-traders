@@ -20,5 +20,6 @@ export { default as ResponsiveGrid } from './ResponsiveGrid';
 export { default as SelectGroup } from './SelectGroup';
 export { default as SelectStringList } from './SelectStringList';
 export { default as ThemeToggle } from './ThemeToggle';
+export { default as TopbarControls } from './TopbarControls';
 export { Typography } from './Typography';
 export { default as WaitSpinner } from './WaitSpinner';

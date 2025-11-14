@@ -8,7 +8,7 @@ interface PanelBasicProps {
 
 const PanelBasic: React.FC<PanelBasicProps> = ({ children, className }) => {
   return (
-    <section className={clsx(className, 'border rounded p-4 bg-sidebar')}>
+    <section className={clsx(className, 'border rounded-md p-4 bg-sidebar')}>
       {children}
     </section>
   );

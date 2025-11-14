@@ -9,7 +9,7 @@ interface PanelCentredProps {
 const PanelCentred: React.FC<PanelCentredProps> = ({ children, className }) => {
   return (
     <div className="container mx-auto flex flex-col items-center">
-      <section className={clsx('border rounded p-4 bg-sidebar', className)}>
+      <section className={clsx('border rounded-md p-4 bg-sidebar', className)}>
         {children}
       </section>
     </div>

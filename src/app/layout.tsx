@@ -4,8 +4,8 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import { AppSidebar, Providers } from '@/components';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { FullscreenToggle } from '@/ui';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { TopbarControls } from '@/ui';
 import { buildTitle } from '@/utils';
 
 const geistSans = Geist({
@@ -45,19 +45,8 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider>
             <AppSidebar />
-            <main className="w-full sm:px-2 sm:pt-2">
-              <div
-                className="p-2 sm:absolute sm:top-2 sm:left-2 flex gap-2"
-                style={{
-                  marginLeft: 'env(safe-area-inset-left)',
-                }}
-              >
-                <SidebarTrigger
-                  variant="outline"
-                  className="size-9 bg-transparent"
-                />
-                <FullscreenToggle className="sm:hidden bg-transparent" />
-              </div>
+            <main className="w-full sm:px-2 sm:py-2">
+              <TopbarControls />
               {children}
             </main>
           </SidebarProvider>

@@ -224,7 +224,7 @@ const WorldMapChart: React.FC<WorldMapChartProps> = ({
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
     if (isLoading) return <WaitSpinner />;
-    return <svg ref={ref} className="absolute" />;
+    return <svg ref={ref} className="absolute rounded-md" />;
   };
 
   return (

@@ -65,8 +65,8 @@ const AppSidebar: React.FC = () => {
             <div className="h-max-sm:py-0 p-2 flex items-center gap-2">
               <ThemeToggle />
               <FullscreenToggle />
-              <SidebarTrigger variant="outline" className="size-9" />
               <FontSizeControls />
+              <SidebarTrigger variant="outline" className="size-9" />
             </div>
           </SidebarGroupContent>
         </SidebarGroup>

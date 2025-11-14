@@ -29,7 +29,10 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
         );
 
         return (
-          <Card key={orderDetail.productId}>
+          <Card
+            className="hover:shadow-lg transition h-full"
+            key={orderDetail.productId}
+          >
             <CardHeader>
               <CardTitle>
                 <BasicLink

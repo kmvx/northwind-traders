@@ -165,7 +165,7 @@ class SVGBuilder {
               this.margin.top +
                 this.y(ordersCount) -
                 (tooltip.node()?.offsetHeight || 0) -
-                15 +
+                20 +
                 'px',
             )
             .html(`<b>${ordersCount}</b> orders in ${months[nearestIndex]}`)
