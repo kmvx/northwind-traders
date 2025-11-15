@@ -22,6 +22,11 @@
     "vitest:typecheck": "vitest --typecheck",
     "vitest:typecheck:run": "vitest --typecheck --run",
     "test": "npm run format && npm run tsc && npm run vitest:typecheck:run && npm run vitest:run && echo OK",
+    "pw": "playwright test --forbid-only",
+    "pw:rep": "playwright show-report",
+    "pw:chrome": "playwright test --project=chromium",
+    "pw:ui": "playwright test --ui --headed",
+    "pw:debug": "playwright test --project=chromium --debug",
     "deploy:prod": "vercel build --prod && vercel deploy --prebuilt --prod && echo OK",
     "deploy": "vercel build && vercel deploy --prebuilt && echo OK"
   },
@@ -53,6 +58,7 @@
     "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
     "@types/d3": "^7.4.3",
     "@types/node": "^24",
