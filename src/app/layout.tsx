@@ -45,7 +45,7 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider>
             <AppSidebar />
-            <main className="w-full sm:px-2 sm:py-2">
+            <main className="w-full sm:m-2">
               <TopbarControls />
               {children}
             </main>

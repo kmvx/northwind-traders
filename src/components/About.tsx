@@ -6,7 +6,7 @@ import { Button } from '@/components/ui';
 
 const About: React.FC = () => {
   return (
-    <div className="flex flex-col xl:flex-row h-full bg-blue-950 text-[max(1.5rem,1vw)]">
+    <div className="sm:-m-2 flex flex-col xl:flex-row h-full bg-blue-950 text-[max(1.5rem,1vw)]">
       <div className="w-full xl:w-3/5">
         <Image
           alt=""
