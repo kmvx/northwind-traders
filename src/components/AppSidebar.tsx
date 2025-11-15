@@ -33,8 +33,8 @@ const AppSidebar: React.FC = () => {
         }}
       >
         <Logo />
-        <Separator />
       </SidebarHeader>
+      <Separator />
       <SidebarContent className="h-max-sm:gap-0">
         {navigationItems.map((item, index) => (
           <Fragment key={index}>
