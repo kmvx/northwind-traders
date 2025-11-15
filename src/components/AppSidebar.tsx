@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
 
 import {
@@ -20,6 +23,10 @@ import { FontSizeControls, FullscreenToggle, Logo, ThemeToggle } from '@/ui';
 import { Separator } from './ui';
 
 const AppSidebar: React.FC = () => {
+  const pathname = usePathname();
+  const isActive = (url: string): boolean =>
+    pathname === url || (pathname.startsWith(url) && url !== '/');
+
   return (
     <Sidebar
       style={{
@@ -46,7 +53,11 @@ const AppSidebar: React.FC = () => {
               <SidebarMenu className="h-max-sm:gap-0">
                 {item.children.map((child) => (
                   <SidebarMenuItem key={child.title}>
-                    <SidebarMenuButton asChild className="h-max-sm:py-0">
+                    <SidebarMenuButton
+                      isActive={isActive(child.url)}
+                      asChild
+                      className="h-max-sm:py-0"
+                    >
                       <Link href={child.url}>
                         <child.icon />
                         <span>{child.title}</span>
