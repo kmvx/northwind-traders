@@ -18,7 +18,13 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { navigationItems } from '@/constants';
-import { FontSizeControls, FullscreenToggle, Logo, ThemeToggle } from '@/ui';
+import {
+  FontSizeControls,
+  FullscreenToggle,
+  Logo,
+  ThemeCustomToggle,
+  ThemeToggle,
+} from '@/ui';
 
 import { Separator } from './ui';
 
@@ -73,11 +79,16 @@ const AppSidebar: React.FC = () => {
         <SidebarGroup>
           <SidebarGroupLabel>Settings</SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="h-max-sm:py-0 p-2 flex items-center gap-2">
-              <ThemeToggle />
-              <FullscreenToggle />
-              <FontSizeControls />
-              <SidebarTrigger variant="outline" className="size-9" />
+            <div className="h-max-sm:py-0 p-2 flex flex-col gap-2">
+              <div className="flex gap-2">
+                <ThemeToggle />
+                <FullscreenToggle />
+                <SidebarTrigger variant="outline" className="size-9" />
+              </div>
+              <div className="flex gap-2">
+                <ThemeCustomToggle />
+                <FontSizeControls />
+              </div>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>

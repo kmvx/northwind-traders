@@ -40,7 +40,7 @@ export default function FontSizeControls() {
         disabled={fontSize <= config.MIN}
         title="Decrease font size"
       >
-        <AArrowDownIcon />
+        <AArrowDownIcon className="size-[1.2rem]" />
       </Button>
       <Button
         variant="outline"
@@ -49,7 +49,7 @@ export default function FontSizeControls() {
         disabled={fontSize >= config.MAX}
         title="Increase font size"
       >
-        <AArrowUpIcon />
+        <AArrowUpIcon className="size-[1.5rem]" />
       </Button>
     </div>
   );
