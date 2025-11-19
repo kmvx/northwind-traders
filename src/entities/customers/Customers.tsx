@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useQueryState } from 'nuqs';
 import React, { memo, useMemo } from 'react';
 
 import {
@@ -13,6 +12,7 @@ import {
   Skeleton,
 } from '@/components/ui';
 import { WorldMapChart } from '@/features/charts';
+import { useQueryStateFixed } from '@/hooks';
 import { type ICustomer, type ICustomers } from '@/models';
 import { useQueryCustomers } from '@/net';
 import {
@@ -36,10 +36,10 @@ interface CustomersProps {
 
 const Customers: React.FC<CustomersProps> = ({ initialData }) => {
   // Filters
-  const [filterString, setFilterString] = useQueryState('q', {
+  const [filterString, setFilterString] = useQueryStateFixed('q', {
     defaultValue: '',
   });
-  const [filterCountry, setFilterCountry] = useQueryState('country', {
+  const [filterCountry, setFilterCountry] = useQueryStateFixed('country', {
     defaultValue: '',
   });
   const hasFilters = !!filterString || !!filterCountry;

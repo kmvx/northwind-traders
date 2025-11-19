@@ -1,9 +1,8 @@
 'use client';
 
-import { useQueryState } from 'nuqs';
 import React, { useMemo } from 'react';
 
-import { usePageSize } from '@/hooks';
+import { usePageSize, useQueryStateFixed } from '@/hooks';
 import { type IProducts } from '@/models';
 import { useQueryProducts } from '@/net';
 import {
@@ -28,10 +27,10 @@ interface ProductsProps {
 
 const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
   // Filters
-  const [filterString, setFilterString] = useQueryState('productsFilter', {
+  const [filterString, setFilterString] = useQueryStateFixed('productsFilter', {
     defaultValue: '',
   });
-  const [filterDiscontinued, setDiscontinued] = useQueryState(
+  const [filterDiscontinued, setDiscontinued] = useQueryStateFixed(
     'discontinued',
     parseAsBooleanOrUndefined,
   );

@@ -1,8 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
-import { useQueryState } from 'nuqs';
 import React, { useCallback, useEffect } from 'react';
+
+import { useQueryStateFixed } from '@/hooks';
 
 import { PaginationControls } from '.';
 
@@ -19,12 +20,12 @@ function Pagination<T>({
   defaultLimit,
   className,
 }: PaginationProps<T>) {
-  const [limit] = useQueryState('limit', {
+  const [limit] = useQueryStateFixed('limit', {
     defaultValue: defaultLimit,
     parse: Number,
   });
 
-  const [offset, setOffset] = useQueryState('offset', {
+  const [offset, setOffset] = useQueryStateFixed('offset', {
     defaultValue: 0,
     parse: Number,
   });

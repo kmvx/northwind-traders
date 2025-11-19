@@ -1,11 +1,11 @@
 'use client';
 
-import { parseAsInteger, useQueryState } from 'nuqs';
+import { parseAsInteger } from 'nuqs';
 import React, { useMemo, useState } from 'react';
 
 import { Separator } from '@/components/ui';
 import { OrdersChart, WorldMapChart } from '@/features/charts';
-import { useMemoWaitCursor, usePageSize } from '@/hooks';
+import { useMemoWaitCursor, usePageSize, useQueryStateFixed } from '@/hooks';
 import { type IOrders } from '@/models';
 import { useQueryEmployees, useQueryOrders } from '@/net';
 import {
@@ -42,14 +42,20 @@ const Orders: React.FC<OrdersProps> = ({
   employeeId,
 }) => {
   // Filters
-  const [filterString, setFilterString] = useQueryState('ordersFilter', {
+  const [filterString, setFilterString] = useQueryStateFixed('ordersFilter', {
     defaultValue: '',
   });
-  const [filterCountry, setFilterCountry] = useQueryState('ordersCountry', {
-    defaultValue: '',
-  });
-  const [filterYear, setFilterYear] = useQueryState('year', parseAsInteger);
-  const [filterEmployeeId, setFilterEmployeeId] = useQueryState(
+  const [filterCountry, setFilterCountry] = useQueryStateFixed(
+    'ordersCountry',
+    {
+      defaultValue: '',
+    },
+  );
+  const [filterYear, setFilterYear] = useQueryStateFixed(
+    'year',
+    parseAsInteger,
+  );
+  const [filterEmployeeId, setFilterEmployeeId] = useQueryStateFixed(
     'employeeId',
     parseAsInteger,
   );

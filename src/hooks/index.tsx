@@ -5,3 +5,4 @@ export { default as useInit } from './useInit';
 export { default as useMemoWaitCursor } from './useMemoWaitCursor';
 export { default as useNavigate } from './useNavigate';
 export { default as usePageSize } from './usePageSize';
+export { default as useQueryStateFixed } from './useQueryStateFixed';

@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 
 import {
@@ -15,6 +14,7 @@ import {
   Skeleton,
 } from '@/components/ui';
 import { EmployeesBarChart } from '@/features/charts';
+import { useQueryStateFixed } from '@/hooks';
 import { type IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';
 import {
@@ -37,10 +37,10 @@ interface EmployeesProps {
 
 const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
   // Filters
-  const [filterString, setFilterString] = useQueryState('q', {
+  const [filterString, setFilterString] = useQueryStateFixed('q', {
     defaultValue: '',
   });
-  const [filterCountry, setFilterCountry] = useQueryState('country', {
+  const [filterCountry, setFilterCountry] = useQueryStateFixed('country', {
     defaultValue: '',
   });
   const hasFilters = !!filterString || !!filterCountry;
