@@ -31,7 +31,7 @@ function Item({ item }: { item: PropertyGridItemType }) {
       <div className="">
         <div>{item.name}:</div>
         {item.description && (
-          <div className="text-xs text-muted-foreground indent-4">
+          <div className="text-xs text-muted-foreground">
             {item.description}
           </div>
         )}
