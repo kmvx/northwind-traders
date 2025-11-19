@@ -23,6 +23,98 @@ import { dateFromString } from './utils';
 
 const API_URL = 'https://demodata.grapecity.com/northwind/api/v1';
 
+// Customers
+
+export const useQueryCustomers = () => {
+  return useQuery<ICustomers>({
+    queryKey: [API_URL + '/Customers'],
+  });
+};
+
+export const getCustomers = async (): Promise<ICustomers> => {
+  return await (await fetch(API_URL + '/Customers')).json();
+};
+
+export const useQueryCustomer = ({
+  customerId,
+  enabled = true,
+}: {
+  customerId: string | undefined;
+  enabled?: boolean;
+}) => {
+  return useQuery<ICustomer>({
+    queryKey: [API_URL + '/Customers/' + customerId],
+    enabled,
+  });
+};
+
+export const useQueryOrderCustomer = ({
+  orderId,
+}: {
+  orderId: number | undefined;
+}) => {
+  return useQuery<ICustomer>({
+    queryKey: [API_URL + '/Orders/' + orderId + '/Customer'],
+  });
+};
+
+// Employees
+
+export const useQueryEmployees = () => {
+  return useQuery<IEmployees>({
+    queryKey: [API_URL + '/Employees'],
+  });
+};
+
+export const getEmployees = async (): Promise<IEmployees> => {
+  return await (await fetch(API_URL + '/Employees')).json();
+};
+
+export const useQueryEmployee = ({
+  employeeId,
+  enabled = true,
+}: {
+  employeeId: number | undefined;
+  enabled?: boolean;
+}) => {
+  return useQuery<IEmployee>({
+    queryKey: [API_URL + '/Employees/' + employeeId],
+    enabled,
+  });
+};
+
+export const getEmployee = async (
+  employeeId: number | undefined,
+): Promise<IEmployee> => {
+  return await (await fetch(API_URL + '/Employees/' + employeeId)).json();
+};
+
+export const useQueryOrderEmployee = ({
+  orderId,
+}: {
+  orderId: number | undefined;
+}) => {
+  return useQuery<IEmployee>({
+    queryKey: [API_URL + '/Orders/' + orderId + '/Employee'],
+  });
+};
+
+export const useEmployeeTeritories = ({
+  employeeId,
+}: {
+  employeeId: number | undefined;
+}) => {
+  return useQuery<ITerritories>({
+    queryKey: [API_URL + '/Employees/' + employeeId + '/Territories'],
+  });
+};
+
+export const useQueryRegions = () => {
+  return useQuery<IRegions>({
+    queryKey: [API_URL + '/Regions'],
+  });
+};
+
 // Orders
 
 export const useQueryOrders = ({
@@ -120,60 +212,41 @@ export const useQueryOrderDetails = ({
   });
 };
 
-// Employees
+// Products
 
-export const useQueryEmployees = () => {
-  return useQuery<IEmployees>({
-    queryKey: [API_URL + '/Employees'],
-  });
-};
-
-export const getEmployees = async (): Promise<IEmployees> => {
-  return await (await fetch(API_URL + '/Employees')).json();
-};
-
-export const useQueryEmployee = ({
-  employeeId,
+export const useQueryProducts = ({
+  supplierId,
+  orderId,
   enabled = true,
 }: {
-  employeeId: number | undefined;
+  supplierId?: number | undefined;
+  orderId?: number | undefined;
   enabled?: boolean;
 }) => {
-  return useQuery<IEmployee>({
-    queryKey: [API_URL + '/Employees/' + employeeId],
+  return useQuery<IProducts>({
+    queryKey: [
+      API_URL +
+        (supplierId ? '/Suppliers/' + supplierId : '') +
+        (orderId ? '/Orders/' + orderId : '') +
+        '/Products',
+    ],
     enabled,
   });
 };
 
-export const getEmployee = async (
-  employeeId: number | undefined,
-): Promise<IEmployee> => {
-  return await (await fetch(API_URL + '/Employees/' + employeeId)).json();
-};
-
-export const useQueryOrderEmployee = ({
-  orderId,
+export const useQueryProduct = ({
+  productId,
 }: {
-  orderId: number | undefined;
+  productId: number | undefined;
 }) => {
-  return useQuery<IEmployee>({
-    queryKey: [API_URL + '/Orders/' + orderId + '/Employee'],
+  return useQuery<IProduct>({
+    queryKey: [API_URL + '/Products/' + productId],
   });
 };
 
-export const useEmployeeTeritories = ({
-  employeeId,
-}: {
-  employeeId: number | undefined;
-}) => {
-  return useQuery<ITerritories>({
-    queryKey: [API_URL + '/Employees/' + employeeId + '/Territories'],
-  });
-};
-
-export const useQueryRegions = () => {
-  return useQuery<IRegions>({
-    queryKey: [API_URL + '/Regions'],
+export const useQueryCategories = () => {
+  return useQuery<ICategories>({
+    queryKey: [API_URL + '/Categories'],
   });
 };
 
@@ -213,78 +286,5 @@ export const useQuerySupplier = ({
   return useQuery<ISupplier>({
     queryKey: [API_URL + '/Suppliers/' + supplierId],
     enabled,
-  });
-};
-
-// Products
-
-export const useQueryProducts = ({
-  supplierId,
-  orderId,
-  enabled = true,
-}: {
-  supplierId?: number | undefined;
-  orderId?: number | undefined;
-  enabled?: boolean;
-}) => {
-  return useQuery<IProducts>({
-    queryKey: [
-      API_URL +
-        (supplierId ? '/Suppliers/' + supplierId : '') +
-        (orderId ? '/Orders/' + orderId : '') +
-        '/Products',
-    ],
-    enabled,
-  });
-};
-
-export const useQueryProduct = ({
-  productId,
-}: {
-  productId: number | undefined;
-}) => {
-  return useQuery<IProduct>({
-    queryKey: [API_URL + '/Products/' + productId],
-  });
-};
-
-export const useQueryCategories = () => {
-  return useQuery<ICategories>({
-    queryKey: [API_URL + '/Categories'],
-  });
-};
-
-// Customers
-
-export const useQueryCustomers = () => {
-  return useQuery<ICustomers>({
-    queryKey: [API_URL + '/Customers'],
-  });
-};
-
-export const getCustomers = async (): Promise<ICustomers> => {
-  return await (await fetch(API_URL + '/Customers')).json();
-};
-
-export const useQueryCustomer = ({
-  customerId,
-  enabled = true,
-}: {
-  customerId: string | undefined;
-  enabled?: boolean;
-}) => {
-  return useQuery<ICustomer>({
-    queryKey: [API_URL + '/Customers/' + customerId],
-    enabled,
-  });
-};
-
-export const useQueryOrderCustomer = ({
-  orderId,
-}: {
-  orderId: number | undefined;
-}) => {
-  return useQuery<ICustomer>({
-    queryKey: [API_URL + '/Orders/' + orderId + '/Customer'],
   });
 };
