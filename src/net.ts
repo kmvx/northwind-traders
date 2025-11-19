@@ -145,6 +145,12 @@ export const useQueryEmployee = ({
   });
 };
 
+export const getEmployee = async (
+  employeeId: number | undefined,
+): Promise<IEmployee> => {
+  return await (await fetch(API_URL + '/Employees/' + employeeId)).json();
+};
+
 export const useQueryOrderEmployee = ({
   orderId,
 }: {
@@ -254,6 +260,10 @@ export const useQueryCustomers = () => {
   return useQuery<ICustomers>({
     queryKey: [API_URL + '/Customers'],
   });
+};
+
+export const getCustomers = async (): Promise<ICustomers> => {
+  return await (await fetch(API_URL + '/Customers')).json();
 };
 
 export const useQueryCustomer = ({

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import { Separator } from '@/components/ui';
+import type { IEmployee } from '@/models';
 import { useQueryEmployee } from '@/net';
 import {
   ErrorMessage,
@@ -26,30 +27,33 @@ import { EmployeeLink, Employees, Territories } from '.';
 
 interface EmployeeProps {
   employeeId: number;
+  initialData?: IEmployee;
 }
 
-const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
+const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
   const { data, error, isLoading, refetch } = useQueryEmployee({ employeeId });
 
-  const name = data ? getEmployeeNameByData(data) : undefined;
+  const employee = data ?? initialData;
+
+  const name = employee ? getEmployeeNameByData(employee) : undefined;
   setDocumentTitle(name, 'Employee');
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isLoading) return <WaitSpinner />;
-  if (!data) return <div>No data</div>;
+  if (isLoading && !employee) return <WaitSpinner />;
+  if (!employee) return <div>No data</div>;
 
   const items = [
     {
       name: 'Address',
       value: (
         <ContactAddress
-          country={data.country}
+          country={employee.country}
           address={joinFields(
-            data.country,
-            data.region,
-            data.city,
-            data.postalCode,
-            data.address,
+            employee.country,
+            employee.region,
+            employee.city,
+            employee.postalCode,
+            employee.address,
           )}
         />
       ),
@@ -62,7 +66,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
     },
     {
       name: 'Home phone',
-      value: <ContactPhone phone={data.homePhone} />,
+      value: <ContactPhone phone={employee.homePhone} />,
       description: 'Contact phone number.',
     },
     {
@@ -71,7 +75,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
         <div className="flex items-center gap-2">
           <CakeIcon className="size-4 text-muted-foreground" />
           <span className="flex items-center gap-2">
-            <b>{formatDateFromString(data.birthDate)}</b>
+            <b>{formatDateFromString(employee.birthDate)}</b>
           </span>
         </div>
       ),
@@ -84,7 +88,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
       <Typography.Header1>{name}</Typography.Header1>
       <div className="flex flex-col gap-4">
         <div className="text-center">
-          <b>{data.title}</b>, employee
+          <b>{employee.title}</b>, employee
         </div>
 
         <PropertyGrid items={items} />
@@ -93,19 +97,19 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId }) => {
 
         <div>
           <Image
-            src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
+            src={`/assets/img/database/${employee.firstName.toLowerCase()}.jpg`}
             width={103}
             height={118}
             className="rounded-md border float-left mr-2"
             alt=""
           />
-          <div>{data.notes}</div>
+          <div>{employee.notes}</div>
         </div>
 
-        {data.reportsTo && (
+        {employee.reportsTo && (
           <div className="flex items-center gap-2">
             <FlagIcon className="size-4 text-muted-foreground" />
-            <EmployeeLink employeeId={data.reportsTo} />
+            <EmployeeLink employeeId={employee.reportsTo} />
           </div>
         )}
       </div>

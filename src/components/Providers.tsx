@@ -4,11 +4,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import { Toaster } from '@/components/ui/sonner';
 import { useInit } from '@/hooks';
-import { WaitSpinner } from '@/ui';
 import FetchError from '@/utils/FetchError';
 
 const queryClient = new QueryClient({
@@ -48,11 +47,9 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<WaitSpinner />}>
-          <NuqsAdapter>
-            <ProvidersInit>{children}</ProvidersInit>
-          </NuqsAdapter>
-        </Suspense>
+        <NuqsAdapter>
+          <ProvidersInit>{children}</ProvidersInit>
+        </NuqsAdapter>
         <Toaster position="top-center" richColors />
         <ReactQueryDevtools />
       </QueryClientProvider>
