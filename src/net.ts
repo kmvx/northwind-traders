@@ -48,7 +48,7 @@ export const useQueryCustomer = ({
   customerId,
   enabled = true,
 }: {
-  customerId: string | undefined;
+  customerId: string;
   enabled?: boolean;
 }) => {
   return useQuery<ICustomer>({
@@ -57,11 +57,7 @@ export const useQueryCustomer = ({
   });
 };
 
-export const useQueryOrderCustomer = ({
-  orderId,
-}: {
-  orderId: number | undefined;
-}) => {
+export const useQueryOrderCustomer = ({ orderId }: { orderId: number }) => {
   return useQuery<ICustomer>({
     queryKey: [API_URL + '/Orders/' + orderId + '/Customer'],
   });
@@ -83,7 +79,7 @@ export const useQueryEmployee = ({
   employeeId,
   enabled = true,
 }: {
-  employeeId: number | undefined;
+  employeeId: number;
   enabled?: boolean;
 }) => {
   return useQuery<IEmployee>({
@@ -92,17 +88,11 @@ export const useQueryEmployee = ({
   });
 };
 
-export const getEmployee = async (
-  employeeId: number | undefined,
-): Promise<IEmployee> => {
+export const getEmployee = async (employeeId: number): Promise<IEmployee> => {
   return await fetchJSON('/Employees/' + employeeId);
 };
 
-export const useQueryOrderEmployee = ({
-  orderId,
-}: {
-  orderId: number | undefined;
-}) => {
+export const useQueryOrderEmployee = ({ orderId }: { orderId: number }) => {
   return useQuery<IEmployee>({
     queryKey: [API_URL + '/Orders/' + orderId + '/Employee'],
   });
@@ -111,7 +101,7 @@ export const useQueryOrderEmployee = ({
 export const useEmployeeTeritories = ({
   employeeId,
 }: {
-  employeeId: number | undefined;
+  employeeId: number;
 }) => {
   return useQuery<ITerritories>({
     queryKey: [API_URL + '/Employees/' + employeeId + '/Territories'],
@@ -201,7 +191,7 @@ export const useQueryOrdersFiltered = ({
   return { ...queryResult, data: filteredData };
 };
 
-export const useQueryOrder = ({ orderId }: { orderId: number | undefined }) => {
+export const useQueryOrder = ({ orderId }: { orderId: number }) => {
   return useQuery<IOrder>({
     queryKey: [API_URL + '/Orders/' + orderId],
   });
@@ -251,11 +241,7 @@ export const getProducts = async (): Promise<IProducts> => {
   return await fetchJSON('/Products');
 };
 
-export const useQueryProduct = ({
-  productId,
-}: {
-  productId: number | undefined;
-}) => {
+export const useQueryProduct = ({ productId }: { productId: number }) => {
   return useQuery<IProduct>({
     queryKey: [API_URL + '/Products/' + productId],
   });
@@ -275,11 +261,7 @@ export const useQueryShippers = () => {
   });
 };
 
-export const useQueryOrderShipper = ({
-  orderId,
-}: {
-  orderId: number | undefined;
-}) => {
+export const useQueryOrderShipper = ({ orderId }: { orderId: number }) => {
   return useQuery<IShipper>({
     queryKey: [API_URL + '/Orders/' + orderId + '/Shipper'],
   });
@@ -301,7 +283,7 @@ export const useQuerySupplier = ({
   supplierId,
   enabled = true,
 }: {
-  supplierId: number | undefined;
+  supplierId: number;
   enabled?: boolean;
 }) => {
   return useQuery<ISupplier>({

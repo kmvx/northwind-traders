@@ -7,7 +7,7 @@ import { useEmployeeTeritories, useQueryRegions } from '@/net';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 interface TerritoriesProps {
-  employeeId?: number;
+  employeeId: number;
 }
 
 const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
