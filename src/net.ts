@@ -23,6 +23,15 @@ import { dateFromString } from './utils';
 
 const API_URL = 'https://demodata.grapecity.com/northwind/api/v1';
 
+async function fetchJSON(path: string) {
+  const url = API_URL + path;
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error('Failed to fetch data from url: ' + url);
+  }
+  return res.json();
+}
+
 // Customers
 
 export const useQueryCustomers = () => {
@@ -32,7 +41,7 @@ export const useQueryCustomers = () => {
 };
 
 export const getCustomers = async (): Promise<ICustomers> => {
-  return await (await fetch(API_URL + '/Customers')).json();
+  return await fetchJSON('/Customers');
 };
 
 export const useQueryCustomer = ({
@@ -67,7 +76,7 @@ export const useQueryEmployees = () => {
 };
 
 export const getEmployees = async (): Promise<IEmployees> => {
-  return await (await fetch(API_URL + '/Employees')).json();
+  return await fetchJSON('/Employees');
 };
 
 export const useQueryEmployee = ({
@@ -86,7 +95,7 @@ export const useQueryEmployee = ({
 export const getEmployee = async (
   employeeId: number | undefined,
 ): Promise<IEmployee> => {
-  return await (await fetch(API_URL + '/Employees/' + employeeId)).json();
+  return await fetchJSON('/Employees/' + employeeId);
 };
 
 export const useQueryOrderEmployee = ({
