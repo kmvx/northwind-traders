@@ -30,7 +30,7 @@ export interface IEmployee extends IAddress {
   homePhone: string;
   lastName: string;
   notes: string;
-  reportsTo: number;
+  reportsTo: number | null;
   title: string;
   titleOfCourtesy: string;
   photo: string;

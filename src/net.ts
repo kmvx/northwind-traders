@@ -147,6 +147,10 @@ export const useQueryOrders = ({
   });
 };
 
+export const getOrders = async (): Promise<IOrders> => {
+  return await fetchJSON('/Orders');
+};
+
 export const useQueryOrdersFiltered = ({
   filterYear,
   setYearsSet,
@@ -243,6 +247,10 @@ export const useQueryProducts = ({
   });
 };
 
+export const getProducts = async (): Promise<IProducts> => {
+  return await fetchJSON('/Products');
+};
+
 export const useQueryProduct = ({
   productId,
 }: {
@@ -283,6 +291,10 @@ export const useQuerySuppliers = () => {
   return useQuery<ISuppliers>({
     queryKey: [API_URL + '/Suppliers'],
   });
+};
+
+export const getSuppliers = async (): Promise<ISuppliers> => {
+  return await fetchJSON('/Suppliers');
 };
 
 export const useQuerySupplier = ({

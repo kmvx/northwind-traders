@@ -1,6 +1,7 @@
 import { type Metadata } from 'next';
 
 import { Suppliers } from '@/entities/suppliers';
+import { getSuppliers } from '@/net';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default async function SuppliersPage() {
-  return <Suppliers />;
+  return <Suppliers initialData={await getSuppliers()} />;
 }

@@ -1,6 +1,7 @@
 import { type Metadata } from 'next';
 
 import { Products } from '@/entities/products';
+import { getProducts } from '@/net';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
-  return <Products />;
+  return <Products initialData={await getProducts()} />;
 }

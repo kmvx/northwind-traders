@@ -1,6 +1,7 @@
 import { type Metadata } from 'next';
 
 import { Orders } from '@/entities/orders';
+import { getOrders } from '@/net';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default async function OrdersPage() {
-  return <Orders />;
+  return <Orders initialData={await getOrders()} />;
 }

@@ -7,10 +7,14 @@ export default async function EmployeePage({
   params: { id: string };
 }) {
   const employeeId = +(await params).id;
+  const employee = await getEmployee(employeeId);
+  const employeeReportsTo = employee.reportsTo
+    ? await getEmployee(employee.reportsTo)
+    : undefined;
   return (
     <Employee
       employeeId={employeeId}
-      initialData={await getEmployee(employeeId)}
+      initialData={{ employee, employeeReportsTo }}
     />
   );
 }

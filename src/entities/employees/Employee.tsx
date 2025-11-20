@@ -27,13 +27,16 @@ import { EmployeeLink, Employees, Territories } from '.';
 
 interface EmployeeProps {
   employeeId: number;
-  initialData?: IEmployee;
+  initialData?: {
+    employee: IEmployee;
+    employeeReportsTo: IEmployee | undefined;
+  };
 }
 
 const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
   const { data, error, isLoading, refetch } = useQueryEmployee({ employeeId });
 
-  const employee = data ?? initialData;
+  const employee = data ?? initialData?.employee;
 
   const name = employee ? getEmployeeNameByData(employee) : undefined;
   setDocumentTitle(name, 'Employee');
@@ -109,7 +112,10 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
         {employee.reportsTo && (
           <div className="flex items-center gap-2">
             <FlagIcon className="size-4 text-muted-foreground" />
-            <EmployeeLink employeeId={employee.reportsTo} />
+            <EmployeeLink
+              employeeId={employee.reportsTo}
+              initialData={initialData?.employeeReportsTo}
+            />
           </div>
         )}
       </div>
