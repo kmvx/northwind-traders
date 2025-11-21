@@ -15,6 +15,7 @@ export { default as PanelBasic } from './PanelBasic';
 export { default as PanelCentred } from './PanelCentred';
 export { default as PanelStretched } from './PanelStretched';
 export { default as PropertyGrid } from './PropertyGrid';
+export { default as QueryFetchingIndicator } from './QueryFetchingIndicator';
 export { default as ReloadButton } from './ReloadButton';
 export { default as ResponsiveGrid } from './ResponsiveGrid';
 export { default as SelectGroup } from './SelectGroup';

@@ -22,6 +22,7 @@ import {
   FontSizeControls,
   FullscreenToggle,
   Logo,
+  QueryFetchingIndicator,
   ThemeCustomToggle,
   ThemeToggle,
 } from '@/ui';
@@ -84,6 +85,7 @@ const AppSidebar: React.FC = () => {
                 <ThemeToggle />
                 <FullscreenToggle />
                 <SidebarTrigger variant="outline" className="size-9" />
+                <QueryFetchingIndicator />
               </div>
               <div className="flex gap-2">
                 <ThemeCustomToggle />
