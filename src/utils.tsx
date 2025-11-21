@@ -100,3 +100,22 @@ export const escapeHtml = (text: string): string => {
     return escapeMap[char] || char;
   });
 };
+
+export function withWaitCursor<T>(fn: () => T) {
+  const isClientSide = typeof document !== 'undefined';
+  const CSS_CLASSES = ['cursor-wait', '[*]:cursor-wait'] as const;
+  try {
+    if (isClientSide) {
+      CSS_CLASSES.forEach((token) =>
+        document.documentElement.classList.add(token),
+      );
+    }
+    return fn();
+  } finally {
+    if (isClientSide) {
+      CSS_CLASSES.forEach((token) =>
+        document.documentElement.classList.remove(token),
+      );
+    }
+  }
+}

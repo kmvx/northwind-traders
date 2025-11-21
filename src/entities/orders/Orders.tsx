@@ -1,11 +1,11 @@
 'use client';
 
 import { parseAsInteger } from 'nuqs';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { Separator } from '@/components/ui';
 import { OrdersChart, WorldMapChart } from '@/features/charts';
-import { useMemoWaitCursor, usePageSize, useQueryStateFixed } from '@/hooks';
+import { usePageSize, useQueryStateFixed } from '@/hooks';
 import { type IOrders } from '@/models';
 import { useQueryEmployees, useQueryOrders } from '@/net';
 import {
@@ -24,6 +24,7 @@ import {
   getEmployeeNameByData,
   isStringIncludes,
   joinFields,
+  withWaitCursor,
 } from '@/utils';
 
 import { FilterEmployee } from '../employees';
@@ -72,108 +73,106 @@ const Orders: React.FC<OrdersProps> = ({
   const queryResult = useQueryOrders({
     customerId,
     employeeId,
+    initialData,
   });
   const { data, isLoading, isFetching, error, refetch } = queryResult;
   const { data: dataEmployees } = useQueryEmployees();
 
   // Prepare data
-  const [yearsSet, setYearsSet] = useState<Set<number>>(new Set());
-  const preparedData = useMemoWaitCursor(() => {
-    const yearsSetTemp = new Set<number>();
+  const { preparedData, yearsSet } = useMemo(
+    () =>
+      withWaitCursor(() => {
+        const yearsSet = new Set<number>();
 
-    const loadedData = data
-      ? data
-      : isLoading && initialData?.length
-        ? initialData
-        : [];
+        const loadedData = data
+          ? data
+          : isLoading && initialData?.length
+            ? initialData
+            : [];
 
-    const preparedData = loadedData?.map((item) => {
-      const orderDate = item.orderDate;
-      if (orderDate) {
-        const date = new Date(item.orderDate);
-        const year = date.getFullYear();
-        yearsSetTemp.add(year);
-      }
+        const preparedData = loadedData?.map((item) => {
+          const orderDate = item.orderDate;
+          if (orderDate) {
+            const date = new Date(item.orderDate);
+            const year = date.getFullYear();
+            yearsSet.add(year);
+          }
 
-      const employee = dataEmployees?.find(
-        (employee) => employee.employeeId === item.employeeId,
-      );
+          const employee = dataEmployees?.find(
+            (employee) => employee.employeeId === item.employeeId,
+          );
 
-      const result: IOrderFormatted = {
-        ...item,
-        employeeName: employee ? getEmployeeNameByData(employee) : '',
-        orderDateFormatted: formatDateFromString(item.orderDate),
-        shippedDateFormatted: formatDateFromString(item.shippedDate),
-        requiredDateFormatted: formatDateFromString(item.requiredDate),
-        orderDateObject: dateFromString(item.orderDate),
-        shippedDateObject: dateFromString(item.shippedDate),
-        requiredDateObject: dateFromString(item.requiredDate),
-        shipLocation: joinFields(
-          item.shipCountry,
-          item.shipRegion,
-          item.shipCity,
-          item.shipPostalCode,
-        ),
-      };
+          const result: IOrderFormatted = {
+            ...item,
+            employeeName: employee ? getEmployeeNameByData(employee) : '',
+            orderDateFormatted: formatDateFromString(item.orderDate),
+            shippedDateFormatted: formatDateFromString(item.shippedDate),
+            requiredDateFormatted: formatDateFromString(item.requiredDate),
+            orderDateObject: dateFromString(item.orderDate),
+            shippedDateObject: dateFromString(item.shippedDate),
+            requiredDateObject: dateFromString(item.requiredDate),
+            shipLocation: joinFields(
+              item.shipCountry,
+              item.shipRegion,
+              item.shipCity,
+              item.shipPostalCode,
+            ),
+          };
 
-      return result;
-    });
+          return result;
+        });
 
-    setYearsSet(yearsSetTemp);
-
-    return preparedData;
-  }, [data, dataEmployees]);
+        return { preparedData, yearsSet };
+      }),
+    [isLoading, initialData, data, dataEmployees],
+  );
 
   // Filter data
-  const filteredData = useMemoWaitCursor(() => {
-    return preparedData?.filter((item) => {
-      if (
-        filterString &&
-        !(
-          [
-            'orderId',
-            'customerId',
-            'employeeName',
-            'shipVia',
-            'orderDateObject',
-            'shippedDateObject',
-            'requiredDateObject',
-            'freight',
-            'shipName',
-            'shipCountry',
-            'shipRegion',
-            'shipCity',
-            'shipCity',
-            'shipAddress',
-          ] as const
-        ).some((name) => {
-          return isStringIncludes(String(item[name]), filterString);
-        })
-      )
-        return false;
+  const filteredData = useMemo(
+    () =>
+      withWaitCursor(() => {
+        return preparedData?.filter((item) => {
+          if (
+            filterString &&
+            !(
+              [
+                'orderId',
+                'customerId',
+                'employeeName',
+                'shipVia',
+                'orderDateObject',
+                'shippedDateObject',
+                'requiredDateObject',
+                'freight',
+                'shipName',
+                'shipCountry',
+                'shipRegion',
+                'shipCity',
+                'shipCity',
+                'shipAddress',
+              ] as const
+            ).some((name) => {
+              return isStringIncludes(String(item[name]), filterString);
+            })
+          )
+            return false;
 
-      if (filterCountry && item.shipCountry !== filterCountry) return false;
+          if (filterCountry && item.shipCountry !== filterCountry) return false;
 
-      if (
-        filterYear != null &&
-        item.orderDateObject.getFullYear() !== filterYear
-      )
-        return false;
+          if (
+            filterYear != null &&
+            item.orderDateObject.getFullYear() !== filterYear
+          )
+            return false;
 
-      if (filterEmployeeId != null && item.employeeId !== filterEmployeeId)
-        return false;
+          if (filterEmployeeId != null && item.employeeId !== filterEmployeeId)
+            return false;
 
-      return true;
-    });
-  }, [
-    preparedData,
-    initialData,
-    isLoading,
-    filterString,
-    filterCountry,
-    filterYear,
-    filterEmployeeId,
-  ]);
+          return true;
+        });
+      }),
+    [preparedData, filterString, filterCountry, filterYear, filterEmployeeId],
+  );
 
   const filteredQueryResult = useMemo(() => {
     const result = { ...queryResult };
@@ -260,7 +259,10 @@ const Orders: React.FC<OrdersProps> = ({
           data={filteredData as object[] as Record<string, unknown>[]}
           name="Orders"
         />
-        <ReloadButton onClick={refetch} isLoading={isFetching} />
+        <ReloadButton
+          onClick={refetch}
+          isLoading={isFetching && typeof window !== 'undefined'}
+        />
       </div>
       {getContent()}
     </PanelStretched>

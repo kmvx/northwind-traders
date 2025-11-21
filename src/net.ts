@@ -120,10 +120,12 @@ export const useQueryOrders = ({
   customerId,
   employeeId,
   shipperId,
+  initialData,
 }: {
   customerId?: string | undefined;
   employeeId?: number | undefined;
   shipperId?: number | undefined;
+  initialData?: IOrders | undefined;
 } = {}) => {
   return useQuery<IOrders>({
     queryKey: [
@@ -134,6 +136,7 @@ export const useQueryOrders = ({
         (customerId ?? employeeId ?? shipperId ?? '') +
         '/Orders',
     ],
+    ...(initialData ? { initialData } : {}),
   });
 };
 
