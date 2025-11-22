@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import type { ICategories, IProduct, IProducts } from '@/models';
 import { useQueryCategories } from '@/net';
 import { Pagination, ResponsiveGrid } from '@/ui';
+import { formatCurrency } from '@/utils';
 
 import { CategoryName } from '.';
 
@@ -62,7 +63,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
             </span>
           </div>
           <div className="flex flex-wrap justify-between items-baseline">
-            <span title="Unit price">${item.unitPrice}</span>
+            <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
             <span
               title="Quantity per unit"
               className="text-muted-foreground text-sm"

@@ -9,9 +9,10 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
+import { formatCurrency } from '@/utils';
 
 import { OrderDetailsCards, OrderDetailsTable } from '.';
-import { getTotalCost, roundMoney } from './utils';
+import { getTotalCost } from './utils';
 
 interface OrderDetailsProps {
   orderId?: number | undefined;
@@ -42,7 +43,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
     return (
       <>
         <span>
-          {data.length} order details, <b>${roundMoney(totalMoney)}</b> total.
+          {data.length} order details, <b>{formatCurrency(totalMoney)}</b>{' '}
+          total.
         </span>
         {isWidePage ? (
           <OrderDetailsTable {...{ data, dataProducts, showProduct }} />

@@ -3,6 +3,7 @@ import React, { Fragment, memo } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { Pagination, ResponsiveGrid } from '@/ui';
+import { formatCurrency } from '@/utils';
 
 import { ContactAddress } from '../shared';
 import type { IOrderFormatted } from '.';
@@ -36,7 +37,7 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({ item }) {
     { name: 'Order date', value: item.orderDateFormatted },
     { name: 'Shipped date', value: item.shippedDateFormatted },
     { name: 'Required date', value: item.requiredDateFormatted },
-    { name: 'Freight', value: '$' + item.freight },
+    { name: 'Freight', value: formatCurrency(item.freight) },
   ];
   return (
     <Link href={`/orders/${item.orderId}`} className="block">

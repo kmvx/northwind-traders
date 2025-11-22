@@ -5,8 +5,9 @@ import { Spinner } from '@/components/ui';
 import { DataTable } from '@/features/table';
 import type { IOrderDetail, IOrderDetails, IProducts } from '@/models';
 import { BasicLink } from '@/ui';
+import { formatCurrency } from '@/utils';
 
-import { getTotalCost, roundMoney } from './utils';
+import { getTotalCost } from './utils';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -49,7 +50,7 @@ const allColumns: ColumnDef<IOrderDetail>[] = [
   {
     accessorKey: 'unitPrice',
     header: 'Unit Price',
-    cell: ({ row }) => '$' + row.original.unitPrice,
+    cell: ({ row }) => formatCurrency(row.original.unitPrice),
   },
   {
     accessorKey: 'quantity',
@@ -66,7 +67,7 @@ const allColumns: ColumnDef<IOrderDetail>[] = [
   {
     header: 'Cost',
     cell: ({ row }) => {
-      return '$' + roundMoney(getTotalCost(row.original));
+      return formatCurrency(getTotalCost(row.original));
     },
   },
 ];

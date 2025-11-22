@@ -10,7 +10,7 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { setDocumentTitle } from '@/utils';
+import { formatCurrency, setDocumentTitle } from '@/utils';
 
 import { OrderDetails } from '../orders';
 import { Supplier } from '../suppliers';
@@ -56,7 +56,7 @@ const Product: React.FC<ProductProps> = ({ productId }) => {
     },
     {
       name: 'Unit price',
-      value: '$' + data.unitPrice,
+      value: formatCurrency(data.unitPrice),
       description: 'The cost per unit of the product.',
     },
     {

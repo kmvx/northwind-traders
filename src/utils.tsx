@@ -4,11 +4,18 @@ export function joinFields(...args: string[]): string {
   return [...args].filter(Boolean).join(', ');
 }
 
+export function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(amount);
+}
+
 export function formatDateFromString(date: string | null): string {
   if (!date) return 'N/A';
   const dataObject = new Date(date);
   if (isNaN(dataObject as unknown as number)) return `${dataObject}`;
-  return `${dataObject.toLocaleString('default', {
+  return `${dataObject.toLocaleString('en-US', {
     month: 'short',
   })} ${dataObject.getDate()}, ${dataObject.getFullYear()}`;
 }

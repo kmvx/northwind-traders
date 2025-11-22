@@ -9,6 +9,7 @@ import { DataTable } from '@/features/table';
 import type { IEmployees, IShippers } from '@/models';
 import { useQueryEmployees, useQueryShippers } from '@/net';
 import { BasicLink } from '@/ui';
+import { formatCurrency } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
@@ -99,7 +100,7 @@ const allColumns: ColumnDef<IOrderFormatted>[] = [
     accessorKey: 'freight',
     header: 'Freight',
     cell: ({ row }) => {
-      return '$' + row.original.freight;
+      return formatCurrency(row.original.freight);
     },
   },
   {

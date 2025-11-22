@@ -9,8 +9,9 @@ import {
 } from '@/components/ui';
 import type { IOrderDetails, IProducts } from '@/models';
 import { BasicLink, ResponsiveGrid } from '@/ui';
+import { formatCurrency } from '@/utils';
 
-import { getTotalCost, roundMoney } from './utils';
+import { getTotalCost } from './utils';
 
 interface OrderDetailsCardsProps {
   data: IOrderDetails;
@@ -63,11 +64,12 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
                 className="text-end text-sm"
                 title="Price * Quantity - Discont = Cost"
               >
-                ${orderDetail.unitPrice} * {orderDetail.quantity} units{' '}
+                {formatCurrency(orderDetail.unitPrice)} * {orderDetail.quantity}{' '}
+                units{' '}
                 {orderDetail.discount
                   ? ` - ${orderDetail.discount * 100}% `
                   : ''}{' '}
-                = <b>${roundMoney(getTotalCost(orderDetail))}</b>
+                = <b>{formatCurrency(getTotalCost(orderDetail))}</b>
               </div>
             </CardContent>
           </Card>

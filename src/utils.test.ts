@@ -4,6 +4,7 @@ import { type IEmployee } from './models';
 import {
   buildTitle,
   escapeHtml,
+  formatCurrency,
   formatDateFromString,
   getCountries,
   getEmployeeNameByData,
@@ -22,6 +23,14 @@ describe('joinFields', () => {
     expect(joinFields('a', '', 'b', undefined as unknown as string)).toBe(
       'a, b',
     );
+  });
+});
+
+describe('formatCurrency', () => {
+  it('format currency', () => {
+    expect(formatCurrency(-12_345_678.955)).toBe('-$12,345,678.96');
+    expect(formatCurrency(0.005)).toBe('$0.01');
+    expect(formatCurrency(0.004)).toBe('$0.00');
   });
 });
 

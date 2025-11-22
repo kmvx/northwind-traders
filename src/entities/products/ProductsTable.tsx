@@ -5,6 +5,7 @@ import { DataTable } from '@/features/table';
 import type { ICategories, IProduct, IProducts } from '@/models';
 import { useQueryCategories } from '@/net';
 import { BasicLink } from '@/ui';
+import { formatCurrency } from '@/utils';
 
 import { CategoryName } from '.';
 
@@ -50,7 +51,7 @@ const allColumns: ColumnDef<IProduct>[] = [
     accessorKey: 'unitPrice',
     header: 'Unit price',
     cell: ({ row }) => {
-      return '$' + row.original.unitPrice;
+      return formatCurrency(row.original.unitPrice);
     },
   },
   {

@@ -16,7 +16,12 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { formatDateFromString, joinFields, setDocumentTitle } from '@/utils';
+import {
+  formatCurrency,
+  formatDateFromString,
+  joinFields,
+  setDocumentTitle,
+} from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
@@ -93,7 +98,7 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
     },
     {
       name: 'Freight',
-      value: '$' + data.freight,
+      value: formatCurrency(data.freight),
       description: 'The cost of shipping the order to the customer.',
     },
     {
