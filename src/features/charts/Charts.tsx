@@ -63,14 +63,19 @@ const OrdersChartsWithFilter: React.FC = () => {
   const [filterYear, setFilterYear] = useState<number | null>(null);
   const [yearsSet, setYearsSet] = useState<Set<number>>(new Set());
 
-  const queryResult = useQueryOrdersFiltered({
+  const {
+    filteredData,
+    queryResult: { isLoading, error, refetch },
+  } = useQueryOrdersFiltered({
     filterYear,
     setYearsSet,
   });
 
   return (
     <div className="flex flex-col gap-2">
-      <OrdersChart queryResult={queryResult}>
+      <OrdersChart
+        queryResult={{ data: filteredData, isLoading, error, refetch }}
+      >
         <div className="flex justify-end">
           <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
         </div>
@@ -111,19 +116,22 @@ const OrdersCharts: React.FC = () => {
   const [filterYear, setFilterYear] = useState<number | null>(null);
   const [yearsSet, setYearsSet] = useState<Set<number>>(new Set());
 
-  const { data, error, isLoading, refetch } = useQueryOrdersFiltered({
+  const {
+    filteredData,
+    queryResult: { error, isLoading, refetch },
+  } = useQueryOrdersFiltered({
     filterYear,
     setYearsSet,
   });
 
   const categoriesQueryResult = useMemo(
     () => ({
-      categories: data?.map((item) => item.shipCountry),
+      categories: filteredData?.map((item) => item.shipCountry),
       error,
       isLoading,
       refetch,
     }),
-    [data, error, isLoading, refetch],
+    [filteredData, error, isLoading, refetch],
   );
 
   const hue = 216;

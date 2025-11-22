@@ -17,10 +17,12 @@ const EmployeesBarChart: React.FC = () => {
 
   // Network data
   const {
-    data: dataOrders,
-    error: errorOrders,
-    isLoading: isLoadingOrders,
-    refetch: refetchOrders,
+    filteredData: dataOrders,
+    queryResult: {
+      error: errorOrders,
+      isLoading: isLoadingOrders,
+      refetch: refetchOrders,
+    },
   } = useQueryOrdersFiltered({ filterYear, setYearsSet });
   const {
     data: dataEmployees,

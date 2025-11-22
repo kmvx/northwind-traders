@@ -352,7 +352,10 @@ class SVGBuilder {
 }
 
 interface OrdersChartProps {
-  queryResult: UseQueryResult<IOrders>;
+  queryResult: Pick<
+    UseQueryResult<IOrders>,
+    'data' | 'error' | 'isLoading' | 'refetch'
+  >;
   children?: React.ReactNode;
 }
 

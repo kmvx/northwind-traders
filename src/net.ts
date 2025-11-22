@@ -150,7 +150,10 @@ export const useQueryOrdersFiltered = ({
 }: {
   filterYear?: number | null;
   setYearsSet: (yearsSet: Set<number>) => void;
-}): UseQueryResult<IOrders> => {
+}): {
+  queryResult: Omit<UseQueryResult<IOrders>, 'data'>;
+  filteredData: IOrders | undefined;
+} => {
   const queryResult = useQuery<IOrders>({
     queryKey: [API_URL + '/Orders'],
   });
@@ -187,11 +190,7 @@ export const useQueryOrdersFiltered = ({
     return filteredData;
   }, [preparedData, filterYear]);
 
-  if (!filteredData || !queryResult.data) {
-    return queryResult;
-  }
-
-  return { ...queryResult, data: filteredData };
+  return { queryResult, filteredData };
 };
 
 export const useQueryOrder = ({ orderId }: { orderId: number }) => {
