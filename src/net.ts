@@ -34,9 +34,14 @@ async function fetchJSON(path: string) {
 
 // Customers
 
-export const useQueryCustomers = () => {
+export const useQueryCustomers = ({
+  initialData,
+}: {
+  initialData?: ICustomers | undefined;
+} = {}) => {
   return useQuery<ICustomers>({
     queryKey: [API_URL + '/Customers'],
+    ...(initialData ? { initialData } : {}),
   });
 };
 
@@ -65,9 +70,14 @@ export const useQueryOrderCustomer = ({ orderId }: { orderId: number }) => {
 
 // Employees
 
-export const useQueryEmployees = () => {
+export const useQueryEmployees = ({
+  initialData,
+}: {
+  initialData?: IEmployees | undefined;
+} = {}) => {
   return useQuery<IEmployees>({
     queryKey: [API_URL + '/Employees'],
+    ...(initialData ? { initialData } : {}),
   });
 };
 
@@ -78,13 +88,16 @@ export const getEmployees = async (): Promise<IEmployees> => {
 export const useQueryEmployee = ({
   employeeId,
   enabled = true,
+  initialData,
 }: {
   employeeId: number;
   enabled?: boolean;
+  initialData?: IEmployee | undefined;
 }) => {
   return useQuery<IEmployee>({
     queryKey: [API_URL + '/Employees/' + employeeId],
     enabled,
+    ...(initialData ? { initialData } : {}),
   });
 };
 
@@ -223,11 +236,13 @@ export const useQueryProducts = ({
   supplierId,
   orderId,
   enabled = true,
+  initialData,
 }: {
   supplierId?: number | undefined;
   orderId?: number | undefined;
   enabled?: boolean;
-}) => {
+  initialData?: IProducts | undefined;
+} = {}) => {
   return useQuery<IProducts>({
     queryKey: [
       API_URL +
@@ -236,6 +251,7 @@ export const useQueryProducts = ({
         '/Products',
     ],
     enabled,
+    ...(initialData ? { initialData } : {}),
   });
 };
 
@@ -271,9 +287,14 @@ export const useQueryOrderShipper = ({ orderId }: { orderId: number }) => {
 
 // Suppliers
 
-export const useQuerySuppliers = () => {
+export const useQuerySuppliers = ({
+  initialData,
+}: {
+  initialData?: ISuppliers | undefined;
+} = {}) => {
   return useQuery<ISuppliers>({
     queryKey: [API_URL + '/Suppliers'],
+    ...(initialData ? { initialData } : {}),
   });
 };
 

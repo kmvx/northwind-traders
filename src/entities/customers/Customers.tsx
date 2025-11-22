@@ -49,15 +49,13 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
   }
 
   // Network data
-  const { data, isLoading, isFetching, error, refetch } = useQueryCustomers();
+  const { data, isLoading, isFetching, error, refetch } = useQueryCustomers({
+    initialData,
+  });
 
   // Filter data
   const filteredData = useMemo(() => {
-    let filteredData = data
-      ? data
-      : isLoading && initialData?.length
-        ? initialData
-        : [];
+    let filteredData = data;
     if (filterString) {
       filteredData = filteredData?.filter((item) =>
         (['companyName', 'country', 'city', 'customerId'] as const).some(
@@ -73,11 +71,11 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
       );
     }
     return filteredData;
-  }, [data, initialData, isLoading, filterString, filterCountry]);
+  }, [data, filterString, filterCountry]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
-    if (isLoading && filteredData.length === 0) return <LocalSkeleton />;
+    if (isLoading && filteredData?.length === 0) return <LocalSkeleton />;
     if (!filteredData) return null;
     if (filteredData.length === 0) return <div>Customers not found</div>;
 

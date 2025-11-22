@@ -21,18 +21,17 @@ const EmployeeLink: React.FC<EmployeeLinkProps> = ({
   const { data, error, isLoading, refetch } = useQueryEmployee({
     employeeId,
     enabled: hasReportsTo,
+    initialData,
   });
 
-  const employee = data ?? initialData;
-
   if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isLoading && !employee) return hasReportsTo ? <WaitSpinner /> : null;
-  if (!employee) return <div>No data</div>;
+  if (isLoading && !data) return hasReportsTo ? <WaitSpinner /> : null;
+  if (!data) return <div>No data</div>;
 
   return (
     <span className={className}>
       <span>Reports to </span>
-      <EmployeeHoverCard employee={employee} employeeId={employeeId} />
+      <EmployeeHoverCard employee={data} employeeId={employeeId} />
     </span>
   );
 };

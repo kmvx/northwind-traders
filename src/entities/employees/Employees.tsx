@@ -50,15 +50,13 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
   }
 
   // Network data
-  const { data, error, isLoading, isFetching, refetch } = useQueryEmployees();
+  const { data, error, isLoading, isFetching, refetch } = useQueryEmployees({
+    initialData,
+  });
 
   // Filter data
   const filteredData = useMemo(() => {
-    let filteredData = data
-      ? data
-      : isLoading && initialData?.length
-        ? initialData
-        : [];
+    let filteredData = data;
     if (reportsTo) {
       filteredData = filteredData?.filter(
         (item) => item.reportsTo == reportsTo,
@@ -79,11 +77,11 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
       );
     }
     return filteredData;
-  }, [data, initialData, isLoading, filterString, filterCountry, reportsTo]);
+  }, [data, filterString, filterCountry, reportsTo]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
-    if (isLoading && filteredData.length === 0) return <LocalSkeleton />;
+    if (isLoading && filteredData?.length === 0) return <LocalSkeleton />;
     if (!filteredData) return null;
 
     return (

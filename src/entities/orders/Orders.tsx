@@ -84,13 +84,7 @@ const Orders: React.FC<OrdersProps> = ({
       withWaitCursor(() => {
         const yearsSet = new Set<number>();
 
-        const loadedData = data
-          ? data
-          : isLoading && initialData?.length
-            ? initialData
-            : [];
-
-        const preparedData = loadedData?.map((item) => {
+        const preparedData = data?.map((item) => {
           const orderDate = item.orderDate;
           if (orderDate) {
             const date = new Date(item.orderDate);
@@ -124,7 +118,7 @@ const Orders: React.FC<OrdersProps> = ({
 
         return { preparedData, yearsSet };
       }),
-    [isLoading, initialData, data, dataEmployees],
+    [data, dataEmployees],
   );
 
   // Filter data

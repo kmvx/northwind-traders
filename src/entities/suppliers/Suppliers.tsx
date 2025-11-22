@@ -48,15 +48,13 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
   }
 
   // Network data
-  const { data, isLoading, isFetching, error, refetch } = useQuerySuppliers();
+  const { data, isLoading, isFetching, error, refetch } = useQuerySuppliers({
+    initialData,
+  });
 
   // Filter data
   const filteredData = useMemo(() => {
-    let filteredData = data
-      ? data
-      : isLoading && initialData?.length
-        ? initialData
-        : [];
+    let filteredData = data;
     if (filterString) {
       filteredData = filteredData?.filter((item) =>
         (['companyName', 'country', 'city'] as const).some((name) => {
@@ -70,11 +68,11 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
       );
     }
     return filteredData;
-  }, [data, initialData, isLoading, filterString, filterCountry]);
+  }, [data, filterString, filterCountry]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
-    if (isLoading && filteredData.length === 0) return <LocalSkeleton />;
+    if (isLoading && filteredData?.length === 0) return <LocalSkeleton />;
     if (!filteredData) return null;
 
     return (

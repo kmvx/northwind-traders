@@ -34,29 +34,30 @@ interface EmployeeProps {
 }
 
 const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
-  const { data, error, isLoading, refetch } = useQueryEmployee({ employeeId });
+  const { data, error, isLoading, refetch } = useQueryEmployee({
+    employeeId,
+    initialData: initialData?.employee,
+  });
 
-  const employee = data ?? initialData?.employee;
-
-  const name = employee ? getEmployeeNameByData(employee) : undefined;
+  const name = data ? getEmployeeNameByData(data) : undefined;
   setDocumentTitle(name, 'Employee');
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isLoading && !employee) return <WaitSpinner />;
-  if (!employee) return <div>No data</div>;
+  if (isLoading && !data) return <WaitSpinner />;
+  if (!data) return <div>No data</div>;
 
   const items = [
     {
       name: 'Address',
       value: (
         <ContactAddress
-          country={employee.country}
+          country={data.country}
           address={joinFields(
-            employee.country,
-            employee.region,
-            employee.city,
-            employee.postalCode,
-            employee.address,
+            data.country,
+            data.region,
+            data.city,
+            data.postalCode,
+            data.address,
           )}
         />
       ),
@@ -69,7 +70,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
     },
     {
       name: 'Home phone',
-      value: <ContactPhone phone={employee.homePhone} />,
+      value: <ContactPhone phone={data.homePhone} />,
       description: 'Contact phone number.',
     },
     {
@@ -78,7 +79,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
         <div className="flex items-center gap-2">
           <CakeIcon className="size-4 text-muted-foreground" />
           <span className="flex items-center gap-2">
-            <b>{formatDateFromString(employee.birthDate)}</b>
+            <b>{formatDateFromString(data.birthDate)}</b>
           </span>
         </div>
       ),
@@ -91,7 +92,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
       <Typography.Header1>{name}</Typography.Header1>
       <div className="flex flex-col gap-4">
         <div className="text-center">
-          <b>{employee.title}</b>, employee
+          <b>{data.title}</b>, employee
         </div>
 
         <PropertyGrid items={items} />
@@ -100,20 +101,20 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
 
         <div>
           <Image
-            src={`/assets/img/database/${employee.firstName.toLowerCase()}.jpg`}
+            src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
             width={103}
             height={118}
             className="rounded-md border float-left mr-2"
             alt=""
           />
-          <div>{employee.notes}</div>
+          <div>{data.notes}</div>
         </div>
 
-        {employee.reportsTo && (
+        {data.reportsTo && (
           <div className="flex items-center gap-2">
             <FlagIcon className="size-4 text-muted-foreground" />
             <EmployeeLink
-              employeeId={employee.reportsTo}
+              employeeId={data.reportsTo}
               initialData={initialData?.employeeReportsTo}
             />
           </div>
