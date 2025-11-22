@@ -1,5 +1,6 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import invariant from 'tiny-invariant';
 
 import {
   type ICategories,
@@ -140,13 +141,18 @@ export const useQueryOrders = ({
   shipperId?: number | undefined;
   initialData?: IOrders | undefined;
 } = {}) => {
+  const id = customerId ?? employeeId ?? shipperId ?? '';
+  invariant(
+    (customerId?.length ? 1 : 0) + (employeeId ? 1 : 0) + (shipperId ? 1 : 0) <=
+      1,
+  );
   return useQuery<IOrders>({
     queryKey: [
       API_URL +
         (customerId ? '/Customers/' : '') +
         (employeeId ? '/Employees/' : '') +
         (shipperId ? '/Shippers/' : '') +
-        (customerId ?? employeeId ?? shipperId ?? '') +
+        id +
         '/Orders',
     ],
     ...(initialData ? { initialData } : {}),
@@ -219,12 +225,15 @@ export const useQueryOrderDetails = ({
   orderId?: number | undefined;
   productId?: number | undefined;
 }) => {
+  const id = orderId ?? productId;
+  invariant(id);
+  invariant((orderId ? 1 : 0) + (productId ? 1 : 0) === 1);
   return useQuery<IOrderDetails>({
     queryKey: [
       API_URL +
         (orderId ? '/Orders/' : '') +
         (productId ? '/Products/' : '') +
-        (orderId ?? productId ?? '') +
+        id +
         '/OrderDetails',
     ],
   });
