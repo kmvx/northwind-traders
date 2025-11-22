@@ -12,6 +12,7 @@ import {
 } from '@/ui';
 import { setDocumentTitle } from '@/utils';
 
+import { OrderDetails } from '../orders';
 import { Supplier } from '../suppliers';
 import { CategoryName } from '.';
 
@@ -94,6 +95,7 @@ const Product: React.FC<ProductProps> = ({ productId }) => {
         <PropertyGrid items={items} />
         <Supplier supplierId={data.supplierId} isEmbedded />
       </div>
+      <OrderDetails productId={productId} />
     </PanelCentred>
   );
 };

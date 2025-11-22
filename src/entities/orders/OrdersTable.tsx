@@ -140,12 +140,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
   const columns = useMemo(() => {
     return allColumns.filter((column) => {
       if ('accessorKey' in column) {
-        if (isCustomerPage && column.accessorKey === 'customerId') {
-          return false;
-        }
-        if (isEmployeePage && column.accessorKey === 'employeeId') {
-          return false;
-        }
+        if (isCustomerPage && column.accessorKey === 'customerId') return false;
+        if (isEmployeePage && column.accessorKey === 'employeeId') return false;
       }
       return true;
     });

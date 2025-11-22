@@ -1,5 +1,5 @@
 import type { ColumnDef, RowData } from '@tanstack/react-table';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Spinner } from '@/components/ui';
 import { DataTable } from '@/features/table';
@@ -16,6 +16,14 @@ declare module '@tanstack/table-core' {
 }
 
 const allColumns: ColumnDef<IOrderDetail>[] = [
+  {
+    accessorKey: 'orderId',
+    header: 'Order ID',
+    cell: ({ row }) => {
+      const orderId = row.original.orderId;
+      return <BasicLink href={`/orders/${orderId}`}>{orderId}</BasicLink>;
+    },
+  },
   {
     accessorKey: 'productId',
     header: 'Product',
@@ -66,13 +74,24 @@ const allColumns: ColumnDef<IOrderDetail>[] = [
 interface OrderDetailsTableProps {
   data: IOrderDetails;
   dataProducts: IProducts | undefined;
+  showProduct: boolean;
 }
 
 const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
   data,
   dataProducts,
+  showProduct,
 }) => {
-  return <DataTable data={data} columns={allColumns} meta={{ dataProducts }} />;
+  const columns = useMemo(() => {
+    return allColumns.filter((column) => {
+      if ('accessorKey' in column) {
+        if (showProduct && column.accessorKey === 'orderId') return false;
+        if (!showProduct && column.accessorKey === 'productId') return false;
+      }
+      return true;
+    });
+  }, [showProduct]);
+  return <DataTable data={data} columns={columns} meta={{ dataProducts }} />;
 };
 
 export default OrderDetailsTable;

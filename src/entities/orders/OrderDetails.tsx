@@ -14,25 +14,28 @@ import { OrderDetailsCards, OrderDetailsTable } from '.';
 import { getTotalCost, roundMoney } from './utils';
 
 interface OrderDetailsProps {
-  orderId: number;
+  orderId?: number | undefined;
+  productId?: number | undefined;
 }
 
-const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
+const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
+  const showProduct = orderId != undefined;
+
   // Network data
   const { data, error, isLoading, refetch } = useQueryOrderDetails({
     orderId,
+    productId,
   });
   const { data: dataProducts } = useQueryProducts({
     orderId,
-    enabled: orderId != undefined,
+    enabled: showProduct,
   });
 
   const isWidePage = usePageSize().isWidePage;
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
-    //if (isLoading && data?.length === 0) return <WaitSpinner />;
-    if (isLoading) return <WaitSpinner />;
+    if (isLoading && !data) return <WaitSpinner />;
     if (!data) return null;
     if (data.length === 0) return <div>Order details not found</div>;
     const totalMoney = data.reduce((acc, item) => acc + getTotalCost(item), 0);
@@ -42,9 +45,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId }) => {
           {data.length} order details, <b>${roundMoney(totalMoney)}</b> total.
         </span>
         {isWidePage ? (
-          <OrderDetailsTable {...{ data, dataProducts }} />
+          <OrderDetailsTable {...{ data, dataProducts, showProduct }} />
         ) : (
-          <OrderDetailsCards {...{ data, dataProducts }} />
+          <OrderDetailsCards {...{ data, dataProducts, showProduct }} />
         )}
       </>
     );
