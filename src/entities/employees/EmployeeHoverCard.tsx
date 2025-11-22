@@ -67,8 +67,8 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
             data.region,
             data.city,
             data.postalCode,
-            data.address,
           )}
+          addressDetails={data.address}
         />
 
         <ContactPhone phone={data.homePhone} description="Home phone" />

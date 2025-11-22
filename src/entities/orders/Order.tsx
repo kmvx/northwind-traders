@@ -117,8 +117,8 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
             data.shipRegion,
             data.shipCity,
             data.shipPostalCode,
-            data.shipAddress,
           )}
+          addressDetails={data.shipAddress}
         />
       ),
       description: 'Street address for delivery of the order.',

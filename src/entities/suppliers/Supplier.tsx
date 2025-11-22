@@ -45,8 +45,8 @@ const Supplier: React.FC<SupplierProps> = ({
             data.region,
             data.city,
             data.postalCode,
-            data.address,
           )}
+          addressDetails={data.address}
         />
       ),
       description: 'Supplier business street address.',

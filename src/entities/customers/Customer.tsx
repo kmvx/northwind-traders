@@ -39,8 +39,8 @@ const Customer: React.FC<CustomerProps> = ({ customerId }) => {
             data.region,
             data.city,
             data.postalCode,
-            data.address,
           )}
+          addressDetails={data.address}
         />
       ),
       description: 'Customer’s business street address.',

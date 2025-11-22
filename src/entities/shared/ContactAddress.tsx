@@ -8,6 +8,7 @@ import { Flag } from '.';
 interface ContactAddressProps {
   country: string;
   address: string;
+  addressDetails: string;
   title?: string;
   className?: string;
 }
@@ -15,6 +16,7 @@ interface ContactAddressProps {
 const ContactAddress: React.FC<ContactAddressProps> = ({
   country,
   address,
+  addressDetails,
   title,
   className,
 }) => {
@@ -25,7 +27,10 @@ const ContactAddress: React.FC<ContactAddressProps> = ({
     >
       <MapPinIcon className="min-w-4 size-4 text-muted-foreground" />
       <Flag country={country} />
-      <span>{address}</span>
+      <div className="flex flex-col">
+        <span>{address}</span>
+        <span>{addressDetails}</span>
+      </div>
     </div>
   );
 };

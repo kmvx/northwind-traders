@@ -13,7 +13,7 @@ import { formatCurrency } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
-import { Flag } from '../shared';
+import { ContactAddress } from '../shared';
 import type { IOrderFormatted } from '.';
 
 declare module '@tanstack/table-core' {
@@ -112,13 +112,13 @@ const allColumns: ColumnDef<IOrderFormatted>[] = [
     header: 'Ship address',
     cell: ({ row }) => {
       return (
-        <div className="flex items-center gap-2">
-          <Flag country={row.original.shipCountry} />
-          <div className="flex flex-col">
-            <span>{row.original.shipLocation}</span>
-            <span>{row.original.shipAddress}</span>
-          </div>
-        </div>
+        <ContactAddress
+          country={row.original.shipCountry}
+          address={row.original.shipLocation}
+          addressDetails={row.original.shipAddress}
+          title="Ship address"
+          className="font-normal"
+        />
       );
     },
   },

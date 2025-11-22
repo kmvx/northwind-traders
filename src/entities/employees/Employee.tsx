@@ -57,8 +57,8 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
             data.region,
             data.city,
             data.postalCode,
-            data.address,
           )}
+          addressDetails={data.address}
         />
       ),
       description: 'Employee’s home mailing street address.',
