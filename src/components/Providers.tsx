@@ -51,7 +51,7 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
           <ProvidersInit>{children}</ProvidersInit>
         </NuqsAdapter>
         <Toaster position="top-center" richColors />
-        <ReactQueryDevtools />
+        <ReactQueryDevtools buttonPosition="bottom-left" />
       </QueryClientProvider>
     </ThemeProvider>
   );
