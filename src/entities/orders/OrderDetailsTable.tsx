@@ -7,6 +7,7 @@ import type { IOrderDetail, IOrderDetails, IProducts } from '@/models';
 import { BasicLink } from '@/ui';
 import { formatCurrency } from '@/utils';
 
+import { OrderHoverCard } from '.';
 import { getTotalCost } from './utils';
 
 declare module '@tanstack/table-core' {
@@ -22,7 +23,7 @@ const allColumns: ColumnDef<IOrderDetail>[] = [
     header: 'Order ID',
     cell: ({ row }) => {
       const orderId = row.original.orderId;
-      return <BasicLink href={`/orders/${orderId}`}>{orderId}</BasicLink>;
+      return <OrderHoverCard orderId={orderId} />;
     },
   },
   {

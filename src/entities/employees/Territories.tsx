@@ -30,17 +30,13 @@ const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
       <Globe2Icon className="min-w-4 size-4 text-muted-foreground me-2" />
       {data.map((item, i) => (
         <React.Fragment key={item.territoryId}>
-          {i > 0 && (
-            <>
-              &#x2060;,<span>&nbsp;</span>
-            </>
-          )}
           <b
             title={`Index: ${item.territoryId}\nRegion: ${
               regionsMap.get(item.regionId) || item.regionId
             }`}
           >
-            {item.territoryDescription}
+            {item.territoryDescription + (i < data.length - 1 ? ',' : '')}
+            &nbsp;
           </b>
         </React.Fragment>
       ))}

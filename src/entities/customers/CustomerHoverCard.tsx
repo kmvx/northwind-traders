@@ -9,7 +9,7 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { useQueryCustomer } from '@/net';
-import { BasicLink, ErrorMessage, WaitSpinner } from '@/ui';
+import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 import { joinFields } from '@/utils';
 
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
@@ -36,6 +36,7 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
 
     return (
       <div className="flex flex-col gap-2">
+        <Typography.Header3>Customer</Typography.Header3>
         <ContactAddress
           country={data.country}
           address={joinFields(
@@ -74,7 +75,7 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
           {children ? children : customerId}
         </BasicLink>
       </HoverCardTrigger>
-      <HoverCardContent>{getContent()}</HoverCardContent>
+      <HoverCardContent className="text-sm">{getContent()}</HoverCardContent>
     </HoverCard>
   );
 };

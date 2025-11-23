@@ -1,15 +1,15 @@
-import React, { Fragment, memo } from 'react';
+import React, { memo } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import type { IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';
-import { BasicLink, Pagination, ResponsiveGrid } from '@/ui';
+import { BasicLink, Pagination, ResponsiveGrid, ResponsiveItems } from '@/ui';
 import { formatCurrency } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
 import { ContactAddress } from '../shared';
-import type { IOrderFormatted } from '.';
+import { type IOrderFormatted } from '.';
 
 interface OrdersCardsProps {
   data: IOrderFormatted[];
@@ -74,14 +74,7 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({
           <CustomerHoverCard customerId={item.customerId} />
           <EmployeeHoverCard employee={employee} employeeId={item.employeeId} />
         </div>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-          {items.map((item) => (
-            <Fragment key={item.name}>
-              <div className="text-muted-foreground">{item.name}</div>
-              <div className="text-end">{item.value}</div>
-            </Fragment>
-          ))}
-        </div>
+        <ResponsiveItems items={items} />
         <ContactAddress
           country={item.shipCountry}
           address={item.shipLocation}

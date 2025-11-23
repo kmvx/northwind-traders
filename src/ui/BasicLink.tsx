@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 interface BasicLinkProps extends React.ComponentProps<typeof Button> {
   href: string;
   children: React.ReactNode;
-  className?: string;
+  className?: string | undefined;
 }
 
 const BasicLink = forwardRef<HTMLAnchorElement, BasicLinkProps>(

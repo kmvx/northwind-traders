@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/hover-card';
 import type { IEmployee } from '@/models';
 import { useQueryEmployee } from '@/net';
-import { BasicLink, ErrorMessage, WaitSpinner } from '@/ui';
+import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 import {
   formatDateFromString,
   getEmployeeNameByData,
@@ -44,6 +44,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
 
     return (
       <div className="flex flex-col gap-2">
+        <Typography.Header3>Employee</Typography.Header3>
         <div className="flex gap-4">
           <Image
             src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
@@ -97,7 +98,9 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
           )}
         </BasicLink>
       </HoverCardTrigger>
-      <HoverCardContent className="sm:w-100">{getContent()}</HoverCardContent>
+      <HoverCardContent className="sm:w-100 text-sm">
+        {getContent()}
+      </HoverCardContent>
     </HoverCard>
   );
 };

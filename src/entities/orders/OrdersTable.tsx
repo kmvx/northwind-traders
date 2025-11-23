@@ -14,7 +14,7 @@ import { formatCurrency } from '@/utils';
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
 import { ContactAddress } from '../shared';
-import type { IOrderFormatted } from '.';
+import { type IOrderFormatted } from '.';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -27,10 +27,10 @@ declare module '@tanstack/table-core' {
 const allColumns: ColumnDef<IOrderFormatted>[] = [
   {
     accessorKey: 'orderId',
-    header: '#',
+    header: 'Order ID',
     cell: ({ row }) => {
       const orderId = row.original.orderId;
-      return <BasicLink href={`/orders/${orderId}`}>{orderId}</BasicLink>;
+      return <BasicLink href={`/orders/${orderId}`}>#{orderId}</BasicLink>;
     },
   },
   {

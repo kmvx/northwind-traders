@@ -11,6 +11,7 @@ import type { IOrderDetails, IProducts } from '@/models';
 import { BasicLink, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
+import { OrderHoverCard } from '.';
 import { getTotalCost } from './utils';
 
 interface OrderDetailsCardsProps {
@@ -50,12 +51,7 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
                     )}
                   </BasicLink>
                 ) : (
-                  <BasicLink
-                    href={`/orders/${orderDetail.orderId}`}
-                    title="Order ID"
-                  >
-                    # {orderDetail.orderId}
-                  </BasicLink>
+                  <OrderHoverCard orderId={orderDetail.orderId} />
                 )}
               </CardTitle>
             </CardHeader>

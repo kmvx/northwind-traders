@@ -1,0 +1,98 @@
+'use client';
+
+import { memo, useState } from 'react';
+
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
+import { useQueryEmployees, useQueryOrder } from '@/net';
+import {
+  BasicLink,
+  ErrorMessage,
+  ResponsiveItems,
+  Typography,
+  WaitSpinner,
+} from '@/ui';
+import { formatCurrency, formatDateFromString, joinFields } from '@/utils';
+
+import { CustomerHoverCard } from '../customers';
+import { EmployeeHoverCard } from '../employees';
+import { ContactAddress } from '../shared';
+
+type OrderHoverCardProps = {
+  orderId: number;
+};
+
+const OrderHoverCard: React.FC<OrderHoverCardProps> = ({ orderId }) => {
+  const [open, setOpen] = useState(false);
+  const { data, error, isLoading, refetch } = useQueryOrder({
+    orderId,
+    enabled: open,
+  });
+  const { data: dataEmployees } = useQueryEmployees({
+    enabled: open,
+  });
+
+  const getContent = () => {
+    if (error) return <ErrorMessage error={error} retry={refetch} />;
+    if (isLoading) return <WaitSpinner />;
+    if (!data) return null;
+
+    const employee = dataEmployees?.find(
+      (value) => value.employeeId === data.employeeId,
+    );
+
+    const items = [
+      {
+        name: 'Customer',
+        value: <CustomerHoverCard customerId={data.customerId} />,
+      },
+      {
+        name: 'Employee',
+        value: (
+          <EmployeeHoverCard employee={employee} employeeId={data.employeeId} />
+        ),
+      },
+      { name: 'Order date', value: formatDateFromString(data.orderDate) },
+      { name: 'Shipped date', value: formatDateFromString(data.shippedDate) },
+      { name: 'Required date', value: formatDateFromString(data.requiredDate) },
+      { name: 'Freight', value: formatCurrency(data.freight) },
+      undefined,
+      { name: 'Ship name', value: data.shipName },
+    ];
+
+    return (
+      <div className="flex flex-col gap-2">
+        <Typography.Header3>Order #{orderId}</Typography.Header3>
+        <ResponsiveItems items={items} />
+        <ContactAddress
+          country={data.shipCountry}
+          address={joinFields(
+            data.shipCountry,
+            data.shipRegion,
+            data.shipCity,
+            data.shipPostalCode,
+          )}
+          addressDetails={data.shipAddress}
+          title="Ship address"
+          className="font-normal"
+        />
+      </div>
+    );
+  };
+
+  return (
+    <HoverCard open={open} onOpenChange={setOpen}>
+      <HoverCardTrigger asChild>
+        <BasicLink href={`/orders/${orderId}`}>#{orderId}</BasicLink>
+      </HoverCardTrigger>
+      <HoverCardContent className="sm:w-100 text-sm">
+        {getContent()}
+      </HoverCardContent>
+    </HoverCard>
+  );
+};
+
+export default memo(OrderHoverCard);

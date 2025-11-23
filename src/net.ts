@@ -73,12 +73,15 @@ export const useQueryOrderCustomer = ({ orderId }: { orderId: number }) => {
 
 export const useQueryEmployees = ({
   initialData,
+  enabled = true,
 }: {
   initialData?: IEmployees | undefined;
+  enabled?: boolean;
 } = {}) => {
   return useQuery<IEmployees>({
     queryKey: [API_URL + '/Employees'],
     ...(initialData ? { initialData } : {}),
+    enabled,
   });
 };
 
@@ -212,9 +215,16 @@ export const useQueryOrdersFiltered = ({
   return { queryResult, filteredData };
 };
 
-export const useQueryOrder = ({ orderId }: { orderId: number }) => {
+export const useQueryOrder = ({
+  orderId,
+  enabled = true,
+}: {
+  orderId: number;
+  enabled?: boolean;
+}) => {
   return useQuery<IOrder>({
     queryKey: [API_URL + '/Orders/' + orderId],
+    enabled,
   });
 };
 
