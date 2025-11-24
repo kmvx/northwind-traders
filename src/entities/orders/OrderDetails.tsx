@@ -12,7 +12,7 @@ import {
 import { formatCurrency } from '@/utils';
 
 import { OrderDetailsCards, OrderDetailsTable } from '.';
-import { getTotalCost } from './utils';
+import { getTotalCost } from './utilsOrders';
 
 interface OrderDetailsProps {
   orderId?: number | undefined;

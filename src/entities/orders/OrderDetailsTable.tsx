@@ -8,7 +8,7 @@ import { BasicLink } from '@/ui';
 import { formatCurrency } from '@/utils';
 
 import { OrderHoverCard } from '.';
-import { getTotalCost } from './utils';
+import { getTotalCost } from './utilsOrders';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

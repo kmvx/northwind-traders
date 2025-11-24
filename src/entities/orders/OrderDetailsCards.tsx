@@ -12,7 +12,7 @@ import { BasicLink, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
 import { OrderHoverCard } from '.';
-import { getTotalCost } from './utils';
+import { getTotalCost } from './utilsOrders';
 
 interface OrderDetailsCardsProps {
   data: IOrderDetails;
