@@ -20,14 +20,14 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
 
   const itemsInfo = useMemo(() => {
     let result: SelectStringListInfoType[] = [
-      { value: EMPTY_OPTION_VALUE, component: 'All employees' },
+      { value: EMPTY_OPTION_VALUE, component: '👫 All employees' },
     ];
     if (dataEmployees) {
       result = [
         ...result,
         ...dataEmployees?.map((item) => ({
           value: String(item.employeeId),
-          component: getEmployeeNameByData(item),
+          component: `${titleOfCourtesyMap[item.titleOfCourtesy] ?? ''} ${getEmployeeNameByData(item)}`,
         })),
       ];
     }
@@ -49,6 +49,13 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
       title="Filter by employee"
     />
   );
+};
+
+const titleOfCourtesyMap: Record<string, string> = {
+  'Dr.': '👨‍🎓',
+  'Mr.': '👨‍💼',
+  'Ms.': '👩‍💼',
+  'Mrs.': '🧑‍💼',
 };
 
 export default FilterEmployee;
