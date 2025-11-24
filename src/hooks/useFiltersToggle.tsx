@@ -8,7 +8,12 @@ export default function useFiltersToggle() {
   const [showFilters, setShowFilters] = useState(true);
 
   const getFiltersToggleButton = useCallback(
-    () => <FiltersToggleButton {...{ showFilters, setShowFilters }} />,
+    () => (
+      <FiltersToggleButton
+        showFilters={showFilters}
+        setShowFilters={setShowFilters}
+      />
+    ),
     [showFilters],
   );
 

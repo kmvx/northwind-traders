@@ -97,9 +97,18 @@ const EmployeesBarChart: React.FC = () => {
         Distribution of count of <b>orders</b> by <b>employees</b>
       </h3>
       <div className="flex justify-end">
-        <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
+        <FilterYear
+          years={yearsSet}
+          filterYear={filterYear}
+          setFilterYear={setFilterYear}
+        />
       </div>
-      <BarChart name="orders" {...{ categoriesQueryResult, hue, navigate }} />
+      <BarChart
+        name="orders"
+        categoriesQueryResult={categoriesQueryResult}
+        hue={hue}
+        navigate={navigate}
+      />
     </div>
   );
 };

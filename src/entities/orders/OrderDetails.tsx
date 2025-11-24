@@ -55,11 +55,17 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
         </span>
         {isWidePage ? (
           <OrderDetailsTable
-            {...{ data, dataProducts, dataCategories, showProduct }}
+            data={data}
+            dataProducts={dataProducts}
+            dataCategories={dataCategories}
+            showProduct={showProduct}
           />
         ) : (
           <OrderDetailsCards
-            {...{ data, dataProducts, dataCategories, showProduct }}
+            data={data}
+            dataProducts={dataProducts}
+            dataCategories={dataCategories}
+            showProduct={showProduct}
           />
         )}
       </>

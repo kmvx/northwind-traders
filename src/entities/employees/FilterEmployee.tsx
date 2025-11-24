@@ -42,7 +42,8 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
 
   return (
     <SelectStringList
-      {...{ itemsInfo, setValue }}
+      itemsInfo={itemsInfo}
+      setValue={setValue}
       value={
         filterEmployeeId == null ? EMPTY_OPTION_VALUE : String(filterEmployeeId)
       }

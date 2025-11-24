@@ -113,7 +113,10 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
               title="String filter"
             />
           </div>
-          <FilterDiscontinued {...{ filterDiscontinued, setDiscontinued }} />
+          <FilterDiscontinued
+            filterDiscontinued={filterDiscontinued}
+            setDiscontinued={setDiscontinued}
+          />
           <FiltersClearButton
             disabled={!hasFilters}
             onClick={handleFiltersClear}

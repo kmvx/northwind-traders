@@ -251,7 +251,11 @@ const Orders: React.FC<OrdersProps> = ({
               title="String filter"
             />
           </div>
-          <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
+          <FilterYear
+            years={yearsSet}
+            filterYear={filterYear}
+            setFilterYear={setFilterYear}
+          />
           <FilterCountry
             filterCountry={filterCountry}
             setFilterCountry={setFilterCountry}
@@ -259,7 +263,10 @@ const Orders: React.FC<OrdersProps> = ({
             countryPropertyName="shipCountry"
           />
           {!employeeId && (
-            <FilterEmployee {...{ filterEmployeeId, setFilterEmployeeId }} />
+            <FilterEmployee
+              filterEmployeeId={filterEmployeeId}
+              setFilterEmployeeId={setFilterEmployeeId}
+            />
           )}
           <FiltersClearButton
             disabled={!hasFilters}

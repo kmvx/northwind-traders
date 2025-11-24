@@ -77,7 +77,11 @@ const OrdersChartsWithFilter: React.FC = () => {
         queryResult={{ data: filteredData, isLoading, error, refetch }}
       >
         <div className="flex justify-end">
-          <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
+          <FilterYear
+            years={yearsSet}
+            filterYear={filterYear}
+            setFilterYear={setFilterYear}
+          />
         </div>
       </OrdersChart>
     </div>
@@ -103,10 +107,15 @@ const CustomersCharts: React.FC = () => {
     <div className="flex flex-wrap justify-center gap-2">
       <WorldMapChart
         name="customers"
-        {...{ categoriesQueryResult, hue }}
+        categoriesQueryResult={categoriesQueryResult}
+        hue={hue}
         allowZoom
       />
-      <BarChart name="customers" {...{ categoriesQueryResult, hue }} />
+      <BarChart
+        name="customers"
+        categoriesQueryResult={categoriesQueryResult}
+        hue={hue}
+      />
     </div>
   );
 };
@@ -152,15 +161,26 @@ const OrdersCharts: React.FC = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">
-        <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
+        <FilterYear
+          years={yearsSet}
+          filterYear={filterYear}
+          setFilterYear={setFilterYear}
+        />
       </div>
       <div className="flex flex-wrap justify-center gap-2">
         <WorldMapChart
           name="orders"
-          {...{ categoriesQueryResult, hue, navigate }}
+          categoriesQueryResult={categoriesQueryResult}
+          hue={hue}
+          navigate={navigate}
           allowZoom
         />
-        <BarChart name="orders" {...{ categoriesQueryResult, hue, navigate }} />
+        <BarChart
+          name="orders"
+          categoriesQueryResult={categoriesQueryResult}
+          hue={hue}
+          navigate={navigate}
+        />
       </div>
     </div>
   );
@@ -185,10 +205,15 @@ const SuppliersCharts: React.FC = () => {
     <div className="flex flex-wrap justify-center gap-2">
       <WorldMapChart
         name="suppliers"
-        {...{ categoriesQueryResult, hue }}
+        categoriesQueryResult={categoriesQueryResult}
+        hue={hue}
         allowZoom
       />
-      <BarChart name="suppliers" {...{ categoriesQueryResult, hue }} />
+      <BarChart
+        name="suppliers"
+        categoriesQueryResult={categoriesQueryResult}
+        hue={hue}
+      />
     </div>
   );
 };
