@@ -13,7 +13,7 @@ import {
   Skeleton,
 } from '@/components/ui';
 import { WorldMapChart } from '@/features/charts';
-import { useQueryStateFixed } from '@/hooks';
+import { useFiltersToggle, useQueryStateFixed } from '@/hooks';
 import { type ISuppliers } from '@/models';
 import { useQuerySuppliers } from '@/net';
 import {
@@ -35,6 +35,7 @@ interface SuppliersProps {
 
 const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
   // Filters
+  const { showFilters, getFiltersToggleButton } = useFiltersToggle();
   const [filterString, setFilterString] = useQueryStateFixed('q', {
     defaultValue: '',
   });
@@ -77,7 +78,6 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
 
     return (
       <>
-        <div className="mx-2">{filteredData.length} suppliers</div>
         <ResponsiveGrid minWidth="16rem">
           {filteredData.map((item) => (
             <Link
@@ -128,30 +128,39 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
   return (
     <PanelStretched className="flex flex-col gap-4">
       <Typography variant="header1">Suppliers</Typography>
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex-grow">
-          <Input
-            type="search"
-            placeholder="Enter filter string here"
-            value={filterString}
-            onChange={(event) => setFilterString(event.target.value)}
-            title="String filter"
+      {showFilters && (
+        <div className="flex flex-wrap items-center gap-2">
+          {getFiltersToggleButton()}
+          <div className="flex-grow">
+            <Input
+              type="search"
+              placeholder="Enter filter string here"
+              value={filterString}
+              onChange={(event) => setFilterString(event.target.value)}
+              title="String filter"
+            />
+          </div>
+          <FilterCountry
+            filterCountry={filterCountry}
+            setFilterCountry={setFilterCountry}
+            data={data}
           />
+          <FiltersClearButton
+            disabled={!hasFilters}
+            onClick={handleFiltersClear}
+          />
+          <ExportDropdown
+            data={filteredData as object[] as Record<string, unknown>[]}
+            name="Suppliers"
+          />
+          <ReloadButton onClick={refetch} isLoading={isFetching} />
         </div>
-        <FilterCountry
-          filterCountry={filterCountry}
-          setFilterCountry={setFilterCountry}
-          data={data}
-        />
-        <FiltersClearButton
-          disabled={!hasFilters}
-          onClick={handleFiltersClear}
-        />
-        <ExportDropdown
-          data={filteredData as object[] as Record<string, unknown>[]}
-          name="Suppliers"
-        />
-        <ReloadButton onClick={refetch} isLoading={isFetching} />
+      )}
+      <div className="flex items-center">
+        {!showFilters && getFiltersToggleButton()}
+        {filteredData && (
+          <span className="mx-2">{filteredData?.length} suppliers</span>
+        )}
       </div>
       {getContent()}
     </PanelStretched>

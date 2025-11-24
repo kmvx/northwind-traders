@@ -11,9 +11,10 @@ import { CategoryName } from '.';
 
 interface ProductsCardsProps {
   data: IProducts;
+  extraNodes?: React.ReactNode;
 }
 
-const ProductsCards: React.FC<ProductsCardsProps> = ({ data }) => {
+const ProductsCards: React.FC<ProductsCardsProps> = ({ data, extraNodes }) => {
   const { data: dataCategories } = useQueryCategories();
   return (
     <Pagination
@@ -30,6 +31,7 @@ const ProductsCards: React.FC<ProductsCardsProps> = ({ data }) => {
           ))}
         </ResponsiveGrid>
       )}
+      extraNodes={extraNodes}
     />
   );
 };

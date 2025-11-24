@@ -14,7 +14,7 @@ import {
   Skeleton,
 } from '@/components/ui';
 import { EmployeesBarChart } from '@/features/charts';
-import { useQueryStateFixed } from '@/hooks';
+import { useFiltersToggle, useQueryStateFixed } from '@/hooks';
 import { type IEmployees } from '@/models';
 import { useQueryEmployees } from '@/net';
 import {
@@ -37,6 +37,7 @@ interface EmployeesProps {
 
 const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
   // Filters
+  const { showFilters, getFiltersToggleButton } = useFiltersToggle();
   const [filterString, setFilterString] = useQueryStateFixed('q', {
     defaultValue: '',
   });
@@ -85,53 +86,47 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
     if (!filteredData) return null;
 
     return (
-      <>
-        <div className="mx-2">
-          {filteredData.length}{' '}
-          {reportsTo ? 'direct subordinates' : 'employees'}
-        </div>
-        <ResponsiveGrid minWidth="18rem">
-          {filteredData.map((item, index) => (
-            <Link
-              href={`/employees/${item.employeeId}`}
-              key={item.employeeId}
-              className="block"
-            >
-              <Card className="hover:shadow-lg transition h-full">
-                <CardHeader>
-                  <CardTitle title="Employee name">
-                    {getEmployeeNameByData(item)}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="flex gap-2">
-                  <Image
-                    src={`/assets/img/database/${item.firstName.toLowerCase()}.jpg`}
-                    alt=""
-                    title="Employee photo"
-                    className="w-[70px] h-[70px] object-cover rounded-md"
-                    width="70"
-                    height="70"
-                    priority={index === 0}
+      <ResponsiveGrid minWidth="18rem">
+        {filteredData.map((item, index) => (
+          <Link
+            href={`/employees/${item.employeeId}`}
+            key={item.employeeId}
+            className="block"
+          >
+            <Card className="hover:shadow-lg transition h-full">
+              <CardHeader>
+                <CardTitle title="Employee name">
+                  {getEmployeeNameByData(item)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex gap-2">
+                <Image
+                  src={`/assets/img/database/${item.firstName.toLowerCase()}.jpg`}
+                  alt=""
+                  title="Employee photo"
+                  className="w-[70px] h-[70px] object-cover rounded-md"
+                  width="70"
+                  height="70"
+                  priority={index === 0}
+                />
+                <div className="flex flex-col flex-1 justify-between">
+                  <span
+                    className="text-sm text-right font-medium"
+                    title="Employee title"
+                  >
+                    {item.title}
+                  </span>
+                  <Location
+                    country={item.country}
+                    city={item.city}
+                    title="Employee location"
                   />
-                  <div className="flex flex-col flex-1 justify-between">
-                    <span
-                      className="text-sm text-right font-medium"
-                      title="Employee title"
-                    >
-                      {item.title}
-                    </span>
-                    <Location
-                      country={item.country}
-                      city={item.city}
-                      title="Employee location"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </ResponsiveGrid>
-      </>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+      </ResponsiveGrid>
     );
   };
 
@@ -144,33 +139,45 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
       <Typography variant={reportsTo ? 'header2' : 'header1'}>
         {reportsTo ? 'Direct subordinates' : 'Employees'}
       </Typography>
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex-grow">
-          <Input
-            type="search"
-            placeholder="Enter filter string here"
-            value={filterString}
-            onChange={(event) => setFilterString(event.target.value)}
-            title="String filter"
+      {showFilters && (
+        <div className="flex flex-wrap items-center gap-2">
+          {getFiltersToggleButton()}
+          <div className="flex-grow">
+            <Input
+              type="search"
+              placeholder="Enter filter string here"
+              value={filterString}
+              onChange={(event) => setFilterString(event.target.value)}
+              title="String filter"
+            />
+          </div>
+          <FilterCountry
+            filterCountry={filterCountry}
+            setFilterCountry={setFilterCountry}
+            data={data}
           />
+          <FiltersClearButton
+            disabled={!hasFilters}
+            onClick={handleFiltersClear}
+          />
+          <ExportDropdown
+            data={// eslint-disable-next-line @typescript-eslint/no-unused-vars
+            filteredData?.map(({ photo: _photo, ...item }) => ({
+              ...item,
+            }))}
+            name="Employees"
+          />
+          <ReloadButton onClick={refetch} isLoading={isFetching} />
         </div>
-        <FilterCountry
-          filterCountry={filterCountry}
-          setFilterCountry={setFilterCountry}
-          data={data}
-        />
-        <FiltersClearButton
-          disabled={!hasFilters}
-          onClick={handleFiltersClear}
-        />
-        <ExportDropdown
-          data={// eslint-disable-next-line @typescript-eslint/no-unused-vars
-          filteredData?.map(({ photo: _photo, ...item }) => ({
-            ...item,
-          }))}
-          name="Employees"
-        />
-        <ReloadButton onClick={refetch} isLoading={isFetching} />
+      )}
+      <div className="flex items-center">
+        {!showFilters && getFiltersToggleButton()}
+        {filteredData && (
+          <span className="mx-2">
+            {filteredData?.length}{' '}
+            {reportsTo ? 'direct subordinates' : 'employees'}
+          </span>
+        )}
       </div>
       {getContent()}
       {!reportsTo && (

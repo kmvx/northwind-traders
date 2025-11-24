@@ -128,12 +128,14 @@ interface OrdersTableProps {
   data: IOrderFormatted[];
   isCustomerPage?: boolean;
   isEmployeePage?: boolean;
+  extraNodes?: React.ReactNode;
 }
 
 const OrdersTable: React.FC<OrdersTableProps> = ({
   data,
   isCustomerPage,
   isEmployeePage,
+  extraNodes,
 }) => {
   const { data: dataEmployees } = useQueryEmployees();
   const { data: dataShippers } = useQueryShippers();
@@ -153,6 +155,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
       data={data}
       columns={columns}
       meta={{ dataEmployees, dataShippers }}
+      extraNodes={extraNodes}
     />
   );
 };

@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react';
 
-import { usePageSize, useQueryStateFixed } from '@/hooks';
+import { useFiltersToggle, usePageSize, useQueryStateFixed } from '@/hooks';
 import { type IProducts } from '@/models';
 import { useQueryProducts } from '@/net';
 import {
@@ -27,6 +27,7 @@ interface ProductsProps {
 
 const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
   // Filters
+  const { showFilters, getFiltersToggleButton } = useFiltersToggle();
   const [filterString, setFilterString] = useQueryStateFixed('productsFilter', {
     defaultValue: '',
   });
@@ -64,18 +65,30 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
     return filteredData;
   }, [data, filterString, filterDiscontinued]);
 
+  const extraNodes = useMemo(
+    () => !showFilters && getFiltersToggleButton(),
+    [showFilters, getFiltersToggleButton],
+  );
+
   const isWidePage = usePageSize().isWidePage;
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
     if (isLoading && filteredData?.length === 0) return <WaitSpinner />;
     if (!filteredData) return null;
-    if (filteredData.length === 0) return <div>Products not found</div>;
+    if (filteredData.length === 0) {
+      return (
+        <div className="flex items-center gap-2">
+          {extraNodes}
+          <span>Products not found</span>
+        </div>
+      );
+    }
 
     return isWidePage ? (
-      <ProductsTable data={filteredData} />
+      <ProductsTable data={filteredData} extraNodes={extraNodes} />
     ) : (
-      <ProductsCards data={filteredData} />
+      <ProductsCards data={filteredData} extraNodes={extraNodes} />
     );
   };
 
@@ -89,26 +102,29 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
   return (
     <PanelStretched className="flex flex-col gap-4">
       <Header>Products</Header>
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex-grow">
-          <DebouncedInput
-            placeholder="Enter filter string here"
-            value={filterString}
-            setValue={setFilterString}
-            title="String filter"
+      {showFilters && (
+        <div className="flex flex-wrap items-center gap-2">
+          {getFiltersToggleButton()}
+          <div className="flex-grow">
+            <DebouncedInput
+              placeholder="Enter filter string here"
+              value={filterString}
+              setValue={setFilterString}
+              title="String filter"
+            />
+          </div>
+          <FilterDiscontinued {...{ filterDiscontinued, setDiscontinued }} />
+          <FiltersClearButton
+            disabled={!hasFilters}
+            onClick={handleFiltersClear}
           />
+          <ExportDropdown
+            data={filteredData as object[] as Record<string, unknown>[]}
+            name="Products"
+          />
+          <ReloadButton onClick={refetch} isLoading={isFetching} />
         </div>
-        <FilterDiscontinued {...{ filterDiscontinued, setDiscontinued }} />
-        <FiltersClearButton
-          disabled={!hasFilters}
-          onClick={handleFiltersClear}
-        />
-        <ExportDropdown
-          data={filteredData as object[] as Record<string, unknown>[]}
-          name="Products"
-        />
-        <ReloadButton onClick={refetch} isLoading={isFetching} />
-      </div>
+      )}
       {getContent()}
     </PanelStretched>
   );

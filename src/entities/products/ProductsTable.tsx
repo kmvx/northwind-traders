@@ -77,13 +77,19 @@ const allColumns: ColumnDef<IProduct>[] = [
 
 interface ProductsTableProps {
   data: IProducts;
+  extraNodes?: React.ReactNode;
 }
 
-const ProductsTable: React.FC<ProductsTableProps> = ({ data }) => {
+const ProductsTable: React.FC<ProductsTableProps> = ({ data, extraNodes }) => {
   const { data: dataCategories } = useQueryCategories();
 
   return (
-    <DataTable data={data} columns={allColumns} meta={{ dataCategories }} />
+    <DataTable
+      data={data}
+      columns={allColumns}
+      meta={{ dataCategories }}
+      extraNodes={extraNodes}
+    />
   );
 };
 

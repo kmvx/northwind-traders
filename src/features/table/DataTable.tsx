@@ -22,9 +22,15 @@ interface DataTableProps<TData> {
   data: TData[];
   columns: ColumnDef<TData>[];
   meta?: TableMeta<TData>;
+  extraNodes?: React.ReactNode;
 }
 
-function DataTable<TData>({ data, columns, meta }: DataTableProps<TData>) {
+function DataTable<TData>({
+  data,
+  columns,
+  meta,
+  extraNodes,
+}: DataTableProps<TData>) {
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable<TData>({
     data,
@@ -79,6 +85,7 @@ function DataTable<TData>({ data, columns, meta }: DataTableProps<TData>) {
         totalItems={totalItems}
         goToPage={goToPage}
         showAtLeastItemsCount
+        extraNodes={extraNodes}
       />
       <div className="overflow-hidden rounded-md border">
         <Table>

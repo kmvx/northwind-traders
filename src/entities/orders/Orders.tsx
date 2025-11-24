@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 
 import { Separator } from '@/components/ui';
 import { OrdersChart, WorldMapChart } from '@/features/charts';
-import { usePageSize, useQueryStateFixed } from '@/hooks';
+import { useFiltersToggle, usePageSize, useQueryStateFixed } from '@/hooks';
 import { type IOrders } from '@/models';
 import { useQueryEmployees, useQueryOrders } from '@/net';
 import {
@@ -43,6 +43,7 @@ const Orders: React.FC<OrdersProps> = ({
   employeeId,
 }) => {
   // Filters
+  const { showFilters, getFiltersToggleButton } = useFiltersToggle();
   const [filterString, setFilterString] = useQueryStateFixed('ordersFilter', {
     defaultValue: '',
   });
@@ -174,13 +175,25 @@ const Orders: React.FC<OrdersProps> = ({
     return result;
   }, [queryResult, filteredData]);
 
+  const extraNodes = useMemo(
+    () => !showFilters && getFiltersToggleButton(),
+    [showFilters, getFiltersToggleButton],
+  );
+
   const isWidePage = usePageSize().isWidePage;
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
     if (isLoading && filteredData?.length === 0) return <WaitSpinner />;
     if (!filteredData) return null;
-    if (filteredData.length === 0) return <div>Orders not found</div>;
+    if (filteredData.length === 0) {
+      return (
+        <div className="flex items-center gap-2">
+          {extraNodes}
+          <span>Orders not found</span>
+        </div>
+      );
+    }
 
     return (
       <>
@@ -189,9 +202,10 @@ const Orders: React.FC<OrdersProps> = ({
             data={filteredData}
             isCustomerPage={!!customerId}
             isEmployeePage={!!employeeId}
+            extraNodes={extraNodes}
           />
         ) : (
-          <OrdersCards data={filteredData} />
+          <OrdersCards data={filteredData} extraNodes={extraNodes} />
         )}
         {!customerId && !filterCountry && (
           <>
@@ -226,38 +240,41 @@ const Orders: React.FC<OrdersProps> = ({
   return (
     <PanelStretched className="flex flex-col gap-4">
       <Header>Orders</Header>
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex-grow">
-          <DebouncedInput
-            placeholder="Enter filter string here"
-            value={filterString}
-            setValue={setFilterString}
-            title="String filter"
+      {showFilters && (
+        <div className="flex flex-wrap items-center gap-2">
+          {getFiltersToggleButton()}
+          <div className="flex-grow">
+            <DebouncedInput
+              placeholder="Enter filter string here"
+              value={filterString}
+              setValue={setFilterString}
+              title="String filter"
+            />
+          </div>
+          <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
+          <FilterCountry
+            filterCountry={filterCountry}
+            setFilterCountry={setFilterCountry}
+            data={data}
+            countryPropertyName="shipCountry"
+          />
+          {!employeeId && (
+            <FilterEmployee {...{ filterEmployeeId, setFilterEmployeeId }} />
+          )}
+          <FiltersClearButton
+            disabled={!hasFilters}
+            onClick={handleFiltersClear}
+          />
+          <ExportDropdown
+            data={filteredData as object[] as Record<string, unknown>[]}
+            name="Orders"
+          />
+          <ReloadButton
+            onClick={refetch}
+            isLoading={isFetching && typeof window !== 'undefined'}
           />
         </div>
-        <FilterYear {...{ years: yearsSet, filterYear, setFilterYear }} />
-        <FilterCountry
-          filterCountry={filterCountry}
-          setFilterCountry={setFilterCountry}
-          data={data}
-          countryPropertyName="shipCountry"
-        />
-        {!employeeId && (
-          <FilterEmployee {...{ filterEmployeeId, setFilterEmployeeId }} />
-        )}
-        <FiltersClearButton
-          disabled={!hasFilters}
-          onClick={handleFiltersClear}
-        />
-        <ExportDropdown
-          data={filteredData as object[] as Record<string, unknown>[]}
-          name="Orders"
-        />
-        <ReloadButton
-          onClick={refetch}
-          isLoading={isFetching && typeof window !== 'undefined'}
-        />
-      </div>
+      )}
       {getContent()}
     </PanelStretched>
   );
