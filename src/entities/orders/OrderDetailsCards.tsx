@@ -7,22 +7,25 @@ import {
   CardTitle,
   Spinner,
 } from '@/components/ui';
-import type { IOrderDetails, IProducts } from '@/models';
+import type { ICategories, IOrderDetails, IProducts } from '@/models';
 import { BasicLink, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
+import { CategoryName } from '../products';
 import { OrderHoverCard } from '.';
 import { getTotalCost } from './utilsOrders';
 
 interface OrderDetailsCardsProps {
   data: IOrderDetails;
   dataProducts: IProducts | undefined;
+  dataCategories: ICategories | undefined;
   showProduct: boolean;
 }
 
 const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
   data,
   dataProducts,
+  dataCategories,
   showProduct,
 }) => {
   return (
@@ -36,23 +39,31 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
           <Card className="hover:shadow-lg transition h-full" key={index}>
             <CardHeader>
               <CardTitle>
-                {showProduct ? (
-                  <BasicLink
-                    href={`/products/${orderDetail.productId}`}
-                    title="Product"
-                  >
-                    {product ? (
-                      product.productName
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        {orderDetail.productId}
-                        <Spinner />
-                      </span>
-                    )}
-                  </BasicLink>
-                ) : (
-                  <OrderHoverCard orderId={orderDetail.orderId} />
-                )}
+                <div className="flex justify-between">
+                  {showProduct ? (
+                    <>
+                      <BasicLink
+                        href={`/products/${orderDetail.productId}`}
+                        title="Product"
+                      >
+                        {product ? (
+                          product.productName
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            {orderDetail.productId}
+                            <Spinner />
+                          </span>
+                        )}
+                      </BasicLink>
+                      <CategoryName
+                        dataCategories={dataCategories}
+                        categoryId={product?.categoryId}
+                      />
+                    </>
+                  ) : (
+                    <OrderHoverCard orderId={orderDetail.orderId} />
+                  )}
+                </div>
               </CardTitle>
             </CardHeader>
             <CardContent className="">

@@ -16,7 +16,19 @@ const CategoryName: React.FC<CategoryNameProps> = ({
     (item) => item.categoryId === categoryId,
   );
 
-  if (category) return category.categoryName;
+  if (category) {
+    return (
+      <div
+        className="flex items-center gap-2 -mb-1"
+        title={category.description}
+      >
+        <span className="mb-1">
+          {mapProductCategoryToEmojii[category.categoryName] ?? '❓'}
+        </span>
+        <span>{category.categoryName}</span>
+      </div>
+    );
+  }
 
   return (
     <span
@@ -28,5 +40,16 @@ const CategoryName: React.FC<CategoryNameProps> = ({
     </span>
   );
 };
+
+const mapProductCategoryToEmojii: Record<string, string> = {
+  Beverages: '🥤',
+  Condiments: '🌶️',
+  Confections: '🍬',
+  'Dairy Products': '🧀',
+  'Grains/Cereals': '🌽',
+  'Meat/Poultry': '🍗',
+  Produce: '🍉',
+  Seafood: '🐟',
+} as const;
 
 export default CategoryName;

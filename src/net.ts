@@ -284,9 +284,14 @@ export const useQueryProduct = ({ productId }: { productId: number }) => {
   });
 };
 
-export const useQueryCategories = () => {
+export const useQueryCategories = ({
+  enabled = true,
+}: {
+  enabled?: boolean;
+} = {}) => {
   return useQuery<ICategories>({
     queryKey: [API_URL + '/Categories'],
+    enabled,
   });
 };
 

@@ -49,23 +49,25 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
     <Link href={`/products/${item.productId}`} className="block">
       <Card className="hover:shadow-lg transition h-full">
         <CardHeader>
-          <CardTitle title="Product name">{item.productName}</CardTitle>
+          <CardTitle>
+            <div className="flex justify-between">
+              <div title="Product name">{item.productName}</div>
+              <CategoryName
+                dataCategories={dataCategories}
+                categoryId={item.categoryId}
+              />
+            </div>
+          </CardTitle>
         </CardHeader>
         <CardContent className="h-full flex flex-col justify-end gap-2">
           <div className="flex flex-wrap justify-between items-baseline">
-            <CategoryName
-              dataCategories={dataCategories}
-              categoryId={item.categoryId}
-            />
+            <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
             <span
               className="text-red-600"
               title="This product was discontinued"
             >
               {item.discontinued && 'Discontinued'}
             </span>
-          </div>
-          <div className="flex flex-wrap justify-between items-baseline">
-            <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
             <span
               title="Quantity per unit"
               className="text-muted-foreground text-sm"

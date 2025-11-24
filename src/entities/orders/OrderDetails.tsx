@@ -1,7 +1,11 @@
 import React from 'react';
 
 import { usePageSize } from '@/hooks';
-import { useQueryOrderDetails, useQueryProducts } from '@/net';
+import {
+  useQueryCategories,
+  useQueryOrderDetails,
+  useQueryProducts,
+} from '@/net';
 import {
   ErrorMessage,
   PanelCentred,
@@ -31,6 +35,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
     orderId,
     enabled: showProduct,
   });
+  const { data: dataCategories } = useQueryCategories({
+    enabled: showProduct,
+  });
 
   const isWidePage = usePageSize().isWidePage;
 
@@ -47,9 +54,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
           total.
         </span>
         {isWidePage ? (
-          <OrderDetailsTable {...{ data, dataProducts, showProduct }} />
+          <OrderDetailsTable
+            {...{ data, dataProducts, dataCategories, showProduct }}
+          />
         ) : (
-          <OrderDetailsCards {...{ data, dataProducts, showProduct }} />
+          <OrderDetailsCards
+            {...{ data, dataProducts, dataCategories, showProduct }}
+          />
         )}
       </>
     );
