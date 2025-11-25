@@ -7,7 +7,7 @@ import { useQueryCategories } from '@/net';
 import { Pagination, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
-import { CategoryName } from '.';
+import { CategoryLoader } from '.';
 
 interface ProductsCardsProps {
   data: IProducts;
@@ -52,7 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
           <CardTitle>
             <div className="flex justify-between">
               <div title="Product name">{item.productName}</div>
-              <CategoryName
+              <CategoryLoader
                 dataCategories={dataCategories}
                 categoryId={item.categoryId}
               />

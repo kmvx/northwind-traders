@@ -11,7 +11,7 @@ import type { ICategories, IOrderDetails, IProducts } from '@/models';
 import { BasicLink, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
-import { CategoryName } from '../products';
+import { CategoryLoader } from '../products';
 import { OrderHoverCard } from '.';
 import { getTotalCost } from './utilsOrders';
 
@@ -55,7 +55,7 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
                           </span>
                         )}
                       </BasicLink>
-                      <CategoryName
+                      <CategoryLoader
                         dataCategories={dataCategories}
                         categoryId={product?.categoryId}
                       />

@@ -1,5 +1,6 @@
 'use client';
 
+import { parseAsInteger } from 'nuqs';
 import React, { useMemo } from 'react';
 
 import { useFiltersToggle, usePageSize, useQueryStateFixed } from '@/hooks';
@@ -18,7 +19,12 @@ import {
 import { isStringIncludes } from '@/utils';
 import { parseAsBooleanOrUndefined } from '@/utils/nuqs';
 
-import { FilterDiscontinued, ProductsCards, ProductsTable } from '.';
+import {
+  FilterCategory,
+  FilterDiscontinued,
+  ProductsCards,
+  ProductsTable,
+} from '.';
 
 interface ProductsProps {
   supplierId?: number;
@@ -31,13 +37,19 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
   const [filterString, setFilterString] = useQueryStateFixed('productsFilter', {
     defaultValue: '',
   });
+  const [filterCategoryId, setFilterCategoryId] = useQueryStateFixed(
+    'categoryId',
+    parseAsInteger,
+  );
   const [filterDiscontinued, setDiscontinued] = useQueryStateFixed(
     'discontinued',
     parseAsBooleanOrUndefined,
   );
-  const hasFilters = !!filterString || filterDiscontinued != null;
+  const hasFilters =
+    !!filterString || !!filterCategoryId || filterDiscontinued != null;
   function handleFiltersClear() {
     setFilterString('');
+    setFilterCategoryId(null);
     setDiscontinued(null);
   }
 
@@ -50,6 +62,7 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
   // Filter data
   const filteredData = useMemo(() => {
     let filteredData = data;
+
     if (filterString) {
       filteredData = filteredData?.filter((item) =>
         (['productName', 'quantityPerUnit'] as const).some((name) => {
@@ -57,13 +70,21 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
         }),
       );
     }
+
+    if (filterCategoryId) {
+      filteredData = filteredData?.filter(
+        (item) => item.categoryId === filterCategoryId,
+      );
+    }
+
     if (filterDiscontinued != null) {
       filteredData = filteredData?.filter(
         (item) => item.discontinued === filterDiscontinued,
       );
     }
+
     return filteredData;
-  }, [data, filterString, filterDiscontinued]);
+  }, [data, filterString, filterCategoryId, filterDiscontinued]);
 
   const extraNodes = useMemo(
     () => !showFilters && getFiltersToggleButton(),
@@ -113,6 +134,10 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
               title="String filter"
             />
           </div>
+          <FilterCategory
+            filterCategoryId={filterCategoryId}
+            setFilterCategoryId={setFilterCategoryId}
+          />
           <FilterDiscontinued
             filterDiscontinued={filterDiscontinued}
             setDiscontinued={setDiscontinued}

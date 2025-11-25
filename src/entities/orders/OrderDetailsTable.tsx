@@ -12,7 +12,7 @@ import type {
 import { BasicLink } from '@/ui';
 import { formatCurrency } from '@/utils';
 
-import { CategoryName } from '../products';
+import { CategoryLoader } from '../products';
 import { OrderHoverCard } from '.';
 import { getTotalCost } from './utilsOrders';
 
@@ -64,7 +64,7 @@ const allColumns: ColumnDef<IOrderDetail>[] = [
         (product) => product.productId === productId,
       );
       return (
-        <CategoryName
+        <CategoryLoader
           dataCategories={table?.options?.meta?.dataCategories}
           categoryId={product?.categoryId}
         />

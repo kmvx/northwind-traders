@@ -25,7 +25,7 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
     if (dataEmployees) {
       result = [
         ...result,
-        ...dataEmployees?.map((item) => ({
+        ...dataEmployees.map((item) => ({
           value: String(item.employeeId),
           component: `${titleOfCourtesyMap[item.titleOfCourtesy] ?? ''} ${getEmployeeNameByData(item)}`,
         })),
