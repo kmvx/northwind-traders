@@ -46,18 +46,23 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
     if (isLoading && !data) return <WaitSpinner />;
     if (!data) return null;
     if (data.length === 0) return <div>Order details not found</div>;
+
     const totalMoney = data.reduce((acc, item) => acc + getTotalCost(item), 0);
+    const extraNodesAfter = (
+      <span className="mx-2">
+        Total cost: <b>{formatCurrency(totalMoney)}</b>
+      </span>
+    );
+
     return (
       <>
-        <span className="mx-2">
-          <b>{formatCurrency(totalMoney)}</b> total cost.
-        </span>
         {isWidePage ? (
           <OrderDetailsTable
             data={data}
             dataProducts={dataProducts}
             dataCategories={dataCategories}
             showProduct={showProduct}
+            extraNodesAfter={extraNodesAfter}
           />
         ) : (
           <OrderDetailsCards
@@ -65,6 +70,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
             dataProducts={dataProducts}
             dataCategories={dataCategories}
             showProduct={showProduct}
+            extraNodesAfter={extraNodesAfter}
           />
         )}
       </>

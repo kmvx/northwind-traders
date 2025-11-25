@@ -23,6 +23,7 @@ const ProductsCards: React.FC<ProductsCardsProps> = ({
     <Pagination
       data={data}
       defaultLimit={20}
+      extraNodesBefore={extraNodesBefore}
       renderPage={(items) => (
         <ResponsiveGrid minWidth="18rem">
           {items.map((item) => (
@@ -34,7 +35,6 @@ const ProductsCards: React.FC<ProductsCardsProps> = ({
           ))}
         </ResponsiveGrid>
       )}
-      extraNodesBefore={extraNodesBefore}
     />
   );
 };

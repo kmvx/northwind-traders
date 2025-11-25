@@ -23,6 +23,7 @@ interface DataTableProps<TData> {
   columns: ColumnDef<TData>[];
   meta?: TableMeta<TData>;
   extraNodesBefore?: React.ReactNode;
+  extraNodesAfter?: React.ReactNode;
 }
 
 function DataTable<TData>({
@@ -30,6 +31,7 @@ function DataTable<TData>({
   columns,
   meta,
   extraNodesBefore,
+  extraNodesAfter,
 }: DataTableProps<TData>) {
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable<TData>({
@@ -86,6 +88,7 @@ function DataTable<TData>({
         goToPage={goToPage}
         showAtLeastItemsCount
         extraNodesBefore={extraNodesBefore}
+        extraNodesAfter={extraNodesAfter}
       />
       <div className="overflow-hidden rounded-md border">
         <Table>

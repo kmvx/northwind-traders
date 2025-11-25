@@ -101,6 +101,7 @@ interface OrderDetailsTableProps {
   dataProducts: IProducts | undefined;
   dataCategories: ICategories | undefined;
   showProduct: boolean;
+  extraNodesAfter?: React.ReactNode;
 }
 
 const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
@@ -108,6 +109,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
   dataProducts,
   dataCategories,
   showProduct,
+  extraNodesAfter,
 }) => {
   const columns = useMemo(() => {
     return allColumns.filter((column) => {
@@ -130,6 +132,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
       data={data}
       columns={columns}
       meta={{ dataProducts, dataCategories }}
+      extraNodesAfter={extraNodesAfter}
     />
   );
 };

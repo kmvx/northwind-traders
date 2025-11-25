@@ -9,18 +9,20 @@ import { PaginationControls } from '.';
 
 type PaginationProps<T> = {
   data: T[];
-  renderPage: (visibleItems: T[]) => React.ReactNode;
   defaultLimit: number;
   className?: string;
   extraNodesBefore?: React.ReactNode;
+  extraNodesAfter?: React.ReactNode;
+  renderPage: (visibleItems: T[]) => React.ReactNode;
 };
 
 function Pagination<T>({
   data,
-  renderPage,
   defaultLimit,
   className,
   extraNodesBefore,
+  extraNodesAfter,
+  renderPage,
 }: PaginationProps<T>) {
   const [limit] = useQueryStateFixed('limit', {
     defaultValue: defaultLimit,
@@ -57,6 +59,7 @@ function Pagination<T>({
         goToPage={goToPage}
         showAtLeastItemsCount
         extraNodesBefore={extraNodesBefore}
+        extraNodesAfter={extraNodesAfter}
       />
       {renderPage(visibleItems)}
       <PaginationControls

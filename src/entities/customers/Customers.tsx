@@ -85,6 +85,7 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
         <Pagination
           data={filteredData}
           defaultLimit={20}
+          extraNodesBefore={!showFilters && getFiltersToggleButton()}
           renderPage={(customers) => (
             <ResponsiveGrid minWidth="18rem">
               {customers.map((customer) => (
@@ -95,7 +96,6 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
               ))}
             </ResponsiveGrid>
           )}
-          extraNodesBefore={!showFilters && getFiltersToggleButton()}
         />
         {!filterCountry && (
           <>
