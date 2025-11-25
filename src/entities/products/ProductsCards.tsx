@@ -63,14 +63,16 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
           </CardTitle>
         </CardHeader>
         <CardContent className="h-full flex flex-col justify-end gap-2">
-          <div className="flex flex-wrap justify-between items-baseline gap-2">
-            <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
+          <div className="flex justify-end">
             <span
-              className="text-red-600"
+              className="text-red-600 text-sm"
               title="This product was discontinued"
             >
               {item.discontinued && 'Discontinued'}
             </span>
+          </div>
+          <div className="flex flex-wrap justify-between items-baseline gap-2">
+            <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
             <span
               title="Quantity per unit"
               className="text-muted-foreground text-sm"

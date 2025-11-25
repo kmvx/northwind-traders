@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import React from 'react';
 
+import { useIsMobile } from '@/hooks';
+
 interface ResponsiveGridProps {
   minWidth: string;
   children: React.ReactNode;
@@ -12,6 +14,8 @@ const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   children,
   className,
 }) => {
+  const isMobile = useIsMobile();
+
   return (
     <div
       className={clsx(
@@ -19,7 +23,9 @@ const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
         className,
       )}
       style={{
-        gridTemplateColumns: `repeat(auto-fit, minmax(${minWidth}, 1fr))`,
+        gridTemplateColumns: isMobile
+          ? '1fr'
+          : `repeat(auto-fit, minmax(${minWidth}, 1fr))`,
       }}
     >
       {children}
