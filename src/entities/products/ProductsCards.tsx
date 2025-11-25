@@ -25,7 +25,7 @@ const ProductsCards: React.FC<ProductsCardsProps> = ({
       defaultLimit={20}
       extraNodesBefore={extraNodesBefore}
       renderPage={(items) => (
-        <ResponsiveGrid minWidth="18rem">
+        <ResponsiveGrid minWidth="16rem">
           {items.map((item) => (
             <ProductCard
               item={item}
@@ -53,7 +53,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
       <Card className="hover:shadow-lg transition h-full">
         <CardHeader>
           <CardTitle>
-            <div className="flex justify-between">
+            <div className="flex flex-wrap justify-between gap-2">
               <div title="Product name">{item.productName}</div>
               <CategoryLoader
                 dataCategories={dataCategories}
@@ -63,7 +63,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
           </CardTitle>
         </CardHeader>
         <CardContent className="h-full flex flex-col justify-end gap-2">
-          <div className="flex flex-wrap justify-between items-baseline">
+          <div className="flex flex-wrap justify-between items-baseline gap-2">
             <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
             <span
               className="text-red-600"

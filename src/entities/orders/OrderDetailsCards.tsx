@@ -74,7 +74,7 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
       <Card className="hover:shadow-lg transition h-full">
         <CardHeader>
           <CardTitle>
-            <div className="flex justify-between">
+            <div className="flex flex-wrap justify-between gap-2">
               {showProduct ? (
                 <>
                   <BasicLink

@@ -75,7 +75,7 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="h-full flex flex-col justify-end gap-4 text-sm">
-        <div className="flex flex-wrap justify-between">
+        <div className="flex flex-wrap justify-between gap-2">
           <CustomerHoverCard customerId={item.customerId} />
           <EmployeeHoverCard employee={employee} employeeId={item.employeeId} />
         </div>

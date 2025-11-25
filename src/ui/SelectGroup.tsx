@@ -17,7 +17,7 @@ function SelectGroup<T>({
   title,
 }: SelectGroupProps<T>) {
   return (
-    <ButtonGroup title={title}>
+    <ButtonGroup title={title} className="flex-wrap">
       {itemsInfo.map((itemInfo, index) => (
         <Button
           variant={state === itemInfo.value ? 'default' : 'secondary'}
