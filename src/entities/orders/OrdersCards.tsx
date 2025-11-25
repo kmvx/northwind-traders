@@ -24,6 +24,7 @@ const OrdersCards: React.FC<OrdersCardsProps> = ({
 
   return (
     <Pagination
+      suffix="Orders"
       data={data}
       defaultLimit={20}
       extraNodesBefore={extraNodesBefore}

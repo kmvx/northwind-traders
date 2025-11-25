@@ -20,6 +20,7 @@ const ProductsCards: React.FC<ProductsCardsProps> = ({
   const { data: dataCategories } = useQueryCategories();
   return (
     <Pagination
+      suffix="Products"
       data={data}
       defaultLimit={20}
       extraNodesBefore={extraNodesBefore}

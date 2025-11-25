@@ -83,6 +83,7 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
     return (
       <>
         <Pagination
+          suffix="Customers"
           data={filteredData}
           defaultLimit={20}
           extraNodesBefore={!showFilters && getFiltersToggleButton()}

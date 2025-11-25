@@ -37,6 +37,7 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
 }) => {
   return (
     <Pagination
+      suffix="OrderDetails"
       data={data}
       defaultLimit={20}
       extraNodesAfter={extraNodesAfter}

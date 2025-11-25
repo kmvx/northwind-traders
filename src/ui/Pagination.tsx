@@ -8,6 +8,7 @@ import { useQueryStateFixed } from '@/hooks';
 import { PaginationControls } from '.';
 
 type PaginationProps<T> = {
+  suffix: string;
   data: T[];
   defaultLimit: number;
   className?: string;
@@ -17,6 +18,7 @@ type PaginationProps<T> = {
 };
 
 function Pagination<T>({
+  suffix,
   data,
   defaultLimit,
   className,
@@ -24,12 +26,12 @@ function Pagination<T>({
   extraNodesAfter,
   renderPage,
 }: PaginationProps<T>) {
-  const [limit] = useQueryStateFixed('limit', {
+  const [limit] = useQueryStateFixed('limit' + suffix, {
     defaultValue: defaultLimit,
     parse: Number,
   });
 
-  const [offset, setOffset] = useQueryStateFixed('offset', {
+  const [offset, setOffset] = useQueryStateFixed('offset' + suffix, {
     defaultValue: 0,
     parse: Number,
   });
