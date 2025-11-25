@@ -49,9 +49,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
     const totalMoney = data.reduce((acc, item) => acc + getTotalCost(item), 0);
     return (
       <>
-        <span>
-          {data.length} order details, <b>{formatCurrency(totalMoney)}</b>{' '}
-          total.
+        <span className="mx-2">
+          <b>{formatCurrency(totalMoney)}</b> total cost.
         </span>
         {isWidePage ? (
           <OrderDetailsTable

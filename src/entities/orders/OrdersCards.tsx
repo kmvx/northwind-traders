@@ -13,10 +13,13 @@ import { type IOrderFormatted } from '.';
 
 interface OrdersCardsProps {
   data: IOrderFormatted[];
-  extraNodes?: React.ReactNode;
+  extraNodesBefore?: React.ReactNode;
 }
 
-const OrdersCards: React.FC<OrdersCardsProps> = ({ data, extraNodes }) => {
+const OrdersCards: React.FC<OrdersCardsProps> = ({
+  data,
+  extraNodesBefore,
+}) => {
   const { data: dataEmployees } = useQueryEmployees();
 
   return (
@@ -34,7 +37,7 @@ const OrdersCards: React.FC<OrdersCardsProps> = ({ data, extraNodes }) => {
           ))}
         </ResponsiveGrid>
       )}
-      extraNodes={extraNodes}
+      extraNodesBefore={extraNodesBefore}
     />
   );
 };

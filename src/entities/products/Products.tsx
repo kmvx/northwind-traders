@@ -86,7 +86,7 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
     return filteredData;
   }, [data, filterString, filterCategoryId, filterDiscontinued]);
 
-  const extraNodes = useMemo(
+  const extraNodesBefore = useMemo(
     () => !showFilters && getFiltersToggleButton(),
     [showFilters, getFiltersToggleButton],
   );
@@ -100,16 +100,16 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
     if (filteredData.length === 0) {
       return (
         <div className="flex items-center gap-2">
-          {extraNodes}
+          {extraNodesBefore}
           <span>Products not found</span>
         </div>
       );
     }
 
     return isWidePage ? (
-      <ProductsTable data={filteredData} extraNodes={extraNodes} />
+      <ProductsTable data={filteredData} extraNodesBefore={extraNodesBefore} />
     ) : (
-      <ProductsCards data={filteredData} extraNodes={extraNodes} />
+      <ProductsCards data={filteredData} extraNodesBefore={extraNodesBefore} />
     );
   };
 

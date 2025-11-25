@@ -175,7 +175,7 @@ const Orders: React.FC<OrdersProps> = ({
     return result;
   }, [queryResult, filteredData]);
 
-  const extraNodes = useMemo(
+  const extraNodesBefore = useMemo(
     () => !showFilters && getFiltersToggleButton(),
     [showFilters, getFiltersToggleButton],
   );
@@ -189,7 +189,7 @@ const Orders: React.FC<OrdersProps> = ({
     if (filteredData.length === 0) {
       return (
         <div className="flex items-center gap-2">
-          {extraNodes}
+          {extraNodesBefore}
           <span>Orders not found</span>
         </div>
       );
@@ -202,10 +202,13 @@ const Orders: React.FC<OrdersProps> = ({
             data={filteredData}
             isCustomerPage={!!customerId}
             isEmployeePage={!!employeeId}
-            extraNodes={extraNodes}
+            extraNodesBefore={extraNodesBefore}
           />
         ) : (
-          <OrdersCards data={filteredData} extraNodes={extraNodes} />
+          <OrdersCards
+            data={filteredData}
+            extraNodesBefore={extraNodesBefore}
+          />
         )}
         {!customerId && !filterCountry && (
           <>

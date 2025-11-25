@@ -13,7 +13,7 @@ interface PaginationControlsProps {
   totalItems: number;
   goToPage: (page: number) => void;
   showAtLeastItemsCount: boolean;
-  extraNodes?: React.ReactNode;
+  extraNodesBefore?: React.ReactNode;
 }
 
 const PaginationControls: React.FC<PaginationControlsProps> = ({
@@ -22,7 +22,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   totalItems,
   goToPage,
   showAtLeastItemsCount,
-  extraNodes,
+  extraNodesBefore,
 }) => {
   const totalPages = Math.ceil(totalItems / limit);
   const currentPage = Math.floor(offset / limit);
@@ -30,7 +30,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   if (totalPages <= 1) {
     return showAtLeastItemsCount ? (
       <div className="flex items-center">
-        {extraNodes}
+        {extraNodesBefore}
         <span className="mx-2">{totalItems} items</span>
       </div>
     ) : null;
@@ -38,7 +38,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
 
   return (
     <div className="flex items-center justify-start gap-2">
-      {extraNodes}
+      {extraNodesBefore}
 
       <ButtonWithTooltip
         title="Go to the First Page"

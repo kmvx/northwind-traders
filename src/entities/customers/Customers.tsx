@@ -95,7 +95,7 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
               ))}
             </ResponsiveGrid>
           )}
-          extraNodes={!showFilters && getFiltersToggleButton()}
+          extraNodesBefore={!showFilters && getFiltersToggleButton()}
         />
         {!filterCountry && (
           <>
