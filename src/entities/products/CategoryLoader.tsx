@@ -30,7 +30,7 @@ const CategoryLoader: React.FC<CategoryLoaderProps> = ({
     );
   }
 
-  return <Category category={category} />;
+  return <Category category={category} isLink />;
 };
 
 export default CategoryLoader;

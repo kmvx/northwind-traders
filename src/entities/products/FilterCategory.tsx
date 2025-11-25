@@ -21,14 +21,17 @@ const FilterCategory: React.FC<FilterCategoryProps> = ({
 
   const itemsInfo = useMemo(() => {
     let result: SelectStringListInfoType[] = [
-      { value: EMPTY_OPTION_VALUE, component: <Category category={null} /> },
+      {
+        value: EMPTY_OPTION_VALUE,
+        component: <Category category={null} isLink={false} />,
+      },
     ];
     if (dataCategories) {
       result = [
         ...result,
         ...dataCategories.map((item) => ({
           value: String(item.categoryId),
-          component: <Category category={item} />,
+          component: <Category category={item} isLink={false} />,
         })),
       ];
     }
