@@ -4,7 +4,7 @@ import React, { memo, useMemo } from 'react';
 
 import { getCountries, getFlagEmojiByCountryName } from '@/utils';
 
-import { SelectStringList } from '../../ui';
+import { SelectStringList, type SelectStringListInfoType } from '../../ui';
 
 const EMPTY_OPTION_VALUE = 'worldwide';
 
@@ -40,10 +40,15 @@ const FilterCountry = <T extends string>({
   return (
     <span className="font-flags">
       <SelectStringList
-        itemsInfo={options.map((option) => ({
-          component: <Item option={option} />,
-          value: option || EMPTY_OPTION_VALUE,
-        }))}
+        itemsInfo={options.map(
+          (option): SelectStringListInfoType => ({
+            title:
+              (getFlagEmojiByCountryName(option) ?? '') +
+              ' \xa0 ' +
+              (option || 'Worldwide'),
+            value: option || EMPTY_OPTION_VALUE,
+          }),
+        )}
         value={filterCountry || EMPTY_OPTION_VALUE}
         setValue={(value) =>
           setFilterCountry(value === EMPTY_OPTION_VALUE ? '' : value)
@@ -52,18 +57,6 @@ const FilterCountry = <T extends string>({
         className="font-flags"
       />
     </span>
-  );
-};
-
-interface ItemProps {
-  option: string;
-}
-
-const Item: React.FC<ItemProps> = ({ option }) => {
-  return (
-    <>
-      {getFlagEmojiByCountryName(option)} &nbsp; {option || 'Worldwide'}
-    </>
   );
 };
 

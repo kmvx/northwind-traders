@@ -1,20 +1,35 @@
-import type { ICategory } from '@/models';
+import React from 'react';
+
+import { Spinner } from '@/components/ui';
+import type { ICategories } from '@/models';
 import { BasicLink } from '@/ui';
 
 import { getEmojiiByCategoryName } from '.';
 
 interface CategoryProps {
-  category: ICategory | null;
-  isLink: boolean;
+  dataCategories: ICategories | undefined;
+  categoryId: number | undefined;
 }
 
-const Category: React.FC<CategoryProps> = ({ category, isLink }) => {
-  const getContent = () => {
-    return <span>{category ? category.categoryName : 'All categories'}</span>;
-  };
+const Category: React.FC<CategoryProps> = ({ dataCategories, categoryId }) => {
+  const category = dataCategories?.find(
+    (item) => item.categoryId === categoryId,
+  );
+
+  if (!category) {
+    return (
+      <span
+        className="inline-flex items-center gap-2 text-muted-foreground"
+        title="Product category"
+      >
+        {categoryId}
+        <Spinner />
+      </span>
+    );
+  }
 
   return (
-    <div
+    <span
       className="flex items-center -mb-1"
       title={`${category ? category.description : 'Any product category'} (product category)`}
     >
@@ -22,14 +37,10 @@ const Category: React.FC<CategoryProps> = ({ category, isLink }) => {
         {category ? getEmojiiByCategoryName(category.categoryName) : '📦'}
       </span>
       &nbsp;&nbsp;
-      {isLink ? (
-        <BasicLink href={`/products/?categoryId=${category?.categoryId}`}>
-          {getContent()}
-        </BasicLink>
-      ) : (
-        getContent()
-      )}
-    </div>
+      <BasicLink href={`/products/?categoryId=${category?.categoryId}`}>
+        {category?.categoryName}
+      </BasicLink>
+    </span>
   );
 };
 

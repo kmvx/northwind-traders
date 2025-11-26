@@ -21,7 +21,10 @@ export { default as ReloadButton } from './ReloadButton';
 export { default as ResponsiveGrid } from './ResponsiveGrid';
 export { default as ResponsiveItems } from './ResponsiveItems';
 export { default as SelectGroup } from './SelectGroup';
-export { default as SelectStringList } from './SelectStringList';
+export {
+  default as SelectStringList,
+  type SelectStringListInfoType,
+} from './SelectStringList';
 export { default as ThemeCustomToggle } from './ThemeCustomToggle';
 export { default as ThemeToggle } from './ThemeToggle';
 export { default as TopbarControls } from './TopbarControls';

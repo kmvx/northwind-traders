@@ -14,7 +14,8 @@ import {
 import { useIsMobile } from '@/hooks';
 
 export interface SelectStringListInfoType {
-  component?: React.ReactNode;
+  title?: string;
+  description?: string;
   value: string;
 }
 
@@ -50,8 +51,11 @@ const SelectStringList: React.FC<SelectStringListProps> = ({
             key={index}
             value={itemInfo.value}
             className="bg-background"
+            title={itemInfo.description}
           >
-            {itemInfo.component ?? String(itemInfo.value)}
+            {itemInfo.title == undefined
+              ? String(itemInfo.value)
+              : itemInfo.title}
           </NativeSelectOption>
         ))}
       </NativeSelect>
@@ -68,14 +72,18 @@ const SelectStringList: React.FC<SelectStringListProps> = ({
       <SelectTrigger title={title} className={className}>
         <SelectValue
           placeholder={
-            itemsInfo.find((itemInfo) => itemInfo.value === value)?.component
+            itemsInfo.find((itemInfo) => itemInfo.value === value)?.title
           }
         />
       </SelectTrigger>
       <SelectContent className={className}>
         {itemsInfo.map((itemInfo, index) => (
-          <SelectItem key={index} value={itemInfo.value}>
-            {itemInfo.component ?? String(itemInfo.value)}
+          <SelectItem
+            key={index}
+            value={itemInfo.value}
+            title={itemInfo.description}
+          >
+            {itemInfo.title ?? String(itemInfo.value)}
           </SelectItem>
         ))}
       </SelectContent>

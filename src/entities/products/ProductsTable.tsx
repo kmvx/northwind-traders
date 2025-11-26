@@ -7,7 +7,7 @@ import { useQueryCategories } from '@/net';
 import { BasicLink } from '@/ui';
 import { formatCurrency } from '@/utils';
 
-import { CategoryLoader } from '.';
+import { Category } from '.';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,7 +36,7 @@ const allColumns: ColumnDef<IProduct>[] = [
     header: 'Category',
     cell: ({ row, table }) => {
       return (
-        <CategoryLoader
+        <Category
           dataCategories={table?.options?.meta?.dataCategories}
           categoryId={row.original.categoryId}
         />

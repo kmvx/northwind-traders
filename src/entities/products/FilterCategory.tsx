@@ -1,10 +1,9 @@
 import { useCallback, useMemo } from 'react';
 
 import { useQueryCategories } from '@/net';
-import { SelectStringList } from '@/ui';
-import type { SelectStringListInfoType } from '@/ui/SelectStringList';
+import { SelectStringList, type SelectStringListInfoType } from '@/ui';
 
-import { Category } from '.';
+import { getEmojiiByCategoryName } from '.';
 
 const EMPTY_OPTION_VALUE = '*';
 
@@ -20,20 +19,25 @@ const FilterCategory: React.FC<FilterCategoryProps> = ({
   const { data: dataCategories } = useQueryCategories();
 
   const itemsInfo = useMemo(() => {
-    let result: SelectStringListInfoType[] = [
+    const result: SelectStringListInfoType[] = [
       {
         value: EMPTY_OPTION_VALUE,
-        component: <Category category={null} isLink={false} />,
+        title: '📦 \xa0 All categories',
       },
     ];
     if (dataCategories) {
-      result = [
-        ...result,
-        ...dataCategories.map((item) => ({
-          value: String(item.categoryId),
-          component: <Category category={item} isLink={false} />,
-        })),
-      ];
+      result.push(
+        ...dataCategories.map(
+          (item): SelectStringListInfoType => ({
+            value: String(item.categoryId),
+            title:
+              getEmojiiByCategoryName(item.categoryName) +
+              ' \xa0 ' +
+              item.categoryName,
+            description: item.description + ' (product category)',
+          }),
+        ),
+      );
     }
     return result;
   }, [dataCategories]);

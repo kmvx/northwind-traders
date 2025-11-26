@@ -6,7 +6,7 @@ import { useQueryCategories } from '@/net';
 import { BasicLink, Pagination, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
-import { CategoryLoader } from '.';
+import { Category } from '.';
 
 interface ProductsCardsProps {
   data: IProducts;
@@ -59,7 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
             >
               {item.productName}
             </BasicLink>
-            <CategoryLoader
+            <Category
               dataCategories={dataCategories}
               categoryId={item.categoryId}
             />

@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { useQueryEmployees } from '@/net';
-import { SelectStringList } from '@/ui';
-import type { SelectStringListInfoType } from '@/ui/SelectStringList';
+import { SelectStringList, type SelectStringListInfoType } from '@/ui';
 import { getEmployeeNameByData } from '@/utils';
 
 const EMPTY_OPTION_VALUE = '*';
@@ -19,17 +18,19 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
   const { data: dataEmployees } = useQueryEmployees();
 
   const itemsInfo = useMemo(() => {
-    let result: SelectStringListInfoType[] = [
-      { value: EMPTY_OPTION_VALUE, component: '👫 All employees' },
+    const result: SelectStringListInfoType[] = [
+      { value: EMPTY_OPTION_VALUE, title: '👫 \xa0 All employees' },
     ];
     if (dataEmployees) {
-      result = [
-        ...result,
-        ...dataEmployees.map((item) => ({
-          value: String(item.employeeId),
-          component: `${titleOfCourtesyMap[item.titleOfCourtesy] ?? ''} ${getEmployeeNameByData(item)}`,
-        })),
-      ];
+      result.push(
+        ...dataEmployees.map(
+          (item): SelectStringListInfoType => ({
+            value: String(item.employeeId),
+            title: `${titleOfCourtesyMap[item.titleOfCourtesy] ?? ''} \xa0 ${getEmployeeNameByData(item)}`,
+            description: item.title,
+          }),
+        ),
+      );
     }
     return result;
   }, [dataEmployees]);

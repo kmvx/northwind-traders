@@ -14,7 +14,7 @@ import { formatCurrency, setDocumentTitle } from '@/utils';
 
 import { OrderDetails } from '../orders';
 import { Supplier } from '../suppliers';
-import { CategoryLoader } from '.';
+import { Category } from '.';
 
 interface ProductProps {
   productId: number;
@@ -41,7 +41,7 @@ const Product: React.FC<ProductProps> = ({ productId }) => {
       name: 'Category',
       value: (
         <span className="font-bold">
-          <CategoryLoader
+          <Category
             dataCategories={dataCategories}
             categoryId={data.categoryId}
           />

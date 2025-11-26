@@ -16,7 +16,7 @@ import type {
 import { BasicLink, Pagination, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
-import { CategoryLoader } from '../products';
+import { Category } from '../products';
 import { OrderHoverCard } from '.';
 import { getTotalCost } from './utilsOrders';
 
@@ -91,7 +91,7 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
                       </span>
                     )}
                   </BasicLink>
-                  <CategoryLoader
+                  <Category
                     dataCategories={dataCategories}
                     categoryId={product?.categoryId}
                   />
