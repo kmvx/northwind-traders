@@ -8,11 +8,13 @@ import type {
   IOrderDetail,
   IOrderDetails,
   IProducts,
+  ISuppliers,
 } from '@/models';
 import { BasicLink } from '@/ui';
 import { formatCurrency } from '@/utils';
 
 import { Category } from '../products';
+import { SupplierPreview } from '../suppliers';
 import { OrderHoverCard } from '.';
 import { getTotalCost } from './utilsOrders';
 
@@ -21,6 +23,7 @@ declare module '@tanstack/table-core' {
   interface TableMeta<TData extends RowData> {
     dataProducts?: IProducts | undefined;
     dataCategories?: ICategories | undefined;
+    dataSuppliers?: ISuppliers | undefined;
   }
 }
 
@@ -72,6 +75,24 @@ const allColumns: ColumnDef<IOrderDetail>[] = [
     },
   },
   {
+    accessorKey: 'supplierId',
+    header: 'Supplier',
+    cell: ({ row, table }) => {
+      const productId = row.original.productId;
+      const product = table?.options?.meta?.dataProducts?.find(
+        (product) => product.productId === productId,
+      );
+      if (!product) return null;
+
+      return (
+        <SupplierPreview
+          dataSuppliers={table?.options?.meta?.dataSuppliers}
+          supplierId={product.supplierId}
+        />
+      );
+    },
+  },
+  {
     accessorKey: 'unitPrice',
     header: 'Unit Price',
     cell: ({ row }) => formatCurrency(row.original.unitPrice),
@@ -100,6 +121,7 @@ interface OrderDetailsTableProps {
   data: IOrderDetails;
   dataProducts: IProducts | undefined;
   dataCategories: ICategories | undefined;
+  dataSuppliers: ISuppliers | undefined;
   showProduct: boolean;
   extraNodesAfter?: React.ReactNode;
 }
@@ -108,6 +130,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
   data,
   dataProducts,
   dataCategories,
+  dataSuppliers,
   showProduct,
   extraNodesAfter,
 }) => {
@@ -132,7 +155,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
       suffix="OrderDetails"
       data={data}
       columns={columns}
-      meta={{ dataProducts, dataCategories }}
+      meta={{ dataProducts, dataCategories, dataSuppliers }}
       extraNodesAfter={extraNodesAfter}
     />
   );

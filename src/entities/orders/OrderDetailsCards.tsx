@@ -12,11 +12,13 @@ import type {
   IOrderDetail,
   IOrderDetails,
   IProducts,
+  ISuppliers,
 } from '@/models';
 import { BasicLink, Pagination, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
 import { Category } from '../products';
+import { SupplierPreview } from '../suppliers';
 import { OrderHoverCard } from '.';
 import { getTotalCost } from './utilsOrders';
 
@@ -24,6 +26,7 @@ interface OrderDetailsCardsProps {
   data: IOrderDetails;
   dataProducts: IProducts | undefined;
   dataCategories: ICategories | undefined;
+  dataSuppliers: ISuppliers | undefined;
   showProduct: boolean;
   extraNodesAfter?: React.ReactNode;
 }
@@ -32,6 +35,7 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
   data,
   dataProducts,
   dataCategories,
+  dataSuppliers,
   showProduct,
   extraNodesAfter,
 }) => {
@@ -47,6 +51,7 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
               item={item}
               dataProducts={dataProducts}
               dataCategories={dataCategories}
+              dataSuppliers={dataSuppliers}
               showProduct={showProduct}
               key={index}
             />
@@ -61,11 +66,18 @@ interface OrderDetailCardProps {
   item: IOrderDetail;
   dataProducts: IProducts | undefined;
   dataCategories: ICategories | undefined;
+  dataSuppliers: ISuppliers | undefined;
   showProduct: boolean;
 }
 
 const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
-  function OrderCard({ item, dataProducts, dataCategories, showProduct }) {
+  function OrderCard({
+    item,
+    dataProducts,
+    dataCategories,
+    dataSuppliers,
+    showProduct,
+  }) {
     const product = dataProducts?.find(
       (product) => product.productId === item.productId,
     );
@@ -101,14 +113,22 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="">
-          <div
-            className="text-end text-sm"
-            title="Price * Quantity - Discont = Cost"
-          >
-            {formatCurrency(item.unitPrice)} * {item.quantity} units{' '}
-            {item.discount ? ` - ${item.discount * 100}% ` : ''} ={' '}
-            <b>{formatCurrency(getTotalCost(item))}</b>
+        <CardContent>
+          <div className="flex flex-col gap-4">
+            {product && (
+              <SupplierPreview
+                dataSuppliers={dataSuppliers}
+                supplierId={product.supplierId}
+              />
+            )}
+            <div
+              className="text-end text-sm"
+              title="Price * Quantity - Discont = Cost"
+            >
+              {formatCurrency(item.unitPrice)} * {item.quantity} units{' '}
+              {item.discount ? ` - ${item.discount * 100}% ` : ''} ={' '}
+              <b>{formatCurrency(getTotalCost(item))}</b>
+            </div>
           </div>
         </CardContent>
       </Card>

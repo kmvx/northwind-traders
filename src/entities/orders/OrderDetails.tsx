@@ -5,6 +5,7 @@ import {
   useQueryCategories,
   useQueryOrderDetails,
   useQueryProducts,
+  useQuerySuppliers,
 } from '@/net';
 import {
   ErrorMessage,
@@ -38,6 +39,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
   const { data: dataCategories } = useQueryCategories({
     enabled: showProduct,
   });
+  const { data: dataSuppliers } = useQuerySuppliers({
+    enabled: showProduct,
+  });
 
   const isWidePage = usePageSize().isWidePage;
 
@@ -61,6 +65,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
             data={data}
             dataProducts={dataProducts}
             dataCategories={dataCategories}
+            dataSuppliers={dataSuppliers}
             showProduct={showProduct}
             extraNodesAfter={extraNodesAfter}
           />
@@ -69,6 +74,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
             data={data}
             dataProducts={dataProducts}
             dataCategories={dataCategories}
+            dataSuppliers={dataSuppliers}
             showProduct={showProduct}
             extraNodesAfter={extraNodesAfter}
           />
