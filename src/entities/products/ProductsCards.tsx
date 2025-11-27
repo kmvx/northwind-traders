@@ -1,23 +1,30 @@
 import React, { memo } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
-import type { ICategories, IProduct, IProducts } from '@/models';
-import { useQueryCategories } from '@/net';
+import type { ICategories, IProduct, IProducts, ISuppliers } from '@/models';
+import { useQueryCategories, useQuerySuppliers } from '@/net';
 import { BasicLink, Pagination, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
+import { SupplierPreview } from '../suppliers';
 import { Category } from '.';
 
 interface ProductsCardsProps {
   data: IProducts;
   extraNodesBefore?: React.ReactNode;
+  isSupplierPage: boolean;
 }
 
 const ProductsCards: React.FC<ProductsCardsProps> = ({
   data,
   extraNodesBefore,
+  isSupplierPage,
 }) => {
   const { data: dataCategories } = useQueryCategories();
+  const { data: dataSuppliers } = useQuerySuppliers({
+    enabled: !isSupplierPage,
+  });
+
   return (
     <Pagination
       suffix="Products"
@@ -29,6 +36,7 @@ const ProductsCards: React.FC<ProductsCardsProps> = ({
             <ProductCard
               item={item}
               dataCategories={dataCategories}
+              dataSuppliers={isSupplierPage ? undefined : dataSuppliers}
               key={item.productId}
             />
           ))}
@@ -41,11 +49,13 @@ const ProductsCards: React.FC<ProductsCardsProps> = ({
 interface ProductCardProps {
   item: IProduct;
   dataCategories: ICategories | undefined;
+  dataSuppliers: ISuppliers | undefined;
 }
 
 const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
   item,
   dataCategories,
+  dataSuppliers,
 }) {
   return (
     <Card className="hover:shadow-lg transition h-full">
@@ -65,17 +75,25 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent className="h-full flex flex-col justify-end gap-2">
-        <div className="flex justify-end">
-          {item.discontinued && (
-            <span
-              className="text-red-600 text-sm"
-              title="This product was discontinued"
-            >
-              Discontinued
-            </span>
-          )}
-        </div>
+      <CardContent className="h-full flex flex-col justify-end gap-4">
+        {(dataSuppliers || item.discontinued) && (
+          <div className="flex flex-wrap justify-between gap-2">
+            {dataSuppliers && (
+              <SupplierPreview
+                dataSuppliers={dataSuppliers}
+                supplierId={item.supplierId}
+              />
+            )}
+            {item.discontinued && (
+              <span
+                className="text-red-600 text-sm"
+                title="This product was discontinued"
+              >
+                Discontinued
+              </span>
+            )}
+          </div>
+        )}
         <div className="flex flex-wrap justify-between items-baseline gap-2">
           <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
           <span

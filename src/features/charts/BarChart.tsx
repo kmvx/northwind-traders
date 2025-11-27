@@ -142,7 +142,7 @@ const BarChart: React.FC<{
   navigate?: NavigateType;
   categoriesQueryResult: CategoriesQueryResultType;
   hue: number;
-  bottomMargin: number;
+  bottomMargin?: number;
 }> = ({
   name,
   navigate,

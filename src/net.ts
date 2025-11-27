@@ -312,12 +312,15 @@ export const useQueryOrderShipper = ({ orderId }: { orderId: number }) => {
 // Suppliers
 
 export const useQuerySuppliers = ({
+  enabled = true,
   initialData,
 }: {
+  enabled?: boolean;
   initialData?: ISuppliers | undefined;
 } = {}) => {
   return useQuery<ISuppliers>({
     queryKey: [API_URL + '/Suppliers'],
+    enabled,
     ...(initialData ? { initialData } : {}),
   });
 };

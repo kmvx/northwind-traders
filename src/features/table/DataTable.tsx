@@ -149,6 +149,7 @@ function DataTable<TData>({
               </TableRow>
             )}
           </TableBody>
+          {getHeader()}
         </Table>
       </div>
       <PaginationControls

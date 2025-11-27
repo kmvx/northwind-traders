@@ -114,10 +114,20 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
       );
     }
 
+    const isSupplierPage = Boolean(supplierId);
+
     return isWidePage ? (
-      <ProductsTable data={filteredData} extraNodesBefore={extraNodesBefore} />
+      <ProductsTable
+        data={filteredData}
+        extraNodesBefore={extraNodesBefore}
+        isSupplierPage={isSupplierPage}
+      />
     ) : (
-      <ProductsCards data={filteredData} extraNodesBefore={extraNodesBefore} />
+      <ProductsCards
+        data={filteredData}
+        extraNodesBefore={extraNodesBefore}
+        isSupplierPage={isSupplierPage}
+      />
     );
   };
 
