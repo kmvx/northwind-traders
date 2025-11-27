@@ -59,6 +59,14 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
     initialData,
   });
 
+  // Check if there is at least one discontinued product
+  const hasDiscontinuedProduct = useMemo(() => {
+    return data?.some((product) => product.discontinued) ?? false;
+  }, [data]);
+
+  const shouldShowDiscontinuedFilter =
+    hasDiscontinuedProduct || filterDiscontinued != null;
+
   // Filter data
   const filteredData = useMemo(() => {
     let filteredData = data;
@@ -138,10 +146,12 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
             filterCategoryId={filterCategoryId}
             setFilterCategoryId={setFilterCategoryId}
           />
-          <FilterDiscontinued
-            filterDiscontinued={filterDiscontinued}
-            setDiscontinued={setDiscontinued}
-          />
+          {shouldShowDiscontinuedFilter && (
+            <FilterDiscontinued
+              filterDiscontinued={filterDiscontinued}
+              setDiscontinued={setDiscontinued}
+            />
+          )}
           <FiltersClearButton
             disabled={!hasFilters}
             onClick={handleFiltersClear}

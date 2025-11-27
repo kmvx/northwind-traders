@@ -4,8 +4,8 @@ import { SelectGroup } from '@/ui';
 
 const itemsInfo = [
   { component: 'All', value: null },
-  { component: 'Discontinued', value: true },
   { component: 'Active', value: false },
+  { component: 'Discontinued', value: true },
 ] as const;
 
 interface FilterDiscontinuedProps {
