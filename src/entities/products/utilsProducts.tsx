@@ -1,5 +1,5 @@
 const mapProductCategoryToEmojii: Record<string, string> = {
-  Beverages: '🥤',
+  Beverages: '🍾',
   Condiments: '🌶️',
   Confections: '🍬',
   'Dairy Products': '🧀',

@@ -54,10 +54,10 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
 };
 
 const titleOfCourtesyMap: Record<string, string> = {
-  'Dr.': '👨‍🎓',
-  'Mr.': '👨‍💼',
-  'Ms.': '👩‍💼',
-  'Mrs.': '🧑‍💼',
+  'Dr.': '🎓',
+  'Mr.': '👔',
+  'Ms.': '👠',
+  'Mrs.': '💍',
 };
 
 export default FilterEmployee;
