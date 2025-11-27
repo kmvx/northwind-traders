@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import React, { useCallback, useEffect } from 'react';
 
-import { useQueryStateFixed } from '@/hooks';
+import { useQueryStateFixed, useScrollTo } from '@/hooks';
 
 import { PaginationControls } from '.';
 
@@ -45,12 +45,15 @@ function Pagination<T>({
 
   const visibleItems = data.slice(offset, offset + limit);
 
+  const { scrollToRef, scrollTo } = useScrollTo();
+
   const goToPage = useCallback(
     (page: number) => {
       const newOffset = Math.max(0, Math.min(totalItems - 1, page * limit));
       setOffset(newOffset);
+      scrollTo();
     },
-    [limit, totalItems, setOffset],
+    [limit, totalItems, setOffset, scrollTo],
   );
 
   return (
@@ -64,6 +67,7 @@ function Pagination<T>({
         showAtLeastItemsCount
         extraNodesBefore={extraNodesBefore}
         extraNodesAfter={extraNodesAfter}
+        ref={scrollToRef}
       />
       {renderPage(visibleItems)}
       <PaginationControls

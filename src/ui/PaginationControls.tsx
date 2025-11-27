@@ -16,6 +16,7 @@ interface PaginationControlsProps {
   showAtLeastItemsCount: boolean;
   extraNodesBefore?: React.ReactNode;
   extraNodesAfter?: React.ReactNode;
+  ref?: React.RefObject<HTMLDivElement | null>;
 }
 
 const PaginationControls: React.FC<PaginationControlsProps> = ({
@@ -27,6 +28,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   showAtLeastItemsCount,
   extraNodesBefore,
   extraNodesAfter,
+  ref,
 }) => {
   const totalPages = Math.ceil(totalItems / limit);
   const currentPage = Math.floor(offset / limit);
@@ -50,7 +52,10 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2">
+    <div
+      className="flex flex-wrap items-center justify-between gap-2"
+      ref={ref}
+    >
       <div className="flex flex-wrap items-center justify-start gap-2">
         {extraNodesBefore}
 

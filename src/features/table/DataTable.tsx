@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useQueryStateFixed } from '@/hooks';
+import { useQueryStateFixed, useScrollTo } from '@/hooks';
 import { PaginationControls } from '@/ui';
 
 interface DataTableProps<TData> {
@@ -92,13 +92,16 @@ function DataTable<TData>({
     </TableHeader>
   );
 
+  const { scrollToRef, scrollTo } = useScrollTo();
+
   const totalItems = data.length;
   const goToPage = useCallback(
     (page: number) => {
       const newOffset = page * limit;
       setOffset(newOffset);
+      scrollTo();
     },
-    [setOffset, limit],
+    [limit, setOffset, scrollTo],
   );
 
   return (
@@ -112,6 +115,7 @@ function DataTable<TData>({
         showAtLeastItemsCount
         extraNodesBefore={extraNodesBefore}
         extraNodesAfter={extraNodesAfter}
+        ref={scrollToRef}
       />
       <div className="overflow-hidden rounded-md border">
         <Table>
