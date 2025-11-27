@@ -13,11 +13,11 @@ import {
 } from '@/components/ui/select';
 import { useIsMobile } from '@/hooks';
 
-export interface SelectStringListInfoType {
+export type SelectStringListInfoType = {
   title?: string;
   description?: string;
   value: string;
-}
+};
 
 interface SelectStringListProps {
   itemsInfo: readonly SelectStringListInfoType[];

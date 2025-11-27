@@ -5,11 +5,12 @@ import {
   ChevronsRightIcon,
 } from 'lucide-react';
 
-import { ButtonWithTooltip } from '.';
+import { ButtonWithTooltip, PaginationLimitSelect } from '.';
 
 interface PaginationControlsProps {
   offset: number;
   limit: number;
+  setLimit?: ((limit: number) => void) | undefined;
   totalItems: number;
   goToPage: (page: number) => void;
   showAtLeastItemsCount: boolean;
@@ -22,6 +23,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   limit,
   totalItems,
   goToPage,
+  setLimit,
   showAtLeastItemsCount,
   extraNodesBefore,
   extraNodesAfter,
@@ -29,12 +31,18 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   const totalPages = Math.ceil(totalItems / limit);
   const currentPage = Math.floor(offset / limit);
 
+  const getLimitSelect = () => {
+    if (!setLimit || totalItems <= 10) return null;
+    return <PaginationLimitSelect limit={limit} setLimit={setLimit} />;
+  };
+
   if (totalPages <= 1) {
     return showAtLeastItemsCount ? (
-      <div className="flex justify-between gap-2">
+      <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           {extraNodesBefore}
           <span className="mx-2">{totalItems} items</span>
+          {getLimitSelect()}
         </div>
         {extraNodesAfter}
       </div>
@@ -94,6 +102,8 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
             <ChevronsRightIcon className="size-4" />
           </ButtonWithTooltip>
         </div>
+
+        {getLimitSelect()}
       </div>
       <div>{extraNodesAfter}</div>
     </div>

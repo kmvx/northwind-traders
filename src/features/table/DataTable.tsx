@@ -40,7 +40,7 @@ function DataTable<TData>({
   extraNodesBefore,
   extraNodesAfter,
 }: DataTableProps<TData>) {
-  const [limit] = useQueryStateFixed('limit' + suffix, {
+  const [limit, setLimit] = useQueryStateFixed('limit' + suffix, {
     defaultValue: defaultLimit,
     parse: Number,
   });
@@ -106,6 +106,7 @@ function DataTable<TData>({
       <PaginationControls
         offset={offset}
         limit={limit}
+        setLimit={setLimit}
         totalItems={totalItems}
         goToPage={goToPage}
         showAtLeastItemsCount
@@ -149,6 +150,7 @@ function DataTable<TData>({
       <PaginationControls
         offset={offset}
         limit={limit}
+        setLimit={setLimit}
         totalItems={totalItems}
         goToPage={goToPage}
         showAtLeastItemsCount={false}

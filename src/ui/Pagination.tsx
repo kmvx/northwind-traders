@@ -26,7 +26,7 @@ function Pagination<T>({
   extraNodesAfter,
   renderPage,
 }: PaginationProps<T>) {
-  const [limit] = useQueryStateFixed('limit' + suffix, {
+  const [limit, setLimit] = useQueryStateFixed('limit' + suffix, {
     defaultValue: defaultLimit,
     parse: Number,
   });
@@ -58,6 +58,7 @@ function Pagination<T>({
       <PaginationControls
         offset={offset}
         limit={limit}
+        setLimit={setLimit}
         totalItems={totalItems}
         goToPage={goToPage}
         showAtLeastItemsCount
@@ -68,6 +69,7 @@ function Pagination<T>({
       <PaginationControls
         offset={offset}
         limit={limit}
+        setLimit={setLimit}
         totalItems={totalItems}
         goToPage={goToPage}
         showAtLeastItemsCount={false}

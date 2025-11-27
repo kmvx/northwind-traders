@@ -12,6 +12,7 @@ export { default as FullscreenToggle } from './FullscreenToggle';
 export { default as Logo } from './Logo';
 export { default as Pagination } from './Pagination';
 export { default as PaginationControls } from './PaginationControls';
+export { default as PaginationLimitSelect } from './PaginationLimitSelect';
 export { default as PanelBasic } from './PanelBasic';
 export { default as PanelCentred } from './PanelCentred';
 export { default as PanelStretched } from './PanelStretched';
