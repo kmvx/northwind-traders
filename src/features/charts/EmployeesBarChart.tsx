@@ -108,6 +108,7 @@ const EmployeesBarChart: React.FC = () => {
         categoriesQueryResult={categoriesQueryResult}
         hue={hue}
         navigate={navigate}
+        bottomMargin={150}
       />
     </div>
   );

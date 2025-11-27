@@ -19,6 +19,7 @@ function updateChart({
   maxItemsCountPerCategory,
   hue,
   name,
+  bottomMargin,
 }: {
   current: SVGSVGElement;
   navigate: NavigateType;
@@ -26,6 +27,7 @@ function updateChart({
   maxItemsCountPerCategory: number;
   hue: number;
   name: string;
+  bottomMargin: number;
 }) {
   // Prepare data
   const itemsPerCategoryCountArray = [...itemsPerCategoryCount]
@@ -45,7 +47,7 @@ function updateChart({
   const parentHeight = parentNode.clientHeight;
   svgBase.attr('width', parentWidth).attr('height', parentHeight);
 
-  const margin = { top: 30, right: 30, bottom: 150, left: 60 };
+  const margin = { top: 30, right: 30, bottom: bottomMargin, left: 60 };
   const widthChart = parentWidth - margin.left - margin.right;
   const heightChart = parentHeight - margin.top - margin.bottom;
   const svg = svgBase
@@ -70,7 +72,7 @@ function updateChart({
     .call(d3.axisBottom(x).tickSizeOuter(0))
     .selectAll('text')
     .attr('class', 'text-xs')
-    .attr('transform', 'translate(-10, 0) rotate(-45)')
+    .attr('transform', 'translate(-10, 0) rotate(-60)')
     .style('text-anchor', 'end');
 
   // Y axis
@@ -140,11 +142,13 @@ const BarChart: React.FC<{
   navigate?: NavigateType;
   categoriesQueryResult: CategoriesQueryResultType;
   hue: number;
+  bottomMargin: number;
 }> = ({
   name,
   navigate,
-  hue,
   categoriesQueryResult: { categories, error, isLoading, refetch },
+  hue,
+  bottomMargin = 70,
 }) => {
   // Prepare data for the chart
   const { itemsPerCategoryCount, maxItemsCountPerCategory } = useMemo(() => {
@@ -175,15 +179,17 @@ const BarChart: React.FC<{
         maxItemsCountPerCategory,
         hue,
         name,
+        bottomMargin,
       });
     },
     [
+      navigate,
+      navigateLocal,
       itemsPerCategoryCount,
       maxItemsCountPerCategory,
       hue,
       name,
-      navigate,
-      navigateLocal,
+      bottomMargin,
     ],
   );
 
