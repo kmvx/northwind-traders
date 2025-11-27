@@ -88,6 +88,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
 
   return (
     <DataTable
+      suffix="Products"
       data={data}
       columns={allColumns}
       meta={{ dataCategories }}

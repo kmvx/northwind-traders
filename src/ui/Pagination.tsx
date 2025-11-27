@@ -7,10 +7,11 @@ import { useQueryStateFixed } from '@/hooks';
 
 import { PaginationControls } from '.';
 
+const defaultLimit = 20;
+
 type PaginationProps<T> = {
   suffix: string;
   data: T[];
-  defaultLimit: number;
   className?: string;
   extraNodesBefore?: React.ReactNode;
   extraNodesAfter?: React.ReactNode;
@@ -20,7 +21,6 @@ type PaginationProps<T> = {
 function Pagination<T>({
   suffix,
   data,
-  defaultLimit,
   className,
   extraNodesBefore,
   extraNodesAfter,
@@ -36,6 +36,7 @@ function Pagination<T>({
     parse: Number,
   });
 
+  // Reset to first page when data changes
   useEffect(() => {
     setOffset(0);
   }, [data, setOffset]);

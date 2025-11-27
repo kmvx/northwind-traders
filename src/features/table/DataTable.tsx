@@ -1,3 +1,5 @@
+'use client';
+
 import {
   type ColumnDef,
   flexRender,
@@ -6,7 +8,9 @@ import {
   type TableMeta,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+
+const defaultLimit = 20;
 
 import {
   Table,
@@ -16,9 +20,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useQueryStateFixed } from '@/hooks';
 import { PaginationControls } from '@/ui';
 
 interface DataTableProps<TData> {
+  suffix: string;
   data: TData[];
   columns: ColumnDef<TData>[];
   meta?: TableMeta<TData>;
@@ -27,24 +33,42 @@ interface DataTableProps<TData> {
 }
 
 function DataTable<TData>({
+  suffix,
   data,
   columns,
   meta,
   extraNodesBefore,
   extraNodesAfter,
 }: DataTableProps<TData>) {
+  const [limit] = useQueryStateFixed('limit' + suffix, {
+    defaultValue: defaultLimit,
+    parse: Number,
+  });
+
+  const [offset, setOffset] = useQueryStateFixed('offset' + suffix, {
+    defaultValue: 0,
+    parse: Number,
+  });
+
+  // Reset to first page when data changes
+  useEffect(() => {
+    setOffset(0);
+  }, [data, setOffset]);
+
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable<TData>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
+    state: {
       pagination: {
-        pageSize: 20,
+        pageIndex: Math.floor(offset / limit),
+        pageSize: limit,
       },
     },
     ...(meta ? { meta } : {}),
+    // debugTable: process.env.NODE_ENV !== 'production',
   });
 
   const getHeader = () => (
@@ -68,15 +92,13 @@ function DataTable<TData>({
     </TableHeader>
   );
 
-  const pagination = table.getState().pagination;
-  const offset = pagination.pageIndex * pagination.pageSize;
-  const limit = pagination.pageSize;
   const totalItems = data.length;
   const goToPage = useCallback(
     (page: number) => {
-      table.setPageIndex(page);
+      const newOffset = page * limit;
+      setOffset(newOffset);
     },
-    [table],
+    [setOffset, limit],
   );
 
   return (

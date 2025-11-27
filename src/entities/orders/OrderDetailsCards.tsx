@@ -39,7 +39,6 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
     <Pagination
       suffix="OrderDetails"
       data={data}
-      defaultLimit={20}
       extraNodesAfter={extraNodesAfter}
       renderPage={(items) => (
         <ResponsiveGrid minWidth="15rem">

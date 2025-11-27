@@ -129,6 +129,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
   }, [showProduct]);
   return (
     <DataTable
+      suffix="OrderDetails"
       data={data}
       columns={columns}
       meta={{ dataProducts, dataCategories }}

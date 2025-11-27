@@ -85,7 +85,6 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
         <Pagination
           suffix="Customers"
           data={filteredData}
-          defaultLimit={20}
           extraNodesBefore={!showFilters && getFiltersToggleButton()}
           renderPage={(customers) => (
             <ResponsiveGrid minWidth="18rem">

@@ -152,6 +152,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 
   return (
     <DataTable
+      suffix="Orders"
       data={data}
       columns={columns}
       meta={{ dataEmployees, dataShippers }}
