@@ -2,6 +2,8 @@
 
 import { useLayoutEffect, useRef } from 'react';
 
+// Call update callback function on parent resize
+
 const useChartUpdate = (
   updateCallback: ({ current }: { current: SVGSVGElement }) => void,
 ) => {
