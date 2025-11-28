@@ -7,10 +7,26 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on:
+      - ubuntu-latest
+      # - windows-latest
+      # - macos-latest
+
     strategy:
       matrix:
-        node-version: [24.x]
+        node-version:
+          - 24.x
+        config:
+          - name: Default Environment
+            env: {}
+          - name: Berlin Environment
+            env:
+              LC_ALL: de_DE.UTF-8
+              TZ: Europe/Berlin
+
+    name: ${{ matrix.config.name }}
+
+    env: ${{ matrix.config.env }}
 
     steps:
       - name: Check out repository code
