@@ -126,3 +126,6 @@ export function withWaitCursor<T>(fn: () => T) {
     }
   }
 }
+
+export const remToPx = (rem: number): number =>
+  rem * parseFloat(getComputedStyle(document.documentElement).fontSize);

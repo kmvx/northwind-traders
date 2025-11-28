@@ -7,6 +7,7 @@ import invariant from 'tiny-invariant';
 import { useNavigate } from '@/hooks';
 import type { NavigateType } from '@/hooks/useNavigate';
 import { ErrorMessage, WaitSpinner } from '@/ui';
+import { remToPx } from '@/utils';
 
 import { useChartUpdate } from '.';
 import type { CategoriesQueryResultType } from './types';
@@ -19,7 +20,7 @@ function updateChart({
   maxItemsCountPerCategory,
   hue,
   name,
-  bottomMargin,
+  bottomMarginRem,
 }: {
   current: SVGSVGElement;
   navigate: NavigateType;
@@ -27,7 +28,7 @@ function updateChart({
   maxItemsCountPerCategory: number;
   hue: number;
   name: string;
-  bottomMargin: number;
+  bottomMarginRem: number;
 }) {
   // Prepare data
   const itemsPerCategoryCountArray = [...itemsPerCategoryCount]
@@ -47,7 +48,12 @@ function updateChart({
   const parentHeight = parentNode.clientHeight;
   svgBase.attr('width', parentWidth).attr('height', parentHeight);
 
-  const margin = { top: 30, right: 30, bottom: bottomMargin, left: 60 };
+  const margin = {
+    top: remToPx(2),
+    right: remToPx(2),
+    bottom: remToPx(bottomMarginRem),
+    left: remToPx(4),
+  };
   const widthChart = parentWidth - margin.left - margin.right;
   const heightChart = parentHeight - margin.top - margin.bottom;
   const svg = svgBase
@@ -142,13 +148,13 @@ const BarChart: React.FC<{
   navigate?: NavigateType;
   categoriesQueryResult: CategoriesQueryResultType;
   hue: number;
-  bottomMargin?: number;
+  bottomMarginRem?: number;
 }> = ({
   name,
   navigate,
   categoriesQueryResult: { categories, error, isLoading, refetch },
   hue,
-  bottomMargin = 70,
+  bottomMarginRem = 5,
 }) => {
   // Prepare data for the chart
   const { itemsPerCategoryCount, maxItemsCountPerCategory } = useMemo(() => {
@@ -179,7 +185,7 @@ const BarChart: React.FC<{
         maxItemsCountPerCategory,
         hue,
         name,
-        bottomMargin,
+        bottomMarginRem,
       });
     },
     [
@@ -189,7 +195,7 @@ const BarChart: React.FC<{
       maxItemsCountPerCategory,
       hue,
       name,
-      bottomMargin,
+      bottomMarginRem,
     ],
   );
 

@@ -88,7 +88,7 @@ class SVGBuilder {
         .attr('class', 'pointer-events-auto hover:opacity-50')
         .attr('stroke', 'var(--chart-line-color)')
         .attr('stroke-width', 2)
-        .attr('r', '1rem')
+        .attr('r', '0.5rem')
         .attr('cx', (_, index: number) => x(index))
         .attr('cy', (d) => y(d));
     }
