@@ -22,6 +22,7 @@ import {
   FontSizeControls,
   FullscreenToggle,
   Logo,
+  NavigateButton,
   QueryFetchingIndicator,
   ThemeCustomToggle,
   ThemeToggle,
@@ -83,13 +84,15 @@ const AppSidebar: React.FC = () => {
             <div className="h-max-sm:py-0 p-2 flex flex-col gap-2">
               <div className="flex gap-2">
                 <ThemeToggle />
-                <FullscreenToggle />
+                <FontSizeControls />
                 <SidebarTrigger variant="outline" className="size-9" />
                 <QueryFetchingIndicator />
               </div>
               <div className="flex gap-2">
                 <ThemeCustomToggle />
-                <FontSizeControls />
+                <NavigateButton isMoveBackward />
+                <NavigateButton isMoveBackward={false} />
+                <FullscreenToggle />
               </div>
             </div>
           </SidebarGroupContent>

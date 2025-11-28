@@ -10,6 +10,7 @@ export { default as FiltersToggleButton } from './FiltersToggleButton';
 export { default as FontSizeControls } from './FontSizeControls';
 export { default as FullscreenToggle } from './FullscreenToggle';
 export { default as Logo } from './Logo';
+export { default as NavigateButton } from './NavigateButton';
 export { default as Pagination } from './Pagination';
 export { default as PaginationControls } from './PaginationControls';
 export { default as PaginationLimitSelect } from './PaginationLimitSelect';
