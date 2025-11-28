@@ -140,7 +140,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
         if (showProduct && column.accessorKey === 'orderId') return false;
         if (
           !showProduct &&
-          ['productId', 'categoryId'].some(
+          ['productId', 'categoryId', 'supplierId'].some(
             (item) => column.accessorKey === item,
           )
         ) {
