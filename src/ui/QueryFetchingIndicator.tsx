@@ -2,7 +2,7 @@ import { useIsFetching } from '@tanstack/react-query';
 
 import { Spinner } from '@/components/ui';
 
-const QueryFetchingIndicator: React.FC = ({}) => {
+const QueryFetchingIndicator: React.FC = () => {
   const isFetching = useIsFetching();
   if (!isFetching) return null;
   return (

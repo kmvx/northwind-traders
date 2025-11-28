@@ -27,7 +27,7 @@ declare module '@tanstack/table-core' {
   }
 }
 
-const allColumns: ColumnDef<IOrderDetail>[] = [
+const allColumns = [
   {
     accessorKey: 'orderId',
     header: 'Order ID',
@@ -110,12 +110,13 @@ const allColumns: ColumnDef<IOrderDetail>[] = [
     },
   },
   {
+    accessorKey: 'cost',
     header: 'Cost',
     cell: ({ row }) => {
       return formatCurrency(getTotalCost(row.original));
     },
   },
-];
+] satisfies ColumnDef<IOrderDetail>[];
 
 interface OrderDetailsTableProps {
   data: IOrderDetails;
@@ -136,17 +137,18 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
 }) => {
   const columns = useMemo(() => {
     return allColumns.filter((column) => {
-      if ('accessorKey' in column) {
-        if (showProduct && column.accessorKey === 'orderId') return false;
-        if (
-          !showProduct &&
-          ['productId', 'categoryId', 'supplierId'].some(
-            (item) => column.accessorKey === item,
-          )
-        ) {
-          return false;
-        }
+      if (showProduct && column.accessorKey === 'orderId') return false;
+
+      type AccessorKeyType = (typeof column)['accessorKey'];
+      if (
+        !showProduct &&
+        (
+          ['productId', 'categoryId', 'supplierId'] satisfies AccessorKeyType[]
+        ).some((item) => column.accessorKey === item)
+      ) {
+        return false;
       }
+
       return true;
     });
   }, [showProduct]);

@@ -18,7 +18,7 @@ declare module '@tanstack/table-core' {
   }
 }
 
-const allColumns: ColumnDef<IProduct>[] = [
+const allColumns = [
   {
     accessorKey: 'productId',
     header: '#',
@@ -87,7 +87,7 @@ const allColumns: ColumnDef<IProduct>[] = [
       return row.original.discontinued ? 'Discontinued' : 'Active';
     },
   },
-];
+] satisfies ColumnDef<IProduct>[];
 
 interface ProductsTableProps {
   data: IProducts;
@@ -107,9 +107,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
 
   const columns = useMemo(() => {
     return allColumns.filter((column) => {
-      if ('accessorKey' in column) {
-        if (isSupplierPage && column.accessorKey === 'supplierId') return false;
-      }
+      if (isSupplierPage && column.accessorKey === 'supplierId') return false;
       return true;
     });
   }, [isSupplierPage]);

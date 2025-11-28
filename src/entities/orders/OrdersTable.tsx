@@ -24,7 +24,7 @@ declare module '@tanstack/table-core' {
   }
 }
 
-const allColumns: ColumnDef<IOrderFormatted>[] = [
+const allColumns = [
   {
     accessorKey: 'orderId',
     header: 'Order ID',
@@ -122,7 +122,7 @@ const allColumns: ColumnDef<IOrderFormatted>[] = [
       );
     },
   },
-];
+] satisfies ColumnDef<IOrderFormatted>[];
 
 interface OrdersTableProps {
   data: IOrderFormatted[];
@@ -142,10 +142,8 @@ const OrdersTable: React.FC<OrdersTableProps> = ({
 
   const columns = useMemo(() => {
     return allColumns.filter((column) => {
-      if ('accessorKey' in column) {
-        if (isCustomerPage && column.accessorKey === 'customerId') return false;
-        if (isEmployeePage && column.accessorKey === 'employeeId') return false;
-      }
+      if (isCustomerPage && column.accessorKey === 'customerId') return false;
+      if (isEmployeePage && column.accessorKey === 'employeeId') return false;
       return true;
     });
   }, [isCustomerPage, isEmployeePage]);

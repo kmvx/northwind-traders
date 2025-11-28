@@ -7,7 +7,6 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React from 'react';
 
 import { Toaster } from '@/components/ui/sonner';
-import { useInit } from '@/hooks';
 import FetchError from '@/utils/FetchError';
 
 const queryClient = new QueryClient({
@@ -62,8 +61,6 @@ interface ProvidersInitProps {
 }
 
 const ProvidersInit: React.FC<ProvidersInitProps> = ({ children }) => {
-  useInit();
-
   return <>{children}</>;
 };
 
