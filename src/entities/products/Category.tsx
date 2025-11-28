@@ -30,8 +30,8 @@ const Category: React.FC<CategoryProps> = ({ dataCategories, categoryId }) => {
 
   return (
     <span
-      className="flex items-center -mb-1"
-      title={`${category ? category.description : 'Any product category'} (product category)`}
+      className="flex items-center"
+      title={`${category ? category.description : 'Any product category'} - product category`}
     >
       <span className="mb-1">
         {category ? getEmojiiByCategoryName(category.categoryName) : '📦'}

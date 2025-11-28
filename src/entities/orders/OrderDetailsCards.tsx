@@ -86,12 +86,12 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
       <Card className="hover:shadow-lg transition h-full">
         <CardHeader>
           <CardTitle>
-            <div className="flex flex-wrap justify-between gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               {showProduct ? (
                 <>
                   <BasicLink
                     href={`/products/${item.productId}`}
-                    title="Product"
+                    title="Product name"
                   >
                     {product ? (
                       product.productName
