@@ -3,6 +3,7 @@ import os from 'os';
 const start = new Date();
 
 export async function GET(request: Request) {
+  console.log('/api/status:', request.url, new Date().toISOString());
   const now = new Date();
   return Response.json({
     app: {
