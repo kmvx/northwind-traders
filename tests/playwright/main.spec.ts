@@ -8,12 +8,12 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/Northwind/);
 });
 
-test('filter field', async ({ page }) => {
+test('find text', async ({ page }) => {
   await page.goto(URL);
-  const clearFiltersText = page.getByText('Clear filters', { exact: true });
-  await expect(clearFiltersText).toHaveCount(0);
+  const findedText = page.getByText('9 employees', { exact: true });
+  await expect(findedText).toHaveCount(0);
   await page.getByText('Employees').click();
-  await expect(clearFiltersText).toHaveCount(1);
-  console.log('Filters count', await clearFiltersText.count());
-  await expect(clearFiltersText).toBeVisible();
+  await expect(findedText).toHaveCount(1);
+  console.log('finded texts count', await findedText.count());
+  await expect(findedText).toBeVisible();
 });
