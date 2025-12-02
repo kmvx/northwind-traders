@@ -13,15 +13,17 @@ export default async function proxy(request: NextRequest) {
 
   const statusCode = response.status;
 
-  // NOTE: Don't wait
-  logRequests({
-    method,
-    url,
-    ip,
-    userAgent,
-    statusCode,
-    responseTimeMS,
-  });
+  if (new URL(url).searchParams.get('log') === 'true') {
+    // NOTE: Don't wait
+    logRequests({
+      method,
+      url,
+      ip,
+      userAgent,
+      statusCode,
+      responseTimeMS,
+    });
+  }
 
   return response;
 }
