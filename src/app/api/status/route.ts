@@ -14,6 +14,11 @@ export async function GET(request: Request) {
       name: process.env.npm_package_name,
       version: process.env.npm_package_version,
       NODE_ENV: process.env.NODE_ENV,
+      DATABASE_URL_length: process.env.DATABASE_URL?.length,
+      BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+      BETTER_AUTH_SECRET_length: process.env.BETTER_AUTH_SECRET?.length,
+      GOOGLE_CLIENT_ID_length: process.env.GOOGLE_CLIENT_ID?.length,
+      GOOGLE_CLIENT_SECRET_length: process.env.GOOGLE_CLIENT_SECRET?.length,
     },
     node: {
       version: process.version,
