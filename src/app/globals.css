@@ -139,6 +139,10 @@
     env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
+.tsqd-open-btn-container {
+  bottom: 70px !important;
+}
+
 @font-face {
   font-family: NotoColorEmojiLimited;
   unicode-range: U+1F1E6-1F1FF;

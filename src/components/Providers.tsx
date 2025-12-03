@@ -1,7 +1,7 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React from 'react';
@@ -50,7 +50,7 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
           <ProvidersInit>{children}</ProvidersInit>
         </NuqsAdapter>
         <Toaster position="top-center" richColors />
-        {/* <ReactQueryDevtools buttonPosition="bottom-left" /> */}
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </ThemeProvider>
   );
