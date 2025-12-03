@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { TriangleAlertIcon } from 'lucide-react';
 import React from 'react';
 
@@ -20,10 +19,10 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
   const text = 'Error: ' + error.message;
 
   return (
-    <div className={clsx('text-red-600', className)}>
+    <div className={className}>
       <Alert
         variant="destructive"
-        className="flex flex-wrap items-center gap-2 bg-red-50"
+        className="flex flex-wrap items-center gap-2 bg-red-500/20 [&>svg]:size-9"
       >
         <TriangleAlertIcon />
         <div
@@ -33,17 +32,18 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{text}</AlertDescription>
         </div>
-        <CopyButton content={text} />
-        {retry && (
-          <ButtonWithTooltip
-            onClick={retry}
-            title="Refetch network request"
-            size="sm"
-            variant="outline"
-          >
-            Retry
-          </ButtonWithTooltip>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          <CopyButton content={text} />
+          {retry && (
+            <ButtonWithTooltip
+              onClick={retry}
+              title="Refetch network request"
+              variant="outline"
+            >
+              Retry
+            </ButtonWithTooltip>
+          )}
+        </div>
       </Alert>
     </div>
   );
