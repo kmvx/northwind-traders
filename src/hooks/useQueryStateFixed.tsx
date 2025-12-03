@@ -11,6 +11,8 @@ import { useState } from 'react';
 
 // useQueryState() calls useSearchParams() that requires <Suspense /> component.
 // Fixing it.
+// https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+// <Suspense fallback={<WaitSpinner />} /> blocks rendering (permanent fallback component) when JavaScript is disabled
 
 function useQueryStateFixed<T>(
   key: string,
