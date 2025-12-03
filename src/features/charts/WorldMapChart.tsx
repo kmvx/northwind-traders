@@ -53,9 +53,8 @@ function updateChart({
     svg.attr('width', parentWidth).attr('height', parentHeight);
 
     const projection = d3
-      .geoNaturalEarth1()
-      //.geoAzimuthalEqualArea()
-      //.geoCylindricalEqualArea()
+      //.geoNaturalEarth1()
+      .geoEqualEarth()
       .scale(parentWidth / 1.5 / Math.PI)
       .translate([parentWidth / 2.2, parentHeight / 2]);
 
