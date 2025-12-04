@@ -1,3 +1,4 @@
+export { Badge } from './badge';
 export { Button } from './button';
 export { ButtonGroup } from './button-group';
 export { Card, CardContent, CardHeader, CardTitle } from './card';

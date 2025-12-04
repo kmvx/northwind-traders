@@ -8,7 +8,7 @@ import { BasicLink } from '@/ui';
 import { formatCurrency } from '@/utils';
 
 import { SupplierPreview } from '../suppliers';
-import { Category } from '.';
+import { Category, Discontinued } from '.';
 
 declare module '@tanstack/table-core' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -84,7 +84,7 @@ const allColumns = [
     accessorKey: 'discontinued',
     header: 'Discontinued',
     cell: ({ row }) => {
-      return row.original.discontinued ? 'Discontinued' : 'Active';
+      return <Discontinued discontinued={row.original.discontinued} />;
     },
   },
 ] satisfies ColumnDef<IProduct>[];

@@ -1,4 +1,5 @@
 export { default as Category } from './Category';
+export { default as Discontinued } from './Discontinued';
 export { default as FilterCategory } from './FilterCategory';
 export { default as FilterDiscontinued } from './FilterDiscontinued';
 export { default as Product } from './Product';

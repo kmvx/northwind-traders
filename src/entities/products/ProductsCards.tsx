@@ -7,7 +7,7 @@ import { BasicLink, Pagination, ResponsiveGrid } from '@/ui';
 import { formatCurrency } from '@/utils';
 
 import { SupplierPreview } from '../suppliers';
-import { Category } from '.';
+import { Category, Discontinued } from '.';
 
 interface ProductsCardsProps {
   data: IProducts;
@@ -84,14 +84,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
                 supplierId={item.supplierId}
               />
             )}
-            {item.discontinued && (
-              <span
-                className="text-sm text-red-600"
-                title="This product was discontinued"
-              >
-                Discontinued
-              </span>
-            )}
+            {item.discontinued && <Discontinued />}
           </div>
         )}
         <div className="flex flex-wrap items-baseline justify-between gap-2">

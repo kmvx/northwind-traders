@@ -14,7 +14,7 @@ import { formatCurrency, setDocumentTitle } from '@/utils';
 
 import { OrderDetails } from '../orders';
 import { Supplier } from '../suppliers';
-import { Category } from '.';
+import { Category, Discontinued } from '.';
 
 interface ProductProps {
   productId: number;
@@ -78,11 +78,7 @@ const Product: React.FC<ProductProps> = ({ productId }) => {
     },
     {
       name: 'Discontinued',
-      value: data.discontinued ? (
-        <span className="text-red-600">Discontinued</span>
-      ) : (
-        'Active'
-      ),
+      value: <Discontinued discontinued={data.discontinued} />,
       description: 'Indicates if the product is discontinued or active.',
     },
   ];
