@@ -12,7 +12,7 @@ interface LocationProps {
 const Location: React.FC<LocationProps> = ({ country, city, title }) => {
   return (
     <span
-      className="flex items-center justify-end gap-2 text-sm text-muted-foreground flex-wrap"
+      className="text-muted-foreground flex flex-wrap items-center justify-end gap-2 text-sm"
       title={title}
     >
       <MapPinIcon className="size-4" />

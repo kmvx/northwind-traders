@@ -163,11 +163,11 @@ const CustomerPreview: React.FC<CustomerPreviewProps> = memo(
   function CustomerPreview({ customer }) {
     return (
       <Link href={`/customers/${customer.customerId}`} className="block">
-        <Card className="hover:shadow-lg transition h-full">
+        <Card className="h-full transition hover:shadow-lg">
           <CardHeader>
             <CardTitle title="Customer name">{customer.companyName}</CardTitle>
           </CardHeader>
-          <CardContent className="h-full flex flex-col justify-end gap-4">
+          <CardContent className="flex h-full flex-col justify-end gap-4">
             <div className="text-end" title="Customer company ID">
               {customer.customerId}
             </div>
@@ -192,8 +192,8 @@ function LocalSkeleton() {
             <CardHeader>
               <Skeleton className="h-6 w-3/4" />
             </CardHeader>
-            <CardContent className="h-full flex flex-col justify-end gap-4">
-              <Skeleton className="h-4 w-full ml-auto max-w-[40px]" />
+            <CardContent className="flex h-full flex-col justify-end gap-4">
+              <Skeleton className="ml-auto h-4 w-full max-w-[40px]" />
               <LocationSkeleton />
             </CardContent>
           </Card>

@@ -14,10 +14,10 @@ const ContactPerson: React.FC<ContactPersonProps> = ({
 }) => {
   return (
     <div className="flex items-start gap-2" title={title}>
-      <UserIcon className="size-4 text-muted-foreground mt-1" />
+      <UserIcon className="text-muted-foreground mt-1 size-4" />
       <div className="flex flex-col">
         <b>{name}</b>
-        <span className="text-sm text-muted-foreground">{contactTitle}</span>
+        <span className="text-muted-foreground text-sm">{contactTitle}</span>
       </div>
     </div>
   );

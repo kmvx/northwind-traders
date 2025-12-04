@@ -20,7 +20,7 @@ const SupplierPreview: React.FC<SupplierPreviewProps> = ({
   if (!supplier) {
     return (
       <span
-        className="inline-flex items-center gap-2 text-muted-foreground"
+        className="text-muted-foreground inline-flex items-center gap-2"
         title="Supplier"
       >
         {supplierId}

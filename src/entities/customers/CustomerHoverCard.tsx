@@ -53,7 +53,7 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
         {data.fax && <ContactPhone phone={data.fax} isFax />}
 
         <div className="flex items-center gap-2" title="ID">
-          <HashIcon className="size-4 text-muted-foreground" />
+          <HashIcon className="text-muted-foreground size-4" />
           <span className="flex items-center gap-2">
             <b>{data.customerId}</b>
           </span>

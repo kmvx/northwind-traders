@@ -18,7 +18,7 @@ const FiltersToggleButton: React.FC<FiltersToggleButtonProps> = ({
       title="Toggle filters"
       data-state={showFilters ? 'on' : 'off'}
       onClick={() => setShowFilters((prev) => !prev)}
-      className="data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-primary data-[state=on]:*:[svg]:stroke-primary"
+      className="data-[state=on]:*:[svg]:fill-primary data-[state=on]:*:[svg]:stroke-primary data-[state=on]:bg-transparent"
     >
       <FunnelIcon className="size-4" />
     </Toggle>

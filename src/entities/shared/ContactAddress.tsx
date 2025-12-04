@@ -25,7 +25,7 @@ const ContactAddress: React.FC<ContactAddressProps> = ({
       className={cn('flex items-center gap-2 font-bold', className)}
       title={title ? title : 'Address'}
     >
-      <MapPinIcon className="min-w-4 size-4 text-muted-foreground" />
+      <MapPinIcon className="text-muted-foreground size-4 min-w-4" />
       <Flag country={country} />
       <div className="flex flex-col">
         <span>{address}</span>

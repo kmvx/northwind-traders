@@ -74,7 +74,7 @@ const allColumns = [
         <div className="flex flex-col gap-1">
           <div>{shipper.companyName}</div>
           <div
-            className="text-xs text-muted-foreground flex items-center gap-1 ms-2"
+            className="text-muted-foreground ms-2 flex items-center gap-1 text-xs"
             title="Phone"
           >
             <PhoneIcon className="size-2" />

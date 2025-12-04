@@ -77,7 +77,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
       name: 'Birth date',
       value: (
         <div className="flex items-center gap-2">
-          <CakeIcon className="size-4 text-muted-foreground" />
+          <CakeIcon className="text-muted-foreground size-4" />
           <span className="flex items-center gap-2">
             <b>{formatDateFromString(data.birthDate)}</b>
           </span>
@@ -104,7 +104,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
             src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
             width={103}
             height={118}
-            className="rounded-md border float-left mr-2"
+            className="float-left mr-2 rounded-md border"
             alt=""
           />
           <div>{data.notes}</div>
@@ -112,7 +112,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
 
         {data.reportsTo && (
           <div className="flex items-center gap-2">
-            <FlagIcon className="size-4 text-muted-foreground" />
+            <FlagIcon className="text-muted-foreground size-4" />
             <EmployeeLink
               employeeId={data.reportsTo}
               initialData={initialData?.employeeReportsTo}

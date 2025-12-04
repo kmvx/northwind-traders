@@ -47,7 +47,7 @@ const DebouncedInput: React.FC<DebouncedInputProps> = ({
         onChange={(event) => setLocalValue(event.target.value)}
         title={title}
       />
-      <span className="absolute right-10 top-1/2 -translate-y-1/2 text-muted-foreground">
+      <span className="text-muted-foreground absolute top-1/2 right-10 -translate-y-1/2">
         {isDebouncing && <Spinner />}
       </span>
     </div>

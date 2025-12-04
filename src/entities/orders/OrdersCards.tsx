@@ -68,13 +68,13 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({
         <CardTitle>
           <BasicLink
             href={`/orders/${item.orderId}`}
-            className="font-bold text-xl"
+            className="text-xl font-bold"
           >
             Order #{item.orderId}
           </BasicLink>
         </CardTitle>
       </CardHeader>
-      <CardContent className="h-full flex flex-col justify-end gap-4 text-sm">
+      <CardContent className="flex h-full flex-col justify-end gap-4 text-sm">
         <div className="flex flex-wrap justify-between gap-2">
           <CustomerHoverCard customerId={item.customerId} />
           <EmployeeHoverCard employee={employee} employeeId={item.employeeId} />

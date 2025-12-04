@@ -33,7 +33,7 @@ const Product: React.FC<ProductProps> = ({ productId }) => {
   const NoneComponent = data.discontinued ? (
     'None'
   ) : (
-    <span className="text-red-600 font-bold">None</span>
+    <span className="font-bold text-red-600">None</span>
   );
 
   const items = [

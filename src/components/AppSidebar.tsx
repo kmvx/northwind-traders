@@ -82,7 +82,7 @@ const AppSidebar: React.FC = () => {
         <SidebarGroup>
           <SidebarGroupLabel>Settings</SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="h-max-sm:py-0 p-2 flex flex-col gap-2">
+            <div className="h-max-sm:py-0 flex flex-col gap-2 p-2">
               <div className="flex gap-2">
                 <ThemeToggle />
                 <FontSizeControls />
@@ -98,7 +98,7 @@ const AppSidebar: React.FC = () => {
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup className="hidden h-max-sm:flex">
+        <SidebarGroup className="h-max-sm:flex hidden">
           <Logo />
         </SidebarGroup>
       </SidebarContent>

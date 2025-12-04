@@ -19,7 +19,7 @@ const Category: React.FC<CategoryProps> = ({ dataCategories, categoryId }) => {
   if (!category) {
     return (
       <span
-        className="inline-flex items-center gap-2 text-muted-foreground"
+        className="text-muted-foreground inline-flex items-center gap-2"
         title="Product category"
       >
         {categoryId}

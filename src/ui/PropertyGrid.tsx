@@ -27,16 +27,16 @@ const PropertyGrid: React.FC<PropertyGridProps> = ({ items }) => {
 
 function Item({ item }: { item: PropertyGridItemType }) {
   return (
-    <div className="flex flex-col sm:flex-row flex-wrap gap-x-4 gap-y-2">
+    <div className="flex flex-col flex-wrap gap-x-4 gap-y-2 sm:flex-row">
       <div className="">
         <div>{item.name}:</div>
         {item.description && (
-          <div className="text-xs text-muted-foreground">
+          <div className="text-muted-foreground text-xs">
             {item.description}
           </div>
         )}
       </div>
-      <div className="grow flex items-center justify-end">
+      <div className="flex grow items-center justify-end">
         {typeof item.value === 'string' || typeof item.value === 'number' ? (
           <span className="text-end font-bold">{item.value}</span>
         ) : (

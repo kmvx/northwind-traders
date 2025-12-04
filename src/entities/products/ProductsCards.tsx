@@ -58,7 +58,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
   dataSuppliers,
 }) {
   return (
-    <Card className="hover:shadow-lg transition h-full">
+    <Card className="h-full transition hover:shadow-lg">
       <CardHeader>
         <CardTitle>
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -75,7 +75,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent className="h-full flex flex-col justify-end gap-4">
+      <CardContent className="flex h-full flex-col justify-end gap-4">
         {(dataSuppliers || item.discontinued) && (
           <div className="flex flex-wrap justify-between gap-2">
             {dataSuppliers && (
@@ -86,7 +86,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
             )}
             {item.discontinued && (
               <span
-                className="text-red-600 text-sm"
+                className="text-sm text-red-600"
                 title="This product was discontinued"
               >
                 Discontinued
@@ -94,7 +94,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
             )}
           </div>
         )}
-        <div className="flex flex-wrap justify-between items-baseline gap-2">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
           <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
           <span
             title="Quantity per unit"

@@ -9,7 +9,7 @@ import { authClient } from './auth-client';
 
 const Login: React.FC = () => {
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-8">
+    <div className="flex h-full flex-col items-center justify-center gap-8">
       <LogInIcon className="size-50" />
       <Separator className="max-w-75" />
       <Typography.Header1>Login</Typography.Header1>

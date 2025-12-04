@@ -85,13 +85,13 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
               key={item.supplierId}
               className="block"
             >
-              <Card className="hover:shadow-lg transition h-full">
+              <Card className="h-full transition hover:shadow-lg">
                 <CardHeader>
                   <CardTitle title="Supplier name">
                     {item.companyName}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="h-full flex flex-col justify-end">
+                <CardContent className="flex h-full flex-col justify-end">
                   <Location
                     country={item.country}
                     city={item.city}
@@ -177,7 +177,7 @@ function LocalSkeleton() {
             <CardHeader>
               <Skeleton className="h-6 w-3/4" />
             </CardHeader>
-            <CardContent className="h-full flex flex-col justify-end">
+            <CardContent className="flex h-full flex-col justify-end">
               <LocationSkeleton />
             </CardContent>
           </Card>

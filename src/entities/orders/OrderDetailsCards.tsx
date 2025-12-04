@@ -83,7 +83,7 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
     );
 
     return (
-      <Card className="hover:shadow-lg transition h-full">
+      <Card className="h-full transition hover:shadow-lg">
         <CardHeader>
           <CardTitle>
             <div className="flex flex-wrap items-center justify-between gap-2">

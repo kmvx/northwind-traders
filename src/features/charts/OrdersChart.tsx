@@ -391,7 +391,7 @@ const OrdersChart: React.FC<OrdersChartProps> = ({ queryResult, children }) => {
         Distribution of count of <b>orders</b> by <b>month</b>
       </h3>
       {children}
-      <div className="relative h-75 flex justify-center">{getContent()}</div>
+      <div className="relative flex h-75 justify-center">{getContent()}</div>
     </div>
   );
 };

@@ -37,9 +37,9 @@ const User: React.FC = () => {
         <AvatarImage src={user.image ?? ''} alt={user.name} />
         <AvatarFallback className="rounded-md">?</AvatarFallback>
       </Avatar>
-      <div className="flex-grow grid">
+      <div className="grid flex-grow">
         <span className="truncate text-sm font-bold">{user.name}</span>
-        <span className="truncate text-xs text-muted-foreground">
+        <span className="text-muted-foreground truncate text-xs">
           {user.email}
         </span>
       </div>

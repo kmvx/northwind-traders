@@ -8,7 +8,7 @@ import { Typography } from '@/ui';
 
 export default function NotFound() {
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-8 p-2 text-center text-balance">
+    <div className="flex h-full flex-col items-center justify-center gap-8 p-2 text-center text-balance">
       <FileExclamationPointIcon className="size-50" />
       <Separator className="max-w-75" />
       <Typography.Header1>Page Not Found</Typography.Header1>

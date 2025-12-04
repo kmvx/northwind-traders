@@ -88,7 +88,7 @@ const OrderHoverCard: React.FC<OrderHoverCardProps> = ({ orderId }) => {
       <HoverCardTrigger asChild>
         <BasicLink href={`/orders/${orderId}`}>#{orderId}</BasicLink>
       </HoverCardTrigger>
-      <HoverCardContent className="sm:w-100 text-sm">
+      <HoverCardContent className="text-sm sm:w-100">
         {getContent()}
       </HoverCardContent>
     </HoverCard>

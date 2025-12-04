@@ -50,7 +50,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
             src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
             width={103}
             height={118}
-            className="rounded-md border object-cover w-[103px] h-[118px]"
+            className="h-[118px] w-[103px] rounded-md border object-cover"
             alt=""
           />
 
@@ -75,7 +75,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
         <ContactPhone phone={data.homePhone} description="Home phone" />
 
         <div className="flex items-center gap-2">
-          <CakeIcon className="min-w-4 size-4 text-muted-foreground" />
+          <CakeIcon className="text-muted-foreground size-4 min-w-4" />
           <span>
             Birth date: <b>{formatDateFromString(data.birthDate)}</b>
           </span>
@@ -98,7 +98,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
           )}
         </BasicLink>
       </HoverCardTrigger>
-      <HoverCardContent className="sm:w-100 text-sm">
+      <HoverCardContent className="text-sm sm:w-100">
         {getContent()}
       </HoverCardContent>
     </HoverCard>

@@ -93,7 +93,7 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
             key={item.employeeId}
             className="block"
           >
-            <Card className="hover:shadow-lg transition h-full">
+            <Card className="h-full transition hover:shadow-lg">
               <CardHeader>
                 <CardTitle title="Employee name">
                   {getEmployeeNameByData(item)}
@@ -104,14 +104,14 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
                   src={`/assets/img/database/${item.firstName.toLowerCase()}.jpg`}
                   alt=""
                   title="Employee photo"
-                  className="w-[70px] h-[70px] object-cover rounded-md"
+                  className="h-[70px] w-[70px] rounded-md object-cover"
                   width="70"
                   height="70"
                   priority={index === 0}
                 />
-                <div className="flex flex-col flex-1 justify-between">
+                <div className="flex flex-1 flex-col justify-between">
                   <span
-                    className="text-sm text-right font-medium"
+                    className="text-right text-sm font-medium"
                     title="Employee title"
                   >
                     {item.title}
@@ -201,9 +201,9 @@ function LocalSkeleton() {
               <Skeleton className="h-6 w-3/4" />
             </CardHeader>
             <CardContent className="flex gap-2">
-              <Skeleton className="w-[70px] h-[70px] rounded-md" />
-              <div className="flex flex-col flex-1 justify-between gap-2">
-                <Skeleton className="h-4 w-full ml-auto max-w-[120px]" />
+              <Skeleton className="h-[70px] w-[70px] rounded-md" />
+              <div className="flex flex-1 flex-col justify-between gap-2">
+                <Skeleton className="ml-auto h-4 w-full max-w-[120px]" />
                 <LocationSkeleton />
               </div>
             </CardContent>

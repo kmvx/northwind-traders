@@ -26,8 +26,8 @@ const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
   );
 
   return (
-    <div className="flex items-center flex-wrap">
-      <Globe2Icon className="min-w-4 size-4 text-muted-foreground me-2" />
+    <div className="flex flex-wrap items-center">
+      <Globe2Icon className="text-muted-foreground me-2 size-4 min-w-4" />
       {data.map((item, i) => (
         <React.Fragment key={item.territoryId}>
           <b
