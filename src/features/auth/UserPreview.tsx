@@ -7,7 +7,7 @@ import { ErrorMessage } from '@/ui';
 
 import { authClient } from './auth-client';
 
-const User: React.FC = () => {
+const UserPreview: React.FC = () => {
   const { data, isPending, error, refetch } = authClient.useSession();
   const user = data?.user;
 
@@ -55,4 +55,4 @@ const User: React.FC = () => {
   );
 };
 
-export default User;
+export default UserPreview;

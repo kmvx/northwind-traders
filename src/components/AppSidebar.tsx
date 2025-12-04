@@ -18,7 +18,7 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { navigationItems } from '@/constants';
-import { User } from '@/features/auth';
+import { UserPreview } from '@/features/auth';
 import {
   FontSizeControls,
   FullscreenToggle,
@@ -104,7 +104,7 @@ const AppSidebar: React.FC = () => {
       </SidebarContent>
       <Separator />
       <SidebarFooter>
-        <User />
+        <UserPreview />
       </SidebarFooter>
     </Sidebar>
   );
