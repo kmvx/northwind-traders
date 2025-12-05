@@ -85,7 +85,7 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
               key={item.supplierId}
               className="block"
             >
-              <Card className="h-full transition hover:shadow-lg">
+              <Card className="h-full rounded-md shadow-none transition hover:shadow-lg">
                 <CardHeader>
                   <CardTitle title="Supplier name">
                     {item.companyName}

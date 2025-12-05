@@ -163,7 +163,7 @@ const CustomerPreview: React.FC<CustomerPreviewProps> = memo(
   function CustomerPreview({ customer }) {
     return (
       <Link href={`/customers/${customer.customerId}`} className="block">
-        <Card className="h-full transition hover:shadow-lg">
+        <Card className="h-full rounded-md shadow-none transition hover:shadow-lg">
           <CardHeader>
             <CardTitle title="Customer name">{customer.companyName}</CardTitle>
           </CardHeader>

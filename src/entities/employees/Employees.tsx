@@ -93,7 +93,7 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
             key={item.employeeId}
             className="block"
           >
-            <Card className="h-full transition hover:shadow-lg">
+            <Card className="h-full rounded-md shadow-none transition hover:shadow-lg">
               <CardHeader>
                 <CardTitle title="Employee name">
                   {getEmployeeNameByData(item)}

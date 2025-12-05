@@ -63,7 +63,7 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({
   ];
 
   return (
-    <Card className="h-full">
+    <Card className="h-full rounded-md shadow-none">
       <CardHeader>
         <CardTitle>
           <BasicLink

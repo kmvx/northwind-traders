@@ -31,6 +31,34 @@ export function dateFromString(str: string | null): Date {
   return new Date(str);
 }
 
+const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+
+const units: [number, Intl.RelativeTimeFormatUnit][] = [
+  [60 * 60 * 24 * 365, 'year'],
+  [60 * 60 * 24 * 30, 'month'],
+  [60 * 60 * 24, 'day'],
+  [60 * 60, 'hour'],
+  [60, 'minute'],
+  [1, 'second'],
+];
+
+export function getRelativeTimeString(date: Date): string {
+  const diffSeconds = (date.getTime() - Date.now()) / 1000;
+  const absSeconds = Math.abs(diffSeconds);
+
+  for (const [thresholdSeconds, unit] of units) {
+    if (absSeconds >= thresholdSeconds || unit === 'second') {
+      return rtf.format(Math.round(diffSeconds / thresholdSeconds), unit);
+    }
+  }
+
+  return 'error'; // unreachable
+}
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function isStringIncludes(str: string, search: string): boolean {
   const strConverted = typeof str === 'string' ? str : '' + str;
   const searchConverted = typeof search === 'string' ? search : '' + search;

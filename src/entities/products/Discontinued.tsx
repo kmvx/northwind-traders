@@ -14,8 +14,8 @@ const Discontinued: React.FC<DiscontinuedProps> = ({ discontinued = true }) => {
       className={cn(
         'rounded-md',
         discontinued
-          ? 'text-primary dark:text-primary border-red-500/50 bg-red-500/20 dark:bg-red-500/20'
-          : 'text-primary dark:text-primary border-green-500/50 bg-green-500/20 dark:bg-green-500/20',
+          ? 'border-red-500/50 bg-red-500/20 text-red-700 dark:bg-red-500/20 dark:text-red-400'
+          : 'border-green-500/50 bg-green-500/20 text-green-700 dark:bg-green-500/20 dark:text-green-400',
       )}
       title={
         discontinued

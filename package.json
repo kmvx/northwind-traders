@@ -49,6 +49,7 @@
     "@tanstack/react-query-devtools": "^5.90.2",
     "@tanstack/react-table": "^8.21.3",
     "better-auth": "^1.4.5",
+    "bowser": "^2.13.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "d3": "^7.9.0",

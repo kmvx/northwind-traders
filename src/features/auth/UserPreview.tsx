@@ -1,10 +1,10 @@
-import { LogInIcon, LogOutIcon } from 'lucide-react';
+import { LogOutIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button, Spinner } from '@/components/ui';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ErrorMessage } from '@/ui';
 
+import { LoginButton, UserAvatar } from '.';
 import { authClient } from './auth-client';
 
 const UserPreview: React.FC = () => {
@@ -14,14 +14,7 @@ const UserPreview: React.FC = () => {
   const getNoUserContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
     if (isPending) return <Spinner className="size-9" />;
-    return (
-      <Button asChild>
-        <Link href="/login">
-          <LogInIcon />
-          Login
-        </Link>
-      </Button>
-    );
+    return <LoginButton />;
   };
 
   if (!user) {
@@ -30,19 +23,20 @@ const UserPreview: React.FC = () => {
 
   return (
     <div
-      className="flex items-center justify-between gap-2"
+      className="flex items-center justify-between gap-2 pl-2"
       title={JSON.stringify(user, null, 4)}
     >
-      <Avatar className="rounded-md">
-        <AvatarImage src={user.image ?? ''} alt={user.name} />
-        <AvatarFallback className="rounded-md">?</AvatarFallback>
-      </Avatar>
-      <div className="grid flex-grow">
-        <span className="truncate text-sm font-bold">{user.name}</span>
-        <span className="text-muted-foreground truncate text-xs">
-          {user.email}
-        </span>
-      </div>
+      <Button asChild variant="ghost" className="flex-grow p-0">
+        <Link href="/auth/user">
+          <UserAvatar user={user} />
+          <div className="grid flex-grow">
+            <span className="truncate text-sm font-bold">{user.name}</span>
+            <span className="text-muted-foreground truncate text-xs">
+              {user.email}
+            </span>
+          </div>
+        </Link>
+      </Button>
       <Button
         onClick={async () => await authClient.signOut()}
         title="Logout"

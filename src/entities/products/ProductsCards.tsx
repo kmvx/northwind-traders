@@ -58,7 +58,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
   dataSuppliers,
 }) {
   return (
-    <Card className="h-full transition hover:shadow-lg">
+    <Card className="h-full rounded-md shadow-none transition hover:shadow-lg">
       <CardHeader>
         <CardTitle>
           <div className="flex flex-wrap items-center justify-between gap-2">
