@@ -15,7 +15,9 @@ const Location: React.FC<LocationProps> = ({ country, city, title }) => {
       className="text-muted-foreground flex flex-wrap items-center justify-end gap-2 text-sm"
       title={title}
     >
-      <MapPinIcon className="size-4" />
+      <div className="u-hue-green rounded-md p-2">
+        <MapPinIcon className="size-4" />
+      </div>
       <span>
         {country}, {city}
       </span>

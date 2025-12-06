@@ -75,7 +75,9 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
         <ContactPhone phone={data.homePhone} description="Home phone" />
 
         <div className="flex items-center gap-2">
-          <CakeIcon className="text-muted-foreground size-4 min-w-4" />
+          <div className="u-hue-blue rounded-md p-2">
+            <CakeIcon className="size-4 min-w-4" />
+          </div>
           <span>
             Birth date: <b>{formatDateFromString(data.birthDate)}</b>
           </span>

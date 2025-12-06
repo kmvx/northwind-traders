@@ -14,7 +14,9 @@ const ContactPerson: React.FC<ContactPersonProps> = ({
 }) => {
   return (
     <div className="flex items-start gap-2" title={title}>
-      <UserIcon className="text-muted-foreground mt-1 size-4" />
+      <div className="u-hue-blue mt-1 rounded-md p-2">
+        <UserIcon className="size-4" />
+      </div>
       <div className="flex flex-col">
         <b>{name}</b>
         <span className="text-muted-foreground text-sm">{contactTitle}</span>

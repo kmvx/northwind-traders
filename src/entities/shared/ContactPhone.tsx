@@ -18,7 +18,9 @@ const ContactPhone: React.FC<ContactPhoneProps> = ({
 
   return (
     <div className="flex items-center gap-2" title={isFax ? 'Fax' : 'Phone'}>
-      <IconComponent className="text-muted-foreground size-4 min-w-4" />
+      <div className="u-hue-orange rounded-md p-2">
+        <IconComponent className="size-4 min-w-4" />
+      </div>
       <span className="flex items-center gap-2">
         <b>{phone}</b>
         <CopyButton content={phone} />

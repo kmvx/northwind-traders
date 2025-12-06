@@ -165,29 +165,29 @@
 }
 
 .u-hue-red {
-  @apply border border-red-500/50 bg-red-500/20 text-red-700 dark:text-red-400;
+  @apply border border-red-500/10 bg-red-500/5 text-red-700 dark:text-red-400;
 }
 
 .u-hue-orange {
-  @apply border border-orange-500/50 bg-orange-500/20 text-orange-700 dark:text-orange-400;
+  @apply border border-orange-500/10 bg-orange-500/5 text-orange-700 dark:text-orange-400;
 }
 
 .u-hue-yellow {
-  @apply border border-yellow-500/50 bg-yellow-500/20 text-yellow-700 dark:text-yellow-400;
+  @apply border border-yellow-500/10 bg-yellow-500/5 text-yellow-700 dark:text-yellow-400;
 }
 
 .u-hue-green {
-  @apply border border-green-500/50 bg-green-500/20 text-green-700 dark:text-green-400;
+  @apply border border-green-500/10 bg-green-500/5 text-green-700 dark:text-green-400;
 }
 
 .u-hue-teal {
-  @apply border border-teal-500/50 bg-teal-500/20 text-teal-700 dark:text-teal-400;
+  @apply border border-teal-500/10 bg-teal-500/5 text-teal-700 dark:text-teal-400;
 }
 
 .u-hue-blue {
-  @apply border border-blue-500/50 bg-blue-500/20 text-blue-700 dark:text-blue-400;
+  @apply border border-blue-500/10 bg-blue-500/5 text-blue-700 dark:text-blue-400;
 }
 
 .u-hue-violet {
-  @apply border border-violet-500/50 bg-violet-500/20 text-violet-700 dark:text-violet-400;
+  @apply border border-violet-500/10 bg-violet-500/5 text-violet-700 dark:text-violet-400;
 }

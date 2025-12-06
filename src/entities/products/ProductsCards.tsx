@@ -77,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
       </CardHeader>
       <CardContent className="flex h-full flex-col justify-end gap-4">
         {(dataSuppliers || item.discontinued) && (
-          <div className="flex flex-wrap justify-between gap-2">
+          <div className="flex flex-wrap justify-between gap-x-2 gap-y-4">
             {dataSuppliers && (
               <SupplierPreview
                 dataSuppliers={dataSuppliers}

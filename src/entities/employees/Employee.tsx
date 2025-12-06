@@ -77,7 +77,9 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
       name: 'Birth date',
       value: (
         <div className="flex items-center gap-2">
-          <CakeIcon className="text-muted-foreground size-4" />
+          <div className="u-hue-blue rounded-md p-2">
+            <CakeIcon className="size-4" />
+          </div>
           <span className="flex items-center gap-2">
             <b>{formatDateFromString(data.birthDate)}</b>
           </span>
