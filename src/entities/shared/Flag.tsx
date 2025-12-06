@@ -9,7 +9,7 @@ const Flag: React.FC<{
 }> = ({ className, country }) => {
   return (
     <span
-      className={clsx('font-flags -my-4', className)}
+      className={clsx('u-font-flags -my-4', className)}
       style={{ fontSize: '2rem' }}
     >
       {getFlagEmojiByCountryName(country)}

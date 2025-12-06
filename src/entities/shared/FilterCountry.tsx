@@ -38,7 +38,7 @@ const FilterCountry = <T extends string>({
   if (options.length <= 2) return null;
 
   return (
-    <span className="font-flags">
+    <span className="u-font-flags">
       <SelectStringList
         itemsInfo={options.map(
           (option): SelectStringListInfoType => ({
@@ -54,7 +54,7 @@ const FilterCountry = <T extends string>({
           setFilterCountry(value === EMPTY_OPTION_VALUE ? '' : value)
         }
         title="Filter by country"
-        className="font-flags"
+        className="u-font-flags"
       />
     </span>
   );

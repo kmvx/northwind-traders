@@ -13,19 +13,19 @@ import { capitalizeFirstLetter } from '@/utils';
 const CONFIG = {
   desktop: {
     icon: MonitorIcon,
-    className: 'bg-green-500/20 text-green-700 dark:text-green-400',
+    className: 'u-hue-green',
   },
   tablet: {
     icon: TabletIcon,
-    className: 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400',
+    className: 'u-hue-yellow',
   },
   mobile: {
     icon: PhoneIcon,
-    className: 'bg-blue-500/20 text-blue-700 dark:text-blue-400',
+    className: 'u-hue-blue',
   },
   unknown: {
     icon: CircleQuestionMarkIcon,
-    className: 'bg-red-500/20 text-red-700 dark:text-red-400',
+    className: 'u-hue-red',
   },
 } as const;
 

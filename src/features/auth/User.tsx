@@ -42,7 +42,7 @@ const User: React.FC = () => {
           name="Email Address"
           description="Your email used for login and notifications"
           icon={<MailIcon />}
-          iconClassName="bg-yellow-500/20 text-yellow-700 dark:text-yellow-400"
+          iconClassName="u-hue-yellow"
         >
           {user.email}
         </ResponsiveItem>
@@ -50,7 +50,7 @@ const User: React.FC = () => {
           name="Member Since"
           description="Date when you created your account"
           icon={<CalendarIcon />}
-          iconClassName="bg-violet-500/20 text-violet-700 dark:text-violet-400"
+          iconClassName="u-hue-violet"
         >
           <DateTime date={user.createdAt} />
         </ResponsiveItem>
@@ -99,7 +99,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ sessionId }) => {
                     name="Session Created"
                     description="When this session was first established"
                     icon={<CalendarDays className="size-4" />}
-                    iconClassName="bg-violet-500/20 text-violet-700 dark:text-violet-400"
+                    iconClassName="u-hue-violet"
                   >
                     <DateTime date={session.createdAt} />
                   </ResponsiveItem>
@@ -108,7 +108,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ sessionId }) => {
                     name="Last Updated"
                     description="Last time this session was updated"
                     icon={<Clock className="size-4" />}
-                    iconClassName="bg-teal-500/20 text-teal-700 dark:text-teal-400"
+                    iconClassName="u-hue-orange"
                   >
                     <DateTime date={session.updatedAt} />
                   </ResponsiveItem>
@@ -117,7 +117,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ sessionId }) => {
                     name="Expires"
                     description="Automatic logout time if inactive"
                     icon={<Clock className="size-4" />}
-                    iconClassName="bg-red-500/20 text-red-700 dark:text-red-400"
+                    iconClassName="u-hue-red"
                   >
                     <DateTime date={session.expiresAt} />
                   </ResponsiveItem>
@@ -126,11 +126,9 @@ const UserDetails: React.FC<UserDetailsProps> = ({ sessionId }) => {
                     name="IP Address"
                     description="Public IP from which the session was created"
                     icon={<Globe className="size-4" />}
-                    iconClassName="bg-blue-500/20 text-blue-700 dark:text-blue-400"
+                    iconClassName="u-hue-blue"
                   >
-                    <code className="text-foreground font-mono">
-                      {session.ipAddress}
-                    </code>
+                    <code className="font-mono">{session.ipAddress}</code>
                   </ResponsiveItem>
                 </div>
               </div>
