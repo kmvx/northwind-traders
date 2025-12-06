@@ -33,10 +33,13 @@ const User: React.FC = () => {
 
   return (
     <PanelCentred className="flex flex-col gap-4">
-      <Typography.Header1 className="flex items-center justify-center gap-2">
-        <UserAvatar user={user} /> {user.name}
-      </Typography.Header1>
-      <div className="text-muted-foreground text-center">User (you)</div>
+      <div className="u-hue-violet flex flex-col items-center gap-4 rounded-md p-4">
+        <UserAvatar user={user} className="size-20" />
+        <Typography.Header1>{user.name}</Typography.Header1>
+        <div className="text-muted-foreground text-center text-sm">
+          User (you)
+        </div>
+      </div>
       <div className="flex flex-wrap justify-between gap-x-8 gap-y-2">
         <ResponsiveItem
           name="Email Address"
