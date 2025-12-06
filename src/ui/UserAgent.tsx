@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { capitalizeFirstLetter } from '@/utils';
 
-const PLATFORM_CONFIG = {
+const CONFIG = {
   desktop: {
     icon: MonitorIcon,
     className: 'bg-green-500/20 text-green-700 dark:text-green-400',
@@ -29,8 +29,7 @@ const PLATFORM_CONFIG = {
   },
 } as const;
 
-const isPlatformKey = (key: string): key is keyof typeof PLATFORM_CONFIG =>
-  key in PLATFORM_CONFIG;
+const isConfigKey = (key: string): key is keyof typeof CONFIG => key in CONFIG;
 
 interface UserAgentProps {
   userAgent: string | null;
@@ -44,9 +43,7 @@ const UserAgent: React.FC<UserAgentProps> = ({ userAgent }) => {
 
   const platform = parsed?.platform.type;
   const config =
-    platform && isPlatformKey(platform)
-      ? PLATFORM_CONFIG[platform]
-      : PLATFORM_CONFIG.unknown;
+    platform && isConfigKey(platform) ? CONFIG[platform] : CONFIG.unknown;
   const Icon = config.icon;
 
   return (
