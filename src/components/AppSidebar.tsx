@@ -16,6 +16,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarTrigger,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { navigationItems } from '@/constants';
 import { UserPreview } from '@/features/auth';
@@ -38,6 +39,8 @@ const AppSidebar: React.FC = () => {
     pathname === url || (pathname.startsWith(url) && url !== '/');
 
   const closeSidebar = useCloseSidebar();
+
+  const { isMobile } = useSidebar();
 
   return (
     <Sidebar
@@ -89,14 +92,14 @@ const AppSidebar: React.FC = () => {
             <div className="h-max-sm:py-0 flex flex-col gap-2 p-2">
               <div className="flex gap-2">
                 <ThemeToggle />
-                <FontSizeControls />
+                <ThemeCustomToggle />
+                {!isMobile && <NavigateButton isMoveBackward />}
                 <SidebarTrigger variant="outline" className="size-9" />
                 <QueryFetchingIndicator />
               </div>
               <div className="flex gap-2">
-                <ThemeCustomToggle />
-                <NavigateButton isMoveBackward />
-                <NavigateButton isMoveBackward={false} />
+                <FontSizeControls />
+                {!isMobile && <NavigateButton isMoveBackward={false} />}
                 <FullscreenToggle />
               </div>
             </div>
