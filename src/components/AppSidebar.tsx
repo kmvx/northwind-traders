@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/sidebar';
 import { navigationItems } from '@/constants';
 import { UserPreview } from '@/features/auth';
+import { useCloseSidebar } from '@/hooks';
 import {
   FontSizeControls,
   FullscreenToggle,
@@ -35,6 +36,8 @@ const AppSidebar: React.FC = () => {
   const pathname = usePathname();
   const isActive = (url: string): boolean =>
     pathname === url || (pathname.startsWith(url) && url !== '/');
+
+  const closeSidebar = useCloseSidebar();
 
   return (
     <Sidebar
@@ -63,6 +66,7 @@ const AppSidebar: React.FC = () => {
                 {item.children.map((child) => (
                   <SidebarMenuItem key={child.title}>
                     <SidebarMenuButton
+                      onClick={closeSidebar}
                       isActive={isActive(child.url)}
                       asChild
                       className="h-max-sm:py-0"
