@@ -54,7 +54,7 @@ const UserAgent: React.FC<UserAgentProps> = ({ userAgent }) => {
       <div className="flex flex-col">
         <div className="font-bold">
           {parsed
-            ? `${parsed.browser.name} on ${parsed.os.name} ${parsed.os.versionName ?? ''}`
+            ? `${parsed.browser.name} ${parsed.browser.version ?? ''} on ${parsed.os.name} ${parsed.os.versionName ?? ''}`
             : 'Unknown device'}
         </div>
         {platform && (
