@@ -7,4 +7,5 @@ export { default as User } from './User';
 export { default as UserAccounts } from './UserAccounts';
 export { default as UserAvatar } from './UserAvatar';
 export { default as UserPreview } from './UserPreview';
+export { default as UserSession } from './UserSession';
 export { default as UserSessions } from './UserSessions';

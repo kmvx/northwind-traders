@@ -62,7 +62,7 @@ const User: React.FC = () => {
         </ResponsiveItem>
       </div>
       <Separator />
-      <UserSessions sessionId={data.session.id} />
+      <UserSessions currentSessionId={data.session.id} />
       <Separator />
       <UserAccounts />
     </PanelCentred>
