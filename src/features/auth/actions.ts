@@ -8,7 +8,7 @@ import { session } from '@/db/schema';
 
 import { auth } from './auth';
 
-export const getUserInfo = async () => {
+export const getUserSessions = async () => {
   const sessionCurrent = await auth.api.getSession({
     headers: await headers(),
   });
