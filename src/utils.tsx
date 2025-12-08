@@ -160,7 +160,9 @@ export const remToPx = (rem: number): number =>
 
 interface InfoByIPAddressData {
   city: string;
+  region: string;
   country_name: string;
+  org: string;
 }
 
 export const fetchInfoByIPAddress = async (ipAddress: string | null) => {
