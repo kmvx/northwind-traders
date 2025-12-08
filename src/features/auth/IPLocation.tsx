@@ -3,6 +3,7 @@ import { MapPinIcon } from 'lucide-react';
 
 import { Spinner } from '@/components/ui';
 import { ResponsiveItem } from '@/ui';
+import { fetchInfoByIPAddress } from '@/utils';
 
 interface IPLocationProps {
   ipAddress: string | null;
@@ -11,7 +12,7 @@ interface IPLocationProps {
 const IPLocation: React.FC<IPLocationProps> = ({ ipAddress }) => {
   const { data, isLoading } = useQuery({
     queryKey: ['ip', ipAddress],
-    queryFn: async () => await fetchLocation(ipAddress),
+    queryFn: async () => await fetchInfoByIPAddress(ipAddress),
     enabled: Boolean(ipAddress),
   });
 
@@ -33,25 +34,6 @@ const IPLocation: React.FC<IPLocationProps> = ({ ipAddress }) => {
       {data.city}, {data.country_name}
     </ResponsiveItem>
   );
-};
-
-interface LocationData {
-  city: string;
-  country_name: string;
-}
-
-const fetchLocation = async (ipAddress: string | null) => {
-  if (!ipAddress) return null;
-
-  const response = await fetch(
-    `https://ipapi.co/${ipAddress === '127.0.0.1' ? '' : ipAddress}/json/`,
-  );
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch location data');
-  }
-
-  return (await response.json()) as LocationData;
 };
 
 export default IPLocation;

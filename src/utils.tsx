@@ -157,3 +157,22 @@ export function withWaitCursor<T>(fn: () => T) {
 
 export const remToPx = (rem: number): number =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+interface InfoByIPAddressData {
+  city: string;
+  country_name: string;
+}
+
+export const fetchInfoByIPAddress = async (ipAddress: string | null) => {
+  if (!ipAddress) return;
+
+  const response = await fetch(
+    `https://ipapi.co/${ipAddress === '127.0.0.1' ? '' : ipAddress}/json/`,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch location data');
+  }
+
+  return (await response.json()) as InfoByIPAddressData;
+};
