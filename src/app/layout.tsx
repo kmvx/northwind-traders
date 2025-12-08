@@ -45,9 +45,9 @@ export default function RootLayout({
         <Providers>
           <SidebarProvider>
             <AppSidebar />
-            <main className="w-full sm:m-2">
+            <main className="flex w-full flex-col sm:m-2">
               <TopbarControls />
-              {children}
+              <div className="flex-grow">{children}</div>
             </main>
           </SidebarProvider>
         </Providers>

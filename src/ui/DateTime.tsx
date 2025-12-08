@@ -5,15 +5,15 @@ import { useState } from 'react';
 import { getRelativeTimeString } from '@/utils';
 
 interface DateTimeProps {
-  date: Date;
+  date: Date | null;
   className?: string;
 }
 
 const DateTime: React.FC<DateTimeProps> = ({ date, className }) => {
   const [isToggled, setIsToggled] = useState(false);
 
-  const absoluteFormat = date.toLocaleString();
-  const relativeFormat = getRelativeTimeString(date);
+  const absoluteFormat = date ? date.toLocaleString() : 'Not Available';
+  const relativeFormat = date ? getRelativeTimeString(date) : 'N/A';
 
   return (
     <span

@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { CalendarDays, Clock, Globe } from 'lucide-react';
+import { CalendarDaysIcon, ClockIcon, GlobeIcon } from 'lucide-react';
 
 import { Badge, Card, CardContent } from '@/components/ui';
 import {
@@ -30,7 +30,7 @@ const UserSessions: React.FC<UserSessionsProps> = ({ sessionId }) => {
   if (isLoading) return <WaitSpinner />;
   if (!data) return null;
 
-  const sessions = data.sessions.slice().reverse();
+  const sessions = data.slice().reverse();
 
   return (
     <div className="flex flex-col gap-4">
@@ -53,7 +53,7 @@ const UserSessions: React.FC<UserSessionsProps> = ({ sessionId }) => {
                   <ResponsiveItem
                     name="Session Created"
                     description="When this session was first established"
-                    icon={<CalendarDays className="size-4" />}
+                    icon={<CalendarDaysIcon className="size-4" />}
                     iconClassName="u-hue-violet"
                   >
                     <DateTime date={session.createdAt} />
@@ -62,16 +62,16 @@ const UserSessions: React.FC<UserSessionsProps> = ({ sessionId }) => {
                   <ResponsiveItem
                     name="Last Updated"
                     description="Last time this session was updated"
-                    icon={<Clock className="size-4" />}
+                    icon={<ClockIcon className="size-4" />}
                     iconClassName="u-hue-orange"
                   >
                     <DateTime date={session.updatedAt} />
                   </ResponsiveItem>
 
                   <ResponsiveItem
-                    name="Expires"
+                    name="Session Expires"
                     description="Automatic logout time if inactive"
-                    icon={<Clock className="size-4" />}
+                    icon={<ClockIcon className="size-4" />}
                     iconClassName="u-hue-red"
                   >
                     <DateTime date={session.expiresAt} />
@@ -80,7 +80,7 @@ const UserSessions: React.FC<UserSessionsProps> = ({ sessionId }) => {
                   <ResponsiveItem
                     name="IP Address"
                     description="Public IP from which the session was created"
-                    icon={<Globe className="size-4" />}
+                    icon={<GlobeIcon className="size-4" />}
                     iconClassName="u-hue-blue"
                   >
                     <code className="font-mono">{session.ipAddress}</code>

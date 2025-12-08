@@ -4,9 +4,33 @@ import { eq } from 'drizzle-orm';
 import { headers } from 'next/headers';
 
 import db from '@/db';
-import { session } from '@/db/schema';
+import { account, session } from '@/db/schema';
 
 import { auth } from './auth';
+
+export const getUserAccounts = async () => {
+  const sessionCurrent = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!sessionCurrent) return;
+
+  const userId = sessionCurrent.user.id;
+
+  const accounts = await db
+    .select({
+      id: account.id,
+      providerId: account.providerId,
+      createdAt: account.createdAt,
+      updatedAt: account.updatedAt,
+      accessTokenExpiresAt: account.accessTokenExpiresAt,
+      refreshTokenExpiresAt: account.refreshTokenExpiresAt,
+    })
+    .from(account)
+    .where(eq(account.userId, userId));
+
+  return accounts;
+};
 
 export const getUserSessions = async () => {
   const sessionCurrent = await auth.api.getSession({
@@ -29,7 +53,5 @@ export const getUserSessions = async () => {
     .from(session)
     .where(eq(session.userId, userId));
 
-  return {
-    sessions,
-  };
+  return sessions;
 };

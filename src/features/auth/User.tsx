@@ -12,7 +12,13 @@ import {
   WaitSpinner,
 } from '@/ui';
 
-import { authClient, LoginButton, UserAvatar, UserSessions } from '.';
+import {
+  authClient,
+  LoginButton,
+  UserAccounts,
+  UserAvatar,
+  UserSessions,
+} from '.';
 
 const User: React.FC = () => {
   const { data, isPending, error, refetch } = authClient.useSession();
@@ -20,7 +26,13 @@ const User: React.FC = () => {
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isPending) return <WaitSpinner />;
-  if (!user) return <LoginButton />;
+  if (!user) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <LoginButton />
+      </div>
+    );
+  }
 
   return (
     <PanelCentred className="flex flex-col gap-4">
@@ -51,6 +63,8 @@ const User: React.FC = () => {
       </div>
       <Separator />
       <UserSessions sessionId={data.session.id} />
+      <Separator />
+      <UserAccounts />
     </PanelCentred>
   );
 };
