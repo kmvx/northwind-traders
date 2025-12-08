@@ -14,7 +14,7 @@ import {
   WaitSpinner,
 } from '@/ui';
 
-import { getUserSessions } from '.';
+import { getUserSessions, IPLocation } from '.';
 
 interface UserSessionsProps {
   sessionId: string;
@@ -49,7 +49,7 @@ const UserSessions: React.FC<UserSessionsProps> = ({ sessionId }) => {
                   {session.id === sessionId && <Badge>Current</Badge>}
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 items-center gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
                   <ResponsiveItem
                     name="Session Created"
                     description="When this session was first established"
@@ -85,6 +85,8 @@ const UserSessions: React.FC<UserSessionsProps> = ({ sessionId }) => {
                   >
                     <code className="font-mono">{session.ipAddress}</code>
                   </ResponsiveItem>
+
+                  <IPLocation ipAddress={session.ipAddress} />
                 </div>
               </div>
             </CardContent>
