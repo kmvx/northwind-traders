@@ -73,7 +73,7 @@ const Supplier: React.FC<SupplierProps> = ({
 
   return (
     <PanelCentred className="flex flex-col gap-4">
-      <Header>{data.companyName}</Header>
+      <Header className="wrap-anywhere">{data.companyName}</Header>
       <div className="flex flex-col gap-4">
         <div className="text-center">Supplier company</div>
         <PropertyGrid items={items} />
