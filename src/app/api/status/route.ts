@@ -5,7 +5,8 @@ const start = new Date();
 export async function GET(request: Request) {
   console.log('/api/status:', request.url, new Date().toISOString());
   const now = new Date();
-  return Response.json({
+
+  const result = {
     app: {
       startTime: start.toISOString(),
       nowTime: now.toISOString(),
@@ -15,8 +16,14 @@ export async function GET(request: Request) {
       version: process.env.npm_package_version,
       NODE_ENV: process.env.NODE_ENV,
       DATABASE_URL_length: process.env.DATABASE_URL?.length,
-      VERCEL_URL: process.env.VERCEL_URL,
+      VERCEL: process.env.VERCEL,
       VERCEL_ENV: process.env.VERCEL_ENV,
+      VERCEL_TARGET_ENV: process.env.VERCEL_TARGET_ENV,
+      VERCEL_URL: process.env.VERCEL_URL,
+      VERCEL_BRANCH_URL: process.env.VERCEL_BRANCH_URL,
+      VERCEL_PROJECT_PRODUCTION_URL: process.env.VERCEL_PROJECT_PRODUCTION_URL,
+      VERCEL_SKEW_PROTECTION_ENABLED:
+        process.env.VERCEL_SKEW_PROTECTION_ENABLED,
       BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
       BETTER_AUTH_SECRET_length: process.env.BETTER_AUTH_SECRET?.length,
       GOOGLE_CLIENT_ID_length: process.env.GOOGLE_CLIENT_ID?.length,
@@ -39,5 +46,12 @@ export async function GET(request: Request) {
       cpus: os.cpus(),
     },
     headers: Object.fromEntries(request.headers.entries()),
+  };
+
+  return new Response(JSON.stringify(result, null, 2), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 }
