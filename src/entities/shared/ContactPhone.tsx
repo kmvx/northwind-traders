@@ -1,10 +1,12 @@
 import { PhoneIcon, PrinterIcon } from 'lucide-react';
 import React from 'react';
 
+import type { PhoneType } from '@/types';
+
 import CopyButton from '../../ui/CopyButton';
 
 interface ContactPhoneProps {
-  phone: string;
+  phone: PhoneType;
   description?: string;
   isFax?: boolean;
 }

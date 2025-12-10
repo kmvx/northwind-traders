@@ -1,5 +1,12 @@
+import type {
+  CountryType,
+  CurrencyType,
+  DateStringType,
+  PhoneType,
+} from './types';
+
 interface IAddress {
-  country: string;
+  country: CountryType;
   region: string;
   city: string;
   postalCode: string;
@@ -18,16 +25,16 @@ export interface ICustomer extends IAddress {
   contactName: string;
   contactTitle: string;
   customerId: string;
-  fax: string | null;
-  phone: string;
+  fax: PhoneType | null;
+  phone: PhoneType;
 }
 export type ICustomers = ICustomer[];
 
 export interface IEmployee extends IAddress {
-  birthDate: string;
+  birthDate: DateStringType;
   employeeId: number;
   firstName: string;
-  homePhone: string;
+  homePhone: PhoneType;
   lastName: string;
   notes: string;
   reportsTo: number | null;
@@ -42,17 +49,17 @@ export interface IOrder {
   orderId: number;
   customerId: string;
   employeeId: number;
-  freight: number;
-  orderDate: string;
-  requiredDate: string;
+  freight: CurrencyType;
+  orderDate: DateStringType;
+  requiredDate: DateStringType;
   shipName: string;
-  shipCountry: string;
+  shipCountry: CountryType;
   shipRegion: string;
   shipCity: string;
   shipPostalCode: string;
   shipAddress: string;
   shipVia: number;
-  shippedDate: string | null;
+  shippedDate: DateStringType | null;
 }
 export type IOrders = IOrder[];
 
@@ -61,7 +68,7 @@ export interface IOrderDetail {
   orderId: number;
   productId: number;
   quantity: number;
-  unitPrice: number;
+  unitPrice: CurrencyType;
 }
 export type IOrderDetails = IOrderDetail[];
 
@@ -73,7 +80,7 @@ export interface IProduct {
   quantityPerUnit: string;
   supplierId: number;
   reorderLevel: number;
-  unitPrice: number;
+  unitPrice: CurrencyType;
   unitsInStock: number;
   unitsOnOrder: number;
 }
@@ -81,7 +88,7 @@ export type IProducts = IProduct[];
 
 export interface IShipper {
   companyName: string;
-  phone: string;
+  phone: PhoneType;
   shipperId: number;
 }
 export type IShippers = IShipper[];
@@ -90,7 +97,7 @@ export interface ISupplier extends IAddress {
   companyName: string;
   contactName: string;
   contactTitle: string;
-  phone: string;
+  phone: PhoneType;
   supplierId: number;
 }
 export type ISuppliers = ISupplier[];

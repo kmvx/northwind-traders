@@ -1,0 +1,36 @@
+declare const __brand: unique symbol;
+export type Branded<T, Brand> = T & {
+  readonly [__brand]: Brand;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const currencySymbol: unique symbol;
+export type CurrencyType = Branded<number, typeof currencySymbol>;
+
+export function castToCurrency(value: number): CurrencyType {
+  return value as CurrencyType;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const datastringSymbol: unique symbol;
+export type DateStringType = Branded<string, typeof datastringSymbol>;
+
+export function castToDateString(value: string): DateStringType {
+  return value as DateStringType;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const phoneSymbol: unique symbol;
+export type PhoneType = Branded<string, typeof phoneSymbol>;
+
+export function castToPhone(value: string): PhoneType {
+  return value as PhoneType;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const countrySymbol: unique symbol;
+export type CountryType = Branded<string, typeof countrySymbol>;
+
+export function castToCountry(value: string): CountryType {
+  return value as CountryType;
+}

@@ -1,17 +1,18 @@
 import { type IEmployee } from './models';
+import type { CurrencyType, DateStringType } from './types';
 
 export function joinFields(...args: string[]): string {
   return [...args].filter(Boolean).join(', ');
 }
 
-export function formatCurrency(amount: number): string {
+export function formatCurrency(amount: CurrencyType): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   }).format(amount);
 }
 
-export function formatDateFromString(date: string | null): string {
+export function formatDateFromString(date: DateStringType | null): string {
   if (!date) return 'N/A';
   const dataObject = new Date(date);
   if (isNaN(dataObject as unknown as number)) return `${dataObject}`;
@@ -20,7 +21,7 @@ export function formatDateFromString(date: string | null): string {
   })} ${dataObject.getDate()}, ${dataObject.getFullYear()}`;
 }
 
-export function dateFromString(str: string | null): Date {
+export function dateFromString(str: DateStringType | null): Date {
   if (str == null) return new Date(NaN);
 
   // If the string is in ISO format without timezone, append 'Z' to treat it as UTC

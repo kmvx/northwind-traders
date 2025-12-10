@@ -1,10 +1,12 @@
 import { MapPinIcon } from 'lucide-react';
 import React from 'react';
 
+import type { CountryType } from '@/types';
+
 import { Flag } from '.';
 
 interface LocationProps {
-  country: string;
+  country: CountryType;
   city: string;
   title: string;
 }

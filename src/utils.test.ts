@@ -11,6 +11,12 @@ import {
 
 import { type IEmployee } from './models';
 import {
+  castToCountry,
+  castToCurrency,
+  castToDateString,
+  castToPhone,
+} from './types';
+import {
   buildTitle,
   capitalizeFirstLetter,
   escapeHtml,
@@ -39,9 +45,11 @@ describe('joinFields', () => {
 
 describe('formatCurrency', () => {
   it('format currency', () => {
-    expect(formatCurrency(-12_345_678.955)).toBe('-$12,345,678.96');
-    expect(formatCurrency(0.005)).toBe('$0.01');
-    expect(formatCurrency(0.004)).toBe('$0.00');
+    expect(formatCurrency(castToCurrency(-12_345_678.955))).toBe(
+      '-$12,345,678.96',
+    );
+    expect(formatCurrency(castToCurrency(0.005))).toBe('$0.01');
+    expect(formatCurrency(castToCurrency(0.004))).toBe('$0.00');
   });
 });
 
@@ -51,12 +59,14 @@ describe('formatDateFromString', () => {
   });
 
   it('returns formatted date for valid string', () => {
-    const result = formatDateFromString('2020-01-15T00:00:00Z');
+    const result = formatDateFromString(
+      castToDateString('2020-01-15T00:00:00Z'),
+    );
     expect(result).toMatch(/Jan 15, 2020/);
   });
 
   it('returns stringified Date for invalid date', () => {
-    const result = formatDateFromString('invalid-date');
+    const result = formatDateFromString(castToDateString('invalid-date'));
     expect(result).toContain('Invalid Date');
   });
 });
@@ -206,9 +216,9 @@ describe('getEmployeeNameByData', () => {
       titleOfCourtesy: 'Mr.',
       lastName: 'Doe',
       firstName: 'John',
-      birthDate: '1990-05-15',
+      birthDate: castToDateString('1990-05-15'),
       employeeId: 1,
-      homePhone: '(123) 456-7890',
+      homePhone: castToPhone('(123) 456-7890'),
       notes:
         'John is a dedicated software engineer with 5 years of experience.',
       reportsTo: 2,
@@ -217,7 +227,7 @@ describe('getEmployeeNameByData', () => {
       photoPath: '/images/employees/john_doe.jpg',
       address: '123 Main St',
       city: 'Springfield',
-      country: 'USA',
+      country: castToCountry('USA'),
       postalCode: '62701',
       region: 'IL',
     };

@@ -1,11 +1,12 @@
 import clsx from 'clsx';
 import React from 'react';
 
+import type { CountryType } from '@/types';
 import { getFlagEmojiByCountryName } from '@/utils';
 
 const Flag: React.FC<{
   className?: string;
-  country: string;
+  country: CountryType;
 }> = ({ className, country }) => {
   return (
     <span

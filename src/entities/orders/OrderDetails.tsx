@@ -7,6 +7,7 @@ import {
   useQueryProducts,
   useQuerySuppliers,
 } from '@/net';
+import { castToCurrency } from '@/types';
 import {
   ErrorMessage,
   PanelCentred,
@@ -51,7 +52,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
     if (!data) return null;
     if (data.length === 0) return <div>Order details not found</div>;
 
-    const totalMoney = data.reduce((acc, item) => acc + getTotalCost(item), 0);
+    const totalMoney = castToCurrency(
+      data.reduce((acc, item) => acc + getTotalCost(item), 0),
+    );
     const extraNodesAfter = (
       <span className="mx-2">
         Total cost: <b>{formatCurrency(totalMoney)}</b>

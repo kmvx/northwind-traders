@@ -2,11 +2,12 @@ import { MapPinIcon } from 'lucide-react';
 import React from 'react';
 
 import { cn } from '@/lib/utils';
+import type { CountryType } from '@/types';
 
 import { Flag } from '.';
 
 interface ContactAddressProps {
-  country: string;
+  country: CountryType;
   address: string;
   addressDetails: string;
   title?: string;
