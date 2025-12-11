@@ -44,7 +44,7 @@ const User: React.FC = () => {
   }
 
   return (
-    <PanelCentred className="flex flex-col gap-4">
+    <PanelCentred className="flex flex-col gap-4 xl:min-w-[800px]">
       <div className="u-hue-violet flex flex-col items-center gap-4 rounded-md p-4">
         <UserAvatar user={user} className="size-20" />
         <Typography.Header1>{user.name}</Typography.Header1>
