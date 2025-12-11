@@ -1,8 +1,9 @@
 'use client';
 
-import { CalendarIcon, MailIcon } from 'lucide-react';
+import { CalendarIcon, LogOutIcon, MailIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-import { Separator } from '@/components/ui';
+import { Button, Separator } from '@/components/ui';
 import {
   DateTime,
   ErrorMessage,
@@ -21,6 +22,14 @@ import {
 } from '.';
 
 const User: React.FC = () => {
+  // Logout
+  const router = useRouter();
+  const onLogout = async () => {
+    await authClient.signOut();
+    router.push('/');
+  };
+
+  // Session info
   const { data, isPending, error, refetch } = authClient.useSession();
   const user = data?.user;
 
@@ -43,7 +52,7 @@ const User: React.FC = () => {
           User (you)
         </div>
       </div>
-      <div className="flex flex-wrap justify-between gap-x-8 gap-y-2">
+      <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2">
         <ResponsiveItem
           name="Email Address"
           description="Your email used for login and notifications"
@@ -60,6 +69,14 @@ const User: React.FC = () => {
         >
           <DateTime date={user.createdAt} />
         </ResponsiveItem>
+        <Button
+          onClick={onLogout}
+          title="End your current user session"
+          variant="outline"
+        >
+          <LogOutIcon />
+          Logout
+        </Button>
       </div>
       <Separator />
       <UserSessions currentSessionId={data.session.id} />

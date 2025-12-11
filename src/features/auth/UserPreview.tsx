@@ -1,4 +1,3 @@
-import { LogOutIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button, Spinner } from '@/components/ui';
@@ -25,35 +24,23 @@ const UserPreview: React.FC = () => {
   }
 
   return (
-    <div
-      className="flex items-center justify-between gap-2 pl-2"
+    <Button
+      onClick={closeSidebar}
       title={JSON.stringify(user, null, 4)}
+      asChild
+      variant="ghost"
+      className="ml-2 flex-grow p-0"
     >
-      <Button
-        onClick={closeSidebar}
-        asChild
-        variant="ghost"
-        className="flex-grow p-0"
-      >
-        <Link href="/auth/user">
-          <UserAvatar user={user} />
-          <div className="grid flex-grow">
-            <span className="truncate text-sm font-bold">{user.name}</span>
-            <span className="text-muted-foreground truncate text-xs">
-              {user.email}
-            </span>
-          </div>
-        </Link>
-      </Button>
-      <Button
-        onClick={async () => await authClient.signOut()}
-        title="Logout"
-        variant="outline"
-        size="icon"
-      >
-        <LogOutIcon />
-      </Button>
-    </div>
+      <Link href="/auth/user">
+        <UserAvatar user={user} />
+        <div className="grid flex-grow">
+          <span className="truncate text-sm font-bold">{user.name}</span>
+          <span className="text-muted-foreground truncate text-xs">
+            {user.email}
+          </span>
+        </div>
+      </Link>
+    </Button>
   );
 };
 
