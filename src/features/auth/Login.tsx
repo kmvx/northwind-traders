@@ -1,6 +1,7 @@
 'use client';
 
 import { LogInIcon } from 'lucide-react';
+import Image from 'next/image';
 
 import { Button, Separator } from '@/components/ui';
 import { Typography } from '@/ui';
@@ -13,13 +14,14 @@ const Login: React.FC = () => {
       <LogInIcon className="size-50" />
       <Separator className="max-w-75" />
       <Typography.Header1>Login</Typography.Header1>
-      <div>
+      <div className="flex gap-4">
         <Button
           onClick={() =>
             authClient.signIn.social({
               provider: 'google',
             })
           }
+          title="Login with Google"
           variant="outline"
         >
           <svg
@@ -46,6 +48,24 @@ const Login: React.FC = () => {
             ></path>
           </svg>
           Google
+        </Button>
+        <Button
+          onClick={() =>
+            authClient.signIn.social({
+              provider: 'clerk',
+            })
+          }
+          title="Login with Clerk"
+          variant="outline"
+        >
+          <Image
+            src="/assets/img/auth/clerk.ico"
+            alt=""
+            className="size-4"
+            width={32}
+            height={32}
+          />
+          Clerk
         </Button>
       </div>
     </div>

@@ -28,6 +28,9 @@ export async function GET(request: Request) {
       BETTER_AUTH_SECRET_length: process.env.BETTER_AUTH_SECRET?.length,
       GOOGLE_CLIENT_ID_length: process.env.GOOGLE_CLIENT_ID?.length,
       GOOGLE_CLIENT_SECRET_length: process.env.GOOGLE_CLIENT_SECRET?.length,
+      CLERK_CLIENT_ID_length: process.env.CLERK_CLIENT_ID?.length,
+      CLERK_CLIENT_SECRET_length: process.env.CLERK_CLIENT_SECRET?.length,
+      CLERK_DISCOVERY_URL_length: process.env.CLERK_DISCOVERY_URL?.length,
     },
     node: {
       version: process.version,
