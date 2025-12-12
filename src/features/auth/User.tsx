@@ -12,6 +12,7 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
+import { setDocumentTitle } from '@/utils';
 
 import {
   authClient,
@@ -42,6 +43,8 @@ const User: React.FC = () => {
       </div>
     );
   }
+
+  setDocumentTitle(user.name);
 
   return (
     <PanelCentred className="flex flex-col gap-4 xl:min-w-[800px]">
