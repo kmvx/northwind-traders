@@ -40,7 +40,7 @@ const UserSession: React.FC<UserSessionProps> = ({
 
   const getLocation = () => {
     if (isLoading) getLoadingComponent();
-    if (!data) return null;
+    if (!data?.country_name) return null;
 
     return (
       <ResponsiveItem
@@ -60,7 +60,7 @@ const UserSession: React.FC<UserSessionProps> = ({
 
   const getProvider = () => {
     if (isLoading) getLoadingComponent();
-    if (!data) return null;
+    if (!data?.org) return null;
 
     return (
       <ResponsiveItem

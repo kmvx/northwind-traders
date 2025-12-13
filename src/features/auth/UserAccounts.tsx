@@ -36,54 +36,51 @@ const UserAccounts: React.FC = () => {
         return (
           <Card key={account.id} className="rounded-md shadow-none">
             <CardContent>
-              <div className="flex flex-col gap-4">
-                <div>
-                  <ResponsiveItem
-                    name="Account Provider"
-                    description="The service this account belongs to"
-                    icon={<AtSignIcon className="size-4" />}
-                    iconClassName="u-hue-blue"
-                  >
-                    {account.providerId}
-                  </ResponsiveItem>
-                </div>
-                <div className="grid grid-cols-1 items-center gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
-                  <ResponsiveItem
-                    name="Account Created"
-                    description="When this account was first connected"
-                    icon={<CalendarDays className="size-4" />}
-                    iconClassName="u-hue-violet"
-                  >
-                    <DateTime date={account.createdAt} />
-                  </ResponsiveItem>
+              <div className="grid grid-cols-1 items-center gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
+                <ResponsiveItem
+                  name="Account Provider"
+                  description="The service this account belongs to"
+                  icon={<AtSignIcon className="size-4" />}
+                  iconClassName="u-hue-blue"
+                >
+                  {account.providerId}
+                </ResponsiveItem>
 
-                  <ResponsiveItem
-                    name="Last Synced"
-                    description="Most recent sign-in or token refresh"
-                    icon={<Clock className="size-4" />}
-                    iconClassName="u-hue-orange"
-                  >
-                    <DateTime date={account.updatedAt} />
-                  </ResponsiveItem>
+                <ResponsiveItem
+                  name="Account Created"
+                  description="When this account was first connected"
+                  icon={<CalendarDays className="size-4" />}
+                  iconClassName="u-hue-violet"
+                >
+                  <DateTime date={account.createdAt} />
+                </ResponsiveItem>
 
-                  <ResponsiveItem
-                    name="Access Token Expires"
-                    description="Access token valid until this date"
-                    icon={<Clock className="size-4" />}
-                    iconClassName="u-hue-red"
-                  >
-                    <DateTime date={account.accessTokenExpiresAt} />
-                  </ResponsiveItem>
+                <ResponsiveItem
+                  name="Last Synced"
+                  description="Most recent sign-in or token refresh"
+                  icon={<Clock className="size-4" />}
+                  iconClassName="u-hue-orange"
+                >
+                  <DateTime date={account.updatedAt} />
+                </ResponsiveItem>
 
-                  <ResponsiveItem
-                    name="Refresh Token Expires"
-                    description="Refresh token valid until this date"
-                    icon={<Clock className="size-4" />}
-                    iconClassName="u-hue-red"
-                  >
-                    <DateTime date={account.refreshTokenExpiresAt} />
-                  </ResponsiveItem>
-                </div>
+                <ResponsiveItem
+                  name="Access Token Expires"
+                  description="Access token valid until this date"
+                  icon={<Clock className="size-4" />}
+                  iconClassName="u-hue-red"
+                >
+                  <DateTime date={account.accessTokenExpiresAt} />
+                </ResponsiveItem>
+
+                <ResponsiveItem
+                  name="Refresh Token Expires"
+                  description="Refresh token valid until this date"
+                  icon={<Clock className="size-4" />}
+                  iconClassName="u-hue-red"
+                >
+                  <DateTime date={account.refreshTokenExpiresAt} />
+                </ResponsiveItem>
               </div>
             </CardContent>
           </Card>

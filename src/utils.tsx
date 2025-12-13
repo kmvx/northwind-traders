@@ -134,5 +134,5 @@ export const fetchInfoByIPAddress = async (ipAddress: string | null) => {
     throw new Error('Failed to fetch location data');
   }
 
-  return (await response.json()) as InfoByIPAddressData;
+  return (await response.json()) as Partial<InfoByIPAddressData>;
 };
