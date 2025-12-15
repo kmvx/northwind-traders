@@ -8,3 +8,4 @@ export { default as UserAvatar } from './UserAvatar';
 export { default as UserPreview } from './UserPreview';
 export { default as UserSession } from './UserSession';
 export { default as UserSessions } from './UserSessions';
+export * from './utilsAuth';

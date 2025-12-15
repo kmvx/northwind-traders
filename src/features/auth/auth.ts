@@ -1,6 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { oAuthProxy } from 'better-auth/plugins';
+import { admin, oAuthProxy } from 'better-auth/plugins';
 import { genericOAuth } from 'better-auth/plugins';
 import invariant from 'tiny-invariant';
 
@@ -13,6 +13,7 @@ invariant(process.env.GOOGLE_CLIENT_SECRET);
 // NOTE: Required for "npx @better-auth/cli generate"
 export const auth = betterAuth({
   plugins: [
+    admin(),
     oAuthProxy(),
     genericOAuth({
       config: [

@@ -1,4 +1,5 @@
 export { useIsMobile } from './use-mobile';
+export { default as useAsync } from './useAsync';
 export { default as useCloseSidebar } from './useCloseSidebar';
 export { default as useDebounce } from './useDebounce';
 export { default as useDownload } from './useDownload';

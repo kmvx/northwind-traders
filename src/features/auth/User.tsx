@@ -1,10 +1,17 @@
 'use client';
 
-import { CalendarIcon, LogOutIcon, MailIcon } from 'lucide-react';
+import {
+  CalendarIcon,
+  LogOutIcon,
+  MailIcon,
+  ShieldUserIcon,
+  UserIcon,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { Button, Separator } from '@/components/ui';
 import {
+  BasicLink,
   DateTime,
   ErrorMessage,
   PanelCentred,
@@ -14,6 +21,7 @@ import {
 } from '@/ui';
 import { setDocumentTitle } from '@/utils';
 
+import { isAdmin } from '../admin';
 import {
   authClient,
   LoginButton,
@@ -49,13 +57,13 @@ const User: React.FC = () => {
   return (
     <PanelCentred className="flex flex-col gap-4 xl:min-w-[800px]">
       <div className="u-hue-violet flex flex-col items-center gap-4 rounded-md p-4">
-        <UserAvatar user={user} className="size-20" />
+        <UserAvatar image={user.image} className="size-20" />
         <Typography.Header1>{user.name}</Typography.Header1>
         <div className="text-muted-foreground text-center text-sm">
           User (you)
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2">
+      <div className="grid grid-cols-1 items-center gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
         <ResponsiveItem
           name="Email Address"
           description="Your email used for login and notifications"
@@ -72,14 +80,34 @@ const User: React.FC = () => {
         >
           <DateTime date={user.createdAt} />
         </ResponsiveItem>
-        <Button
-          onClick={onLogout}
-          title="End your current user session"
-          variant="outline"
+        <ResponsiveItem
+          name="Role"
+          description="The assigned user roles in the system"
+          icon={<UserIcon />}
+          iconClassName="u-hue-green"
         >
-          <LogOutIcon />
-          Logout
-        </Button>
+          {data.user.role}
+        </ResponsiveItem>
+        <div className="flex gap-2">
+          <Button
+            onClick={onLogout}
+            title="End your current user session"
+            variant="outline"
+          >
+            <LogOutIcon />
+            Logout
+          </Button>
+          {isAdmin(data.user) && (
+            <BasicLink
+              href="/auth/admin"
+              variant="outline"
+              size="icon"
+              title="Admin"
+            >
+              <ShieldUserIcon />
+            </BasicLink>
+          )}
+        </div>
       </div>
       <Separator />
       <UserSessions currentSessionId={data.session.id} />

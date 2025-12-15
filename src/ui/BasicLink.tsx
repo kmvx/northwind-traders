@@ -18,7 +18,11 @@ const BasicLink = forwardRef<HTMLAnchorElement, BasicLinkProps>(
       <Button
         asChild
         variant="link"
-        className={cn('h-auto p-0 text-blue-600 dark:text-blue-300', className)}
+        className={cn(
+          'h-auto p-0',
+          !props.variant && 'text-blue-600 dark:text-blue-300',
+          className,
+        )}
         {...props}
       >
         <Link href={href} ref={ref}>

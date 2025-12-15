@@ -33,7 +33,7 @@ const UserPreview: React.FC = () => {
         className="ml-2 p-0"
       >
         <Link href="/auth/user">
-          <UserAvatar user={user} />
+          <UserAvatar image={user.image} />
           <div className="grid flex-grow">
             <span className="truncate text-sm font-bold">{user.name}</span>
             <span className="text-muted-foreground truncate text-xs">

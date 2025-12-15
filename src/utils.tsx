@@ -3,6 +3,10 @@ import type { CurrencyType } from './types';
 
 export * from './utils/date';
 
+export function normalizeError(error: unknown): Error {
+  return error instanceof Error ? error : new Error(String(error));
+}
+
 export function joinFields(...args: string[]): string {
   return [...args].filter(Boolean).join(', ');
 }
