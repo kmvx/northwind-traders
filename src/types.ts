@@ -1,3 +1,7 @@
+export type Nullable<T, K extends keyof T> = Omit<T, K> & {
+  [P in K]: T[P] | null | undefined;
+};
+
 declare const __brand: unique symbol;
 export type Branded<T, Brand> = T & {
   readonly [__brand]: Brand;

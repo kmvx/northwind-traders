@@ -15,10 +15,13 @@ import {
 
 import { getUserAccounts } from '.';
 
-const UserAccounts: React.FC = () => {
+interface UserAccountsProps {
+  userId: string;
+}
+const UserAccounts: React.FC<UserAccountsProps> = ({ userId }) => {
   const { data, error, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ['auth.getUserAccounts'],
-    queryFn: async () => await getUserAccounts(),
+    queryKey: ['auth.getUserAccounts', userId],
+    queryFn: async () => await getUserAccounts(userId),
   });
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
@@ -32,6 +35,7 @@ const UserAccounts: React.FC = () => {
         <Typography.Header3>Active Accounts</Typography.Header3>
         <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
+      {data.length === 0 && <div>No active accounts</div>}
       {data.map((account) => {
         return (
           <Card key={account.id} className="rounded-md shadow-none">

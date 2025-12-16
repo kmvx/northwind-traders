@@ -2,20 +2,25 @@
 
 import { eq } from 'drizzle-orm';
 import { headers } from 'next/headers';
+import invariant from 'tiny-invariant';
 
 import db from '@/db';
 import { account, session } from '@/db/schema';
 
+import { isAdmin } from '../admin';
 import { auth } from './auth';
 
-export const getUserAccounts = async () => {
+export const getUserAccounts = async (userId: string) => {
   const sessionCurrent = await auth.api.getSession({
     headers: await headers(),
   });
 
-  if (!sessionCurrent) return;
+  invariant(sessionCurrent);
 
-  const userId = sessionCurrent.user.id;
+  const currentUserId = sessionCurrent.user.id;
+  if (currentUserId !== userId && !isAdmin(sessionCurrent.user)) {
+    throw new Error('Permission denied');
+  }
 
   const accounts = await db
     .select({
@@ -32,14 +37,17 @@ export const getUserAccounts = async () => {
   return accounts;
 };
 
-export const getUserSessions = async () => {
+export const getUserSessions = async (userId: string) => {
   const sessionCurrent = await auth.api.getSession({
     headers: await headers(),
   });
 
-  if (!sessionCurrent) return;
+  invariant(sessionCurrent);
 
-  const userId = sessionCurrent.user.id;
+  const currentUserId = sessionCurrent.user.id;
+  if (currentUserId !== userId && !isAdmin(sessionCurrent.user)) {
+    throw new Error('Permission denied');
+  }
 
   const sessions = await db
     .select({

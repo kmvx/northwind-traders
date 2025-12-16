@@ -1,7 +1,10 @@
-import type { User } from 'better-auth';
+import type { UserWithRole } from 'better-auth/client/plugins';
 
-export const isAdmin = (user: User | undefined): boolean => {
-  // if (Math.random() < 1) return true; // for testing only
+import type { Nullable } from '@/types';
+
+export const isAdmin = (
+  user: Nullable<Pick<UserWithRole, 'role'>, 'role'> | undefined,
+): boolean => {
   if (!user) return false;
   if (!('role' in user)) return false;
   if (typeof user.role !== 'string') return false;

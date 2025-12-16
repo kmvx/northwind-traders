@@ -7,13 +7,17 @@ import { ErrorMessage, ReloadButton, Typography, WaitSpinner } from '@/ui';
 import { getUserSessions, UserSession } from '.';
 
 interface UserSessionsProps {
+  userId: string;
   currentSessionId: string;
 }
 
-const UserSessions: React.FC<UserSessionsProps> = ({ currentSessionId }) => {
+const UserSessions: React.FC<UserSessionsProps> = ({
+  userId,
+  currentSessionId,
+}) => {
   const { data, error, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ['auth.getUserSessions'],
-    queryFn: async () => await getUserSessions(),
+    queryKey: ['auth.getUserSessions', userId],
+    queryFn: async () => await getUserSessions(userId),
   });
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
@@ -29,6 +33,7 @@ const UserSessions: React.FC<UserSessionsProps> = ({ currentSessionId }) => {
         <Typography.Header3>Active Sessions</Typography.Header3>
         <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
+      {sessions.length === 0 && <div>No active sessions</div>}
       {sessions.map((session) => (
         <UserSession
           session={session}

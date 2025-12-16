@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useCallback } from 'react';
 
 import { Badge, Card, CardContent } from '@/components/ui';
@@ -50,27 +51,29 @@ const Admin: React.FC = () => {
     return (
       <ResponsiveGrid minWidth="18rem">
         {dataUsers.data.users.map((user) => (
-          <Card className="rounded-md shadow-none" key={user.id}>
-            <CardContent>
-              <div className="flex gap-4">
-                <UserAvatar image={user.image} />
-                <div className="flex flex-grow flex-col gap-2">
-                  <div className="flex justify-between gap-2">
-                    <span>{user.email}</span>
-                    {user.id === session?.user.id && <Badge>You</Badge>}
-                    {isAdmin(user) && <Badge>Admin</Badge>}
+          <Link href={`/auth/admin/users/${user.id}`} key={user.id}>
+            <Card className="rounded-md shadow-none">
+              <CardContent>
+                <div className="flex gap-4">
+                  <UserAvatar image={user.image} />
+                  <div className="flex flex-grow flex-col gap-2">
+                    <div className="flex justify-between gap-2">
+                      <span>{user.email}</span>
+                      {user.id === session?.user.id && <Badge>You</Badge>}
+                      {isAdmin(user) && <Badge>Admin</Badge>}
+                    </div>
+                    <span className="text-muted-foreground text-xs">
+                      {user.name}, {user.role},{' '}
+                      <DateTime
+                        date={user.createdAt}
+                        className="text-muted-foreground text-xs"
+                      />
+                    </span>
                   </div>
-                  <span className="text-muted-foreground text-xs">
-                    {user.name}, {user.role},{' '}
-                    <DateTime
-                      date={user.createdAt}
-                      className="text-muted-foreground text-xs"
-                    />
-                  </span>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </ResponsiveGrid>
     );

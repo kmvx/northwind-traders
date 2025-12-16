@@ -1,6 +1,6 @@
 import { type Metadata } from 'next';
 
-import { User } from '@/features/auth';
+import { UserCurrent } from '@/features/auth';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default async function OrdersPage() {
-  return <User />;
+  return <UserCurrent />;
 }
