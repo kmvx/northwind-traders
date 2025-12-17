@@ -20,7 +20,7 @@ import {
 } from '@/ui';
 import { setDocumentTitle } from '@/utils';
 
-import { isAdmin } from '../admin';
+import { isAdminUser } from '../admin';
 import { UserAccounts, UserAvatar, UserSessions } from '.';
 
 type UserWithRoleFixed = Pick<
@@ -82,7 +82,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
               <LogOutIcon />
               Logout
             </Button>
-            {isAdmin(user) && (
+            {isAdminUser(user) && (
               <BasicLink
                 href="/auth/admin"
                 variant="outline"

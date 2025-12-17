@@ -2,7 +2,7 @@ import type { UserWithRole } from 'better-auth/client/plugins';
 
 import type { Nullable } from '@/types';
 
-export const isAdmin = (
+export const isAdminUser = (
   user: Nullable<Pick<UserWithRole, 'role'>, 'role'> | undefined,
 ): boolean => {
   if (!user) return false;

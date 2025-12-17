@@ -7,7 +7,7 @@ import invariant from 'tiny-invariant';
 import db from '@/db';
 import { account, session } from '@/db/schema';
 
-import { isAdmin } from '../admin';
+import { isAdminUser } from '../admin';
 import { auth } from './auth';
 
 export const getUserAccounts = async (userId: string) => {
@@ -18,7 +18,7 @@ export const getUserAccounts = async (userId: string) => {
   invariant(sessionCurrent);
 
   const currentUserId = sessionCurrent.user.id;
-  if (currentUserId !== userId && !isAdmin(sessionCurrent.user)) {
+  if (currentUserId !== userId && !isAdminUser(sessionCurrent.user)) {
     throw new Error('Permission denied');
   }
 
@@ -45,7 +45,7 @@ export const getUserSessions = async (userId: string) => {
   invariant(sessionCurrent);
 
   const currentUserId = sessionCurrent.user.id;
-  if (currentUserId !== userId && !isAdmin(sessionCurrent.user)) {
+  if (currentUserId !== userId && !isAdminUser(sessionCurrent.user)) {
     throw new Error('Permission denied');
   }
 

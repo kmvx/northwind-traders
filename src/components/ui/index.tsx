@@ -10,7 +10,9 @@ export {
   CardHeader,
   CardTitle,
 } from './card';
+export { Checkbox } from './checkbox';
 export { Input } from './input';
+export { Label } from './label';
 export { Separator } from './separator';
 export { Skeleton } from './skeleton';
 export { Spinner } from './spinner';
