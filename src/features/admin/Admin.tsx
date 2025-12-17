@@ -1,10 +1,10 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useCallback } from 'react';
 
 import { Badge, Card, CardContent } from '@/components/ui';
-import { useAsync } from '@/hooks';
 import {
   DateTime,
   ErrorMessage,
@@ -16,7 +16,7 @@ import {
 } from '@/ui';
 
 import { authClient, toErrorAuth, UserAvatar } from '../auth';
-import { AdminCheckbox, isAdminUser } from '.';
+import { AdminCheckbox, isAdminUser, QUERY_KEY_ADMIN_USERS } from '.';
 
 const Admin: React.FC = () => {
   const {
@@ -26,41 +26,45 @@ const Admin: React.FC = () => {
     refetch: refetchSession,
   } = authClient.useSession();
 
-  const listUsers = useCallback(async () => {
-    // NOTE: Shows only first 100 users, must use pagination
-    return await authClient.admin.listUsers({ query: {} });
-  }, []);
-
+  // Fetch list of users
   const {
     data: dataUsers,
     isLoading: isLoadingUsers,
+    isFetching: isFetchingUsers,
     error: errorUsers,
-    execute: executeUsers,
-  } = useAsync({
-    asyncFn: listUsers,
+    refetch: refetchUsers,
+  } = useQuery({
+    queryKey: [QUERY_KEY_ADMIN_USERS],
+    queryFn: async () => {
+      // BUG: Shows only first 100 users, must use pagination
+      const response = await authClient.admin.listUsers({ query: {} });
+      if (response.error) {
+        throw toErrorAuth(response.error);
+      }
+      return response.data;
+    },
   });
 
-  const error = errorSession || errorUsers || toErrorAuth(dataUsers?.error);
+  const error = errorSession || errorUsers;
   const isLoading = isPendingSession || isLoadingUsers;
   const refetch = useCallback(() => {
     refetchSession();
-    executeUsers();
-  }, [refetchSession, executeUsers]);
+    refetchUsers();
+  }, [refetchSession, refetchUsers]);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
-    const users = dataUsers?.data;
-    if (!users && isLoading) return <WaitSpinner />;
+    if (!dataUsers && isLoading) return <WaitSpinner />;
     if (!isAdminUser(session?.user)) {
       return <ErrorMessage error={new Error('No access')} retry={refetch} />;
     }
-    if (!users) return null;
+    if (!dataUsers) return null;
 
     const currentUserId = session?.user.id;
 
     return (
       <ResponsiveGrid minWidth="18rem">
-        {users.users.map((user) => {
+        {dataUsers.users.map((user) => {
           const href = `/auth/admin/users/${user.id}`;
           const isAdmin = isAdminUser(user);
           return (
@@ -105,7 +109,7 @@ const Admin: React.FC = () => {
       <div className="flex items-center justify-between gap-2">
         <span />
         <Typography variant="header1">Users</Typography>
-        <ReloadButton onClick={refetch} isLoading={isLoading} />
+        <ReloadButton onClick={refetch} isLoading={isFetchingUsers} />
       </div>
       {getContent()}
     </PanelStretched>

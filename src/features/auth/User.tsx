@@ -1,8 +1,7 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import { useAsync } from '@/hooks';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import { authClient, toErrorAuth, UserDetails } from '.';
@@ -14,22 +13,25 @@ interface UserProps {
 const User: React.FC<UserProps> = ({ userId }) => {
   const { data: session } = authClient.useSession();
 
-  const getUser = useCallback(async () => {
-    return await authClient.admin.getUser({ query: { id: userId } });
-  }, [userId]);
-
   const {
     data: dataUser,
     isLoading,
-    error: errorUser,
-    execute,
-  } = useAsync({
-    asyncFn: getUser,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ['auth.user', userId],
+    queryFn: async () => {
+      const response = await authClient.admin.getUser({
+        query: { id: userId },
+      });
+      if (response.error) {
+        throw toErrorAuth(response.error);
+      }
+      return response;
+    },
   });
 
-  const error = errorUser || toErrorAuth(dataUser?.error);
-
-  if (error) return <ErrorMessage error={error} retry={execute} />;
+  if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isLoading) return <WaitSpinner />;
 
   const user = dataUser?.data;
