@@ -3,8 +3,9 @@
 import { Globe2Icon } from 'lucide-react';
 import React from 'react';
 
+import { Spinner } from '@/components/ui';
 import { useEmployeeTerritories, useQueryRegions } from '@/net';
-import { ErrorMessage, WaitSpinner } from '@/ui';
+import { ErrorMessage } from '@/ui';
 
 interface TerritoriesProps {
   employeeId: number | null;
@@ -17,7 +18,7 @@ const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
   const { data: dataRegions } = useQueryRegions();
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isLoading) return <WaitSpinner />;
+  if (isLoading) return <Spinner />;
   if (!data) return <div>No data</div>;
 
   const regionsMap = new Map<number, string>();
