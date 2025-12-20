@@ -7,11 +7,13 @@ export function normalizeError(error: unknown): Error {
   return error instanceof Error ? error : new Error(String(error));
 }
 
-export function joinFields(...args: string[]): string {
+export function joinFields(...args: (string | null)[]): string {
   return [...args].filter(Boolean).join(', ');
 }
 
-export function formatCurrency(amount: CurrencyType): string {
+export function formatCurrency(amount: CurrencyType | null): string {
+  if (amount == null) return 'N/A';
+
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -21,7 +23,9 @@ export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function isStringIncludes(str: string, search: string): boolean {
+export function isStringIncludes(str: string | null, search: string): boolean {
+  if (!str) return false;
+
   const strConverted = typeof str === 'string' ? str : '' + str;
   const searchConverted = typeof search === 'string' ? search : '' + search;
   return (
@@ -29,11 +33,13 @@ export function isStringIncludes(str: string, search: string): boolean {
   );
 }
 
-export const buildTitle = (...args: (string | undefined)[]): string => {
+export const buildTitle = (...args: (string | null | undefined)[]): string => {
   return [...args, 'Northwind Traders'].filter(Boolean).join(' \u2014 ');
 };
 
-export const setDocumentTitle = (...args: (string | undefined)[]): void => {
+export const setDocumentTitle = (
+  ...args: (string | null | undefined)[]
+): void => {
   if (typeof document === 'undefined') return;
   document.title = buildTitle(...args);
 };
@@ -70,8 +76,11 @@ const countryFlagEmojiByCountryName: Record<string, string> = {
   Venezuela: '🇻🇪',
 };
 
-export function getFlagEmojiByCountryName(country: string): string | undefined {
-  if (!country) return '🇺🇳';
+export function getFlagEmojiByCountryName(
+  country: string | null,
+): string | undefined {
+  if (country === '') return '🇺🇳';
+  if (country == null) return '🏴‍☠';
   const emoji = countryFlagEmojiByCountryName[country];
   if (!emoji) {
     console.error('Unknown country', country);

@@ -185,7 +185,7 @@ class SVGBuilder {
     data.forEach((item) => {
       const orderDate = item.orderDate;
       if (!orderDate) return;
-      const date = new Date(item.orderDate);
+      const date = new Date(orderDate);
       ordersCountByMonth[date.getMonth()]++;
     });
     const maxValue = this.ordersCountByMonth.reduce((p, v) => Math.max(p, v));

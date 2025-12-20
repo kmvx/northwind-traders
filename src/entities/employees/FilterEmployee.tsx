@@ -26,7 +26,7 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
         ...dataEmployees.map(
           (item): SelectStringListInfoType => ({
             value: String(item.employeeId),
-            title: `${titleOfCourtesyMap[item.titleOfCourtesy] ?? ''} \xa0 ${getEmployeeNameByData(item)}`,
+            title: `${titleOfCourtesyMap[item.titleOfCourtesy ?? ''] ?? ''} \xa0 ${getEmployeeNameByData(item)}`,
             description: item.title,
           }),
         ),

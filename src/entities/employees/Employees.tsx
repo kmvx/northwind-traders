@@ -161,10 +161,7 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
             onClick={handleFiltersClear}
           />
           <ExportDropdown
-            data={// eslint-disable-next-line @typescript-eslint/no-unused-vars
-            filteredData?.map(({ photo: _photo, ...item }) => ({
-              ...item,
-            }))}
+            data={filteredData?.map(({ ...item }) => ({ ...item }))}
             name="Employees"
           />
           <ReloadButton onClick={refetch} isLoading={isFetching} />

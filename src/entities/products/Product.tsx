@@ -89,7 +89,9 @@ const Product: React.FC<ProductProps> = ({ productId }) => {
       <div className="flex flex-col gap-4">
         <div className="text-center">Product #{data.productId}</div>
         <PropertyGrid items={items} />
-        <Supplier supplierId={data.supplierId} isEmbedded />
+        {data.supplierId && (
+          <Supplier supplierId={data.supplierId} isEmbedded />
+        )}
       </div>
       <OrderDetails productId={productId} />
     </PanelCentred>

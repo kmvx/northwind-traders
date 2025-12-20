@@ -39,6 +39,7 @@ describe('formatCurrency', () => {
     );
     expect(formatCurrency(castToCurrency(0.005))).toBe('$0.01');
     expect(formatCurrency(castToCurrency(0.004))).toBe('$0.00');
+    expect(formatCurrency(null)).toBe('N/A');
   });
 });
 
@@ -126,7 +127,6 @@ describe('getEmployeeNameByData', () => {
         'John is a dedicated software engineer with 5 years of experience.',
       reportsTo: 2,
       title: 'Software Engineer',
-      photo: 'john_doe.jpg',
       photoPath: '/images/employees/john_doe.jpg',
       address: '123 Main St',
       city: 'Springfield',

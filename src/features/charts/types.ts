@@ -1,5 +1,5 @@
 export interface CategoriesQueryResultType {
-  categories: string[] | undefined;
+  categories: (string | null)[] | undefined;
   error: Error | null;
   isLoading: boolean;
   refetch: () => void;

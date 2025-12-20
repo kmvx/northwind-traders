@@ -4,10 +4,10 @@ import React from 'react';
 
 import { Separator } from '@/components/ui';
 import {
+  useQueryCustomerByOrderId,
+  useQueryEmployeeByOrderId,
   useQueryOrder,
-  useQueryOrderCustomer,
-  useQueryOrderEmployee,
-  useQueryOrderShipper,
+  useQueryShipperByOrderId,
 } from '@/net';
 import {
   ErrorMessage,
@@ -36,9 +36,9 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
   const { data, error, isLoading, refetch } = useQueryOrder({
     orderId,
   });
-  const { data: dataCustomer } = useQueryOrderCustomer({ orderId });
-  const { data: dataEmployee } = useQueryOrderEmployee({ orderId });
-  const { data: dataShipper } = useQueryOrderShipper({ orderId });
+  const { data: dataCustomer } = useQueryCustomerByOrderId({ orderId });
+  const { data: dataEmployee } = useQueryEmployeeByOrderId({ orderId });
+  const { data: dataShipper } = useQueryShipperByOrderId({ orderId });
 
   setDocumentTitle(`Order${data ? ' #' + data.orderId : ''}`);
 

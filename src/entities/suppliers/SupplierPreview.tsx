@@ -6,7 +6,7 @@ import { Flag } from '../shared';
 
 interface SupplierPreviewProps {
   dataSuppliers: ISuppliers | undefined;
-  supplierId: number;
+  supplierId: number | null;
 }
 
 const SupplierPreview: React.FC<SupplierPreviewProps> = ({

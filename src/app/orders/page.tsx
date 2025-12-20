@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 
+import { getOrders } from '@/db/actions';
 import { Orders } from '@/entities/orders';
-import { getOrders } from '@/net';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {

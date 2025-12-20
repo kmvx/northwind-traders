@@ -14,8 +14,8 @@ import {
 import { useIsMobile } from '@/hooks';
 
 export type SelectStringListInfoType = {
-  title?: string;
-  description?: string;
+  title?: string | undefined;
+  description?: string | null | undefined;
   value: string;
 };
 
@@ -51,11 +51,9 @@ const SelectStringList: React.FC<SelectStringListProps> = ({
             key={index}
             value={itemInfo.value}
             className="bg-background"
-            title={itemInfo.description}
+            title={itemInfo.description ?? ''}
           >
-            {itemInfo.title == undefined
-              ? String(itemInfo.value)
-              : itemInfo.title}
+            {!itemInfo.title ? itemInfo.title : String(itemInfo.value)}
           </NativeSelectOption>
         ))}
       </NativeSelect>
@@ -81,7 +79,7 @@ const SelectStringList: React.FC<SelectStringListProps> = ({
           <SelectItem
             key={index}
             value={itemInfo.value}
-            title={itemInfo.description}
+            title={itemInfo.description ?? ''}
           >
             {itemInfo.title ?? String(itemInfo.value)}
           </SelectItem>

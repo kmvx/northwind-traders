@@ -6,7 +6,7 @@ import type { PhoneType } from '@/types';
 import CopyButton from '../../ui/CopyButton';
 
 interface ContactPhoneProps {
-  phone: PhoneType;
+  phone: PhoneType | null;
   description?: string;
   isFax?: boolean;
 }
@@ -16,6 +16,8 @@ const ContactPhone: React.FC<ContactPhoneProps> = ({
   description,
   isFax = false,
 }) => {
+  if (!phone) return null;
+
   const IconComponent = isFax ? PrinterIcon : PhoneIcon;
 
   return (

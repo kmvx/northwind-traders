@@ -24,7 +24,7 @@ import Territories from './Territories';
 
 type EmployeeHoverCardProps = {
   employee: IEmployee | undefined;
-  employeeId: number;
+  employeeId: number | null;
 };
 
 const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({

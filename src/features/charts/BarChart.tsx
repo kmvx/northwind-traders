@@ -161,6 +161,7 @@ const BarChart: React.FC<{
     const itemsPerCategoryCount = new Map<string, number>();
     let maxItemsCountPerCategory = 0;
     categories?.forEach((category) => {
+      if (!category) return;
       const count = (itemsPerCategoryCount.get(category) || 0) + 1;
       maxItemsCountPerCategory = Math.max(maxItemsCountPerCategory, count);
       itemsPerCategoryCount.set(category, count);

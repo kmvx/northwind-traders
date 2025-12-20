@@ -15,7 +15,7 @@ import { joinFields } from '@/utils';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 type CustomerHoverCardProps = {
-  customerId: string;
+  customerId: string | null;
   children?: React.ReactNode;
 };
 
@@ -49,8 +49,7 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
         />
 
         <ContactPhone phone={data.phone} />
-
-        {data.fax && <ContactPhone phone={data.fax} isFax />}
+        <ContactPhone phone={data.fax} isFax />
 
         <div className="flex items-center gap-2" title="ID">
           <div className="u-hue-violet rounded-md p-2">

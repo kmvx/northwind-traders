@@ -3,15 +3,15 @@
 import { Globe2Icon } from 'lucide-react';
 import React from 'react';
 
-import { useEmployeeTeritories, useQueryRegions } from '@/net';
+import { useEmployeeTerritories, useQueryRegions } from '@/net';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 interface TerritoriesProps {
-  employeeId: number;
+  employeeId: number | null;
 }
 
 const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
-  const { data, error, isLoading, refetch } = useEmployeeTeritories({
+  const { data, error, isLoading, refetch } = useEmployeeTerritories({
     employeeId,
   });
   const { data: dataRegions } = useQueryRegions();

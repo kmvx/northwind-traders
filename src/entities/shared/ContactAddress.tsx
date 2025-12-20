@@ -7,9 +7,9 @@ import type { CountryType } from '@/types';
 import { Flag } from '.';
 
 interface ContactAddressProps {
-  country: CountryType;
-  address: string;
-  addressDetails: string;
+  country: CountryType | null;
+  address: string | null;
+  addressDetails: string | null;
   title?: string;
   className?: string;
 }

@@ -51,8 +51,8 @@ const EmployeesBarChart: React.FC = () => {
         mapEmployeeToId.set(name, employee.employeeId);
       });
 
-      categories = dataOrders.map(
-        (item) => mapIdToEmployee.get(item.employeeId) ?? '',
+      categories = dataOrders.map((item) =>
+        item.employeeId ? (mapIdToEmployee.get(item.employeeId) ?? '') : '',
       );
     }
 

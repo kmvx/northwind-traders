@@ -2,8 +2,8 @@ import { UserIcon } from 'lucide-react';
 import React from 'react';
 
 interface ContactPersonProps {
-  name: string;
-  contactTitle: string;
+  name: string | null;
+  contactTitle: string | null;
   title?: string;
 }
 

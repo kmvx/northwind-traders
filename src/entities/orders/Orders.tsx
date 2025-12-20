@@ -88,7 +88,7 @@ const Orders: React.FC<OrdersProps> = ({
         const preparedData = data?.map((item) => {
           const orderDate = item.orderDate;
           if (orderDate) {
-            const date = new Date(item.orderDate);
+            const date = new Date(orderDate);
             const year = date.getFullYear();
             yearsSet.add(year);
           }

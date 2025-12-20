@@ -6,8 +6,8 @@ import type { CountryType } from '@/types';
 import { Flag } from '.';
 
 interface LocationProps {
-  country: CountryType;
-  city: string;
+  country: CountryType | null;
+  city: string | null;
   title: string;
 }
 

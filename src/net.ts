@@ -3,6 +3,27 @@ import { useMemo } from 'react';
 import invariant from 'tiny-invariant';
 
 import {
+  getCategories,
+  getCustomer,
+  getCustomerByOrderId,
+  getCustomers,
+  getEmployee,
+  getEmployeeByOrderId,
+  getEmployees,
+  getEmployeeTerritories,
+  getOrder,
+  getOrderDetails,
+  getOrders,
+  getProduct,
+  getProducts,
+  getProductsByOrderId,
+  getRegions,
+  getShipperByOrderId,
+  getShippers,
+  getSupplier,
+  getSuppliers,
+} from './db/actions';
+import {
   type ICategories,
   type ICustomer,
   type ICustomers,
@@ -22,17 +43,6 @@ import {
 } from './models';
 import { dateFromString } from './utils';
 
-const API_URL = 'https://demodata.grapecity.com/northwind/api/v1';
-
-async function fetchJSON(path: string) {
-  const url = API_URL + path;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error('Failed to fetch data from url: ' + url);
-  }
-  return res.json();
-}
-
 // Customers
 
 export const useQueryCustomers = ({
@@ -41,52 +51,48 @@ export const useQueryCustomers = ({
   initialData?: ICustomers | undefined;
 } = {}) => {
   return useQuery<ICustomers>({
-    queryKey: [API_URL + '/Customers'],
+    queryKey: ['northwind.customers'],
+    queryFn: getCustomers,
     ...(initialData ? { initialData } : {}),
   });
-};
-
-export const getCustomers = async (): Promise<ICustomers> => {
-  return await fetchJSON('/Customers');
 };
 
 export const useQueryCustomer = ({
   customerId,
   enabled = true,
 }: {
-  customerId: string;
+  customerId: string | null;
   enabled?: boolean;
 }) => {
-  return useQuery<ICustomer>({
-    queryKey: [API_URL + '/Customers/' + customerId],
+  return useQuery<ICustomer | undefined>({
+    queryKey: ['northwind.customers', { customerId }],
+    queryFn: async () => await getCustomer({ customerId }),
     enabled,
   });
 };
 
-export const useQueryOrderCustomer = ({ orderId }: { orderId: number }) => {
+export const useQueryCustomerByOrderId = ({ orderId }: { orderId: number }) => {
   return useQuery<ICustomer>({
-    queryKey: [API_URL + '/Orders/' + orderId + '/Customer'],
+    queryKey: ['northwind.customers', { orderId }],
+    queryFn: () => getCustomerByOrderId({ orderId }),
   });
 };
 
 // Employees
 
 export const useQueryEmployees = ({
-  initialData,
   enabled = true,
+  initialData,
 }: {
-  initialData?: IEmployees | undefined;
   enabled?: boolean;
+  initialData?: IEmployees | undefined;
 } = {}) => {
   return useQuery<IEmployees>({
-    queryKey: [API_URL + '/Employees'],
-    ...(initialData ? { initialData } : {}),
+    queryKey: ['northwind.employees'],
+    queryFn: getEmployees,
     enabled,
+    ...(initialData ? { initialData } : {}),
   });
-};
-
-export const getEmployees = async (): Promise<IEmployees> => {
-  return await fetchJSON('/Employees');
 };
 
 export const useQueryEmployee = ({
@@ -94,40 +100,40 @@ export const useQueryEmployee = ({
   enabled = true,
   initialData,
 }: {
-  employeeId: number;
+  employeeId: number | null;
   enabled?: boolean;
   initialData?: IEmployee | undefined;
 }) => {
-  return useQuery<IEmployee>({
-    queryKey: [API_URL + '/Employees/' + employeeId],
+  return useQuery<IEmployee | undefined>({
+    queryKey: ['northwind.employees', { employeeId }],
+    queryFn: () => getEmployee({ employeeId }),
     enabled,
     ...(initialData ? { initialData } : {}),
   });
 };
 
-export const getEmployee = async (employeeId: number): Promise<IEmployee> => {
-  return await fetchJSON('/Employees/' + employeeId);
-};
-
-export const useQueryOrderEmployee = ({ orderId }: { orderId: number }) => {
+export const useQueryEmployeeByOrderId = ({ orderId }: { orderId: number }) => {
   return useQuery<IEmployee>({
-    queryKey: [API_URL + '/Orders/' + orderId + '/Employee'],
+    queryKey: ['northwind.employees', { orderId }],
+    queryFn: () => getEmployeeByOrderId({ orderId }),
   });
 };
 
-export const useEmployeeTeritories = ({
+export const useEmployeeTerritories = ({
   employeeId,
 }: {
-  employeeId: number;
+  employeeId: number | null;
 }) => {
-  return useQuery<ITerritories>({
-    queryKey: [API_URL + '/Employees/' + employeeId + '/Territories'],
+  return useQuery<ITerritories | undefined>({
+    queryKey: ['northwind.territories', { employeeId }],
+    queryFn: () => getEmployeeTerritories({ employeeId }),
   });
 };
 
 export const useQueryRegions = () => {
   return useQuery<IRegions>({
-    queryKey: [API_URL + '/Regions'],
+    queryKey: ['northwind.regions'],
+    queryFn: getRegions,
   });
 };
 
@@ -144,26 +150,15 @@ export const useQueryOrders = ({
   shipperId?: number | undefined;
   initialData?: IOrders | undefined;
 } = {}) => {
-  const id = customerId ?? employeeId ?? shipperId ?? '';
   invariant(
-    (customerId?.length ? 1 : 0) + (employeeId ? 1 : 0) + (shipperId ? 1 : 0) <=
-      1,
+    (customerId ? 1 : 0) + (employeeId ? 1 : 0) + (shipperId ? 1 : 0) <= 1,
   );
+
   return useQuery<IOrders>({
-    queryKey: [
-      API_URL +
-        (customerId ? '/Customers/' : '') +
-        (employeeId ? '/Employees/' : '') +
-        (shipperId ? '/Shippers/' : '') +
-        id +
-        '/Orders',
-    ],
+    queryKey: ['northwind.orders', { customerId, employeeId, shipperId }],
+    queryFn: () => getOrders({ customerId, employeeId, shipperId }),
     ...(initialData ? { initialData } : {}),
   });
-};
-
-export const getOrders = async (): Promise<IOrders> => {
-  return await fetchJSON('/Orders');
 };
 
 export const useQueryOrdersFiltered = ({
@@ -176,10 +171,7 @@ export const useQueryOrdersFiltered = ({
   queryResult: Omit<UseQueryResult<IOrders>, 'data'>;
   filteredData: IOrders | undefined;
 } => {
-  const queryResult = useQuery<IOrders>({
-    queryKey: [API_URL + '/Orders'],
-  });
-
+  const queryResult = useQueryOrders();
   const { data } = queryResult;
 
   const preparedData = useMemo(() => {
@@ -223,7 +215,8 @@ export const useQueryOrder = ({
   enabled?: boolean;
 }) => {
   return useQuery<IOrder>({
-    queryKey: [API_URL + '/Orders/' + orderId],
+    queryKey: ['northwind.orders', { orderId }],
+    queryFn: () => getOrder({ orderId }),
     enabled,
   });
 };
@@ -235,17 +228,10 @@ export const useQueryOrderDetails = ({
   orderId?: number | undefined;
   productId?: number | undefined;
 }) => {
-  const id = orderId ?? productId;
-  invariant(id);
   invariant((orderId ? 1 : 0) + (productId ? 1 : 0) === 1);
   return useQuery<IOrderDetails>({
-    queryKey: [
-      API_URL +
-        (orderId ? '/Orders/' : '') +
-        (productId ? '/Products/' : '') +
-        id +
-        '/OrderDetails',
-    ],
+    queryKey: ['northwind.orderDetails', { orderId, productId }],
+    queryFn: () => getOrderDetails({ orderId, productId }),
   });
 };
 
@@ -253,34 +239,39 @@ export const useQueryOrderDetails = ({
 
 export const useQueryProducts = ({
   supplierId,
-  orderId,
   enabled = true,
   initialData,
 }: {
   supplierId?: number | undefined;
-  orderId?: number | undefined;
   enabled?: boolean;
   initialData?: IProducts | undefined;
 } = {}) => {
   return useQuery<IProducts>({
-    queryKey: [
-      API_URL +
-        (supplierId ? '/Suppliers/' + supplierId : '') +
-        (orderId ? '/Orders/' + orderId : '') +
-        '/Products',
-    ],
+    queryKey: ['northwind.products', { supplierId }],
+    queryFn: () => getProducts({ supplierId }),
     enabled,
     ...(initialData ? { initialData } : {}),
   });
 };
 
-export const getProducts = async (): Promise<IProducts> => {
-  return await fetchJSON('/Products');
+export const useQueryProductsByOrderId = ({
+  orderId,
+  enabled = true,
+}: {
+  orderId?: number | undefined;
+  enabled?: boolean;
+} = {}) => {
+  return useQuery<IProducts>({
+    queryKey: ['northwind.products', { orderId }],
+    queryFn: () => getProductsByOrderId({ orderId }),
+    enabled,
+  });
 };
 
 export const useQueryProduct = ({ productId }: { productId: number }) => {
-  return useQuery<IProduct>({
-    queryKey: [API_URL + '/Products/' + productId],
+  return useQuery<IProduct | undefined>({
+    queryKey: ['northwind.products', { productId }],
+    queryFn: () => getProduct({ productId }),
   });
 };
 
@@ -290,7 +281,8 @@ export const useQueryCategories = ({
   enabled?: boolean;
 } = {}) => {
   return useQuery<ICategories>({
-    queryKey: [API_URL + '/Categories'],
+    queryKey: ['northwind.categories'],
+    queryFn: getCategories,
     enabled,
   });
 };
@@ -299,13 +291,15 @@ export const useQueryCategories = ({
 
 export const useQueryShippers = () => {
   return useQuery<IShippers>({
-    queryKey: [API_URL + '/Shippers'],
+    queryKey: ['northwind.shippers'],
+    queryFn: getShippers,
   });
 };
 
-export const useQueryOrderShipper = ({ orderId }: { orderId: number }) => {
+export const useQueryShipperByOrderId = ({ orderId }: { orderId: number }) => {
   return useQuery<IShipper>({
-    queryKey: [API_URL + '/Orders/' + orderId + '/Shipper'],
+    queryKey: ['northwind.shippers', { orderId }],
+    queryFn: () => getShipperByOrderId({ orderId }),
   });
 };
 
@@ -319,14 +313,11 @@ export const useQuerySuppliers = ({
   initialData?: ISuppliers | undefined;
 } = {}) => {
   return useQuery<ISuppliers>({
-    queryKey: [API_URL + '/Suppliers'],
+    queryKey: ['northwind.suppliers'],
+    queryFn: getSuppliers,
     enabled,
     ...(initialData ? { initialData } : {}),
   });
-};
-
-export const getSuppliers = async (): Promise<ISuppliers> => {
-  return await fetchJSON('/Suppliers');
 };
 
 export const useQuerySupplier = ({
@@ -337,7 +328,8 @@ export const useQuerySupplier = ({
   enabled?: boolean;
 }) => {
   return useQuery<ISupplier>({
-    queryKey: [API_URL + '/Suppliers/' + supplierId],
+    queryKey: ['northwind.suppliers', { supplierId }],
+    queryFn: () => getSupplier({ supplierId }),
     enabled,
   });
 };

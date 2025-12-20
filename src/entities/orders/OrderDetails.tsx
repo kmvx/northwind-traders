@@ -4,7 +4,7 @@ import { usePageSize } from '@/hooks';
 import {
   useQueryCategories,
   useQueryOrderDetails,
-  useQueryProducts,
+  useQueryProductsByOrderId,
   useQuerySuppliers,
 } from '@/net';
 import { castToCurrency } from '@/types';
@@ -33,7 +33,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
     orderId,
     productId,
   });
-  const { data: dataProducts } = useQueryProducts({
+  const { data: dataProducts } = useQueryProductsByOrderId({
     orderId,
     enabled: showProduct,
   });

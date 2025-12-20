@@ -8,7 +8,7 @@ import { getEmojiiByCategoryName } from '.';
 
 interface CategoryProps {
   dataCategories: ICategories | undefined;
-  categoryId: number | undefined;
+  categoryId: number | null | undefined;
 }
 
 const Category: React.FC<CategoryProps> = ({ dataCategories, categoryId }) => {

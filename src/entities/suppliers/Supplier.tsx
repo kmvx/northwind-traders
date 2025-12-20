@@ -78,7 +78,7 @@ const Supplier: React.FC<SupplierProps> = ({
         <div className="text-center">Supplier company</div>
         <PropertyGrid items={items} />
       </div>
-      <Products supplierId={data.supplierId} />
+      <Products supplierId={supplierId} />
     </PanelCentred>
   );
 };
