@@ -1,6 +1,7 @@
 'use server';
 
 import { and, eq } from 'drizzle-orm';
+import { uniqBy } from 'es-toolkit/array';
 
 import type {
   ICategories,
@@ -182,7 +183,10 @@ export const getEmployeeTerritories = async ({
     },
   });
 
-  return result.map((employeeTerritory) => employeeTerritory.territory);
+  return uniqBy(
+    result.map((employeeTerritory) => employeeTerritory.territory),
+    (item) => item.territoryId,
+  );
 };
 
 const REGION_COLUMNS = {
@@ -319,7 +323,10 @@ export const getProductsByOrderId = async ({
     },
   });
 
-  return result.map((item) => item.product);
+  return uniqBy(
+    result.map((item) => item.product),
+    (item) => item.productId,
+  );
 };
 
 export const getProduct = async ({
