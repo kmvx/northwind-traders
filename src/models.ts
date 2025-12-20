@@ -37,7 +37,9 @@ export interface IEmployee extends IAddress {
   title: string | null;
   titleOfCourtesy: string | null;
   birthDate: DateStringType | null;
+  hireDate: DateStringType | null;
   homePhone: PhoneType | null;
+  extension: PhoneType | null;
   notes: string | null;
   // photo: string | null;
   reportsTo: number | null;

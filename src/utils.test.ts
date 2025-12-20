@@ -121,8 +121,10 @@ describe('getEmployeeNameByData', () => {
       lastName: 'Doe',
       firstName: 'John',
       birthDate: castToDateString('1990-05-15'),
+      hireDate: castToDateString('2020-05-15'),
       employeeId: 1,
       homePhone: castToPhone('(123) 456-7890'),
+      extension: castToPhone('1234'),
       notes:
         'John is a dedicated software engineer with 5 years of experience.',
       reportsTo: 2,

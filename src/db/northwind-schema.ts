@@ -90,7 +90,7 @@ export const employees = pgTable(
     postalCode: varchar('postal_code', { length: 10 }),
     country: brandedCountryDBColumn({ length: 15 }),
     homePhone: brandedPhoneDBColumn('home_phone', { length: 24 }),
-    extension: varchar({ length: 4 }),
+    extension: brandedPhoneDBColumn({ length: 4 }),
     // TODO: failed to parse database type 'bytea'
     // photo: unknown('photo'),
     notes: text(),

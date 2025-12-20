@@ -1,6 +1,6 @@
 'use client';
 
-import { CakeIcon, FlagIcon } from 'lucide-react';
+import { CakeIcon, FlagIcon, HandshakeIcon } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
@@ -48,7 +48,31 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
 
   const items = [
     {
-      name: 'Address',
+      name: 'Territories',
+      value: <Territories employeeId={employeeId} />,
+      description: 'Sales regions.',
+    },
+    {
+      name: 'Phone extension',
+      value: <ContactPhone phone={data.extension} />,
+      description: 'Internal office phone extension.',
+    },
+    {
+      name: 'Hire date',
+      value: (
+        <div className="flex items-center gap-2">
+          <div className="u-hue-violet rounded-md p-2">
+            <HandshakeIcon className="size-4" />
+          </div>
+          <span className="flex items-center gap-2">
+            <b>{formatDateFromString(data.hireDate)}</b>
+          </span>
+        </div>
+      ),
+      description: 'Date when the employee joined the company.',
+    },
+    {
+      name: 'Home address',
       value: (
         <ContactAddress
           country={data.country}
@@ -64,14 +88,9 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
       description: 'Employee’s home mailing street address.',
     },
     {
-      name: 'Territories',
-      value: <Territories employeeId={employeeId} />,
-      description: 'Sales regions.',
-    },
-    {
       name: 'Home phone',
       value: <ContactPhone phone={data.homePhone} />,
-      description: 'Contact phone number.',
+      description: 'Private phone number at home.',
     },
     {
       name: 'Birth date',
@@ -85,7 +104,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
           </span>
         </div>
       ),
-      description: 'The specific day, month, and year the employee was born.',
+      description: 'Date of birth for the employee.',
     },
   ];
 

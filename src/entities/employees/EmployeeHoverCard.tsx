@@ -1,6 +1,6 @@
 'use client';
 
-import { CakeIcon } from 'lucide-react';
+import { CakeIcon, HandshakeIcon } from 'lucide-react';
 import Image from 'next/image';
 import { memo, useState } from 'react';
 
@@ -44,7 +44,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
 
     return (
       <div className="flex flex-col gap-2">
-        <Typography.Header3>Employee</Typography.Header3>
+        <div>Employee</div>
         <div className="flex gap-4">
           <Image
             src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
@@ -55,11 +55,24 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
           />
 
           <div className="flex flex-col gap-2">
-            <b>{data.title}</b>
+            <Typography.Header2>
+              {getEmployeeNameByData(data)}
+            </Typography.Header2>
+            <Typography.Header3>{data.title}</Typography.Header3>
 
             <Territories employeeId={employeeId} />
           </div>
         </div>
+        <div className="flex items-center gap-2">
+          <div className="u-hue-violet rounded-md p-2">
+            <HandshakeIcon className="size-4 min-w-4" />
+          </div>
+          <span>
+            Hire date: <b>{formatDateFromString(data.hireDate)}</b>
+          </span>
+        </div>
+
+        <ContactPhone phone={data.extension} description="Phone extension" />
 
         <ContactAddress
           country={data.country}
@@ -100,7 +113,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
           )}
         </BasicLink>
       </HoverCardTrigger>
-      <HoverCardContent className="text-sm sm:w-100">
+      <HoverCardContent className="text-sm sm:w-120">
         {getContent()}
       </HoverCardContent>
     </HoverCard>
