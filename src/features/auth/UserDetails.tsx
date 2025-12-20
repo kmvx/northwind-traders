@@ -86,10 +86,10 @@ const UserDetails: React.FC<UserDetailsProps> = ({
               <BasicLink
                 href="/auth/admin"
                 variant="outline"
-                size="icon"
-                title="Admin"
+                title="Admin dashboard"
               >
                 <ShieldUserIcon />
+                Admin
               </BasicLink>
             )}
           </div>

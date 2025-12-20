@@ -6,6 +6,7 @@ import {
   TabletIcon,
 } from 'lucide-react';
 import { useMemo } from 'react';
+import { toast } from 'sonner';
 
 import { cn } from '@/lib/utils';
 import { capitalizeFirstLetter } from '@/utils';
@@ -47,7 +48,11 @@ const UserAgent: React.FC<UserAgentProps> = ({ userAgent }) => {
   const Icon = config.icon;
 
   return (
-    <div title={userAgent ?? ''} className="flex items-center gap-2">
+    <div
+      title={userAgent ?? ''}
+      className="flex items-center gap-2"
+      onClick={() => toast.info(userAgent)}
+    >
       <div className={cn('rounded-md p-2', config.className)}>
         <Icon />
       </div>
