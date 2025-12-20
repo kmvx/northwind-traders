@@ -53,7 +53,7 @@ const SelectStringList: React.FC<SelectStringListProps> = ({
             className="bg-background"
             title={itemInfo.description ?? ''}
           >
-            {!itemInfo.title ? itemInfo.title : String(itemInfo.value)}
+            {itemInfo.title ? itemInfo.title : String(itemInfo.value)}
           </NativeSelectOption>
         ))}
       </NativeSelect>
