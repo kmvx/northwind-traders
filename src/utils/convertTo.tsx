@@ -1,6 +1,6 @@
 import invariant from 'tiny-invariant';
 
-import { hasKey } from '../utils';
+import { hasKey } from '@/utils';
 
 export type DataType = object[] | undefined;
 
