@@ -4,7 +4,7 @@ import {
   CreditCardIcon,
   DollarSignIcon,
   EggFriedIcon,
-  HouseIcon,
+  InfoIcon,
   type LucideIcon,
   UserIcon,
 } from 'lucide-react';
@@ -24,7 +24,7 @@ export const navigationItems: {
       {
         title: 'About',
         url: '/',
-        icon: HouseIcon,
+        icon: InfoIcon,
       },
       {
         title: 'Charts',
