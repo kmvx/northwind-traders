@@ -17,24 +17,32 @@ const UserCurrent: React.FC = () => {
 
   // Session info
   const { data, isPending, error, refetch } = authClient.useSession();
-  const user = data?.user;
 
-  if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isPending) return <WaitSpinner />;
-  if (!user) {
+  const getContent = () => {
+    if (isPending) return <WaitSpinner />;
+
+    const user = data?.user;
+    if (!user) {
+      return (
+        <div className="flex h-full items-center justify-center">
+          <LoginButton />
+        </div>
+      );
+    }
     return (
-      <div className="flex h-full items-center justify-center">
-        <LoginButton />
-      </div>
+      <UserDetails
+        user={user}
+        currentSessionId={data.session.id}
+        onLogout={onLogout}
+      />
     );
-  }
+  };
 
   return (
-    <UserDetails
-      user={user}
-      currentSessionId={data.session.id}
-      onLogout={onLogout}
-    />
+    <div className="flex flex-col gap-2">
+      <ErrorMessage error={error} retry={refetch} isFetching={isPending} />
+      {getContent()}
+    </div>
   );
 };
 

@@ -24,9 +24,65 @@ const UserAccounts: React.FC<UserAccountsProps> = ({ userId }) => {
     queryFn: async () => await getUserAccounts(userId),
   });
 
-  if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isLoading) return <WaitSpinner />;
-  if (!data) return null;
+  const getContent = () => {
+    if (!data) return isLoading ? <WaitSpinner /> : null;
+    if (data.length === 0) return <div>No active accounts</div>;
+
+    return data.map((account) => {
+      return (
+        <Card key={account.id} className="rounded-md shadow-none">
+          <CardContent>
+            <div className="grid grid-cols-1 items-center gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
+              <ResponsiveItem
+                name="Account Provider"
+                description="The service this account belongs to"
+                icon={<AtSignIcon className="size-4" />}
+                iconClassName="u-hue-blue"
+              >
+                {account.providerId}
+              </ResponsiveItem>
+
+              <ResponsiveItem
+                name="Account Created"
+                description="When this account was first connected"
+                icon={<CalendarDays className="size-4" />}
+                iconClassName="u-hue-violet"
+              >
+                <DateTime date={account.createdAt} />
+              </ResponsiveItem>
+
+              <ResponsiveItem
+                name="Last Synced"
+                description="Most recent sign-in or token refresh"
+                icon={<Clock className="size-4" />}
+                iconClassName="u-hue-orange"
+              >
+                <DateTime date={account.updatedAt} />
+              </ResponsiveItem>
+
+              <ResponsiveItem
+                name="Access Token Expires"
+                description="Access token valid until this date"
+                icon={<Clock className="size-4" />}
+                iconClassName="u-hue-red"
+              >
+                <DateTime date={account.accessTokenExpiresAt} />
+              </ResponsiveItem>
+
+              <ResponsiveItem
+                name="Refresh Token Expires"
+                description="Refresh token valid until this date"
+                icon={<Clock className="size-4" />}
+                iconClassName="u-hue-red"
+              >
+                <DateTime date={account.refreshTokenExpiresAt} />
+              </ResponsiveItem>
+            </div>
+          </CardContent>
+        </Card>
+      );
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -35,61 +91,8 @@ const UserAccounts: React.FC<UserAccountsProps> = ({ userId }) => {
         <Typography.Header3>Active Accounts</Typography.Header3>
         <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
-      {data.length === 0 && <div>No active accounts</div>}
-      {data.map((account) => {
-        return (
-          <Card key={account.id} className="rounded-md shadow-none">
-            <CardContent>
-              <div className="grid grid-cols-1 items-center gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
-                <ResponsiveItem
-                  name="Account Provider"
-                  description="The service this account belongs to"
-                  icon={<AtSignIcon className="size-4" />}
-                  iconClassName="u-hue-blue"
-                >
-                  {account.providerId}
-                </ResponsiveItem>
-
-                <ResponsiveItem
-                  name="Account Created"
-                  description="When this account was first connected"
-                  icon={<CalendarDays className="size-4" />}
-                  iconClassName="u-hue-violet"
-                >
-                  <DateTime date={account.createdAt} />
-                </ResponsiveItem>
-
-                <ResponsiveItem
-                  name="Last Synced"
-                  description="Most recent sign-in or token refresh"
-                  icon={<Clock className="size-4" />}
-                  iconClassName="u-hue-orange"
-                >
-                  <DateTime date={account.updatedAt} />
-                </ResponsiveItem>
-
-                <ResponsiveItem
-                  name="Access Token Expires"
-                  description="Access token valid until this date"
-                  icon={<Clock className="size-4" />}
-                  iconClassName="u-hue-red"
-                >
-                  <DateTime date={account.accessTokenExpiresAt} />
-                </ResponsiveItem>
-
-                <ResponsiveItem
-                  name="Refresh Token Expires"
-                  description="Refresh token valid until this date"
-                  icon={<Clock className="size-4" />}
-                  iconClassName="u-hue-red"
-                >
-                  <DateTime date={account.refreshTokenExpiresAt} />
-                </ResponsiveItem>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      })}
+      <ErrorMessage error={error} retry={refetch} isFetching={isFetching} />
+      {getContent()}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { TriangleAlertIcon } from 'lucide-react';
+import { RotateCwIcon, TriangleAlertIcon } from 'lucide-react';
 import React from 'react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -6,16 +6,20 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ButtonWithTooltip, CopyButton } from '.';
 
 interface ErrorMessageProps {
-  error: Error;
+  error: Error | null;
   retry?: () => void;
   className?: string;
+  isFetching?: boolean;
 }
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({
   error,
   retry,
   className,
+  isFetching,
 }) => {
+  if (!error) return null;
+
   const text = 'Error: ' + error.message;
 
   return (
@@ -40,6 +44,9 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
               title="Refetch network request"
               variant="outline"
             >
+              <RotateCwIcon
+                className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
+              />
               Retry
             </ButtonWithTooltip>
           )}

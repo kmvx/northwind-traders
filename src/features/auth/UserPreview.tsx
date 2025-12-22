@@ -11,20 +11,19 @@ const UserPreview: React.FC = () => {
   const closeSidebar = useCloseSidebar();
 
   const { data, isPending, error, refetch } = authClient.useSession();
-  const user = data?.user;
 
-  if (!user) {
-    if (error) return <ErrorMessage error={error} retry={refetch} />;
-    if (isPending) return <LocalSceleton />;
+  const getContent = () => {
+    const user = data?.user;
+    if (!user) {
+      if (isPending) return <LocalSceleton />;
+      return (
+        <div className="flex justify-center">
+          <LoginButton />
+        </div>
+      );
+    }
+
     return (
-      <div className="flex justify-center">
-        <LoginButton />
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-2">
       <Button
         onClick={closeSidebar}
         title={JSON.stringify(user, null, 4)}
@@ -42,6 +41,13 @@ const UserPreview: React.FC = () => {
           </div>
         </Link>
       </Button>
+    );
+  };
+
+  return (
+    <div className="flex flex-col gap-2">
+      <ErrorMessage error={error} retry={refetch} isFetching={isPending} />
+      {getContent()}
     </div>
   );
 };

@@ -53,12 +53,10 @@ const Admin: React.FC = () => {
   }, [refetchSession, refetchUsers]);
 
   const getContent = () => {
-    if (error) return <ErrorMessage error={error} retry={refetch} />;
-    if (!dataUsers && isLoading) return <WaitSpinner />;
+    if (!dataUsers) return isLoading ? <WaitSpinner /> : null;
     if (!isAdminUser(session?.user)) {
       return <ErrorMessage error={new Error('No access')} retry={refetch} />;
     }
-    if (!dataUsers) return null;
 
     const currentUserId = session?.user.id;
 
@@ -111,6 +109,7 @@ const Admin: React.FC = () => {
         <Typography variant="header1">Users</Typography>
         <ReloadButton onClick={refetch} isLoading={isFetchingUsers} />
       </div>
+      <ErrorMessage error={error} retry={refetch} isFetching={isLoading} />
       {getContent()}
     </PanelStretched>
   );

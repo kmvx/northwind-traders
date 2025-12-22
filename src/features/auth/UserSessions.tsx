@@ -20,11 +20,20 @@ const UserSessions: React.FC<UserSessionsProps> = ({
     queryFn: async () => await getUserSessions(userId),
   });
 
-  if (error) return <ErrorMessage error={error} retry={refetch} />;
-  if (isLoading) return <WaitSpinner />;
-  if (!data) return null;
+  const getContent = () => {
+    if (!data) return isLoading ? <WaitSpinner /> : null;
 
-  const sessions = data.slice().reverse();
+    const sessions = data.slice().reverse();
+    if (sessions.length === 0) return <div>No active sessions</div>;
+
+    return sessions.map((session) => (
+      <UserSession
+        session={session}
+        currentSessionId={currentSessionId}
+        key={session.id}
+      />
+    ));
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -33,14 +42,8 @@ const UserSessions: React.FC<UserSessionsProps> = ({
         <Typography.Header3>Active Sessions</Typography.Header3>
         <ReloadButton onClick={refetch} isLoading={isFetching} />
       </div>
-      {sessions.length === 0 && <div>No active sessions</div>}
-      {sessions.map((session) => (
-        <UserSession
-          session={session}
-          currentSessionId={currentSessionId}
-          key={session.id}
-        />
-      ))}
+      <ErrorMessage error={error} retry={refetch} isFetching={isFetching} />
+      {getContent()}
     </div>
   );
 };
