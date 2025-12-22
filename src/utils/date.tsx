@@ -1,3 +1,5 @@
+import invariant from 'tiny-invariant';
+
 import type { DateStringType } from '@/types';
 
 export function formatDateFromString(date: DateStringType | null): string {
@@ -41,5 +43,5 @@ export function getRelativeTimeString(date: Date): string {
     }
   }
 
-  return 'error'; // unreachable
+  invariant(false); // unreachable
 }
