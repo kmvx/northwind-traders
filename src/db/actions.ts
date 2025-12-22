@@ -40,6 +40,19 @@ function checkNotFoundAndReturn<T extends object>(
   return item;
 }
 
+export const getDashboard = async () => {
+  return {
+    customers: await db.$count(customers),
+    employees: await db.$count(employees),
+    // products: await db.$count(products),
+    productsActive: await db.$count(products, eq(products.discontinued, false)),
+    orders: await db.$count(orders),
+    suppliers: await db.$count(suppliers),
+  };
+};
+
+export type DashboardType = Awaited<ReturnType<typeof getDashboard>>;
+
 const ADDRESS_COLUMNS = {
   address: true,
   city: true,

@@ -1,8 +1,10 @@
 'use client';
 
+import { LayoutDashboardIcon } from 'lucide-react';
+
 import { SidebarTrigger } from '@/components/ui/sidebar';
 
-import { FullscreenToggle } from '.';
+import { BasicLink, FullscreenToggle } from '.';
 
 const TopbarControls: React.FC = () => {
   return (
@@ -14,6 +16,15 @@ const TopbarControls: React.FC = () => {
     >
       <SidebarTrigger variant="outline" className="size-9 bg-transparent" />
       <FullscreenToggle className="bg-transparent sm:hidden" />
+      <BasicLink
+        href="/dashboard"
+        variant="outline"
+        size="icon"
+        title="Dashboard"
+        className="sm:hidden"
+      >
+        <LayoutDashboardIcon />
+      </BasicLink>
     </div>
   );
 };

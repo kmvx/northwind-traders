@@ -3,7 +3,7 @@ import {
   DollarSignIcon,
   EggFriedIcon,
   InfoIcon,
-  // LayoutDashboardIcon,
+  LayoutDashboardIcon,
   type LucideIcon,
   PickaxeIcon,
   ShoppingCartIcon,
@@ -27,13 +27,11 @@ export const navigationItems: {
         url: '/',
         icon: InfoIcon,
       },
-      /*
       {
         title: 'Dashboard',
         url: '/dashboard',
         icon: LayoutDashboardIcon,
       },
-      */
       {
         title: 'Charts',
         url: '/charts',

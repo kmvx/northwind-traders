@@ -7,6 +7,6 @@ export const metadata: Metadata = {
   title: buildTitle('About'),
 };
 
-export default function HomePage() {
+export default function AboutPage() {
   return <About />;
 }

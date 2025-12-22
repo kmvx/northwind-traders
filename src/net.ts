@@ -1,12 +1,16 @@
+'use client';
+
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import invariant from 'tiny-invariant';
 
 import {
+  type DashboardType,
   getCategories,
   getCustomer,
   getCustomerByOrderId,
   getCustomers,
+  getDashboard,
   getEmployee,
   getEmployeeByOrderId,
   getEmployees,
@@ -42,6 +46,18 @@ import {
   type ITerritories,
 } from './models';
 import { dateFromString } from './utils';
+
+export const useQueryDashboard = ({
+  initialData,
+}: {
+  initialData?: DashboardType | undefined;
+} = {}) => {
+  return useQuery({
+    queryKey: ['dashboard'],
+    queryFn: async () => await getDashboard(),
+    ...(initialData ? { initialData } : {}),
+  });
+};
 
 // Customers
 
