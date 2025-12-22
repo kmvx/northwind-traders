@@ -166,10 +166,7 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
             disabled={!hasFilters}
             onClick={handleFiltersClear}
           />
-          <ExportDropdown
-            data={filteredData as object[] as Record<string, unknown>[]}
-            name="Products"
-          />
+          <ExportDropdown data={filteredData} name="Products" />
           <ReloadButton onClick={refetch} isFetching={isFetching} />
         </div>
       )}

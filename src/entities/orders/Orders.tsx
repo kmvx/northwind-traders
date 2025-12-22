@@ -275,10 +275,7 @@ const Orders: React.FC<OrdersProps> = ({
             disabled={!hasFilters}
             onClick={handleFiltersClear}
           />
-          <ExportDropdown
-            data={filteredData as object[] as Record<string, unknown>[]}
-            name="Orders"
-          />
+          <ExportDropdown data={filteredData} name="Orders" />
           <ReloadButton
             onClick={refetch}
             isFetching={isFetching && typeof window !== 'undefined'}

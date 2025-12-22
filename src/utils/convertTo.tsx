@@ -1,6 +1,10 @@
-export type DataType = Record<string, unknown>[] | undefined;
+import invariant from 'tiny-invariant';
 
-const getHeaders = (data: Record<string, unknown>[]): string[] => {
+import { hasKey } from '../utils';
+
+export type DataType = object[] | undefined;
+
+const getHeaders = (data: NonNullable<DataType>): string[] => {
   // Similar to:
   // return Object.keys(data[0]);
   return Array.from(new Set(data.flatMap(Object.keys)));
@@ -53,6 +57,7 @@ export const convertToCSV = (data: DataType): string => {
   const rows = data.map((row) => {
     return headers
       .map((header) => {
+        invariant(hasKey(row, header));
         const val = row[header];
 
         if (val === null || val === undefined) {
@@ -90,7 +95,10 @@ export const convertToMarkdown = (data: DataType, title: string): string => {
   };
 
   const columnWidths = headers.map((header) => {
-    const cellWidths = data.map((row) => formatted(row[header]).length);
+    const cellWidths = data.map((row) => {
+      invariant(hasKey(row, header));
+      return formatted(row[header]).length;
+    });
     return Math.max(header.length, ...cellWidths);
   });
 
@@ -105,7 +113,12 @@ export const convertToMarkdown = (data: DataType, title: string): string => {
   const headerRow = formatRow(headers);
   const separatorRow = `| ${columnWidths.map((w) => '-'.repeat(w)).join(' | ')} |`;
   const dataRows = data.map((row) => {
-    return formatRow(headers.map((header) => formatted(row[header])));
+    return formatRow(
+      headers.map((header) => {
+        invariant(hasKey(row, header));
+        return formatted(row[header]);
+      }),
+    );
   });
 
   return [`# ${title}`, '', headerRow, separatorRow, ...dataRows].join('\n');

@@ -160,10 +160,7 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
             disabled={!hasFilters}
             onClick={handleFiltersClear}
           />
-          <ExportDropdown
-            data={filteredData?.map(({ ...item }) => ({ ...item }))}
-            name="Employees"
-          />
+          <ExportDropdown data={filteredData} name="Employees" />
           <ReloadButton onClick={refetch} isFetching={isFetching} />
         </div>
       )}
