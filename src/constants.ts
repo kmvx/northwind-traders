@@ -1,11 +1,12 @@
 import {
-  AxeIcon,
-  ChartLineIcon,
-  CreditCardIcon,
+  ChartSplineIcon,
   DollarSignIcon,
   EggFriedIcon,
   InfoIcon,
+  // LayoutDashboardIcon,
   type LucideIcon,
+  PickaxeIcon,
+  ShoppingCartIcon,
   UserIcon,
 } from 'lucide-react';
 
@@ -26,10 +27,17 @@ export const navigationItems: {
         url: '/',
         icon: InfoIcon,
       },
+      /*
+      {
+        title: 'Dashboard',
+        url: '/dashboard',
+        icon: LayoutDashboardIcon,
+      },
+      */
       {
         title: 'Charts',
         url: '/charts',
-        icon: ChartLineIcon,
+        icon: ChartSplineIcon,
       },
     ],
   },
@@ -49,7 +57,7 @@ export const navigationItems: {
       {
         title: 'Orders',
         url: '/orders',
-        icon: CreditCardIcon,
+        icon: ShoppingCartIcon,
       },
       {
         title: 'Products',
@@ -59,7 +67,7 @@ export const navigationItems: {
       {
         title: 'Suppliers',
         url: '/suppliers',
-        icon: AxeIcon,
+        icon: PickaxeIcon,
       },
     ],
   },

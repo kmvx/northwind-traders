@@ -1,3 +1,7 @@
+import type { LucideIcon } from 'lucide-react';
+import invariant from 'tiny-invariant';
+
+import { navigationItems } from './constants';
 import { type IEmployee } from './models';
 import type { CurrencyType } from './types';
 
@@ -156,3 +160,11 @@ export const fetchInfoByIPAddress = async (ipAddress: string | null) => {
 
   return (await response.json()) as Partial<InfoByIPAddressData>;
 };
+
+export function getNavigationIconByUrl(url: string): LucideIcon {
+  const item = navigationItems
+    .flatMap((group) => group.children)
+    .find((navigationItem) => navigationItem.url === url);
+  invariant(item);
+  return item.icon;
+}

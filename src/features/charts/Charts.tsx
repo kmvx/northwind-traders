@@ -1,6 +1,5 @@
 'use client';
 
-import { AxeIcon, CreditCardIcon, DollarSignIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import { Separator } from '@/components/ui';
@@ -13,18 +12,27 @@ import {
   useQuerySuppliers,
 } from '@/net';
 import { PanelCentred } from '@/ui';
+import { getNavigationIconByUrl } from '@/utils';
 
 import { BarChart, EmployeesBarChart, OrdersChart, WorldMapChart } from '.';
 
 const Charts: React.FC = () => {
   const tabInfos = [
-    { label: 'Orders', icon: <CreditCardIcon />, content: <OrdersCharts /> },
+    {
+      label: 'Orders',
+      icon: getNavigationIconByUrl('/orders'),
+      content: <OrdersCharts />,
+    },
     {
       label: 'Customers',
-      icon: <DollarSignIcon />,
+      icon: getNavigationIconByUrl('/customers'),
       content: <CustomersCharts />,
     },
-    { label: 'Suppliers', icon: <AxeIcon />, content: <SuppliersCharts /> },
+    {
+      label: 'Suppliers',
+      icon: getNavigationIconByUrl('/suppliers'),
+      content: <SuppliersCharts />,
+    },
   ].map((info) => ({ ...info, name: info.label.toLowerCase() }));
 
   return (
@@ -40,7 +48,7 @@ const Charts: React.FC = () => {
                 key={info.name}
                 className="cursor-pointer"
               >
-                {info.icon}
+                <info.icon />
                 {info.label}
               </TabsTrigger>
             ))}
