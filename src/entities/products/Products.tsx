@@ -170,7 +170,7 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
             data={filteredData as object[] as Record<string, unknown>[]}
             name="Products"
           />
-          <ReloadButton onClick={refetch} isLoading={isFetching} />
+          <ReloadButton onClick={refetch} isFetching={isFetching} />
         </div>
       )}
       {getContent()}

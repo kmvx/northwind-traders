@@ -164,7 +164,7 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
             data={filteredData?.map(({ ...item }) => ({ ...item }))}
             name="Employees"
           />
-          <ReloadButton onClick={refetch} isLoading={isFetching} />
+          <ReloadButton onClick={refetch} isFetching={isFetching} />
         </div>
       )}
       <div className="flex items-center">

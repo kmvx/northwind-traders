@@ -281,7 +281,7 @@ const Orders: React.FC<OrdersProps> = ({
           />
           <ReloadButton
             onClick={refetch}
-            isLoading={isFetching && typeof window !== 'undefined'}
+            isFetching={isFetching && typeof window !== 'undefined'}
           />
         </div>
       )}

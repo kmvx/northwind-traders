@@ -40,7 +40,7 @@ const UserSessions: React.FC<UserSessionsProps> = ({
       <div className="flex items-center justify-between gap-2">
         <span />
         <Typography.Header3>Active Sessions</Typography.Header3>
-        <ReloadButton onClick={refetch} isLoading={isFetching} />
+        <ReloadButton onClick={refetch} isFetching={isFetching} />
       </div>
       <ErrorMessage error={error} retry={refetch} isFetching={isFetching} />
       {getContent()}

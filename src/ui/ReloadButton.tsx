@@ -5,10 +5,10 @@ import ButtonWithTooltip from './ButtonWithTooltip';
 
 interface ReloadButtonProps {
   onClick: () => void;
-  isLoading?: boolean;
+  isFetching?: boolean;
 }
 
-const ReloadButton: React.FC<ReloadButtonProps> = ({ onClick, isLoading }) => {
+const ReloadButton: React.FC<ReloadButtonProps> = ({ onClick, isFetching }) => {
   return (
     <ButtonWithTooltip
       type="button"
@@ -16,9 +16,9 @@ const ReloadButton: React.FC<ReloadButtonProps> = ({ onClick, isLoading }) => {
       size="icon"
       title="Reload data"
       onClick={onClick}
-      disabled={isLoading}
+      disabled={isFetching}
     >
-      <RotateCwIcon className={`size-4 ${isLoading ? 'animate-spin' : ''}`} />
+      <RotateCwIcon className={`size-4 ${isFetching ? 'animate-spin' : ''}`} />
     </ButtonWithTooltip>
   );
 };

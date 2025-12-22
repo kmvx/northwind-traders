@@ -153,7 +153,7 @@ const Suppliers: React.FC<SuppliersProps> = ({ initialData }) => {
             data={filteredData as object[] as Record<string, unknown>[]}
             name="Suppliers"
           />
-          <ReloadButton onClick={refetch} isLoading={isFetching} />
+          <ReloadButton onClick={refetch} isFetching={isFetching} />
         </div>
       )}
       <div className="flex items-center">

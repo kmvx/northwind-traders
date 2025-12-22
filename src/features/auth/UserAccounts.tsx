@@ -89,7 +89,7 @@ const UserAccounts: React.FC<UserAccountsProps> = ({ userId }) => {
       <div className="flex items-center justify-between gap-2">
         <span />
         <Typography.Header3>Active Accounts</Typography.Header3>
-        <ReloadButton onClick={refetch} isLoading={isFetching} />
+        <ReloadButton onClick={refetch} isFetching={isFetching} />
       </div>
       <ErrorMessage error={error} retry={refetch} isFetching={isFetching} />
       {getContent()}

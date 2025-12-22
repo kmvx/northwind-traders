@@ -107,7 +107,7 @@ const Admin: React.FC = () => {
       <div className="flex items-center justify-between gap-2">
         <span />
         <Typography variant="header1">Users</Typography>
-        <ReloadButton onClick={refetch} isLoading={isFetchingUsers} />
+        <ReloadButton onClick={refetch} isFetching={isFetchingUsers} />
       </div>
       <ErrorMessage error={error} retry={refetch} isFetching={isLoading} />
       {getContent()}

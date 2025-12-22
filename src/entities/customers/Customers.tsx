@@ -147,7 +147,7 @@ const Customers: React.FC<CustomersProps> = ({ initialData }) => {
             data={filteredData as object[] as Record<string, unknown>[]}
             name="Customers"
           />
-          <ReloadButton onClick={refetch} isLoading={isFetching} />
+          <ReloadButton onClick={refetch} isFetching={isFetching} />
         </div>
       )}
       {getContent()}
