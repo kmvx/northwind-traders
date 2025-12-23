@@ -2,6 +2,7 @@
 
 import { Globe2Icon } from 'lucide-react';
 import React from 'react';
+import { toast } from 'sonner';
 
 import { Spinner } from '@/components/ui';
 import { useEmployeeTerritories, useQueryRegions } from '@/net';
@@ -31,18 +32,19 @@ const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
       <div className="u-hue-green rounded-md p-2">
         <Globe2Icon className="size-4 min-w-4" />
       </div>
-      {data.map((item, i) => (
-        <React.Fragment key={item.territoryId}>
-          <b
-            title={`Index: ${item.territoryId}\nRegion: ${
-              regionsMap.get(item.regionId) || item.regionId
-            }`}
-          >
-            {item.territoryDescription + (i < data.length - 1 ? ',' : '')}
-            &nbsp;
-          </b>
-        </React.Fragment>
-      ))}
+      {data.map((item, i) => {
+        const description = `Index: ${item.territoryId}\nRegion: ${
+          regionsMap.get(item.regionId) || item.regionId
+        }`;
+        return (
+          <React.Fragment key={item.territoryId}>
+            <b title={description} onClick={() => toast.info(description)}>
+              {item.territoryDescription + (i < data.length - 1 ? ',' : '')}
+              &nbsp;
+            </b>
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 };

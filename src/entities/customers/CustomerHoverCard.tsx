@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/hover-card';
 import { useQueryCustomer } from '@/net';
 import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
-import { joinFields } from '@/utils';
 
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
@@ -37,16 +36,7 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
     return (
       <div className="flex flex-col gap-2">
         <Typography.Header3>Customer</Typography.Header3>
-        <ContactAddress
-          country={data.country}
-          address={joinFields(
-            data.country,
-            data.region,
-            data.city,
-            data.postalCode,
-          )}
-          addressDetails={data.address}
-        />
+        <ContactAddress address={data} />
 
         <ContactPhone phone={data.phone} />
         <ContactPhone phone={data.fax} isFax />

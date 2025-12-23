@@ -19,14 +19,13 @@ import {
 import {
   formatCurrency,
   formatDateFromString,
-  joinFields,
   setDocumentTitle,
 } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
 import { ContactAddress, ContactPhone, Flag } from '../shared';
-import { OrderDetails } from '.';
+import { OrderDetails, useShipAddress } from '.';
 
 interface OrderProps {
   orderId: number;
@@ -41,6 +40,8 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
   const { data: dataShipper } = useQueryShipperByOrderId({ orderId });
 
   setDocumentTitle(`Order${data ? ' #' + data.orderId : ''}`);
+
+  const address = useShipAddress(data);
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isLoading) return <WaitSpinner />;
@@ -109,18 +110,7 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
     },
     {
       name: 'Ship address',
-      value: (
-        <ContactAddress
-          country={data.shipCountry}
-          address={joinFields(
-            data.shipCountry,
-            data.shipRegion,
-            data.shipCity,
-            data.shipPostalCode,
-          )}
-          addressDetails={data.shipAddress}
-        />
-      ),
+      value: <ContactAddress address={address} />,
       description: 'Street address for delivery of the order.',
     },
   ];

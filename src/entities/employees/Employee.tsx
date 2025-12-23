@@ -17,7 +17,6 @@ import {
 import {
   formatDateFromString,
   getEmployeeNameByData,
-  joinFields,
   setDocumentTitle,
 } from '@/utils';
 
@@ -73,18 +72,7 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
     },
     {
       name: 'Home address',
-      value: (
-        <ContactAddress
-          country={data.country}
-          address={joinFields(
-            data.country,
-            data.region,
-            data.city,
-            data.postalCode,
-          )}
-          addressDetails={data.address}
-        />
-      ),
+      value: <ContactAddress address={data} />,
       description: 'Employee’s home mailing street address.',
     },
     {

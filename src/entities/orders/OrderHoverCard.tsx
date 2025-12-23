@@ -15,11 +15,12 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { formatCurrency, formatDateFromString, joinFields } from '@/utils';
+import { formatCurrency, formatDateFromString } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
 import { ContactAddress } from '../shared';
+import { useShipAddress } from '.';
 
 type OrderHoverCardProps = {
   orderId: number;
@@ -34,6 +35,8 @@ const OrderHoverCard: React.FC<OrderHoverCardProps> = ({ orderId }) => {
   const { data: dataEmployees } = useQueryEmployees({
     enabled: open,
   });
+
+  const address = useShipAddress(data);
 
   const getContent = () => {
     if (error) return <ErrorMessage error={error} retry={refetch} />;
@@ -68,14 +71,7 @@ const OrderHoverCard: React.FC<OrderHoverCardProps> = ({ orderId }) => {
         <Typography.Header3>Order #{orderId}</Typography.Header3>
         <ResponsiveItems items={items} />
         <ContactAddress
-          country={data.shipCountry}
-          address={joinFields(
-            data.shipCountry,
-            data.shipRegion,
-            data.shipCity,
-            data.shipPostalCode,
-          )}
-          addressDetails={data.shipAddress}
+          address={address}
           title="Ship address"
           className="font-normal"
         />

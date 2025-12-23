@@ -9,7 +9,7 @@ import { formatCurrency } from '@/utils';
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
 import { ContactAddress } from '../shared';
-import { type IOrderFormatted } from '.';
+import { type IOrderFormatted, useShipAddress } from '.';
 
 interface OrdersCardsProps {
   data: IOrderFormatted[];
@@ -62,6 +62,8 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({
     { name: 'Freight', value: formatCurrency(item.freight) },
   ];
 
+  const address = useShipAddress(item);
+
   return (
     <Card className="h-full rounded-md shadow-none">
       <CardHeader>
@@ -81,9 +83,7 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({
         </div>
         <ResponsiveItems items={items} />
         <ContactAddress
-          country={item.shipCountry}
-          address={item.shipLocation}
-          addressDetails={item.shipAddress}
+          address={address}
           title="Ship address"
           className="font-normal"
         />

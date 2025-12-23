@@ -113,9 +113,7 @@ const allColumns = [
     cell: ({ row }) => {
       return (
         <ContactAddress
-          country={row.original.shipCountry}
-          address={row.original.shipLocation}
-          addressDetails={row.original.shipAddress}
+          address={row.original.address}
           title="Ship address"
           className="font-normal"
         />

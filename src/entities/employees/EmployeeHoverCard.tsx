@@ -13,11 +13,7 @@ import {
 import type { IEmployee } from '@/models';
 import { useQueryEmployee } from '@/net';
 import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
-import {
-  formatDateFromString,
-  getEmployeeNameByData,
-  joinFields,
-} from '@/utils';
+import { formatDateFromString, getEmployeeNameByData } from '@/utils';
 
 import { ContactAddress, ContactPhone } from '../shared';
 import Territories from './Territories';
@@ -74,16 +70,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
 
         <ContactPhone phone={data.extension} description="Phone extension" />
 
-        <ContactAddress
-          country={data.country}
-          address={joinFields(
-            data.country,
-            data.region,
-            data.city,
-            data.postalCode,
-          )}
-          addressDetails={data.address}
-        />
+        <ContactAddress address={data} />
 
         <ContactPhone phone={data.homePhone} description="Home phone" />
 

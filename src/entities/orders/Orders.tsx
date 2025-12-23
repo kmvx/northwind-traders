@@ -23,7 +23,6 @@ import {
   formatDateFromString,
   getEmployeeNameByData,
   isStringIncludes,
-  joinFields,
   withWaitCursor,
 } from '@/utils';
 
@@ -106,12 +105,13 @@ const Orders: React.FC<OrdersProps> = ({
             orderDateObject: dateFromString(item.orderDate),
             shippedDateObject: dateFromString(item.shippedDate),
             requiredDateObject: dateFromString(item.requiredDate),
-            shipLocation: joinFields(
-              item.shipCountry,
-              item.shipRegion,
-              item.shipCity,
-              item.shipPostalCode,
-            ),
+            address: {
+              address: item.shipAddress,
+              city: item.shipCity,
+              region: item.shipRegion,
+              postalCode: item.shipPostalCode,
+              country: item.shipCountry,
+            },
           };
 
           return result;

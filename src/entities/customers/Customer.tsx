@@ -10,7 +10,7 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { joinFields, setDocumentTitle } from '@/utils';
+import { setDocumentTitle } from '@/utils';
 
 import { Orders } from '../orders';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
@@ -31,18 +31,7 @@ const Customer: React.FC<CustomerProps> = ({ customerId }) => {
   const items = [
     {
       name: 'Address',
-      value: (
-        <ContactAddress
-          country={data.country}
-          address={joinFields(
-            data.country,
-            data.region,
-            data.city,
-            data.postalCode,
-          )}
-          addressDetails={data.address}
-        />
-      ),
+      value: <ContactAddress address={data} />,
       description: 'Customer’s business street address.',
     },
     {

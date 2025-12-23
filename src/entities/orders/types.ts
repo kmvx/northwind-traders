@@ -1,4 +1,4 @@
-import type { IOrder } from '@/models';
+import type { IAddress, IOrder } from '@/models';
 
 export interface IOrderFormatted extends IOrder {
   employeeName: string;
@@ -8,5 +8,5 @@ export interface IOrderFormatted extends IOrder {
   orderDateObject: Date;
   shippedDateObject: Date;
   requiredDateObject: Date;
-  shipLocation: string;
+  address: IAddress;
 }

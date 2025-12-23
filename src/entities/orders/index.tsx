@@ -8,3 +8,4 @@ export { default as Orders } from './Orders';
 export { default as OrdersCards } from './OrdersCards';
 export { default as OrdersTable } from './OrdersTable';
 export { type IOrderFormatted } from './types';
+export { default as useShipAddress } from './useShipAddress';

@@ -5,7 +5,7 @@ import type {
   PhoneType,
 } from './types';
 
-interface IAddress {
+export interface IAddress {
   address: string | null;
   city: string | null;
   region: string | null;
