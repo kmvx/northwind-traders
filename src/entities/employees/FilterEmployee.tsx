@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
+import { Spinner } from '@/components/ui';
 import { useQueryEmployees } from '@/net';
 import { SelectStringList, type SelectStringListInfoType } from '@/ui';
 import { getEmployeeNameByData } from '@/utils';
@@ -15,7 +16,7 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
   filterEmployeeId,
   setFilterEmployeeId,
 }) => {
-  const { data: dataEmployees } = useQueryEmployees();
+  const { data: dataEmployees, isLoading } = useQueryEmployees();
 
   const itemsInfo = useMemo(() => {
     const result: SelectStringListInfoType[] = [
@@ -40,6 +41,8 @@ const FilterEmployee: React.FC<FilterEmployeeProps> = ({
       setFilterEmployeeId(value === EMPTY_OPTION_VALUE ? null : +value),
     [setFilterEmployeeId],
   );
+
+  if (isLoading) return <Spinner />;
 
   return (
     <SelectStringList

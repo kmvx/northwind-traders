@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
+import { Spinner } from '@/components/ui';
 import { useQueryCategories } from '@/net';
 import { SelectStringList, type SelectStringListInfoType } from '@/ui';
 
@@ -16,7 +17,7 @@ const FilterCategory: React.FC<FilterCategoryProps> = ({
   filterCategoryId,
   setFilterCategoryId: setFilterCategoryId,
 }) => {
-  const { data: dataCategories } = useQueryCategories();
+  const { data: dataCategories, isLoading } = useQueryCategories();
 
   const itemsInfo = useMemo(() => {
     const result: SelectStringListInfoType[] = [
@@ -47,6 +48,8 @@ const FilterCategory: React.FC<FilterCategoryProps> = ({
       setFilterCategoryId(value === EMPTY_OPTION_VALUE ? null : +value),
     [setFilterCategoryId],
   );
+
+  if (isLoading) return <Spinner />;
 
   return (
     <SelectStringList
