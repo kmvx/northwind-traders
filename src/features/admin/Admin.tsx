@@ -72,7 +72,7 @@ const Admin: React.FC = () => {
                   <Link href={href}>
                     <UserAvatar image={user.image} />
                   </Link>
-                  <div className="flex flex-grow flex-col gap-4">
+                  <div className="flex grow flex-col gap-4">
                     <Link href={href}>
                       <div className="flex justify-between gap-4">
                         <span>{user.email}</span>

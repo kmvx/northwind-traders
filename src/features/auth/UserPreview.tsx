@@ -33,7 +33,7 @@ const UserPreview: React.FC = () => {
       >
         <Link href="/auth/user">
           <UserAvatar image={user.image} />
-          <div className="grid flex-grow">
+          <div className="grid grow">
             <span className="truncate text-sm font-bold">{user.name}</span>
             <span className="text-muted-foreground truncate text-xs">
               {user.email}
@@ -56,7 +56,7 @@ function LocalSceleton() {
   return (
     <div className="ml-2 flex w-full items-center gap-2">
       <Skeleton className="size-8 rounded-md" />
-      <div className="grid flex-grow gap-2">
+      <div className="grid grow gap-2">
         <Skeleton className="h-4 w-15" />
         <Skeleton className="h-3 w-40" />
       </div>

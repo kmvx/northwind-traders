@@ -144,7 +144,7 @@ const Products: React.FC<ProductsProps> = ({ supplierId, initialData }) => {
       {showFilters && (
         <div className="flex flex-wrap items-center gap-2">
           {getFiltersToggleButton()}
-          <div className="flex-grow">
+          <div className="grow">
             <DebouncedInput
               placeholder="Enter filter string here"
               value={filterString}

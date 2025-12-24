@@ -29,10 +29,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
         className="flex flex-wrap items-center gap-2 bg-red-500/20 [&>svg]:size-9"
       >
         <TriangleAlertIcon />
-        <div
-          className="flex-grow text-sm whitespace-pre-wrap"
-          title={error.message}
-        >
+        <div className="grow text-sm whitespace-pre-wrap" title={error.message}>
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{text}</AlertDescription>
         </div>

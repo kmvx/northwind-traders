@@ -30,7 +30,7 @@ const ResponsiveItem: React.FC<ResponsiveItemProps> = ({
           {icon}
         </div>
       )}
-      <div className="flex flex-grow flex-col gap-0.5">
+      <div className="flex grow flex-col gap-0.5">
         <div className="text-muted-foreground text-xs" onClick={onClick}>
           {name}
         </div>
