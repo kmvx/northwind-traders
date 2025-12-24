@@ -46,7 +46,7 @@ const AppSidebar: React.FC = () => {
       }}
     >
       <SidebarHeader
-        className="h-max-sm:hidden"
+        className="h-max-md:hidden"
         style={{
           paddingTop: 'env(safe-area-inset-top)',
         }}
@@ -54,7 +54,7 @@ const AppSidebar: React.FC = () => {
         <Logo />
       </SidebarHeader>
       <Separator />
-      <SidebarContent className="h-max-sm:gap-0">
+      <SidebarContent className="h-max-md:gap-0">
         {navigationItems.map((item, index) => (
           <Fragment key={index}>
             {index > 0 && <Separator />}
@@ -62,14 +62,14 @@ const AppSidebar: React.FC = () => {
               {item.title && (
                 <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
               )}
-              <SidebarMenu className="h-max-sm:gap-0">
+              <SidebarMenu className="h-max-md:gap-0">
                 {item.children.map((child) => (
                   <SidebarMenuItem key={child.title}>
                     <SidebarMenuButton
                       onClick={closeSidebar}
                       isActive={isActive(child.url)}
                       asChild
-                      className="h-max-sm:py-0"
+                      className="h-max-md:py-0"
                     >
                       <Link href={child.url}>
                         <child.icon />
@@ -86,7 +86,7 @@ const AppSidebar: React.FC = () => {
         <SidebarGroup>
           <SidebarGroupLabel>Settings</SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="h-max-sm:py-0 flex flex-col gap-2 p-2">
+            <div className="h-max-md:py-0 flex flex-col gap-2 p-2">
               <div className="flex gap-2">
                 <ThemeToggle />
                 <ThemeCustomToggle />
@@ -102,7 +102,7 @@ const AppSidebar: React.FC = () => {
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup className="h-max-sm:flex hidden">
+        <SidebarGroup className="h-max-md:flex hidden">
           <Logo />
         </SidebarGroup>
       </SidebarContent>
