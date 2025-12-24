@@ -112,6 +112,7 @@ const ContactAddress: React.FC<ContactAddressProps> = ({
             onClick={() => setIsOpenDialog(false)}
             type="submit"
             variant="outline"
+            autoFocus
           >
             Close
           </Button>
