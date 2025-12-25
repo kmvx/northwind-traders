@@ -18,10 +18,10 @@ import { formatDateFromString, getEmployeeNameByData } from '@/utils';
 import { ContactAddress, ContactPhone } from '../shared';
 import Territories from './Territories';
 
-type EmployeeHoverCardProps = {
+interface EmployeeHoverCardProps {
   employee: IEmployee | undefined;
   employeeId: number | null;
-};
+}
 
 const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
   employee,

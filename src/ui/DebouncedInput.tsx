@@ -6,13 +6,13 @@ import { Input, Spinner } from '@/components/ui';
 import { useDebounce } from '@/hooks';
 import { cn } from '@/lib/utils';
 
-type DebouncedInputProps = {
+interface DebouncedInputProps {
   value: string;
   setValue: (value: string) => void;
   placeholder?: string;
   className?: string;
   title?: string;
-};
+}
 
 const DebouncedInput: React.FC<DebouncedInputProps> = ({
   value,

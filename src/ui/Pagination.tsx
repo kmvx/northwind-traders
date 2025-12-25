@@ -9,14 +9,14 @@ import { PaginationControls } from '.';
 
 const defaultLimit = 20;
 
-type PaginationProps<T> = {
+interface PaginationProps<T> {
   suffix: string;
   data: T[];
   className?: string;
   extraNodesBefore?: React.ReactNode;
   extraNodesAfter?: React.ReactNode;
   renderPage: (visibleItems: T[]) => React.ReactNode;
-};
+}
 
 function Pagination<T>({
   suffix,

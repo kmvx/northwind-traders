@@ -22,9 +22,9 @@ import { EmployeeHoverCard } from '../employees';
 import { ContactAddress } from '../shared';
 import { useShipAddress } from '.';
 
-type OrderHoverCardProps = {
+interface OrderHoverCardProps {
   orderId: number;
-};
+}
 
 const OrderHoverCard: React.FC<OrderHoverCardProps> = ({ orderId }) => {
   const [open, setOpen] = useState(false);

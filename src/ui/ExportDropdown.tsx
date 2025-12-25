@@ -22,10 +22,10 @@ import {
   type DataType,
 } from '@/utils/convertTo';
 
-type ExportDropdownProps = {
+interface ExportDropdownProps {
   data: DataType;
   name: string;
-};
+}
 
 const ExportDropdown: React.FC<ExportDropdownProps> = ({ data, name }) => {
   const handleCopyCSV = async () => {

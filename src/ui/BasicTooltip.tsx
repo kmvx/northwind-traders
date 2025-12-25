@@ -6,11 +6,11 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-type BasicTooltipProps = {
+interface BasicTooltipProps {
   children: React.ReactNode;
   title: React.ReactNode;
   delayDuration?: number;
-};
+}
 
 const BasicTooltip: React.FC<BasicTooltipProps> = ({
   title,

@@ -13,10 +13,10 @@ import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
-type CustomerHoverCardProps = {
+interface CustomerHoverCardProps {
   customerId: string | null;
   children?: React.ReactNode;
-};
+}
 
 const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
   customerId,
