@@ -1,5 +1,3 @@
-import { Fragment } from 'react/jsx-runtime';
-
 import { Separator } from '@/components/ui';
 
 interface ResponsiveItemsProps {
@@ -8,15 +6,15 @@ interface ResponsiveItemsProps {
 
 const ResponsiveItems: React.FC<ResponsiveItemsProps> = ({ items }) => {
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
+    <div className="flex flex-col gap-2">
       {items.map((item, index) =>
         item ? (
-          <Fragment key={item.name}>
+          <div className="flex flex-wrap justify-between gap-2" key={index}>
             <div className="text-muted-foreground">{item.name}</div>
-            <div className="text-end">{item.value}</div>
-          </Fragment>
+            <div>{item.value}</div>
+          </div>
         ) : (
-          <Separator className="col-span-2 my-2" key={index} />
+          <Separator key={index} />
         ),
       )}
     </div>

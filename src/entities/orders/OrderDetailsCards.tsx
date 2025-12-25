@@ -114,7 +114,7 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col items-center gap-4">
             {showProduct && product && (
               <SupplierPreview
                 dataSuppliers={dataSuppliers}

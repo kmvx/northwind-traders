@@ -90,7 +90,7 @@ const ContactAddress: React.FC<ContactAddressProps> = ({
           </div>
         </div>
       </DialogTrigger>
-      <DialogContent className="2xl:max-w-4xl">
+      <DialogContent className="xl:max-w-4xl">
         <DialogHeader>
           <DialogTitle>{description}</DialogTitle>
           <DialogDescription>Complete address information</DialogDescription>

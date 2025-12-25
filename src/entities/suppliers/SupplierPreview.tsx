@@ -30,9 +30,12 @@ const SupplierPreview: React.FC<SupplierPreviewProps> = ({
   }
 
   return (
-    <span className="flex items-center gap-2" title="Supplier">
+    <span className="inline-flex items-center gap-2" title="Supplier">
       <Flag country={supplier.country} />
-      <BasicLink href={`/suppliers/${supplierId}`}>
+      <BasicLink
+        href={`/suppliers/${supplierId}`}
+        className="grow basis-0 text-balance whitespace-normal"
+      >
         {supplier.companyName}
       </BasicLink>
     </span>

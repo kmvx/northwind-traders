@@ -15,7 +15,7 @@ const PropertyGrid: React.FC<PropertyGridProps> = ({ items }) => {
     <div
       className={cn(
         'grid grid-cols-1 items-center gap-x-8 gap-y-8 sm:gap-y-4',
-        items.length > 1 && '2xl:grid-cols-2',
+        items.length > 1 && 'xl:grid-cols-2',
       )}
     >
       {items.map((item) => (
