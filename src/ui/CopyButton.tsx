@@ -30,6 +30,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ content }) => {
     <Button
       type="button"
       variant="outline"
+      size="icon"
       className="-my-2"
       onClick={handleCopy}
       title="Copy to clipboard"

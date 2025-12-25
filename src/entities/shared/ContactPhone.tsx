@@ -1,6 +1,7 @@
-import { PhoneIcon, PrinterIcon } from 'lucide-react';
+import { PhoneIcon, PhoneOutgoingIcon, PrinterIcon } from 'lucide-react';
 import React from 'react';
 
+import { Button } from '@/components/ui';
 import type { PhoneType } from '@/types';
 
 import CopyButton from '../../ui/CopyButton';
@@ -21,12 +22,24 @@ const ContactPhone: React.FC<ContactPhoneProps> = ({
   const IconComponent = isFax ? PrinterIcon : PhoneIcon;
 
   return (
-    <div className="flex items-center gap-2" title={isFax ? 'Fax' : 'Phone'}>
+    <div className="flex items-center gap-2">
       <div className="u-hue-orange rounded-md p-2">
         <IconComponent className="size-4 min-w-4" />
       </div>
       <span className="flex items-center gap-2">
-        <b>{phone}</b>
+        <b title={isFax ? 'Fax' : 'Phone'}>{phone}</b>
+        {!isFax && (
+          <Button
+            title="Call phone"
+            variant="outline"
+            size="icon"
+            className="-my-2"
+          >
+            <a href={'tel:' + phone}>
+              <PhoneOutgoingIcon className="size-4" />
+            </a>
+          </Button>
+        )}
         <CopyButton content={phone} />
         {description && (
           <span className="text-muted-foreground text-sm whitespace-pre">
