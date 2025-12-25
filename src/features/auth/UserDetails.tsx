@@ -17,11 +17,12 @@ import {
   PanelCentred,
   ResponsiveItem,
   Typography,
+  UserAgent,
 } from '@/ui';
 import { setDocumentTitle } from '@/utils';
 
 import { isAdminUser } from '../admin';
-import { UserAccounts, UserAvatar, UserSessions } from '.';
+import { IPAddress, UserAccounts, UserAvatar, UserSessions } from '.';
 
 type UserWithRoleFixed = Pick<
   Nullable<UserWithRole, 'role' | 'banned'>,
@@ -73,26 +74,32 @@ const UserDetails: React.FC<UserDetailsProps> = ({
           {user.role}
         </ResponsiveItem>
         {onLogout && (
-          <div className="flex gap-2">
-            <Button
-              onClick={onLogout}
-              title="End your current user session"
-              variant="outline"
-            >
-              <LogOutIcon />
-              Logout
-            </Button>
-            {isAdminUser(user) && (
-              <BasicLink
-                href="/auth/admin"
+          <>
+            <IPAddress />
+            <div className="sm:col-span-2">
+              <UserAgent userAgent={navigator.userAgent} />
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={onLogout}
+                title="End your current user session"
                 variant="outline"
-                title="Admin dashboard"
               >
-                <ShieldUserIcon />
-                Admin
-              </BasicLink>
-            )}
-          </div>
+                <LogOutIcon />
+                Logout
+              </Button>
+              {isAdminUser(user) && (
+                <BasicLink
+                  href="/auth/admin"
+                  variant="outline"
+                  title="Admin dashboard"
+                >
+                  <ShieldUserIcon />
+                  Admin
+                </BasicLink>
+              )}
+            </div>
+          </>
         )}
       </div>
       <Separator />

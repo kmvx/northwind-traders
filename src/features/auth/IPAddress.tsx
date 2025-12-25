@@ -9,7 +9,8 @@ import { ResponsiveItem } from '@/ui';
 import { fetchInfoByIPAddress } from '@/utils';
 
 interface IPAddressProps {
-  ipAddress: string | null;
+  // undefined - current IP address
+  ipAddress?: string | null | undefined;
 }
 
 const IPAddress: React.FC<IPAddressProps> = ({ ipAddress }) => {
@@ -17,7 +18,7 @@ const IPAddress: React.FC<IPAddressProps> = ({ ipAddress }) => {
   const { data, isLoading } = useQuery({
     queryKey: ['ip', ipAddress],
     queryFn: async () => await fetchInfoByIPAddress(ipAddress),
-    enabled: Boolean(ipAddress),
+    enabled: ipAddress !== null,
   });
 
   const getLoadingComponent = () => (
@@ -25,6 +26,23 @@ const IPAddress: React.FC<IPAddressProps> = ({ ipAddress }) => {
       <Spinner />
     </div>
   );
+
+  const getIPAddress = () => {
+    if (isLoading) getLoadingComponent();
+    const ip = data?.ip ?? ipAddress;
+    if (!ip) return null;
+
+    return (
+      <ResponsiveItem
+        name="IP Address"
+        description="Public IP address as seen by external servers"
+        icon={<GlobeIcon className="size-4" />}
+        iconClassName="u-hue-blue"
+      >
+        <code className="font-mono">{ip.replace(/:/g, ':\u200B')}</code>
+      </ResponsiveItem>
+    );
+  };
 
   const getLocation = () => {
     if (isLoading) getLoadingComponent();
@@ -53,7 +71,7 @@ const IPAddress: React.FC<IPAddressProps> = ({ ipAddress }) => {
     return (
       <ResponsiveItem
         name="Internet Provider"
-        description="Organization or ISP carrying this session"
+        description="Organization or ISP"
         icon={<MapPinIcon className="size-4" />}
         iconClassName="u-hue-yellow"
       >
@@ -64,15 +82,7 @@ const IPAddress: React.FC<IPAddressProps> = ({ ipAddress }) => {
 
   return (
     <>
-      <ResponsiveItem
-        name="IP Address"
-        description="Public IP from which the session was created"
-        icon={<GlobeIcon className="size-4" />}
-        iconClassName="u-hue-blue"
-      >
-        <code className="font-mono">{ipAddress?.replace(/:/g, ':\u200B')}</code>
-      </ResponsiveItem>
-
+      {getIPAddress()}
       {getLocation()}
       {getProvider()}
     </>

@@ -141,17 +141,20 @@ export const remToPx = (rem: number): number =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
 interface InfoByIPAddressData {
+  ip: string;
   city: string;
   region: string;
   country_name: string;
   org: string;
 }
 
-export const fetchInfoByIPAddress = async (ipAddress: string | null) => {
-  if (!ipAddress) return;
+export const fetchInfoByIPAddress = async (
+  ipAddress: string | null | undefined,
+) => {
+  if (ipAddress === null) return null;
 
   const response = await fetch(
-    `https://ipapi.co/${ipAddress === '127.0.0.1' ? '' : ipAddress}/json/`,
+    `https://ipapi.co/${ipAddress === '127.0.0.1' || ipAddress === undefined ? '' : ipAddress}/json/`,
   );
 
   if (!response.ok) {
