@@ -21,25 +21,22 @@ import {
 } from './utils';
 
 describe('joinFields', () => {
-  it('joins non-empty strings with comma', () => {
-    expect(joinFields('a', 'b', 'c')).toBe('a, b, c');
-  });
-
-  it('filters out falsy values', () => {
-    expect(joinFields('a', '', 'b', undefined as unknown as string)).toBe(
-      'a, b',
-    );
+  it.each([
+    [['a', 'b', 'c'], 'a, b, c'],
+    [['a', '', 'b', undefined as unknown as string], 'a, b'],
+  ])('"%s" -> "%s"', (input, expected) => {
+    expect(joinFields(...input)).toBe(expected);
   });
 });
 
 describe('formatCurrency', () => {
-  it('format currency', () => {
-    expect(formatCurrency(castToCurrency(-12_345_678.955))).toBe(
-      '-$12,345,678.96',
-    );
-    expect(formatCurrency(castToCurrency(0.005))).toBe('$0.01');
-    expect(formatCurrency(castToCurrency(0.004))).toBe('$0.00');
-    expect(formatCurrency(null)).toBe('N/A');
+  it.each([
+    [castToCurrency(-12_345_678.955), '-$12,345,678.96'],
+    [castToCurrency(0.005), '$0.01'],
+    [castToCurrency(0.004), '$0.00'],
+    [null, 'N/A'],
+  ])('%j -> %s', (input, expected) => {
+    expect(formatCurrency(input)).toBe(expected);
   });
 });
 
@@ -56,33 +53,23 @@ describe('capitalizeFirstLetter', () => {
 });
 
 describe('isStringIncludes', () => {
-  it('should return true when search string is found (exact case)', () => {
-    expect(isStringIncludes('hello world', 'world')).toBe(true);
-  });
-
-  it('should return true when search string is found (case insensitive)', () => {
-    expect(isStringIncludes('Hello World', 'WORLD')).toBe(true);
-    expect(isStringIncludes('HELLO WORLD', 'hello')).toBe(true);
-  });
-
-  it('should return false when search string is not found', () => {
-    expect(isStringIncludes('hello world', 'foo')).toBe(false);
+  it.each([
+    ['hello world', 'world', true],
+    ['Hello World', 'WORLD', true],
+    ['HELLO WORLD', 'hello', true],
+    ['hello world', 'foo', false],
+  ])('isStringIncludes(%s, %s) -> %s', (str, search, expected) => {
+    expect(isStringIncludes(str, search)).toBe(expected);
   });
 });
 
 describe('buildTitle', () => {
-  it('should handle no arguments', () => {
-    expect(buildTitle()).toBe('Northwind Traders');
-  });
-
-  it('should append application name to single argument', () => {
-    expect(buildTitle('Dashboard')).toBe('Dashboard — Northwind Traders');
-  });
-
-  it('should join multiple strings', () => {
-    expect(buildTitle('Products', 'Categories')).toBe(
-      'Products — Categories — Northwind Traders',
-    );
+  it.each([
+    [[], 'Northwind Traders'],
+    [['Dashboard'], 'Dashboard — Northwind Traders'],
+    [['Products', 'Categories'], 'Products — Categories — Northwind Traders'],
+  ])('buildTitle(%j) -> %s', (args, expected) => {
+    expect(buildTitle(...args)).toBe(expected);
   });
 });
 
@@ -115,44 +102,51 @@ describe('setDocumentTitle', () => {
 });
 
 describe('getEmployeeNameByData', () => {
-  it('should return concatenated employee name', () => {
-    const employee: IEmployee = {
-      titleOfCourtesy: 'Mr.',
-      lastName: 'Doe',
-      firstName: 'John',
-      birthDate: castToDateString('1990-05-15'),
-      hireDate: castToDateString('2020-05-15'),
-      employeeId: 1,
-      homePhone: castToPhone('(123) 456-7890'),
-      extension: castToPhone('1234'),
-      notes:
-        'John is a dedicated software engineer with 5 years of experience.',
-      reportsTo: 2,
-      title: 'Software Engineer',
-      photoPath: '/images/employees/john_doe.jpg',
-      address: '123 Main St',
-      city: 'Springfield',
-      country: castToCountry('USA'),
-      postalCode: '62701',
-      region: 'IL',
-    };
-    expect(getEmployeeNameByData(employee)).toBe('Mr. John Doe');
+  it.each([
+    [
+      {
+        titleOfCourtesy: 'Mr.',
+        lastName: 'Doe',
+        firstName: 'John',
+        birthDate: castToDateString('1990-05-15'),
+        hireDate: castToDateString('2020-05-15'),
+        employeeId: 1,
+        homePhone: castToPhone('(123) 456-7890'),
+        extension: castToPhone('1234'),
+        notes:
+          'John is a dedicated software engineer with 5 years of experience.',
+        reportsTo: 2,
+        title: 'Software Engineer',
+        photoPath: '/images/employees/john_doe.jpg',
+        address: '123 Main St',
+        city: 'Springfield',
+        country: castToCountry('USA'),
+        postalCode: '62701',
+        region: 'IL',
+      } as IEmployee,
+      'Mr. John Doe',
+    ],
+  ])('getEmployeeNameByData(%j) -> %s', (employee, expected) => {
+    expect(getEmployeeNameByData(employee)).toBe(expected);
   });
 });
 
 describe('getFlagEmojiByCountryName', () => {
-  it('should return UN flag for empty or falsy country', () => {
-    expect(getFlagEmojiByCountryName('')).toBe('🇺🇳');
-  });
+  it.each([
+    ['', '🇺🇳'],
+    ['Argentina', '🇦🇷'],
+    ['Narnia', '🏴‍☠'],
+  ])('getFlagEmojiByCountryName(%s) -> %s', (country, expected) => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-  it('should return flag emoji for known country', () => {
-    expect(getFlagEmojiByCountryName('Argentina')).toBe('🇦🇷');
-  });
+    expect(getFlagEmojiByCountryName(country)).toBe(expected);
 
-  it('should return pirate flag and log for unknown country', () => {
-    const consoleSpy = vi.spyOn(console, 'error');
-    expect(getFlagEmojiByCountryName('Narnia')).toBe('🏴‍☠');
-    expect(consoleSpy).toHaveBeenCalledWith('Unknown country', 'Narnia');
+    if (country === 'Narnia') {
+      expect(consoleSpy).toHaveBeenCalledWith('Unknown country', 'Narnia');
+    } else {
+      expect(consoleSpy).not.toHaveBeenCalled();
+    }
+
     consoleSpy.mockRestore();
   });
 });
@@ -167,13 +161,10 @@ describe('getCountries', () => {
 });
 
 describe('escapeHtml', () => {
-  it('escapes special HTML characters', () => {
-    expect(escapeHtml('&<>"\'/')).toBe('&amp;&lt;&gt;&quot;&#39;&#x2F;');
-  });
-
-  it('handles mixed string with special and non-special characters', () => {
-    const input = 'Hello & <World>!';
-    const expected = 'Hello &amp; &lt;World&gt;!';
+  it.each([
+    ['&<>"\'/', '&amp;&lt;&gt;&quot;&#39;&#x2F;'],
+    ['Hello & <World>!', 'Hello &amp; &lt;World&gt;!'],
+  ])('escapeHtml(%s) -> %s', (input, expected) => {
     expect(escapeHtml(input)).toBe(expected);
   });
 });
