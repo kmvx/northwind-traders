@@ -29,9 +29,9 @@ function Item({ item }: { item: PropertyGridItemType }) {
   return (
     <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
       <div className="grow-2 basis-1/3">
-        <div>{item.name}:</div>
+        <div className="text-balance">{item.name}:</div>
         {item.description && (
-          <div className="text-muted-foreground text-xs">
+          <div className="text-muted-foreground text-xs text-balance">
             {item.description}
           </div>
         )}
