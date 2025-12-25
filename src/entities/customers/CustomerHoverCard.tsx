@@ -35,7 +35,8 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
 
     return (
       <div className="flex flex-col gap-2">
-        <Typography.Header3>Customer</Typography.Header3>
+        <Typography.Header3>{data.companyName}</Typography.Header3>
+        <div className="text-center">Customer company</div>
         <ContactAddress address={data} />
 
         <ContactPhone phone={data.phone} />
