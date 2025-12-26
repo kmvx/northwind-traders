@@ -159,11 +159,13 @@ export const useQueryOrders = ({
   customerId,
   employeeId,
   shipperId,
+  enabled = true,
   initialData,
 }: {
   customerId?: string | undefined;
   employeeId?: number | undefined;
   shipperId?: number | undefined;
+  enabled?: boolean;
   initialData?: IOrders | undefined;
 } = {}) => {
   invariant(
@@ -173,6 +175,7 @@ export const useQueryOrders = ({
   return useQuery<IOrders>({
     queryKey: ['northwind.orders', { customerId, employeeId, shipperId }],
     queryFn: () => getOrders({ customerId, employeeId, shipperId }),
+    enabled,
     ...(initialData ? { initialData } : {}),
   });
 };

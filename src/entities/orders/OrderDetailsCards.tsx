@@ -12,12 +12,14 @@ import type {
   ICategories,
   IOrderDetail,
   IOrderDetails,
+  IOrders,
   IProducts,
   ISuppliers,
 } from '@/models';
 import { BasicLink, Pagination, ResponsiveGrid } from '@/ui';
-import { formatCurrency } from '@/utils';
+import { formatCurrency, formatDateFromString } from '@/utils';
 
+import { CustomerHoverCard } from '../customers';
 import { Category } from '../products';
 import { SupplierPreview } from '../suppliers';
 import { OrderHoverCard } from '.';
@@ -28,6 +30,7 @@ interface OrderDetailsCardsProps {
   dataProducts: IProducts | undefined;
   dataCategories: ICategories | undefined;
   dataSuppliers: ISuppliers | undefined;
+  dataOrders: IOrders | undefined;
   showProduct: boolean;
   extraNodesAfter?: React.ReactNode;
 }
@@ -37,6 +40,7 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
   dataProducts,
   dataCategories,
   dataSuppliers,
+  dataOrders,
   showProduct,
   extraNodesAfter,
 }) => {
@@ -53,6 +57,7 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
               dataProducts={dataProducts}
               dataCategories={dataCategories}
               dataSuppliers={dataSuppliers}
+              dataOrders={dataOrders}
               showProduct={showProduct}
               key={index}
             />
@@ -68,6 +73,7 @@ interface OrderDetailCardProps {
   dataProducts: IProducts | undefined;
   dataCategories: ICategories | undefined;
   dataSuppliers: ISuppliers | undefined;
+  dataOrders: IOrders | undefined;
   showProduct: boolean;
 }
 
@@ -77,13 +83,18 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
     dataProducts,
     dataCategories,
     dataSuppliers,
+    dataOrders,
     showProduct,
   }) {
     const product = dataProducts?.find(
       (product) => product.productId === item.productId,
     );
 
+    const order = dataOrders?.find((order) => order.orderId === item.orderId);
+
     const costDescription = 'Price * Quantity - Discont = Cost';
+    const orderDateDescription =
+      'The date when the order was placed by the customer.';
 
     return (
       <Card className="h-full rounded-md shadow-none transition hover:shadow-lg">
@@ -111,7 +122,20 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
                   />
                 </>
               ) : (
-                <OrderHoverCard orderId={item.orderId} />
+                <>
+                  <OrderHoverCard orderId={item.orderId} />
+                  <span
+                    className="text-xs font-normal"
+                    title={orderDateDescription}
+                    onClick={() => toast.info(orderDateDescription)}
+                  >
+                    {order ? (
+                      formatDateFromString(order.orderDate)
+                    ) : (
+                      <Spinner />
+                    )}
+                  </span>
+                </>
               )}
             </div>
           </CardTitle>
@@ -123,6 +147,12 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
               supplierId={product.supplierId}
             />
           )}
+          {!showProduct &&
+            (order ? (
+              <CustomerHoverCard customerId={order.customerId} />
+            ) : (
+              <Spinner />
+            ))}
           <div
             className="text-end text-sm"
             title={costDescription}

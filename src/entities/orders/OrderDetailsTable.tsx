@@ -1,5 +1,6 @@
 import type { ColumnDef, RowData } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
+import invariant from 'tiny-invariant';
 
 import { Spinner } from '@/components/ui';
 import { DataTable } from '@/features/table';
@@ -7,12 +8,14 @@ import type {
   ICategories,
   IOrderDetail,
   IOrderDetails,
+  IOrders,
   IProducts,
   ISuppliers,
 } from '@/models';
 import { BasicLink } from '@/ui';
-import { formatCurrency } from '@/utils';
+import { formatCurrency, formatDateFromString } from '@/utils';
 
+import { CustomerHoverCard } from '../customers';
 import { Category } from '../products';
 import { SupplierPreview } from '../suppliers';
 import { OrderHoverCard } from '.';
@@ -24,6 +27,7 @@ declare module '@tanstack/table-core' {
     dataProducts?: IProducts | undefined;
     dataCategories?: ICategories | undefined;
     dataSuppliers?: ISuppliers | undefined;
+    dataOrders?: IOrders | undefined;
   }
 }
 
@@ -37,6 +41,34 @@ const allColumns = [
     },
   },
   {
+    accessorKey: 'orderDate',
+    header: 'Date',
+    cell: ({ row, table }) => {
+      const dataOrders = table?.options?.meta?.dataOrders;
+      if (!dataOrders) return <Spinner />;
+
+      const orderId = row.original.orderId;
+      const order = dataOrders.find((order) => order.orderId === orderId);
+      invariant(order);
+
+      return formatDateFromString(order.orderDate);
+    },
+  },
+  {
+    accessorKey: 'customerId',
+    header: 'Customer',
+    cell: ({ row, table }) => {
+      const dataOrders = table?.options?.meta?.dataOrders;
+      if (!dataOrders) return <Spinner />;
+
+      const orderId = row.original.orderId;
+      const order = dataOrders.find((order) => order.orderId === orderId);
+      invariant(order);
+
+      return <CustomerHoverCard customerId={order.customerId} />;
+    },
+  },
+  {
     accessorKey: 'productId',
     header: 'Product',
     cell: ({ row, table }) => {
@@ -44,6 +76,7 @@ const allColumns = [
       const product = table?.options?.meta?.dataProducts?.find(
         (product) => product.productId === productId,
       );
+
       return (
         <BasicLink href={`/products/${productId}`} className="justify-start">
           {product ? (
@@ -66,6 +99,7 @@ const allColumns = [
       const product = table?.options?.meta?.dataProducts?.find(
         (product) => product.productId === productId,
       );
+
       return (
         <Category
           dataCategories={table?.options?.meta?.dataCategories}
@@ -78,11 +112,14 @@ const allColumns = [
     accessorKey: 'supplierId',
     header: 'Supplier',
     cell: ({ row, table }) => {
+      const dataProducts = table?.options?.meta?.dataProducts;
+      if (!dataProducts) return null;
+
       const productId = row.original.productId;
-      const product = table?.options?.meta?.dataProducts?.find(
+      const product = dataProducts.find(
         (product) => product.productId === productId,
       );
-      if (!product) return null;
+      invariant(product);
 
       return (
         <SupplierPreview
@@ -123,6 +160,7 @@ interface OrderDetailsTableProps {
   dataProducts: IProducts | undefined;
   dataCategories: ICategories | undefined;
   dataSuppliers: ISuppliers | undefined;
+  dataOrders: IOrders | undefined;
   showProduct: boolean;
   extraNodesAfter?: React.ReactNode;
 }
@@ -132,20 +170,18 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
   dataProducts,
   dataCategories,
   dataSuppliers,
+  dataOrders,
   showProduct,
   extraNodesAfter,
 }) => {
   const columns = useMemo(() => {
     return allColumns.filter((column) => {
-      if (showProduct && column.accessorKey === 'orderId') return false;
-
+      // Omit columns
       type AccessorKeyType = (typeof column)['accessorKey'];
-      if (
-        !showProduct &&
-        (
-          ['productId', 'categoryId', 'supplierId'] satisfies AccessorKeyType[]
-        ).some((item) => column.accessorKey === item)
-      ) {
+      const omitColumns: AccessorKeyType[] = showProduct
+        ? ['orderId', 'orderDate', 'customerId']
+        : ['productId', 'categoryId', 'supplierId'];
+      if (omitColumns.some((item) => column.accessorKey === item)) {
         return false;
       }
 
@@ -157,7 +193,7 @@ const OrderDetailsTable: React.FC<OrderDetailsTableProps> = ({
       suffix="OrderDetails"
       data={data}
       columns={columns}
-      meta={{ dataProducts, dataCategories, dataSuppliers }}
+      meta={{ dataProducts, dataCategories, dataSuppliers, dataOrders }}
       extraNodesAfter={extraNodesAfter}
     />
   );

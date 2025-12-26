@@ -4,6 +4,7 @@ import { usePageSize } from '@/hooks';
 import {
   useQueryCategories,
   useQueryOrderDetails,
+  useQueryOrders,
   useQueryProductsByOrderId,
   useQuerySuppliers,
 } from '@/net';
@@ -43,6 +44,10 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
   const { data: dataSuppliers } = useQuerySuppliers({
     enabled: showProduct,
   });
+  // NOTE: Expensive
+  const { data: dataOrders } = useQueryOrders({
+    enabled: !showProduct,
+  });
 
   const isWidePage = usePageSize().isWidePage;
 
@@ -69,6 +74,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
             dataProducts={dataProducts}
             dataCategories={dataCategories}
             dataSuppliers={dataSuppliers}
+            dataOrders={dataOrders}
             showProduct={showProduct}
             extraNodesAfter={extraNodesAfter}
           />
@@ -78,6 +84,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
             dataProducts={dataProducts}
             dataCategories={dataCategories}
             dataSuppliers={dataSuppliers}
+            dataOrders={dataOrders}
             showProduct={showProduct}
             extraNodesAfter={extraNodesAfter}
           />
