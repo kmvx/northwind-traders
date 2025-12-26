@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { toast } from 'sonner';
 
 import {
   Card,
@@ -82,6 +83,8 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
       (product) => product.productId === item.productId,
     );
 
+    const costDescription = 'Price * Quantity - Discont = Cost';
+
     return (
       <Card className="h-full rounded-md shadow-none transition hover:shadow-lg">
         <CardHeader>
@@ -122,7 +125,8 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
           )}
           <div
             className="text-end text-sm"
-            title="Price * Quantity - Discont = Cost"
+            title={costDescription}
+            onClick={() => toast.info(costDescription)}
           >
             {formatCurrency(item.unitPrice)} * {item.quantity} units{' '}
             {item.discount ? ` - ${item.discount * 100}% ` : ''} ={' '}

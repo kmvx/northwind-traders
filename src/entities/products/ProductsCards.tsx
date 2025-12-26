@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { toast } from 'sonner';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import type { ICategories, IProduct, IProducts, ISuppliers } from '@/models';
@@ -88,9 +89,12 @@ const ProductCard: React.FC<ProductCardProps> = memo(function ProductCard({
           </div>
         )}
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <span title="Unit price">{formatCurrency(item.unitPrice)}</span>
+          <span title="Unit price" onClick={() => toast.info('Unit price')}>
+            {formatCurrency(item.unitPrice)}
+          </span>
           <span
             title="Quantity per unit"
+            onClick={() => toast.info('Quantity per unit')}
             className="text-muted-foreground text-sm"
           >
             {item.quantityPerUnit}
