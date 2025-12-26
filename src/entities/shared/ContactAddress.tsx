@@ -77,17 +77,15 @@ const ContactAddress: React.FC<ContactAddressProps> = ({
             <MapPinIcon className="size-4 min-w-4" />
           </div>
           <Flag country={address.country} />
-          <div className="flex flex-col">
-            <span className="text-balance">
-              {joinFields(
-                address.country,
-                address.postalCode,
-                address.region,
-                address.city,
-              )}
-            </span>
-            <span className="text-balance">{address.address}</span>
-          </div>
+          <span className="text-balance">
+            {joinFields(
+              address.country,
+              address.postalCode,
+              address.region,
+              address.city,
+              address.address,
+            )}
+          </span>
         </div>
       </DialogTrigger>
       <DialogContent className="xl:max-w-4xl">
