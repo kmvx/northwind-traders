@@ -45,7 +45,7 @@ const OrderDetailsCards: React.FC<OrderDetailsCardsProps> = ({
       data={data}
       extraNodesAfter={extraNodesAfter}
       renderPage={(items) => (
-        <ResponsiveGrid minWidth="15rem">
+        <ResponsiveGrid minWidth="17rem">
           {items.map((item, index) => (
             <OrderDetailCard
               item={item}
@@ -113,22 +113,20 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = memo(
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="flex flex-col items-center gap-4">
-            {showProduct && product && (
-              <SupplierPreview
-                dataSuppliers={dataSuppliers}
-                supplierId={product.supplierId}
-              />
-            )}
-            <div
-              className="text-end text-sm"
-              title="Price * Quantity - Discont = Cost"
-            >
-              {formatCurrency(item.unitPrice)} * {item.quantity} units{' '}
-              {item.discount ? ` - ${item.discount * 100}% ` : ''} ={' '}
-              <b>{formatCurrency(getTotalCost(item))}</b>
-            </div>
+        <CardContent className="flex h-full flex-col items-center justify-between gap-4">
+          {showProduct && product && (
+            <SupplierPreview
+              dataSuppliers={dataSuppliers}
+              supplierId={product.supplierId}
+            />
+          )}
+          <div
+            className="text-end text-sm"
+            title="Price * Quantity - Discont = Cost"
+          >
+            {formatCurrency(item.unitPrice)} * {item.quantity} units{' '}
+            {item.discount ? ` - ${item.discount * 100}% ` : ''} ={' '}
+            <b>{formatCurrency(getTotalCost(item))}</b>
           </div>
         </CardContent>
       </Card>
