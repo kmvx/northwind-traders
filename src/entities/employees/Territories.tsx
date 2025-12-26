@@ -1,7 +1,7 @@
 'use client';
 
 import { Globe2Icon } from 'lucide-react';
-import React from 'react';
+import { Fragment, useMemo } from 'react';
 import { toast } from 'sonner';
 
 import { Spinner } from '@/components/ui';
@@ -18,18 +18,21 @@ const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
   });
   const { data: dataRegions } = useQueryRegions();
 
+  const regionsMap = useMemo(() => {
+    const map = new Map<number, string>();
+    dataRegions?.forEach((region) =>
+      map.set(region.regionId, region.regionDescription),
+    );
+    return map;
+  }, [dataRegions]);
+
   if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isLoading) return <Spinner />;
   if (!data) return <div>No data</div>;
 
-  const regionsMap = new Map<number, string>();
-  dataRegions?.forEach((region) =>
-    regionsMap.set(region.regionId, region.regionDescription),
-  );
-
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <div className="u-hue-green rounded-md p-2">
+    <div className="flex flex-wrap items-center gap-y-2">
+      <div className="u-hue-green mr-2 rounded-md p-2">
         <Globe2Icon className="size-4 min-w-4" />
       </div>
       {data.map((item, i) => {
@@ -37,12 +40,12 @@ const Territories: React.FC<TerritoriesProps> = ({ employeeId }) => {
           regionsMap.get(item.regionId) || item.regionId
         }`;
         return (
-          <React.Fragment key={item.territoryId}>
+          <Fragment key={item.territoryId}>
             <b title={description} onClick={() => toast.info(description)}>
               {item.territoryDescription + (i < data.length - 1 ? ',' : '')}
               &nbsp;
             </b>
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>
