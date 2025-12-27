@@ -1,14 +1,14 @@
 'use client';
 
 import { HashIcon } from 'lucide-react';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import { useQueryCustomer } from '@/net';
+import { useQueryCustomerFromAll } from '@/net';
 import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 
 import { ContactAddress, ContactPerson, ContactPhone, Flag } from '../shared';
@@ -22,8 +22,7 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
   customerId,
   children,
 }) => {
-  const [open, setOpen] = useState(false);
-  const { data, error, isLoading, refetch } = useQueryCustomer({
+  const { data, error, isLoading, refetch } = useQueryCustomerFromAll({
     customerId,
   });
 
@@ -60,7 +59,7 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
   };
 
   return (
-    <HoverCard open={open} onOpenChange={setOpen}>
+    <HoverCard>
       <HoverCardTrigger asChild>
         <span className="inline-flex items-center gap-2">
           {data && <Flag country={data.country} />}

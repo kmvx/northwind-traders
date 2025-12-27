@@ -87,6 +87,26 @@ export const useQueryCustomer = ({
   });
 };
 
+export const useQueryCustomerFromAll = ({
+  customerId,
+}: {
+  customerId: string | null;
+}) => {
+  const result = useQueryCustomers();
+  const { data } = result;
+
+  const mapItems = useMemo(() => {
+    const map = new Map<string, ICustomer>();
+    data?.forEach((item) => map.set(item.customerId, item));
+    return map;
+  }, [data]);
+
+  return {
+    ...result,
+    data: (customerId != null && mapItems?.get(customerId)) || undefined,
+  };
+};
+
 export const useQueryCustomerByOrderId = ({ orderId }: { orderId: number }) => {
   return useQuery<ICustomer>({
     queryKey: ['northwind.customers', { orderId }],
@@ -126,6 +146,26 @@ export const useQueryEmployee = ({
     enabled,
     ...(initialData ? { initialData } : {}),
   });
+};
+
+export const useQueryEmployeeFromAll = ({
+  employeeId,
+}: {
+  employeeId: number | null;
+}) => {
+  const result = useQueryEmployees();
+  const { data } = result;
+
+  const mapItems = useMemo(() => {
+    const map = new Map<number, IEmployee>();
+    data?.forEach((item) => map.set(item.employeeId, item));
+    return map;
+  }, [data]);
+
+  return {
+    ...result,
+    data: (employeeId != null && mapItems?.get(employeeId)) || undefined,
+  };
 };
 
 export const useQueryEmployeeByOrderId = ({ orderId }: { orderId: number }) => {

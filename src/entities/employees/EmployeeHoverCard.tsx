@@ -2,7 +2,7 @@
 
 import { CakeIcon, HandshakeIcon } from 'lucide-react';
 import Image from 'next/image';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 import { Spinner } from '@/components/ui';
 import {
@@ -11,7 +11,7 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import type { IEmployee } from '@/models';
-import { useQueryEmployee } from '@/net';
+import { useQueryEmployeeFromAll } from '@/net';
 import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 import { formatDateFromString, getEmployeeNameByData } from '@/utils';
 
@@ -27,10 +27,8 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
   employee,
   employeeId,
 }) => {
-  const [open, setOpen] = useState(false);
-  const { data, error, isLoading, refetch } = useQueryEmployee({
+  const { data, error, isLoading, refetch } = useQueryEmployeeFromAll({
     employeeId,
-    enabled: open,
   });
 
   const getContent = () => {
@@ -89,7 +87,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
   const href = `/employees/${employeeId}`;
 
   return (
-    <HoverCard open={open} onOpenChange={setOpen}>
+    <HoverCard>
       <HoverCardTrigger asChild>
         {employee ? (
           <span className="inline-flex items-center gap-2">
