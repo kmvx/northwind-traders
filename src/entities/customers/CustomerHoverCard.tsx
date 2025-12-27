@@ -11,7 +11,7 @@ import {
 import { useQueryCustomer } from '@/net';
 import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 
-import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
+import { ContactAddress, ContactPerson, ContactPhone, Flag } from '../shared';
 
 interface CustomerHoverCardProps {
   customerId: string | null;
@@ -25,7 +25,6 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
   const [open, setOpen] = useState(false);
   const { data, error, isLoading, refetch } = useQueryCustomer({
     customerId,
-    enabled: open,
   });
 
   const getContent = () => {
@@ -63,9 +62,12 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
   return (
     <HoverCard open={open} onOpenChange={setOpen}>
       <HoverCardTrigger asChild>
-        <BasicLink href={`/customers/${customerId}`}>
-          {children ? children : customerId}
-        </BasicLink>
+        <span className="inline-flex items-center gap-2">
+          {data && <Flag country={data.country} />}
+          <BasicLink href={`/customers/${customerId}`}>
+            {children ? children : customerId}
+          </BasicLink>
+        </span>
       </HoverCardTrigger>
       <HoverCardContent className="text-sm">{getContent()}</HoverCardContent>
     </HoverCard>

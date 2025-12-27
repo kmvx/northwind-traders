@@ -15,7 +15,7 @@ import { useQueryEmployee } from '@/net';
 import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 import { formatDateFromString, getEmployeeNameByData } from '@/utils';
 
-import { ContactAddress, ContactPhone } from '../shared';
+import { ContactAddress, ContactPhone, Flag } from '../shared';
 import Territories from './Territories';
 
 interface EmployeeHoverCardProps {
@@ -86,19 +86,22 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
     );
   };
 
+  const href = `/employees/${employeeId}`;
+
   return (
     <HoverCard open={open} onOpenChange={setOpen}>
       <HoverCardTrigger asChild>
-        <BasicLink href={`/employees/${employeeId}`}>
-          {employee ? (
-            getEmployeeNameByData(employee)
-          ) : (
-            <span className="inline-flex items-center gap-2">
-              {employeeId}
-              <Spinner />
-            </span>
-          )}
-        </BasicLink>
+        {employee ? (
+          <span className="inline-flex items-center gap-2">
+            <Flag country={employee.country} />
+            <BasicLink href={href}>{getEmployeeNameByData(employee)}</BasicLink>
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-2">
+            <BasicLink href={href}>{employeeId}</BasicLink>
+            <Spinner />
+          </span>
+        )}
       </HoverCardTrigger>
       <HoverCardContent className="text-sm sm:w-120">
         {getContent()}
