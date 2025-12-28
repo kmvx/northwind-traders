@@ -2,20 +2,20 @@
 
 import Link from 'next/link';
 
-import type { DashboardType } from '@/db/actions';
+import type { DBStatsType } from '@/db/actions';
 import { cn } from '@/lib/utils';
-import { useQueryDashboard } from '@/net';
+import { useQueryStats } from '@/net';
 import { ErrorMessage, PanelCentred, Typography, WaitSpinner } from '@/ui';
 import { getNavigationIconByUrl } from '@/utils';
 
 import { Card, CardContent } from './ui';
 
 interface DashboardProps {
-  initialData?: DashboardType;
+  initialData?: DBStatsType;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ initialData }) => {
-  const { data, isLoading, isFetching, error, refetch } = useQueryDashboard({
+  const { data, isLoading, isFetching, error, refetch } = useQueryStats({
     initialData,
   });
 

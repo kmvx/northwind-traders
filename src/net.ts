@@ -5,12 +5,12 @@ import { useMemo } from 'react';
 import invariant from 'tiny-invariant';
 
 import {
-  type DashboardType,
+  type DBStatsType,
   getCategories,
   getCustomer,
   getCustomerByOrderId,
   getCustomers,
-  getDashboard,
+  getDBStats,
   getEmployee,
   getEmployeeByOrderId,
   getEmployees,
@@ -47,14 +47,14 @@ import {
 } from './models';
 import { dateFromString } from './utils';
 
-export const useQueryDashboard = ({
+export const useQueryStats = ({
   initialData,
 }: {
-  initialData?: DashboardType | undefined;
+  initialData?: DBStatsType | undefined;
 } = {}) => {
   return useQuery({
     queryKey: ['dashboard'],
-    queryFn: async () => await getDashboard(),
+    queryFn: async () => await getDBStats(),
     ...(initialData ? { initialData } : {}),
   });
 };

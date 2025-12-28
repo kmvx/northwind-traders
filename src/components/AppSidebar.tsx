@@ -13,6 +13,7 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarTrigger,
@@ -20,6 +21,7 @@ import {
 import { navigationItems } from '@/constants';
 import { UserPreview } from '@/features/auth';
 import { useCloseSidebar } from '@/hooks';
+import { useQueryStats } from '@/net';
 import {
   FontSizeControls,
   FullscreenToggle,
@@ -30,7 +32,7 @@ import {
   ThemeToggle,
 } from '@/ui';
 
-import { Separator } from './ui';
+import { Badge, Separator } from './ui';
 
 const AppSidebar: React.FC = () => {
   const pathname = usePathname();
@@ -38,7 +40,7 @@ const AppSidebar: React.FC = () => {
     pathname === url || (pathname.startsWith(url) && url !== '/');
 
   const closeSidebar = useCloseSidebar();
-
+  const { data: dataStats } = useQueryStats();
   return (
     <Sidebar
       style={{
@@ -63,21 +65,30 @@ const AppSidebar: React.FC = () => {
                 <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
               )}
               <SidebarMenu className="h-max-md:gap-0">
-                {item.children.map((child) => (
-                  <SidebarMenuItem key={child.title}>
-                    <SidebarMenuButton
-                      onClick={closeSidebar}
-                      isActive={isActive(child.url)}
-                      asChild
-                      className="h-max-md:py-0"
-                    >
-                      <Link href={child.url}>
-                        <child.icon />
-                        <span>{child.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {item.children.map((child) => {
+                  const badgeValue =
+                    dataStats && child.getBadgeValue?.(dataStats);
+                  return (
+                    <SidebarMenuItem key={child.title}>
+                      <SidebarMenuButton
+                        onClick={closeSidebar}
+                        isActive={isActive(child.url)}
+                        asChild
+                        className="h-max-md:py-0"
+                      >
+                        <Link href={child.url}>
+                          <child.icon />
+                          <span>{child.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                      {badgeValue != undefined && (
+                        <SidebarMenuBadge>
+                          <Badge variant="secondary">{badgeValue}</Badge>
+                        </SidebarMenuBadge>
+                      )}
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroup>
           </Fragment>

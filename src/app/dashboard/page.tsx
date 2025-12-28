@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 
 import { Dashboard } from '@/components';
-import { getDashboard } from '@/db/actions';
+import { getDBStats } from '@/db/actions';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-  return <Dashboard initialData={await getDashboard()} />;
+  return <Dashboard initialData={await getDBStats()} />;
 }

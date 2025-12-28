@@ -10,6 +10,8 @@ import {
   UserIcon,
 } from 'lucide-react';
 
+import type { DBStatsType } from './db/actions';
+
 export const HIDE_DELAY = 2000; // in milliseconds
 
 export const navigationItems: {
@@ -18,6 +20,7 @@ export const navigationItems: {
     title: string;
     url: string;
     icon: LucideIcon;
+    getBadgeValue?: (stats: DBStatsType) => number;
   }[];
 }[] = [
   {
@@ -46,26 +49,31 @@ export const navigationItems: {
         title: 'Customers',
         url: '/customers',
         icon: DollarSignIcon,
+        getBadgeValue: (stats: DBStatsType) => stats.customers,
       },
       {
         title: 'Employees',
         url: '/employees',
         icon: UserIcon,
+        getBadgeValue: (stats: DBStatsType) => stats.employees,
       },
       {
         title: 'Orders',
         url: '/orders',
         icon: ShoppingCartIcon,
+        getBadgeValue: (stats: DBStatsType) => stats.orders,
       },
       {
         title: 'Products',
         url: '/products',
         icon: EggFriedIcon,
+        getBadgeValue: (stats: DBStatsType) => stats.products,
       },
       {
         title: 'Suppliers',
         url: '/suppliers',
         icon: PickaxeIcon,
+        getBadgeValue: (stats: DBStatsType) => stats.suppliers,
       },
     ],
   },
