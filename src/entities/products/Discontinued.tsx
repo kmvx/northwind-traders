@@ -2,7 +2,6 @@ import { BanIcon, ThumbsUpIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Badge } from '@/components/ui';
-import { cn } from '@/lib/utils';
 
 interface DiscontinuedProps {
   discontinued?: boolean;
@@ -15,7 +14,7 @@ const Discontinued: React.FC<DiscontinuedProps> = ({ discontinued = true }) => {
   const Icon = discontinued ? BanIcon : ThumbsUpIcon;
   return (
     <Badge
-      className={cn('rounded-md', discontinued ? 'u-hue-red' : 'u-hue-green')}
+      className={discontinued ? 'u-hue-red' : 'u-hue-green'}
       title={description}
       onClick={() => toast.info(description)}
     >
