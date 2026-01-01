@@ -1,6 +1,6 @@
 import type { IOrderDetail } from '@/models';
-import { castToCurrency } from '@/types';
+import { asCurrencyType } from '@/types';
 
 export function getTotalCost(item: IOrderDetail) {
-  return castToCurrency(item.unitPrice * item.quantity * (1 - item.discount));
+  return asCurrencyType(item.unitPrice * item.quantity * (1 - item.discount));
 }

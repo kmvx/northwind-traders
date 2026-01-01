@@ -2,10 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { type IEmployee } from './models';
 import {
-  castToCountry,
-  castToCurrency,
-  castToDateString,
-  castToPhone,
+  asCountryType,
+  asCurrencyType,
+  asDateStringType,
+  asPhoneType,
 } from './types';
 import {
   buildTitle,
@@ -31,9 +31,9 @@ describe('joinFields', () => {
 
 describe('formatCurrency', () => {
   it.each([
-    [castToCurrency(-12_345_678.955), '-$12,345,678.96'],
-    [castToCurrency(0.005), '$0.01'],
-    [castToCurrency(0.004), '$0.00'],
+    [asCurrencyType(-12_345_678.955), '-$12,345,678.96'],
+    [asCurrencyType(0.005), '$0.01'],
+    [asCurrencyType(0.004), '$0.00'],
     [null, 'N/A'],
   ])('%j -> %s', (input, expected) => {
     expect(formatCurrency(input)).toBe(expected);
@@ -108,11 +108,11 @@ describe('getEmployeeNameByData', () => {
         titleOfCourtesy: 'Mr.',
         lastName: 'Doe',
         firstName: 'John',
-        birthDate: castToDateString('1990-05-15'),
-        hireDate: castToDateString('2020-05-15'),
+        birthDate: asDateStringType('1990-05-15'),
+        hireDate: asDateStringType('2020-05-15'),
         employeeId: 1,
-        homePhone: castToPhone('(123) 456-7890'),
-        extension: castToPhone('1234'),
+        homePhone: asPhoneType('(123) 456-7890'),
+        extension: asPhoneType('1234'),
         notes:
           'John is a dedicated software engineer with 5 years of experience.',
         reportsTo: 2,
@@ -120,7 +120,7 @@ describe('getEmployeeNameByData', () => {
         photoPath: '/images/employees/john_doe.jpg',
         address: '123 Main St',
         city: 'Springfield',
-        country: castToCountry('USA'),
+        country: asCountryType('USA'),
         postalCode: '62701',
         region: 'IL',
       } as IEmployee,

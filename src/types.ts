@@ -11,7 +11,7 @@ export type Branded<T, Brand> = T & {
 declare const currencySymbol: unique symbol;
 export type CurrencyType = Branded<number, typeof currencySymbol>;
 
-export function castToCurrency(value: number): CurrencyType {
+export function asCurrencyType(value: number): CurrencyType {
   return value as CurrencyType;
 }
 
@@ -19,7 +19,7 @@ export function castToCurrency(value: number): CurrencyType {
 declare const datastringSymbol: unique symbol;
 export type DateStringType = Branded<string, typeof datastringSymbol>;
 
-export function castToDateString(value: string): DateStringType {
+export function asDateStringType(value: string): DateStringType {
   return value as DateStringType;
 }
 
@@ -27,7 +27,7 @@ export function castToDateString(value: string): DateStringType {
 declare const phoneSymbol: unique symbol;
 export type PhoneType = Branded<string, typeof phoneSymbol>;
 
-export function castToPhone(value: string): PhoneType {
+export function asPhoneType(value: string): PhoneType {
   return value as PhoneType;
 }
 
@@ -35,6 +35,6 @@ export function castToPhone(value: string): PhoneType {
 declare const countrySymbol: unique symbol;
 export type CountryType = Branded<string, typeof countrySymbol>;
 
-export function castToCountry(value: string): CountryType {
+export function asCountryType(value: string): CountryType {
   return value as CountryType;
 }

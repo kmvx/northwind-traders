@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { castToDateString } from '../types';
+import { asDateStringType } from '../types';
 import { formatDateFromString, getRelativeTimeString } from './date';
 
 describe('formatDateFromString', () => {
@@ -10,13 +10,13 @@ describe('formatDateFromString', () => {
 
   it('returns formatted date for valid string', () => {
     const result = formatDateFromString(
-      castToDateString('2020-01-15T00:00:00Z'),
+      asDateStringType('2020-01-15T00:00:00Z'),
     );
     expect(result).toMatch(/Jan 15, 2020/);
   });
 
   it('returns stringified Date for invalid date', () => {
-    const result = formatDateFromString(castToDateString('invalid-date'));
+    const result = formatDateFromString(asDateStringType('invalid-date'));
     expect(result).toContain('Invalid Date');
   });
 });

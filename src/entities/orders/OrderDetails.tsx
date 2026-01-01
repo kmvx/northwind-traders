@@ -8,7 +8,7 @@ import {
   useQueryProductsByOrderId,
   useQuerySuppliers,
 } from '@/net';
-import { castToCurrency } from '@/types';
+import { asCurrencyType } from '@/types';
 import {
   ErrorMessage,
   PanelCentred,
@@ -57,7 +57,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ orderId, productId }) => {
     if (!data) return null;
     if (data.length === 0) return <div>Order details not found</div>;
 
-    const totalMoney = castToCurrency(
+    const totalMoney = asCurrencyType(
       data.reduce((acc, item) => acc + getTotalCost(item), 0),
     );
     const extraNodesAfter = (

@@ -1,10 +1,10 @@
 import { customType } from 'drizzle-orm/pg-core';
 
 import {
-  castToCountry,
-  castToCurrency,
-  castToDateString,
-  castToPhone,
+  asCountryType,
+  asCurrencyType,
+  asDateStringType,
+  asPhoneType,
   type CountryType,
   type CurrencyType,
   type DateStringType,
@@ -16,7 +16,7 @@ export const brandedCurrencyDBColumn = customType<{
   driverData: number;
 }>({
   dataType: () => 'real',
-  fromDriver: (value: number): CurrencyType => castToCurrency(value),
+  fromDriver: (value: number): CurrencyType => asCurrencyType(value),
   toDriver: (value: CurrencyType): number => value,
 });
 
@@ -25,7 +25,7 @@ export const brandedDateStringDBColumn = customType<{
   driverData: string;
 }>({
   dataType: () => 'varchar',
-  fromDriver: (value: string): DateStringType => castToDateString(value),
+  fromDriver: (value: string): DateStringType => asDateStringType(value),
   toDriver: (value: DateStringType): string => value,
 });
 
@@ -34,7 +34,7 @@ export const brandedPhoneDBColumn = customType<{
   driverData: string;
 }>({
   dataType: () => 'varchar(24)',
-  fromDriver: (value: string): PhoneType => castToPhone(value),
+  fromDriver: (value: string): PhoneType => asPhoneType(value),
   toDriver: (value: PhoneType): string => value,
 });
 
@@ -43,7 +43,7 @@ export const brandedCountryDBColumn = customType<{
   driverData: string;
 }>({
   dataType: () => 'varchar(15)',
-  fromDriver: (value: string): CountryType => castToCountry(value),
+  fromDriver: (value: string): CountryType => asCountryType(value),
   toDriver: (value: CountryType): string => value,
 });
 
