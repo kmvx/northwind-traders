@@ -9,12 +9,13 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { useQueryCustomerFromAll } from '@/net';
+import type { CustomerIdType } from '@/types';
 import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 
 import { ContactAddress, ContactPerson, ContactPhone, Flag } from '../shared';
 
 interface CustomerHoverCardProps {
-  customerId: string | null;
+  customerId: CustomerIdType | null;
   children?: React.ReactNode;
 }
 

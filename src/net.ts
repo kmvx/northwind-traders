@@ -45,6 +45,7 @@ import {
   type ISuppliers,
   type ITerritories,
 } from './models';
+import type { CustomerIdType } from './types';
 import { dateFromString } from './utils';
 
 export const useQueryStats = ({
@@ -77,7 +78,7 @@ export const useQueryCustomer = ({
   customerId,
   enabled = true,
 }: {
-  customerId: string | null;
+  customerId: CustomerIdType | null;
   enabled?: boolean;
 }) => {
   return useQuery<ICustomer | undefined>({
@@ -90,13 +91,13 @@ export const useQueryCustomer = ({
 export const useQueryCustomerFromAll = ({
   customerId,
 }: {
-  customerId: string | null;
+  customerId: CustomerIdType | null;
 }) => {
   const result = useQueryCustomers();
   const { data } = result;
 
   const mapItems = useMemo(() => {
-    const map = new Map<string, ICustomer>();
+    const map = new Map<CustomerIdType, ICustomer>();
     data?.forEach((item) => map.set(item.customerId, item));
     return map;
   }, [data]);
@@ -202,7 +203,7 @@ export const useQueryOrders = ({
   enabled = true,
   initialData,
 }: {
-  customerId?: string | undefined;
+  customerId?: CustomerIdType | undefined;
   employeeId?: number | undefined;
   shipperId?: number | undefined;
   enabled?: boolean;

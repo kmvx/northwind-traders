@@ -11,6 +11,7 @@ import { relations } from 'drizzle-orm/relations';
 import {
   brandedCountryDBColumn,
   brandedCurrencyDBColumn,
+  brandedCustomerIdDBColumn,
   brandedDateStringDBColumn,
   brandedPhoneDBColumn,
   integerBooleanDBColumn,
@@ -24,7 +25,9 @@ export const usStates = pgTable('us_states', {
 });
 
 export const customers = pgTable('customers', {
-  customerId: varchar('customer_id', { length: 5 }).primaryKey().notNull(),
+  customerId: brandedCustomerIdDBColumn('customer_id', { length: 5 })
+    .primaryKey()
+    .notNull(),
   companyName: varchar('company_name', { length: 40 }).notNull(),
   contactName: varchar('contact_name', { length: 30 }),
   contactTitle: varchar('contact_title', { length: 30 }),
@@ -41,7 +44,7 @@ export const orders = pgTable(
   'orders',
   {
     orderId: smallint('order_id').primaryKey().notNull(),
-    customerId: varchar('customer_id', { length: 5 }),
+    customerId: brandedCustomerIdDBColumn('customer_id', { length: 5 }),
     employeeId: smallint('employee_id'),
     orderDate: brandedDateStringDBColumn('order_date'),
     requiredDate: brandedDateStringDBColumn('required_date'),
@@ -220,7 +223,9 @@ export const employeeTerritories = pgTable(
 export const customerCustomerDemo = pgTable(
   'customer_customer_demo',
   {
-    customerId: varchar('customer_id', { length: 5 }).notNull(),
+    customerId: brandedCustomerIdDBColumn('customer_id', {
+      length: 5,
+    }).notNull(),
     customerTypeId: varchar('customer_type_id', { length: 5 }).notNull(),
   },
   (table) => [

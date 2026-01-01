@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { useQueryCustomer } from '@/net';
+import type { CustomerIdType } from '@/types';
 import {
   ErrorMessage,
   PanelCentred,
@@ -16,7 +17,7 @@ import { Orders } from '../orders';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
 
 interface CustomerProps {
-  customerId: string;
+  customerId: CustomerIdType;
 }
 
 const Customer: React.FC<CustomerProps> = ({ customerId }) => {

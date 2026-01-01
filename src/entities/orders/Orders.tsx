@@ -8,6 +8,7 @@ import { OrdersChart, WorldMapChart } from '@/features/charts';
 import { useFiltersToggle, usePageSize, useQueryStateFixed } from '@/hooks';
 import { type IOrders } from '@/models';
 import { useQueryEmployees, useQueryOrders } from '@/net';
+import type { CustomerIdType } from '@/types';
 import {
   DebouncedInput,
   ErrorMessage,
@@ -32,7 +33,7 @@ import { FilterYear, type IOrderFormatted, OrdersCards, OrdersTable } from '.';
 
 interface OrdersProps {
   initialData?: IOrders;
-  customerId?: string;
+  customerId?: CustomerIdType;
   employeeId?: number;
 }
 

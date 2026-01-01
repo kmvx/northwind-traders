@@ -38,3 +38,11 @@ export type CountryType = Branded<string, typeof countrySymbol>;
 export function asCountryType(value: string): CountryType {
   return value as CountryType;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+declare const customerIdSymbol: unique symbol;
+export type CustomerIdType = Branded<string, typeof customerIdSymbol>;
+
+export function asCustomerIdType(value: string): CustomerIdType {
+  return value as CustomerIdType;
+}

@@ -1,6 +1,7 @@
 import type {
   CountryType,
   CurrencyType,
+  CustomerIdType,
   DateStringType,
   PhoneType,
 } from './types';
@@ -21,7 +22,7 @@ export interface ICategory {
 export type ICategories = ICategory[];
 
 export interface ICustomer extends IAddress {
-  customerId: string;
+  customerId: CustomerIdType;
   companyName: string;
   contactName: string | null;
   contactTitle: string | null;
@@ -49,7 +50,7 @@ export type IEmployees = IEmployee[];
 
 export interface IOrder {
   orderId: number;
-  customerId: string | null;
+  customerId: CustomerIdType | null;
   employeeId: number | null;
   freight: CurrencyType | null;
   orderDate: DateStringType | null;

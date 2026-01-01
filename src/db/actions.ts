@@ -21,6 +21,7 @@ import type {
   ISuppliers,
   ITerritories,
 } from '@/models';
+import type { CustomerIdType } from '@/types';
 
 import db from '.';
 import {
@@ -84,7 +85,7 @@ export const getCustomers = async (): Promise<ICustomers> => {
 export const getCustomer = async ({
   customerId,
 }: {
-  customerId: string | null;
+  customerId: CustomerIdType | null;
 }): Promise<ICustomer | undefined> => {
   if (!customerId) return;
 
@@ -238,7 +239,7 @@ export const getOrders = async ({
   employeeId,
   shipperId,
 }: {
-  customerId?: string | undefined;
+  customerId?: CustomerIdType | undefined;
   employeeId?: number | undefined;
   shipperId?: number | undefined;
 } = {}): Promise<IOrders> => {

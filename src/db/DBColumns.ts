@@ -3,10 +3,12 @@ import { customType } from 'drizzle-orm/pg-core';
 import {
   asCountryType,
   asCurrencyType,
+  asCustomerIdType,
   asDateStringType,
   asPhoneType,
   type CountryType,
   type CurrencyType,
+  type CustomerIdType,
   type DateStringType,
   type PhoneType,
 } from '@/types';
@@ -45,6 +47,15 @@ export const brandedCountryDBColumn = customType<{
   dataType: () => 'varchar(15)',
   fromDriver: (value: string): CountryType => asCountryType(value),
   toDriver: (value: CountryType): string => value,
+});
+
+export const brandedCustomerIdDBColumn = customType<{
+  data: CustomerIdType;
+  driverData: string;
+}>({
+  dataType: () => 'varchar(5)',
+  fromDriver: (value: string): CustomerIdType => asCustomerIdType(value),
+  toDriver: (value: CustomerIdType): string => value,
 });
 
 export const integerBooleanDBColumn = customType<{
