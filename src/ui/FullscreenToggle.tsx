@@ -6,10 +6,14 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui';
 
 interface FullscreenToggleProps {
+  variant?: React.ComponentProps<typeof Button>['variant'];
   className?: string;
 }
 
-const FullscreenToggle: React.FC<FullscreenToggleProps> = ({ className }) => {
+const FullscreenToggle: React.FC<FullscreenToggleProps> = ({
+  variant,
+  className,
+}) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
@@ -35,7 +39,7 @@ const FullscreenToggle: React.FC<FullscreenToggleProps> = ({ className }) => {
 
   return (
     <Button
-      variant="ghost"
+      variant={variant}
       size="icon"
       className={className}
       onClick={toggleFullscreen}

@@ -3,9 +3,13 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui';
 
-const LoginButton: React.FC = () => {
+interface LoginButtonProps {
+  onClick?: (() => void) | undefined;
+}
+
+const LoginButton: React.FC<LoginButtonProps> = ({ onClick }) => {
   return (
-    <Button asChild>
+    <Button asChild onClick={onClick}>
       <Link href="/auth/login">
         <LogInIcon />
         Login

@@ -108,7 +108,7 @@ const AppSidebar: React.FC = () => {
               <div className="flex gap-2">
                 <FontSizeControls />
                 <NavigateButton isMoveBackward={false} />
-                <FullscreenToggle />
+                <FullscreenToggle variant="ghost" />
               </div>
             </div>
           </SidebarGroupContent>

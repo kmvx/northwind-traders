@@ -18,7 +18,7 @@ const UserPreview: React.FC = () => {
       if (isPending) return <LocalSceleton />;
       return (
         <div className="flex justify-center">
-          <LoginButton />
+          <LoginButton onClick={closeSidebar} />
         </div>
       );
     }

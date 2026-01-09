@@ -15,7 +15,10 @@ const TopbarControls: React.FC = () => {
       }}
     >
       <SidebarTrigger variant="outline" className="size-9 bg-transparent" />
-      <FullscreenToggle className="bg-transparent sm:hidden" />
+      <FullscreenToggle
+        variant="outline"
+        className="bg-transparent sm:hidden"
+      />
       <BasicLink
         href="/dashboard"
         variant="outline"
