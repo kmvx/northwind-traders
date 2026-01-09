@@ -35,7 +35,7 @@ const FullscreenToggle: React.FC<FullscreenToggleProps> = ({ className }) => {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       className={className}
       onClick={toggleFullscreen}

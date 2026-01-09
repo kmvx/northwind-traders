@@ -14,7 +14,7 @@ const ThemeToggle: React.FC = () => {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       onClick={toggleTheme}
       title="Toggle Theme"

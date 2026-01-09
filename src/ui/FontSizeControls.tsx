@@ -34,7 +34,7 @@ export default function FontSizeControls() {
   return (
     <div className="flex items-center gap-2">
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
         onClick={() => changeFontSize(fontSize - config.STEP)}
         disabled={fontSize <= config.MIN}
@@ -43,7 +43,7 @@ export default function FontSizeControls() {
         <AArrowDownIcon className="size-[1.2rem]" />
       </Button>
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
         onClick={() => changeFontSize(fontSize + config.STEP)}
         disabled={fontSize >= config.MAX}

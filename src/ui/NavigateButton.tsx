@@ -14,7 +14,7 @@ const NavigateButton: React.FC<NavigateButtonProps> = ({ isMoveBackward }) => {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       onClick={() => (isMoveBackward ? router.back() : router.forward())}
       title={isMoveBackward ? 'Go to the previous page' : 'Go to the next page'}

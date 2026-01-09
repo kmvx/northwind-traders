@@ -23,7 +23,7 @@ const ThemeCustomToggle: React.FC = () => {
   return (
     <Button
       onClick={handleClick}
-      variant="outline"
+      variant="ghost"
       size="icon"
       title="Toggle to Custom Theme"
     >

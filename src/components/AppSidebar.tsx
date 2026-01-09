@@ -102,7 +102,7 @@ const AppSidebar: React.FC = () => {
                 <ThemeToggle />
                 <ThemeCustomToggle />
                 <NavigateButton isMoveBackward />
-                <SidebarTrigger variant="outline" className="size-9" />
+                <SidebarTrigger variant="ghost" className="size-9" />
                 <QueryFetchingIndicator />
               </div>
               <div className="flex gap-2">
