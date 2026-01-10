@@ -14,14 +14,11 @@ const TopbarControls: React.FC = () => {
         marginLeft: 'env(safe-area-inset-left)',
       }}
     >
-      <SidebarTrigger variant="outline" className="size-9 bg-transparent" />
-      <FullscreenToggle
-        variant="outline"
-        className="bg-transparent sm:hidden"
-      />
+      <SidebarTrigger variant="ghost" className="size-9 bg-transparent" />
+      <FullscreenToggle variant="ghost" className="bg-transparent sm:hidden" />
       <BasicLink
         href="/dashboard"
-        variant="outline"
+        variant="ghost"
         size="icon"
         title="Dashboard"
         className="sm:hidden"
