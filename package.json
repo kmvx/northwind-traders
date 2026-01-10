@@ -27,11 +27,11 @@
     "pw:chrome": "playwright test --project=chromium",
     "pw:ui": "playwright test --ui --headed",
     "pw:debug": "playwright test --project=chromium --debug",
-    "deploy:prod": "vercel build --prod && vercel deploy --prebuilt --prod && echo OK",
-    "deploy": "vercel build && vercel deploy --prebuilt && echo OK",
     "auth:generate": "npx @better-auth/cli generate --config ./src/features/auth/auth.ts --output ./src/db/auth-schema.ts",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "deploy:prod": "vercel build --prod && vercel deploy --prebuilt --prod && echo OK",
+    "deploy": "vercel build && vercel deploy --prebuilt && echo OK"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",
