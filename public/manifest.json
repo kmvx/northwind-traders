@@ -1,0 +1,37 @@
+{
+  "name": "Northwind Traders",
+  "short_name": "Northwind",
+  "description": "Northwind Traders - demo e-commerce & business management application",
+  "id": "/",
+  "start_url": "/",
+  "display": "fullscreen",
+  "display_override": ["window-controls-overlay"],
+  "background_color": "#400080",
+  "theme_color": "#000020",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "./favicon.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "./favicon_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./screenshot.png",
+      "sizes": "425x857",
+      "type": "image/png"
+    },
+    {
+      "form_factor": "wide",
+      "src": "./screenshot_wide.png",
+      "sizes": "1440x1142",
+      "type": "image/png"
+    }
+  ]
+}
