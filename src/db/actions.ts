@@ -41,6 +41,10 @@ function checkNotFoundAndReturn<T extends object>(
   return item;
 }
 
+export const getDBHealthStatus = async (): Promise<boolean> => {
+  return (await db.$count(employees)) > 0;
+};
+
 export const getDBStats = async () => {
   return {
     customers: await db.$count(customers),
