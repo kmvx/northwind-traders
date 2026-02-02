@@ -121,6 +121,12 @@
   }
 }
 
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
+}
+
 @theme {
   --default-transition-duration: 500ms;
 }
