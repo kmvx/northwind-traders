@@ -1,3 +1,4 @@
+export { default as BasicDialog } from './BasicDialog';
 export { default as BasicLink } from './BasicLink';
 export { default as BasicTooltip } from './BasicTooltip';
 export { default as ButtonWithTooltip } from './ButtonWithTooltip';

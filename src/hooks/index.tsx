@@ -1,6 +1,8 @@
 export { useIsMobile } from './use-mobile';
 export { default as useCloseSidebar } from './useCloseSidebar';
+export { default as useConfirmDialog } from './useConfirmDialog';
 export { default as useDebounce } from './useDebounce';
+export { default as useDialog } from './useDialog';
 export { default as useDownload } from './useDownload';
 export { default as useFiltersToggle } from './useFiltersToggle';
 export { default as useNavigate } from './useNavigate';
