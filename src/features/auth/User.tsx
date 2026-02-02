@@ -38,7 +38,11 @@ const User: React.FC<UserProps> = ({ userId }) => {
     const user = dataUser?.data;
     if (!user) return null;
     return (
-      <UserDetails user={user} currentSessionId={session?.session.id ?? ''} />
+      <UserDetails
+        user={user}
+        currentSessionId={session?.session.id ?? ''}
+        isCurrentUser={false}
+      />
     );
   };
 

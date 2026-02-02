@@ -3,6 +3,7 @@ export { authClient } from './auth-client';
 export { default as IPAddress } from './IPAddress';
 export { default as Login } from './Login';
 export { default as LoginButton } from './LoginButton';
+export { default as LogoutButton } from './LogoutButton';
 export { default as User } from './User';
 export { default as UserAccounts } from './UserAccounts';
 export { default as UserAvatar } from './UserAvatar';

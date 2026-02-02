@@ -1,20 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
-
 import { ErrorMessage, WaitSpinner } from '@/ui';
 
 import { authClient, LoginButton, UserDetails } from '.';
 
 const UserCurrent: React.FC = () => {
-  // Logout
-  const router = useRouter();
-  const onLogout = useCallback(async () => {
-    await authClient.signOut();
-    router.push('/');
-  }, [router]);
-
   // Session info
   const { data, isPending, error, refetch } = authClient.useSession();
 
@@ -33,7 +23,7 @@ const UserCurrent: React.FC = () => {
       <UserDetails
         user={user}
         currentSessionId={data.session.id}
-        onLogout={onLogout}
+        isCurrentUser
       />
     );
   };

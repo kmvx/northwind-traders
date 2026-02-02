@@ -1,15 +1,9 @@
 'use client';
 
 import type { UserWithRole } from 'better-auth/client/plugins';
-import {
-  CalendarIcon,
-  LogOutIcon,
-  MailIcon,
-  ShieldUserIcon,
-  UserIcon,
-} from 'lucide-react';
+import { CalendarIcon, MailIcon, ShieldUserIcon, UserIcon } from 'lucide-react';
 
-import { Button, Separator } from '@/components/ui';
+import { Separator } from '@/components/ui';
 import type { Nullable } from '@/types';
 import {
   BasicLink,
@@ -22,7 +16,13 @@ import {
 import { setDocumentTitle } from '@/utils';
 
 import { isAdminUser } from '../admin';
-import { IPAddress, UserAccounts, UserAvatar, UserSessions } from '.';
+import {
+  IPAddress,
+  LogoutButton,
+  UserAccounts,
+  UserAvatar,
+  UserSessions,
+} from '.';
 
 type UserWithRoleFixed = Pick<
   Nullable<UserWithRole, 'role' | 'banned'>,
@@ -32,12 +32,12 @@ type UserWithRoleFixed = Pick<
 interface UserDetailsProps {
   user: UserWithRoleFixed;
   currentSessionId: string;
-  onLogout?: (() => void) | undefined;
+  isCurrentUser: boolean;
 }
 
 const UserDetails: React.FC<UserDetailsProps> = ({
   user,
-  onLogout,
+  isCurrentUser,
   currentSessionId,
 }) => {
   setDocumentTitle(user.name);
@@ -73,21 +73,14 @@ const UserDetails: React.FC<UserDetailsProps> = ({
         >
           {user.role}
         </ResponsiveItem>
-        {onLogout && (
+        {isCurrentUser && (
           <>
             <IPAddress />
             <div className="sm:col-span-2">
               <UserAgent userAgent={navigator.userAgent} />
             </div>
             <div className="flex gap-2">
-              <Button
-                onClick={onLogout}
-                title="End your current user session"
-                variant="outline"
-              >
-                <LogOutIcon />
-                Logout
-              </Button>
+              <LogoutButton />
               {isAdminUser(user) && (
                 <BasicLink
                   href="/auth/admin"
