@@ -154,7 +154,7 @@ export const fetchInfoByIPAddress = async (
   if (ipAddress === null) return null;
 
   const response = await fetch(
-    `https://ipapi.co/${ipAddress === '127.0.0.1' || ipAddress === undefined ? '' : ipAddress}/json/`,
+    `https://ipapi.co/${ipAddress === '127.0.0.1' || ipAddress === undefined ? '' : ipAddress + '/'}json/`,
   );
 
   if (!response.ok) {
