@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 
 import { AppSidebar, Providers } from '@/components';
 import { SidebarProvider } from '@/components/ui/sidebar';
+import { getDBStats } from '@/db/actions';
 import { TopbarControls } from '@/ui';
 import { buildTitle } from '@/utils';
 
@@ -33,7 +34,7 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -45,7 +46,7 @@ export default function RootLayout({
       >
         <Providers>
           <SidebarProvider>
-            <AppSidebar />
+            <AppSidebar initialData={await getDBStats()} />
             <main className="flex w-full flex-col sm:m-2">
               <TopbarControls />
               <div className="grow">{children}</div>

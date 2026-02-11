@@ -19,6 +19,7 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { navigationItems } from '@/constants';
+import type { DBStatsType } from '@/db/actions';
 import { UserPreview } from '@/features/auth';
 import { useCloseSidebar } from '@/hooks';
 import { useQueryStats } from '@/net';
@@ -34,13 +35,17 @@ import {
 
 import { Badge, Separator } from './ui';
 
-const AppSidebar: React.FC = () => {
+interface AppSidebarProps {
+  initialData?: DBStatsType | undefined;
+}
+
+const AppSidebar: React.FC<AppSidebarProps> = ({ initialData }) => {
   const pathname = usePathname();
   const isActive = (url: string): boolean =>
     pathname === url || (pathname.startsWith(url) && url !== '/');
 
   const closeSidebar = useCloseSidebar();
-  const { data: dataStats } = useQueryStats();
+  const { data: dataStats } = useQueryStats({ initialData });
   return (
     <Sidebar
       style={{

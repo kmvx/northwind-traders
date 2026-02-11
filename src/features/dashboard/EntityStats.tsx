@@ -31,31 +31,31 @@ const EntityStats: React.FC<EntityStatsProps> = ({ initialData }) => {
       {
         url: '/customers',
         title: 'customers',
-        value: data.customers,
+        value: data.customersCount,
         iconClassName: 'u-hue-red',
       },
       {
         url: '/employees',
         title: 'employees',
-        value: data.employees,
+        value: data.employeesCount,
         iconClassName: 'u-hue-blue',
       },
       {
         url: '/orders',
         title: 'orders',
-        value: data.orders,
+        value: data.ordersCount,
         iconClassName: 'u-hue-yellow',
       },
       {
         url: '/products',
         title: 'active products',
-        value: data.productsActive,
+        value: data.productsActiveCount,
         iconClassName: 'u-hue-violet',
       },
       {
         url: '/suppliers',
         title: 'suppliers',
-        value: data.suppliers,
+        value: data.suppliersCount,
         iconClassName: 'u-hue-orange',
       },
     ] as const satisfies {

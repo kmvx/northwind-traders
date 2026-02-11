@@ -46,14 +46,32 @@ export const getDBHealthStatus = async (): Promise<boolean> => {
 };
 
 export const getDBStats = async () => {
-  return {
-    customers: await db.$count(customers),
-    employees: await db.$count(employees),
-    products: await db.$count(products),
-    productsActive: await db.$count(products, eq(products.discontinued, false)),
-    orders: await db.$count(orders),
-    suppliers: await db.$count(suppliers),
+  const [
+    customersCount,
+    employeesCount,
+    productsCount,
+    productsActiveCount,
+    ordersCount,
+    suppliersCount,
+  ] = await Promise.all([
+    db.$count(customers),
+    db.$count(employees),
+    db.$count(products),
+    db.$count(products, eq(products.discontinued, false)),
+    db.$count(orders),
+    db.$count(suppliers),
+  ]);
+
+  const result = {
+    customersCount,
+    employeesCount,
+    productsCount,
+    productsActiveCount,
+    ordersCount,
+    suppliersCount,
   };
+
+  return result;
 };
 
 export type DBStatsType = Awaited<ReturnType<typeof getDBStats>>;
