@@ -1,7 +1,7 @@
 import { type Metadata } from 'next';
 
-import { Dashboard } from '@/components';
 import { getDBStats } from '@/db/actions';
+import { Dashboard } from '@/features/dashboard';
 import { buildTitle } from '@/utils';
 
 export const metadata: Metadata = {

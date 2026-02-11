@@ -2,19 +2,18 @@
 
 import Link from 'next/link';
 
+import { Card, CardContent } from '@/components/ui';
 import type { DBStatsType } from '@/db/actions';
 import { cn } from '@/lib/utils';
 import { useQueryStats } from '@/net';
 import { ErrorMessage, PanelCentred, Typography, WaitSpinner } from '@/ui';
 import { getNavigationIconByUrl } from '@/utils';
 
-import { Card, CardContent } from './ui';
-
-interface DashboardProps {
-  initialData?: DBStatsType;
+interface EntityStatsProps {
+  initialData?: DBStatsType | undefined;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ initialData }) => {
+const EntityStats: React.FC<EntityStatsProps> = ({ initialData }) => {
   const { data, isLoading, isFetching, error, refetch } = useQueryStats({
     initialData,
   });
@@ -102,4 +101,4 @@ const Dashboard: React.FC<DashboardProps> = ({ initialData }) => {
   );
 };
 
-export default Dashboard;
+export default EntityStats;
