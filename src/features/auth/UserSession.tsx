@@ -17,13 +17,21 @@ const UserSession: React.FC<UserSessionProps> = ({
   session,
   currentSessionId,
 }) => {
+  // eslint-disable-next-line react-hooks/purity
+  const now = Date.now();
+
   return (
     <Card className="rounded-md shadow-none">
       <CardContent>
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between gap-2">
             <UserAgent userAgent={session.userAgent} />
-            {session.id === currentSessionId && <Badge>Current</Badge>}
+            <div className="flex gap-2">
+              {session.id === currentSessionId && <Badge>Current</Badge>}
+              {now > session.expiresAt.getTime() && (
+                <Badge variant="outline">Expired</Badge>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 items-center gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
