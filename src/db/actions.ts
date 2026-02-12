@@ -1,6 +1,6 @@
 'use server';
 
-import { and, eq } from 'drizzle-orm';
+import { and, count, desc, eq, sql } from 'drizzle-orm';
 import { uniqBy } from 'es-toolkit/array';
 
 import type {
@@ -21,7 +21,7 @@ import type {
   ISuppliers,
   ITerritories,
 } from '@/models';
-import type { CustomerIdType } from '@/types';
+import type { CurrencyType, CustomerIdType } from '@/types';
 
 import db from '.';
 import {
@@ -62,7 +62,7 @@ export const getDBStats = async () => {
     db.$count(suppliers),
   ]);
 
-  const result = {
+  return {
     customersCount,
     employeesCount,
     productsCount,
@@ -70,11 +70,27 @@ export const getDBStats = async () => {
     ordersCount,
     suppliersCount,
   };
-
-  return result;
 };
 
 export type DBStatsType = Awaited<ReturnType<typeof getDBStats>>;
+
+export const getTopEmployeesBySales = async (limit = 3) => {
+  return await db
+    .select({
+      employeeId: employees.employeeId,
+      titleOfCourtesy: employees.titleOfCourtesy,
+      firstName: employees.firstName,
+      lastName: employees.lastName,
+      totalSales: sql<CurrencyType>`SUM(${orderDetails.unitPrice} * ${orderDetails.quantity} * (1 - ${orderDetails.discount}))`,
+      totalOrders: count(orders.orderId),
+    })
+    .from(employees)
+    .leftJoin(orders, eq(employees.employeeId, orders.employeeId))
+    .leftJoin(orderDetails, eq(orders.orderId, orderDetails.orderId))
+    .groupBy(employees.employeeId)
+    .orderBy((t) => desc(t.totalSales))
+    .limit(limit);
+};
 
 const ADDRESS_COLUMNS = {
   address: true,

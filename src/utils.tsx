@@ -55,7 +55,9 @@ export const setDocumentTitle = (
   document.title = buildTitle(...args);
 };
 
-export function getEmployeeNameByData(data: IEmployee) {
+export function getEmployeeNameByData(
+  data: Pick<IEmployee, 'titleOfCourtesy' | 'firstName' | 'lastName'>,
+) {
   return data.titleOfCourtesy + ' ' + data.firstName + ' ' + data.lastName;
 }
 

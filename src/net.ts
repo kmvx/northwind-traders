@@ -26,6 +26,7 @@ import {
   getShippers,
   getSupplier,
   getSuppliers,
+  getTopEmployeesBySales,
 } from './db/actions';
 import {
   type ICategories,
@@ -54,9 +55,16 @@ export const useQueryStats = ({
   initialData?: DBStatsType | undefined;
 } = {}) => {
   return useQuery({
-    queryKey: ['dashboard'],
+    queryKey: ['getDBStats'],
     queryFn: async () => await getDBStats(),
     ...(initialData ? { initialData } : {}),
+  });
+};
+
+export const useQueryTopEmployeesBySales = () => {
+  return useQuery({
+    queryKey: ['getTopEmployeesBySales'],
+    queryFn: async () => await getTopEmployeesBySales(),
   });
 };
 

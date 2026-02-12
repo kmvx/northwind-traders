@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui';
 import type { DBStatsType } from '@/db/actions';
 import { cn } from '@/lib/utils';
 import { useQueryStats } from '@/net';
-import { ErrorMessage, PanelCentred, Typography, WaitSpinner } from '@/ui';
+import { ErrorMessage, WaitSpinner } from '@/ui';
 import { getNavigationIconByUrl } from '@/utils';
 
 interface EntityStatsProps {
@@ -93,11 +93,10 @@ const EntityStats: React.FC<EntityStatsProps> = ({ initialData }) => {
   };
 
   return (
-    <PanelCentred className="flex flex-col gap-4">
-      <Typography variant="header1">Dashboard</Typography>
+    <div className="flex flex-col gap-4">
       <ErrorMessage error={error} retry={refetch} isFetching={isFetching} />
       {getContent()}
-    </PanelCentred>
+    </div>
   );
 };
 
