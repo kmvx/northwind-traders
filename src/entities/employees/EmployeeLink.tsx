@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import type { IEmployee } from '@/models';
 import { useQueryEmployee } from '@/net';
 import { ErrorMessage, WaitSpinner } from '@/ui';
@@ -29,7 +30,7 @@ const EmployeeLink: React.FC<EmployeeLinkProps> = ({
   if (!data) return <div>No data</div>;
 
   return (
-    <span className={className}>
+    <span className={cn('inline-flex items-center gap-2', className)}>
       <span>Reports to </span>
       <EmployeeHoverCard employee={data} employeeId={employeeId} />
     </span>
