@@ -1,7 +1,6 @@
 'use client';
 
 import { CakeIcon, FlagIcon, HandshakeIcon } from 'lucide-react';
-import Image from 'next/image';
 import React from 'react';
 
 import { Separator } from '@/components/ui';
@@ -22,7 +21,7 @@ import {
 
 import { Orders } from '../orders';
 import { ContactAddress, ContactPhone } from '../shared';
-import { EmployeeLink, Employees, Territories } from '.';
+import { EmployeeLink, EmployeePhoto, Employees, Territories } from '.';
 
 interface EmployeeProps {
   employeeId: number;
@@ -109,12 +108,9 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
         <Separator />
 
         <div>
-          <Image
-            src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
-            width={103}
-            height={118}
-            className="float-left mr-2 rounded-md border"
-            alt=""
+          <EmployeePhoto
+            firstName={data.firstName}
+            className="float-left mr-2"
           />
           <div>{data.notes}</div>
         </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import { CakeIcon, HandshakeIcon } from 'lucide-react';
-import Image from 'next/image';
 import { memo } from 'react';
 
 import { Spinner } from '@/components/ui';
@@ -16,7 +15,7 @@ import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 import { formatDateFromString, getEmployeeNameByData } from '@/utils';
 
 import { ContactAddress, ContactPhone, Flag } from '../shared';
-import Territories from './Territories';
+import { EmployeePhoto, Territories } from '.';
 
 interface EmployeeHoverCardProps {
   employee: IEmployee | undefined;
@@ -40,13 +39,7 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
       <div className="flex flex-col gap-2">
         <div>Employee</div>
         <div className="flex gap-4">
-          <Image
-            src={`/assets/img/database/${data.firstName.toLowerCase()}.jpg`}
-            width={103}
-            height={118}
-            className="h-[118px] w-[103px] rounded-md border object-cover"
-            alt=""
-          />
+          <EmployeePhoto firstName={data.firstName} />
 
           <div className="flex flex-col gap-2">
             <Typography.Header2>

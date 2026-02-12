@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
+import { EmployeePhoto } from '@/entities/employees';
 import { useQueryTopEmployeesBySales } from '@/net';
 import { ErrorMessage, WaitSpinner } from '@/ui';
 import { formatCurrency, getEmployeeNameByData } from '@/utils';
@@ -37,13 +37,9 @@ const TopEmployeesBySales: React.FC = () => {
                   href={`/employees/${employee.employeeId}`}
                   className="flex items-center gap-2 hover:underline"
                 >
-                  <Image
-                    src={`/assets/img/database/${employee.firstName.toLowerCase()}.jpg`}
-                    alt=""
-                    title="Employee photo"
-                    className="h-[40px] w-[40px] rounded-md object-cover"
-                    width="40"
-                    height="40"
+                  <EmployeePhoto
+                    firstName={employee.firstName}
+                    sizeRem={2.5}
                     priority={index === 0}
                   />
                   {getEmployeeNameByData(employee)}

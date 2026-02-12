@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
 
@@ -29,6 +28,7 @@ import {
 import { getEmployeeNameByData, isStringIncludes } from '@/utils';
 
 import { FilterCountry, Location, LocationSkeleton } from '../shared';
+import { EmployeePhoto } from '.';
 
 interface EmployeesProps {
   initialData?: IEmployees;
@@ -100,13 +100,9 @@ const Employees: React.FC<EmployeesProps> = ({ initialData, reportsTo }) => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex gap-2">
-                <Image
-                  src={`/assets/img/database/${item.firstName.toLowerCase()}.jpg`}
-                  alt=""
-                  title="Employee photo"
-                  className="h-[70px] w-[70px] rounded-md object-cover"
-                  width="70"
-                  height="70"
+                <EmployeePhoto
+                  firstName={item.firstName}
+                  sizeRem={5}
                   priority={index === 0}
                 />
                 <div className="flex flex-1 flex-col justify-between">
