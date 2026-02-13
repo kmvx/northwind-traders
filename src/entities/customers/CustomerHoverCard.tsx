@@ -9,18 +9,20 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { useQueryCustomerFromAll } from '@/net';
-import type { CustomerIdType } from '@/types';
+import type { CountryType, CustomerIdType } from '@/types';
 import { BasicLink, ErrorMessage, Typography, WaitSpinner } from '@/ui';
 
 import { ContactAddress, ContactPerson, ContactPhone, Flag } from '../shared';
 
 interface CustomerHoverCardProps {
   customerId: CustomerIdType | null;
+  country?: CountryType | undefined;
   children?: React.ReactNode;
 }
 
 const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
   customerId,
+  country = null,
   children,
 }) => {
   const { data, error, isLoading, refetch } = useQueryCustomerFromAll({
@@ -63,7 +65,7 @@ const CustomerHoverCard: React.FC<CustomerHoverCardProps> = ({
     <HoverCard>
       <HoverCardTrigger asChild>
         <span className="inline-flex items-center gap-2">
-          {data && <Flag country={data.country} />}
+          {(data || country) && <Flag country={data?.country || country} />}
           <BasicLink href={`/customers/${customerId}`}>
             {children ? children : customerId}
           </BasicLink>

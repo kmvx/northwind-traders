@@ -18,7 +18,10 @@ import { ContactAddress, ContactPhone, Flag } from '../shared';
 import { EmployeePhoto, Territories } from '.';
 
 interface EmployeeHoverCardProps {
-  employee: IEmployee | undefined;
+  employee:
+    | Pick<IEmployee, 'titleOfCourtesy' | 'firstName' | 'lastName' | 'country'>
+    | Pick<IEmployee, 'titleOfCourtesy' | 'firstName' | 'lastName'>
+    | undefined;
   employeeId: number | null;
 }
 
@@ -84,7 +87,8 @@ const EmployeeHoverCard: React.FC<EmployeeHoverCardProps> = ({
       <HoverCardTrigger asChild>
         {employee ? (
           <span className="inline-flex items-center gap-2">
-            <Flag country={employee.country} />
+            <EmployeePhoto firstName={employee.firstName} sizeRem={2.5} />
+            {'country' in employee && <Flag country={employee.country} />}
             <BasicLink href={href}>{getEmployeeNameByData(employee)}</BasicLink>
           </span>
         ) : (

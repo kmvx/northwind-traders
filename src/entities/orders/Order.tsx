@@ -24,7 +24,7 @@ import {
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
-import { ContactAddress, ContactPhone, Flag } from '../shared';
+import { ContactAddress, ContactPhone } from '../shared';
 import { OrderDetails, useShipAddress } from '.';
 
 interface OrderProps {
@@ -57,7 +57,6 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
                 <CustomerHoverCard customerId={dataCustomer.customerId}>
                   <b>{dataCustomer.companyName}</b> ({dataCustomer.customerId})
                 </CustomerHoverCard>
-                <Flag country={dataCustomer.country} />
               </span>
             ),
             description: 'The customer who placed the order.',
@@ -74,7 +73,6 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
                   employee={dataEmployee}
                   employeeId={dataEmployee.employeeId}
                 />
-                <Flag country={dataEmployee.country} />
               </span>
             ),
             description: 'The employee who processed the order.',

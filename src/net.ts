@@ -26,7 +26,10 @@ import {
   getShippers,
   getSupplier,
   getSuppliers,
+  getTopCustomersBySales,
   getTopEmployeesBySales,
+  getTopProductsBySales,
+  getTopSuppliersBySales,
 } from './db/actions';
 import {
   type ICategories,
@@ -65,6 +68,27 @@ export const useQueryTopEmployeesBySales = () => {
   return useQuery({
     queryKey: ['getTopEmployeesBySales'],
     queryFn: async () => await getTopEmployeesBySales(),
+  });
+};
+
+export const useQueryTopCustomersBySales = () => {
+  return useQuery({
+    queryKey: ['getTopCustomersBySales'],
+    queryFn: async () => await getTopCustomersBySales(),
+  });
+};
+
+export const useQueryTopProductsBySales = () => {
+  return useQuery({
+    queryKey: ['getTopProductsBySales'],
+    queryFn: async () => await getTopProductsBySales(),
+  });
+};
+
+export const useQueryTopSuppliersBySales = () => {
+  return useQuery({
+    queryKey: ['getTopSuppliersBySales'],
+    queryFn: async () => await getTopSuppliersBySales(),
   });
 };
 
