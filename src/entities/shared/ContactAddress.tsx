@@ -77,7 +77,7 @@ const ContactAddress: React.FC<ContactAddressProps> = ({
             <MapPinIcon className="size-4 min-w-4" />
           </div>
           <Flag country={address.country} />
-          <div className="flex flex-col">
+          <div className="flex flex-col text-balance">
             <div>
               {joinFields(
                 address.country,
