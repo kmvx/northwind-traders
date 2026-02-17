@@ -55,14 +55,34 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({
     (value) => value.employeeId === item.employeeId,
   );
 
+  const address = useShipAddress(item);
+
   const items = [
+    {
+      name: 'Customer',
+      value: <CustomerHoverCard customerId={item.customerId} />,
+    },
+    {
+      name: 'Employee',
+      value: (
+        <EmployeeHoverCard employee={employee} employeeId={item.employeeId} />
+      ),
+    },
     { name: 'Order date', value: item.orderDateFormatted },
     { name: 'Shipped date', value: item.shippedDateFormatted },
     { name: 'Required date', value: item.requiredDateFormatted },
     { name: 'Freight', value: formatCurrency(item.freight) },
+    {
+      name: 'Ship address',
+      value: (
+        <ContactAddress
+          address={address}
+          title="Ship address"
+          className="font-normal"
+        />
+      ),
+    },
   ];
-
-  const address = useShipAddress(item);
 
   return (
     <Card className="h-full rounded-md shadow-none">
@@ -76,17 +96,8 @@ const OrderCard: React.FC<OrderCardProps> = memo(function OrderCard({
           </BasicLink>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex h-full flex-col gap-4 text-sm">
-        <div className="flex flex-wrap justify-between gap-2">
-          <CustomerHoverCard customerId={item.customerId} />
-          <EmployeeHoverCard employee={employee} employeeId={item.employeeId} />
-        </div>
+      <CardContent>
         <ResponsiveItems items={items} />
-        <ContactAddress
-          address={address}
-          title="Ship address"
-          className="font-normal"
-        />
       </CardContent>
     </Card>
   );

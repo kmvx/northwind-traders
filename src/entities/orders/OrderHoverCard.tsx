@@ -62,19 +62,24 @@ const OrderHoverCard: React.FC<OrderHoverCardProps> = ({ orderId }) => {
       { name: 'Shipped date', value: formatDateFromString(data.shippedDate) },
       { name: 'Required date', value: formatDateFromString(data.requiredDate) },
       { name: 'Freight', value: formatCurrency(data.freight) },
-      undefined,
+      null,
       { name: 'Ship name', value: data.shipName },
+      {
+        name: 'Ship address',
+        value: (
+          <ContactAddress
+            address={address}
+            title="Ship address"
+            className="font-normal"
+          />
+        ),
+      },
     ];
 
     return (
       <div className="flex flex-col gap-2">
         <Typography.Header3>Order #{orderId}</Typography.Header3>
         <ResponsiveItems items={items} />
-        <ContactAddress
-          address={address}
-          title="Ship address"
-          className="font-normal"
-        />
       </div>
     );
   };
