@@ -56,7 +56,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
       className="flex flex-wrap items-center justify-between gap-2"
       ref={ref}
     >
-      <div className="flex flex-wrap items-center justify-start gap-2">
+      <div className="flex flex-wrap items-center justify-start gap-4">
         {extraNodesBefore}
 
         <div className="flex items-center gap-2">
@@ -81,7 +81,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
           </ButtonWithTooltip>
         </div>
 
-        <span className="px-3 text-center text-sm text-balance">
+        <span className="text-center text-sm text-balance">
           Items {offset + 1} - {Math.min(offset + limit, totalItems)} of{' '}
           {totalItems}, page {currentPage + 1} of {totalPages}
         </span>
