@@ -2,7 +2,14 @@ import type { UseQueryResult } from '@tanstack/react-query';
 import type React from 'react';
 import invariant from 'tiny-invariant';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Skeleton,
+} from '@/components/ui';
+import { TOP_SALES_ITEMS_COUNT_LIMIT } from '@/constants';
 import { CustomerHoverCard } from '@/entities/customers';
 import { EmployeeHoverCard } from '@/entities/employees';
 import { Flag } from '@/entities/shared';
@@ -13,7 +20,7 @@ import {
   useQueryTopSuppliersBySales,
 } from '@/net';
 import type { CurrencyType } from '@/types';
-import { BasicLink, ErrorMessage, WaitSpinner } from '@/ui';
+import { BasicLink, ErrorMessage } from '@/ui';
 import { formatCurrency } from '@/utils';
 
 interface TopEntitiesBySalesProps {
@@ -43,7 +50,7 @@ const TopEntitiesBySales: React.FC<TopEntitiesBySalesProps> = ({
       </CardHeader>
       <CardContent>
         <ErrorMessage error={error} retry={refetch} isFetching={isFetching} />
-        {isLoading && <WaitSpinner />}
+        {isLoading && <TopSalesDataSkeleton />}
         <ul className="flex flex-col gap-2">
           {Array.from({ length }).map((_, index) => {
             const entity = getEntityByIndex(index);
@@ -74,6 +81,26 @@ const TopEntitiesBySales: React.FC<TopEntitiesBySalesProps> = ({
         </ul>
       </CardContent>
     </Card>
+  );
+};
+
+const TopSalesDataSkeleton = () => {
+  return (
+    <ul className="flex flex-col gap-2">
+      {Array.from({ length: TOP_SALES_ITEMS_COUNT_LIMIT }).map((_, index) => (
+        <li key={index} className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-4" />
+            <Skeleton className="h-10 w-10 rounded-md" />
+            <Skeleton className="h-4 w-40" />
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            <Skeleton className="h-4 w-20" />
+            <Skeleton className="h-3 w-16" />
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 };
 

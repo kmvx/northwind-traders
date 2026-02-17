@@ -3,6 +3,7 @@
 import { and, countDistinct, desc, eq, sql } from 'drizzle-orm';
 import { uniqBy } from 'es-toolkit/array';
 
+import { TOP_SALES_ITEMS_COUNT_LIMIT } from '@/constants';
 import type {
   ICategories,
   ICustomer,
@@ -74,8 +75,6 @@ export const getDBStats = async () => {
 
 export type DBStatsType = Awaited<ReturnType<typeof getDBStats>>;
 
-const TOP_LIMIT = 5;
-
 const totalSales = sql<CurrencyType>`COALESCE(SUM(${orderDetails.unitPrice} * ${orderDetails.quantity} * (1 - ${orderDetails.discount})), 0)`;
 
 export const getTopEmployeesBySales = async () => {
@@ -93,7 +92,7 @@ export const getTopEmployeesBySales = async () => {
     .leftJoin(orderDetails, eq(orders.orderId, orderDetails.orderId))
     .groupBy(employees.employeeId)
     .orderBy((t) => desc(t.totalSales))
-    .limit(TOP_LIMIT);
+    .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
 };
 
 export const getTopCustomersBySales = async () => {
@@ -110,7 +109,7 @@ export const getTopCustomersBySales = async () => {
     .leftJoin(orderDetails, eq(orders.orderId, orderDetails.orderId))
     .groupBy(customers.customerId)
     .orderBy((t) => desc(t.totalSales))
-    .limit(TOP_LIMIT);
+    .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
 };
 
 export const getTopProductsBySales = async () => {
@@ -127,7 +126,7 @@ export const getTopProductsBySales = async () => {
     .leftJoin(suppliers, eq(products.supplierId, suppliers.supplierId))
     .groupBy(products.productId, suppliers.country)
     .orderBy((t) => desc(t.totalSales))
-    .limit(TOP_LIMIT);
+    .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
 };
 
 export const getTopSuppliersBySales = async () => {
@@ -144,7 +143,7 @@ export const getTopSuppliersBySales = async () => {
     .leftJoin(orderDetails, eq(products.productId, orderDetails.productId))
     .groupBy(suppliers.supplierId)
     .orderBy((t) => desc(t.totalSales))
-    .limit(TOP_LIMIT);
+    .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
 };
 
 const ADDRESS_COLUMNS = {
