@@ -19,7 +19,7 @@ const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
   return (
     <div
       className={clsx(
-        'grid auto-rows-fr gap-4 max-[400px]:auto-rows-auto max-[400px]:grid-cols-1',
+        'grid auto-rows-fr gap-4 max-sm:auto-rows-auto max-sm:grid-cols-1',
         className,
       )}
       style={{
