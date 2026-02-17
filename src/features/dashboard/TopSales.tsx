@@ -37,7 +37,7 @@ const TopEntitiesBySales: React.FC<TopEntitiesBySalesProps> = ({
   const { error, isLoading, isFetching, refetch } = queryResult;
 
   return (
-    <Card className="rounded-md shadow-none transition hover:shadow-lg">
+    <Card className="min-w-0 rounded-md shadow-none transition hover:shadow-lg">
       <CardHeader>
         <CardTitle>Top {name} by sales</CardTitle>
       </CardHeader>
@@ -51,9 +51,9 @@ const TopEntitiesBySales: React.FC<TopEntitiesBySalesProps> = ({
             return (
               <li
                 key={entity.id}
-                className="flex items-center justify-between gap-4"
+                className="flex min-w-0 items-center justify-between gap-4"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex min-w-0 items-center gap-2">
                   <span className="text-muted-foreground text-sm">
                     #{index + 1}
                   </span>
