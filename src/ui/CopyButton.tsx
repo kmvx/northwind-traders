@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui';
-import { HIDE_DELAY } from '@/constants';
+import { HIDE_DELAY_MS } from '@/constants';
 
 interface CopyButtonProps {
   content: string;
@@ -18,7 +18,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ content }) => {
     try {
       await navigator.clipboard.writeText(content);
       setCopied(true);
-      setTimeout(() => setCopied(false), HIDE_DELAY);
+      setTimeout(() => setCopied(false), HIDE_DELAY_MS);
       toast.success('Text copied to clipboard');
     } catch (err) {
       console.error('Failed to copy:', err);

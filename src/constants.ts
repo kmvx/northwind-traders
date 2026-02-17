@@ -12,7 +12,7 @@ import {
 
 import type { DBStatsType } from './db/actions';
 
-export const HIDE_DELAY = 2000; // in milliseconds
+export const HIDE_DELAY_MS = 2000;
 export const TOP_SALES_ITEMS_COUNT_LIMIT = 5;
 
 export const navigationItems: {
