@@ -9,6 +9,7 @@ import {
 } from 'drizzle-orm/pg-core';
 
 export * from './auth-schema';
+export * from './cache-schema';
 export * from './northwind-schema';
 
 export const requestLogs = pgTable('request_logs', {

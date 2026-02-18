@@ -25,6 +25,7 @@ import type {
 import type { CurrencyType, CustomerIdType } from '@/types';
 
 import db from '.';
+import { withCache } from './cache';
 import {
   customers,
   employees,
@@ -78,72 +79,80 @@ export type DBStatsType = Awaited<ReturnType<typeof getDBStats>>;
 const totalSales = sql<CurrencyType>`COALESCE(SUM(${orderDetails.unitPrice} * ${orderDetails.quantity} * (1 - ${orderDetails.discount})), 0)`;
 
 export const getTopEmployeesBySales = async () => {
-  return await db
-    .select({
-      employeeId: employees.employeeId,
-      titleOfCourtesy: employees.titleOfCourtesy,
-      firstName: employees.firstName,
-      lastName: employees.lastName,
-      totalSales,
-      totalOrders: countDistinct(orders.orderId),
-    })
-    .from(employees)
-    .leftJoin(orders, eq(employees.employeeId, orders.employeeId))
-    .leftJoin(orderDetails, eq(orders.orderId, orderDetails.orderId))
-    .groupBy(employees.employeeId)
-    .orderBy((t) => desc(t.totalSales))
-    .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
+  return await withCache('getTopEmployeesBySales', async () => {
+    return await db
+      .select({
+        employeeId: employees.employeeId,
+        titleOfCourtesy: employees.titleOfCourtesy,
+        firstName: employees.firstName,
+        lastName: employees.lastName,
+        totalSales,
+        totalOrders: countDistinct(orders.orderId),
+      })
+      .from(employees)
+      .leftJoin(orders, eq(employees.employeeId, orders.employeeId))
+      .leftJoin(orderDetails, eq(orders.orderId, orderDetails.orderId))
+      .groupBy(employees.employeeId)
+      .orderBy((t) => desc(t.totalSales))
+      .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
+  });
 };
 
 export const getTopCustomersBySales = async () => {
-  return await db
-    .select({
-      customerId: customers.customerId,
-      companyName: customers.companyName,
-      country: customers.country,
-      totalSales,
-      totalOrders: countDistinct(orders.orderId),
-    })
-    .from(customers)
-    .leftJoin(orders, eq(customers.customerId, orders.customerId))
-    .leftJoin(orderDetails, eq(orders.orderId, orderDetails.orderId))
-    .groupBy(customers.customerId)
-    .orderBy((t) => desc(t.totalSales))
-    .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
+  return await withCache('getTopCustomersBySales', async () => {
+    return await db
+      .select({
+        customerId: customers.customerId,
+        companyName: customers.companyName,
+        country: customers.country,
+        totalSales,
+        totalOrders: countDistinct(orders.orderId),
+      })
+      .from(customers)
+      .leftJoin(orders, eq(customers.customerId, orders.customerId))
+      .leftJoin(orderDetails, eq(orders.orderId, orderDetails.orderId))
+      .groupBy(customers.customerId)
+      .orderBy((t) => desc(t.totalSales))
+      .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
+  });
 };
 
 export const getTopProductsBySales = async () => {
-  return await db
-    .select({
-      productId: products.productId,
-      productName: products.productName,
-      country: suppliers.country,
-      totalSales,
-      totalOrders: countDistinct(orderDetails.orderId),
-    })
-    .from(products)
-    .leftJoin(orderDetails, eq(products.productId, orderDetails.productId))
-    .leftJoin(suppliers, eq(products.supplierId, suppliers.supplierId))
-    .groupBy(products.productId, suppliers.country)
-    .orderBy((t) => desc(t.totalSales))
-    .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
+  return await withCache('getTopProductsBySales', async () => {
+    return await db
+      .select({
+        productId: products.productId,
+        productName: products.productName,
+        country: suppliers.country,
+        totalSales,
+        totalOrders: countDistinct(orderDetails.orderId),
+      })
+      .from(products)
+      .leftJoin(orderDetails, eq(products.productId, orderDetails.productId))
+      .leftJoin(suppliers, eq(products.supplierId, suppliers.supplierId))
+      .groupBy(products.productId, suppliers.country)
+      .orderBy((t) => desc(t.totalSales))
+      .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
+  });
 };
 
 export const getTopSuppliersBySales = async () => {
-  return await db
-    .select({
-      supplierId: suppliers.supplierId,
-      companyName: suppliers.companyName,
-      country: suppliers.country,
-      totalSales,
-      totalOrders: countDistinct(orderDetails.orderId),
-    })
-    .from(suppliers)
-    .leftJoin(products, eq(suppliers.supplierId, products.supplierId))
-    .leftJoin(orderDetails, eq(products.productId, orderDetails.productId))
-    .groupBy(suppliers.supplierId)
-    .orderBy((t) => desc(t.totalSales))
-    .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
+  return await withCache('getTopSuppliersBySales', async () => {
+    return await db
+      .select({
+        supplierId: suppliers.supplierId,
+        companyName: suppliers.companyName,
+        country: suppliers.country,
+        totalSales,
+        totalOrders: countDistinct(orderDetails.orderId),
+      })
+      .from(suppliers)
+      .leftJoin(products, eq(suppliers.supplierId, products.supplierId))
+      .leftJoin(orderDetails, eq(products.productId, orderDetails.productId))
+      .groupBy(suppliers.supplierId)
+      .orderBy((t) => desc(t.totalSales))
+      .limit(TOP_SALES_ITEMS_COUNT_LIMIT);
+  });
 };
 
 const ADDRESS_COLUMNS = {

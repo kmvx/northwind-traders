@@ -22,6 +22,19 @@ export function joinFields(...args: (string | null)[]): string {
   return [...args].filter(Boolean).join(', ');
 }
 
+export async function traceDuration<T>(
+  label: string,
+  fn: () => Promise<T> | T,
+): Promise<T> {
+  const start = performance.now();
+  try {
+    const result = await fn();
+    return result;
+  } finally {
+    console.log(`[${label}] Execution time: ${performance.now() - start}ms`);
+  }
+}
+
 export function formatCurrency(amount: CurrencyType | null): string {
   if (amount == null) return 'N/A';
 
