@@ -1,7 +1,7 @@
-import clsx from 'clsx';
 import React from 'react';
 
 import { useIsMobile } from '@/hooks';
+import { cn } from '@/lib/utils';
 
 interface ResponsiveGridProps {
   minWidth: string;
@@ -18,7 +18,7 @@ const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
 
   return (
     <div
-      className={clsx(
+      className={cn(
         'grid auto-rows-fr gap-4 max-sm:auto-rows-auto max-sm:grid-cols-1',
         className,
       )}

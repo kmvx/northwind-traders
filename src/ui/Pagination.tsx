@@ -1,9 +1,9 @@
 'use client';
 
-import clsx from 'clsx';
 import React, { useCallback, useEffect } from 'react';
 
 import { useQueryStateFixed, useScrollTo } from '@/hooks';
+import { cn } from '@/lib/utils';
 
 import { PaginationControls } from '.';
 
@@ -57,7 +57,7 @@ function Pagination<T>({
   );
 
   return (
-    <div className={clsx('flex flex-col gap-4', className)}>
+    <div className={cn('flex flex-col gap-4', className)}>
       <PaginationControls
         offset={offset}
         limit={limit}
