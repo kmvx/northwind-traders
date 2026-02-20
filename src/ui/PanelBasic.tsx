@@ -1,5 +1,6 @@
-import clsx from 'clsx';
 import React from 'react';
+
+import { cn } from '@/lib/utils';
 
 interface PanelBasicProps {
   children: React.ReactNode;
@@ -8,7 +9,7 @@ interface PanelBasicProps {
 
 const PanelBasic: React.FC<PanelBasicProps> = ({ children, className }) => {
   return (
-    <section className={clsx(className, 'bg-sidebar rounded-md border p-4')}>
+    <section className={cn('bg-panel rounded-md border p-4', className)}>
       {children}
     </section>
   );

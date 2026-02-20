@@ -3,6 +3,7 @@
 import { PaintbrushVerticalIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
+import invariant from 'tiny-invariant';
 
 import { Button } from '@/components/ui';
 
@@ -58,27 +59,55 @@ function updateTheme(isDark: boolean) {
   const { hue, lightness } = state;
   const lightnessValue = isDark ? lightness : 100 - lightness;
   const borderColor = `hsl(${hue} 100% ${100 - lightnessValue}% / ${state.borderAlpha})`;
-  const buildColor = (delta: number) =>
-    `hsl(${hue} 100% ${isDark ? lightness + delta : 100 - lightness - delta}%)`;
-  const background = buildColor(0);
-  const panel = buildColor(5);
-  const accent = buildColor(10);
 
-  [
-    ['--background', background],
-    ['--card', background],
-    ['--primary', `hsl(${hue} 100% ${100 - lightnessValue}%)`],
-    ['--secondary', accent],
-    ['--muted', accent],
-    ['--accent', accent],
-    ['--sidebar', panel],
-    ['--sidebar-accent', accent],
-    ['--border', borderColor],
-    ['--input', borderColor],
-    ['--ring', borderColor],
-    ['--radius', state.radius + 'rem'],
-  ].forEach(([name, value]) => {
+  const buildColor = (delta: number, isDark: boolean) => {
+    return `hsl(${hue} 100% ${isDark ? lightness + delta : 100 - (lightness + delta)}%)`;
+  };
+
+  const backgroundColor = buildColor(0, isDark);
+  const panelColor = buildColor(5, isDark);
+  const accentColor = buildColor(10, isDark);
+
+  const isDarkSidebar = Math.random() < 0.5 ? true : isDark;
+  const sidebarColor = buildColor(5, isDarkSidebar);
+  const sidebarForegroundColor = isDarkSidebar
+    ? 'oklch(0.985 0 0)'
+    : 'oklch(0.145 0 0)';
+  const sidebarAccentColor = buildColor(10, isDarkSidebar);
+  const sidebarAccentForegroundColor = isDarkSidebar
+    ? 'oklch(0.985 0 0)'
+    : 'oklch(0.205 0 0)';
+
+  Object.entries({
+    '--background': backgroundColor,
+    '--card': backgroundColor,
+    '--primary': `hsl(${hue} 100% ${100 - lightnessValue}%)`,
+    '--secondary': accentColor,
+    '--muted': accentColor,
+    '--accent': accentColor,
+    '--panel': panelColor, // NOTE: app extension
+    '--sidebar': sidebarColor,
+    '--sidebar-foreground': sidebarForegroundColor,
+    '--sidebar-accent': sidebarAccentColor,
+    '--sidebar-accent-foreground': sidebarAccentForegroundColor,
+    '--border': borderColor,
+    '--input': borderColor,
+    '--ring': borderColor,
+    '--radius': state.radius + 'rem',
+  }).forEach(([name, value]) => {
     document.documentElement.style.setProperty(name, value);
+  });
+
+  const sidebarElement = document.querySelector('[data-sidebar="sidebar"]');
+  invariant(sidebarElement);
+  invariant(sidebarElement instanceof HTMLElement);
+  Object.entries({
+    '--accent': sidebarAccentColor,
+    '--accent-foreground': sidebarAccentForegroundColor,
+    '--secondary': sidebarAccentColor,
+    '--secondary-foreground': sidebarAccentForegroundColor,
+  }).forEach(([name, value]) => {
+    sidebarElement.style.setProperty(name, value);
   });
 }
 

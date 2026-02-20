@@ -1,5 +1,6 @@
-import clsx from 'clsx';
 import React from 'react';
+
+import { cn } from '@/lib/utils';
 
 interface PanelStretchedProps {
   children: React.ReactNode;
@@ -12,9 +13,9 @@ const PanelStretched: React.FC<PanelStretchedProps> = ({
 }) => {
   return (
     <section
-      className={clsx(
+      className={cn(
+        'bg-panel container mx-auto rounded-md border p-4',
         className,
-        'bg-sidebar container mx-auto rounded-md border p-4',
       )}
     >
       {children}
