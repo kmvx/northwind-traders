@@ -38,6 +38,7 @@ interface ThemeState {
   lightness: number;
   borderAlpha: number;
   radius: number;
+  forceDarkSidebar: boolean;
 }
 
 let state: ThemeState;
@@ -50,6 +51,7 @@ const generateState = () => {
     lightness: randInt(10),
     borderAlpha: Math.round(Math.random() * 4) / 10 + 0.1,
     radius: Math.random() < 0.2 ? 0 : (Math.round(Math.random() * 5) / 5) * 2,
+    forceDarkSidebar: Math.random() < 0.5,
   };
 };
 
@@ -68,7 +70,7 @@ function updateTheme(isDark: boolean) {
   const panelColor = buildColor(5, isDark);
   const accentColor = buildColor(10, isDark);
 
-  const isDarkSidebar = Math.random() < 0.5 ? true : isDark;
+  const isDarkSidebar = state.forceDarkSidebar || isDark;
   const sidebarColor = buildColor(5, isDarkSidebar);
   const sidebarForegroundColor = isDarkSidebar
     ? 'oklch(0.985 0 0)'
