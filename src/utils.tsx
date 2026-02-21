@@ -58,14 +58,7 @@ export function isStringIncludes(str: string | null, search: string): boolean {
 }
 
 export const buildTitle = (...args: (string | null | undefined)[]): string => {
-  return [...args, 'Northwind Traders'].filter(Boolean).join(' \u2014 ');
-};
-
-export const setDocumentTitle = (
-  ...args: (string | null | undefined)[]
-): void => {
-  if (typeof document === 'undefined') return;
-  document.title = buildTitle(...args);
+  return [...args, 'Northwind Traders'].filter(Boolean).join(' | ');
 };
 
 export function getEmployeeNameByData(

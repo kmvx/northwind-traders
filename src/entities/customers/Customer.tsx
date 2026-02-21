@@ -11,7 +11,6 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { setDocumentTitle } from '@/utils';
 
 import { Orders } from '../orders';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
@@ -22,8 +21,6 @@ interface CustomerProps {
 
 const Customer: React.FC<CustomerProps> = ({ customerId }) => {
   const { data, error, isLoading, refetch } = useQueryCustomer({ customerId });
-
-  setDocumentTitle(data?.companyName, 'Customer');
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isLoading) return <WaitSpinner />;

@@ -16,11 +16,7 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import {
-  formatCurrency,
-  formatDateFromString,
-  setDocumentTitle,
-} from '@/utils';
+import { formatCurrency, formatDateFromString } from '@/utils';
 
 import { CustomerHoverCard } from '../customers';
 import { EmployeeHoverCard } from '../employees';
@@ -38,8 +34,6 @@ const Order: React.FC<OrderProps> = ({ orderId }) => {
   const { data: dataCustomer } = useQueryCustomerByOrderId({ orderId });
   const { data: dataEmployee } = useQueryEmployeeByOrderId({ orderId });
   const { data: dataShipper } = useQueryShipperByOrderId({ orderId });
-
-  setDocumentTitle(`Order${data ? ' #' + data.orderId : ''}`);
 
   const address = useShipAddress(data);
 

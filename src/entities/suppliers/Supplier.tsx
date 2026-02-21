@@ -10,7 +10,6 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { setDocumentTitle } from '@/utils';
 
 import { Products } from '../products';
 import { ContactAddress, ContactPerson, ContactPhone } from '../shared';
@@ -25,10 +24,6 @@ const Supplier: React.FC<SupplierProps> = ({
   isEmbedded = false,
 }) => {
   const { data, error, isLoading, refetch } = useQuerySupplier({ supplierId });
-
-  if (!isEmbedded) {
-    setDocumentTitle(data?.companyName, 'Supplier');
-  }
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isLoading) return <WaitSpinner />;

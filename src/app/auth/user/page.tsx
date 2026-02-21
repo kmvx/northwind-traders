@@ -7,6 +7,6 @@ export const metadata: Metadata = {
   title: buildTitle('User'),
 };
 
-export default async function OrdersPage() {
+export default async function UserPage() {
   return <UserCurrent />;
 }

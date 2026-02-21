@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { type IEmployee } from './models';
 import {
@@ -17,7 +17,6 @@ import {
   getFlagEmojiByCountryName,
   isStringIncludes,
   joinFields,
-  setDocumentTitle,
 } from './utils';
 
 describe('joinFields', () => {
@@ -66,38 +65,10 @@ describe('isStringIncludes', () => {
 describe('buildTitle', () => {
   it.each([
     [[], 'Northwind Traders'],
-    [['Dashboard'], 'Dashboard — Northwind Traders'],
-    [['Products', 'Categories'], 'Products — Categories — Northwind Traders'],
+    [['Dashboard'], 'Dashboard | Northwind Traders'],
+    [['Products', 'Categories'], 'Products | Categories | Northwind Traders'],
   ])('buildTitle(%j) -> %s', (args, expected) => {
     expect(buildTitle(...args)).toBe(expected);
-  });
-});
-
-const originalDocument = global.document;
-
-describe('setDocumentTitle', () => {
-  beforeEach(() => {
-    // @ts-expect-error Override
-    global.document = { title: '' };
-  });
-
-  afterEach(() => {
-    global.document = originalDocument;
-  });
-
-  it('sets document.title using buildTitle', () => {
-    const spy = vi
-      .spyOn(global, 'document', 'get')
-      .mockReturnValue({ title: '' } as typeof originalDocument);
-    setDocumentTitle('Test');
-    expect(global.document.title).toBe(buildTitle('Test'));
-    spy.mockRestore();
-  });
-
-  it('does nothing if document is undefined', () => {
-    // @ts-expect-error Intentionally undefined
-    global.document = undefined;
-    expect(() => setDocumentTitle('Ignored')).not.toThrow();
   });
 });
 

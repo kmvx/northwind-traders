@@ -10,7 +10,7 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import { formatCurrency, setDocumentTitle } from '@/utils';
+import { formatCurrency } from '@/utils';
 
 import { OrderDetails } from '../orders';
 import { Supplier } from '../suppliers';
@@ -23,8 +23,6 @@ interface ProductProps {
 const Product: React.FC<ProductProps> = ({ productId }) => {
   const { data, error, isLoading, refetch } = useQueryProduct({ productId });
   const { data: dataCategories } = useQueryCategories();
-
-  setDocumentTitle(data?.productName, 'Product');
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isLoading) return <WaitSpinner />;

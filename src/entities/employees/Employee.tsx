@@ -13,11 +13,7 @@ import {
   Typography,
   WaitSpinner,
 } from '@/ui';
-import {
-  formatDateFromString,
-  getEmployeeNameByData,
-  setDocumentTitle,
-} from '@/utils';
+import { formatDateFromString, getEmployeeNameByData } from '@/utils';
 
 import { Orders } from '../orders';
 import { ContactAddress, ContactPhone } from '../shared';
@@ -38,7 +34,6 @@ const Employee: React.FC<EmployeeProps> = ({ employeeId, initialData }) => {
   });
 
   const name = data ? getEmployeeNameByData(data) : undefined;
-  setDocumentTitle(name, 'Employee');
 
   if (error) return <ErrorMessage error={error} retry={refetch} />;
   if (isLoading && !data) return <WaitSpinner />;

@@ -13,7 +13,6 @@ import {
   Typography,
   UserAgent,
 } from '@/ui';
-import { setDocumentTitle } from '@/utils';
 
 import { isAdminUser } from '../admin';
 import {
@@ -40,8 +39,6 @@ const UserDetails: React.FC<UserDetailsProps> = ({
   isCurrentUser,
   currentSessionId,
 }) => {
-  setDocumentTitle(user.name);
-
   return (
     <PanelCentred className="flex flex-col gap-4 xl:min-w-[800px]">
       <div className="u-hue-violet flex flex-col items-center gap-4 rounded-md p-4">
