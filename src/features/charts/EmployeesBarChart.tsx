@@ -8,7 +8,7 @@ import { useNavigate } from '@/hooks';
 import { useQueryEmployees, useQueryOrdersFiltered } from '@/net';
 import { getEmployeeNameByData } from '@/utils';
 
-import { BarChart } from '.';
+import { BarChart, PieChart } from '.';
 
 const EmployeesBarChart: React.FC = () => {
   // State
@@ -103,13 +103,20 @@ const EmployeesBarChart: React.FC = () => {
           setFilterYear={setFilterYear}
         />
       </div>
-      <BarChart
-        name="orders"
-        categoriesQueryResult={categoriesQueryResult}
-        hue={hue}
-        navigate={navigate}
-        bottomMarginRem={10}
-      />
+      <div className="flex flex-wrap justify-center gap-2">
+        <BarChart
+          name="orders"
+          categoriesQueryResult={categoriesQueryResult}
+          hue={hue}
+          navigate={navigate}
+          bottomMarginRem={10}
+        />
+        <PieChart
+          name="orders"
+          categoriesQueryResult={categoriesQueryResult}
+          navigate={navigate}
+        />
+      </div>
     </div>
   );
 };

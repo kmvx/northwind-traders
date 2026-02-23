@@ -25,7 +25,7 @@ const EntityStats: React.FC<EntityStatsProps> = ({ initialData }) => {
       {
         url: '/charts',
         title: 'charts',
-        value: 8,
+        value: 9,
         iconClassName: 'u-hue-teal',
       },
       {
